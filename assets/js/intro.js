@@ -53,5 +53,5 @@ function startCanvas() {
 // Bouton Entrer → force le thème favori (alias 'theme-main')
 document.getElementById('enter-btn')?.addEventListener('click', (e) => {
   e.preventDefault();
-  window.location.href = new URL("../../home.html?forceTheme=main", document.currentScript.src).href;
+  window.location.href = new URL("home.html?forceTheme=main", window.location.href).href;
 });
