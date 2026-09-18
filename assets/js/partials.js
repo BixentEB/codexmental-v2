@@ -16,6 +16,15 @@ export function injectPartial(id, url) {
     .then(html => {
       target.innerHTML = html;
 
+      // Rend les liens racine portables (domaine custom ou GitHub Pages /sous-dossier/).
+      const siteRoot = new URL('../../', import.meta.url);
+      target.querySelectorAll('[href^="/"], [src^="/"]').forEach(el => {
+        for (const attr of ['href', 'src']) {
+          const value = el.getAttribute(attr);
+          if (value?.startsWith('/')) el.setAttribute(attr, new URL(value.slice(1), siteRoot).href);
+        }
+      });
+
       if (id === 'menu-placeholder') {
         highlightActiveLink();
         setupMobileMenu();
