@@ -3,31 +3,31 @@
 // ========================================================
 
 // === 📦 Modules à effets de bord ===
-import '/assets/js/canvas.js';
-import '/assets/js/theme-cards.js';
-import '/assets/js/anti-copy.js';
-import '/assets/js/viewer.js';
-import '/assets/js/cookie.js';
-import '/assets/js/onglets.js';
-import '/assets/js/table.js';
-import '/assets/js/new-badge.js';
-import '/assets/js/openmenu.js';
+import './canvas.js';
+import './theme-cards.js';
+import './anti-copy.js';
+import './viewer.js';
+import './cookie.js';
+import './onglets.js';
+import './table.js';
+import './new-badge.js';
+import './openmenu.js';
 
 // === 🔧 Modules à fonctions exportées ===
-import { setTheme } from '/assets/js/theme-engine.js';
-import { injectPartial } from '/assets/js/partials.js';
-import { setupScrollButton } from '/assets/js/scroll.js';
-import { activerBadgeAstro } from '/assets/js/badge-astro.js';
-import { initEtoileFilante } from '/assets/js/etoile-filante.js';
-import { initThemeObserver } from '/assets/js/theme-observer.js';
+import { setTheme } from './theme-engine.js';
+import { injectPartial } from './partials.js';
+import { setupScrollButton } from './scroll.js';
+import { activerBadgeAstro } from './badge-astro.js';
+import { initEtoileFilante } from './etoile-filante.js';
+import { initThemeObserver } from './theme-observer.js';
 
 // === 🧭 Alias de thème
-import { resolveInitialTheme, resolveAlias } from '/assets/js/theme-alias.js';
+import { resolveInitialTheme, resolveAlias } from './theme-alias.js';
 
 // === 🌠 Initialiser le thème visuel dès le chargement
 (function initTheme() {
   // 🧪 Cas spécial : dashboard ne doit pas être altéré
-  if (location.pathname.startsWith('/dashb/')) return;
+  if (location.pathname.includes('/dashb/')) return;
 
   const params = new URLSearchParams(window.location.search);
   const forceTheme = params.get('forceTheme'); // "main" si on vient de l'intro
@@ -55,13 +55,13 @@ window.addEventListener("DOMContentLoaded", () => {
   const currentEffective =
     document.body.dataset.effectiveTheme || resolveAlias(document.body.className);
 
-  injectPartial('menu-placeholder', '/menu.html');
-  injectPartial('footer-placeholder', '/footer.html');
+  injectPartial('menu-placeholder', new URL('../../menu.html', import.meta.url).href);
+  injectPartial('footer-placeholder', new URL('../../footer.html', import.meta.url).href);
 
   // 🃏 Cartes de thèmes (partial)
   const cardsTarget = document.getElementById('theme-cards-placeholder');
   if (cardsTarget) {
-    injectPartial('theme-cards-placeholder', '/assets/partials/theme-cards.html');
+    injectPartial('theme-cards-placeholder', new URL('../partials/theme-cards.html', import.meta.url).href);
   }
 
   activerBadgeAstro();
@@ -71,7 +71,7 @@ window.addEventListener("DOMContentLoaded", () => {
     initEtoileFilante(); // paramètres gérés dans etoile-filante.js
   }
   if (currentEffective === "theme-lunaire") {
-    import('/assets/js/newmoon.js')
+    import('./newmoon.js')
       .then(m => m.updateNewMoonWidget())
       .catch(err => console.error("❌ Failed to load newmoon.js:", err));
   }
@@ -96,7 +96,7 @@ window.setTheme = (theme) => {
     initEtoileFilante(); // idem ici
   }
   if (effective === "theme-lunaire") {
-    import('/assets/js/newmoon.js')
+    import('./newmoon.js')
       .then(m => m.updateNewMoonWidget())
       .catch(err => console.error("❌ Failed to load newmoon.js:", err));
   }
