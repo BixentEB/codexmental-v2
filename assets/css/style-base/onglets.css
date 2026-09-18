@@ -1,0 +1,115 @@
+/* Barre d'onglets */
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  position: relative;
+}
+
+/* Titre de classeur */
+.tabs-section h2 {
+  margin-bottom: 0.5em;
+}
+
+
+/* Onglet style classeur */
+.tabs .tab {
+  position: relative;
+  padding: 0.6em 1.2em;
+  cursor: pointer;
+  font-weight: bold;
+  color: var(--text-primary, inherit);
+  background: var(--tab-bg, rgba(255,255,255,0.05));
+  margin-right: 0.2em;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-bottom: none;
+  transition: background 0.3s, color 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+
+/* Onglet actif */
+.tabs .tab.active {
+  background: var(--accent, rgba(255,255,255,0.2));
+  color: var(--accent-text, #fff);
+  transform: translateY(1px);
+  z-index: 1;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+/* Ligne supérieure du contenu */
+.tabs + .tab-contents {
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+/* Contenus */
+.tab-content {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.tab-content.active {
+  display: block;
+  opacity: 1;
+}
+
+/* effet hover doux */
+.tabs .tab:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+body.theme-solaire .tabs .tab:hover {
+  background: rgba(255, 193, 7, 0.15);
+}
+body.theme-lunaire .tabs .tab:hover {
+  background: rgba(90, 130, 200, 0.15);
+}
+body.theme-galactique .tabs .tab:hover {
+  background: rgba(179,136,255,0.15);
+}
+body.theme-stellaire .tabs .tab:hover {
+  background: rgba(120,180,255,0.15);
+}
+
+/* TRANSITION DOUCE */
+.tab-content {
+  transition: opacity 0.5s ease;
+}
+
+.tabs .tab.active {
+  border-bottom: 3px solid var(--accent-primary);
+}
+
+/* ==========================================
+📱 RESPONSIVE ONGLET COMPACT (<= 600px)
+========================================== */
+@media (max-width: 600px) {
+
+  /* La barre d'onglets ne passe plus en colonne */
+  .tabs {
+    display: flex !important;      /* S'assure qu'on reste en flex */
+    flex-wrap: nowrap !important;  /* PAS de retour à la ligne */
+    overflow-x: auto !important;   /* Scroll horizontal si déborde */
+    -webkit-overflow-scrolling: touch; /* Inertie iOS */
+  }
+
+  /* Chaque onglet reste sur une seule ligne */
+  .tabs .tab {
+    flex: 0 0 auto;                /* Taille auto sans grandir */
+    white-space: nowrap;           /* Empêche le retour ligne */
+    border-radius: 0;              /* Optionnel : bords carrés */
+    border: none;                  /* Pas de bordure verticale */
+    margin-right: 0.2em;           /* Petit espacement entre onglets */
+  }
+
+  /* Onglet actif : bordure plus visible */
+  .tabs .tab.active {
+    border-bottom: 2px solid var(--accent, rgba(255,255,255,0.2));
+    /* On peut ajouter un fond si souhaité */
+    /* background: var(--accent-primary, rgba(255,255,255,0.15)); */
+  }
+}

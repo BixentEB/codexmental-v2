@@ -1,0 +1,327 @@
+/* ================
+   Menu principal (burger)
+================= */
+.profil-nav {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.profil-nav ul {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.profil-nav li {
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+}
+.burger-btn {
+  display: none;
+}
+
+/* Responsive burger menu */
+@media (max-width: 768px) {
+  .profil-nav {
+    display: block;
+  }
+  .profil-nav ul {
+    display: none;
+    flex-direction: column;
+  }
+  .profil-nav.open ul {
+    display: flex;
+  }
+  .burger-btn {
+    display: block;
+  }
+}
+
+/* ================
+   Visualiseur principal
+================= */
+.profil-visualizer {
+  background: none;
+  color: var(--text-primary);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+/* ================
+   Sous-sections
+================= */
+.subsection-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  max-width: 1300px;
+  margin: 0 auto;
+  background: none;
+  color: var(--text-primary);
+}
+
+/* ================
+   Blocs de base
+================= */
+
+/* Transparent par défaut */
+.bloc-cadre,
+.bloc-libre,
+.bloc-full {
+  background: none;
+  padding: 0;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1300px;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* Bloc pleine largeur sans max-width */
+.bloc-full {
+  max-width: none;
+}
+
+/* Bloc avec fond discret */
+.bloc-style {
+  background: rgba(255,255,255,0.05);
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+/* Bloc avec fond clair */
+.bloc-style-clair {
+  background: rgba(255,255,255,0.15);
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+/* Bloc avec fond sombre */
+.bloc-style-sombre {
+  background: rgba(0,0,0,0.3);
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+/* ================
+   Typo titres
+================= */
+.profil-visualizer h2,
+.profil-visualizer h3,
+.profil-visualizer h4 {
+  color: var(--accent-primary);
+}
+
+/* ================
+   Liens
+================= */
+.profil-visualizer a {
+  color: var(--link-color);
+  text-decoration: underline;
+}
+.profil-visualizer a:hover {
+  color: var(--accent-hover);
+}
+
+/* ================
+   Menu icônes SVG
+================= */
+.menu-icons-svg ul {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 0;
+  list-style: none;
+}
+@media (max-width: 768px) {
+  .menu-icons-svg {
+    display: none;
+  }
+}
+.icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 70px;
+  height: 70px;
+  background: rgba(255, 255, 255, 0.05);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.icon-svg {
+  width: 32px;
+  height: 32px;
+  transition: all 0.3s ease;
+}
+.icon-svg path[opacity="0.2"] {
+  fill: none;
+}
+.icon-svg path:not([opacity]) {
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  fill: none;
+  opacity: 0.85;
+}
+.icon-btn:hover .icon-svg,
+.icon-btn.active .icon-svg {
+  filter: drop-shadow(0 0 6px currentColor);
+  transform: scale(1.1);
+}
+.icon-btn:hover .icon-svg path[opacity="0.2"],
+.icon-btn.active .icon-svg path[opacity="0.2"] {
+  fill: currentColor;
+  opacity: 0.2;
+}
+.icon-btn:hover .icon-svg path:not([opacity]),
+.icon-btn.active .icon-svg path:not([opacity]) {
+  stroke: currentColor;
+  fill: currentColor;
+  opacity: 1;
+}
+
+/* Couleurs spécifiques par icône */
+.icon-profil { color: #88aaff; }
+.icon-passions { color: #ff6699; }
+.icon-influences { color: #66ffaa; }
+.icon-references { color: #ffaa44; }
+.icon-gaming { color: #ffcc00; }
+.icon-voyages { color: #55ffee; }
+.icon-aspirations { color: #ff88ff; }
+
+/* Thème solaire : fond plus lisible */
+body.theme-solaire .icon-btn {
+  background: rgba(0,0,0,0.1);
+}
+
+/* ================
+   Sous-menu boutons
+================= */
+.sous-menu {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  background: none;
+}
+.sous-menu button {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--accent-color, #fff);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--accent-color, #fff);
+  opacity: 0.8;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.sous-menu button:hover,
+.sous-menu button.active {
+  opacity: 1;
+  background: rgba(255,255,255,0.05);
+  box-shadow: 0 0 6px var(--accent-color, #fff);
+  transform: scale(1.05);
+}
+
+/* ================
+   Espacements et hiérarchie
+================= */
+.container.profil-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  padding-top: 1.5rem;
+}
+
+/*ACCENTUATION ET COLORATION TEXTES*/
+/* Accent principal (couleur du thème) */
+.profil-visualizer .accent-text {
+  color: var(--accent-primary);
+}
+
+/* Accent secondaire (couleur hover ou complémentaire) */
+.profil-visualizer .accent-text-2 {
+  color: var(--accent-hover);
+}
+
+/* Accent discret (plus doux) */
+.profil-visualizer .accent-text-soft {
+  color: var(--text-secondary, var(--text-primary));
+  opacity: 0.8;
+}
+
+/* Accent important (plus gros) */
+.profil-visualizer .accent-text-big {
+  color: var(--accent-primary);
+  font-size: 1.2em;
+  font-weight: 600;
+}
+
+/* MENU MOBILE */
+/* Cacher par défaut */
+#mobile-icons-container {
+  display: none;
+}
+
+/* Afficher et styliser uniquement en mobile */
+@media (max-width: 768px) {
+  #mobile-icons-container {
+    display: block;
+    position: fixed;
+    top: 90px;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+    background: transparent;
+    backdrop-filter: none;
+  }
+
+  .mobile-icons-menu {
+    display: flex;
+    justify-content: center; /* centré + gap uniforme */
+    padding: 0 0.5rem; /* un peu de marge sur les côtés */
+    gap: 0.5rem; /* espace régulier entre les boutons */
+    margin: 0;
+    list-style: none;
+  }
+
+  .mobile-icons-menu li {
+    flex: 1 0 0; /* chaque icône occupe une largeur identique */
+  }
+
+  .mobile-icons-menu button {
+    flex-direction: column;
+    width: 100%; /* remplir toute la largeur attribuée */
+    height: auto;
+    padding: 0.3rem 0.2rem;
+    border-radius: 6px;
+  }
+
+  .mobile-icons-menu .icon-svg {
+    width: 24px;
+    height: 24px;
+  }
+
+   @media (max-width: 768px) {
+  .sous-menu {
+   margin-top: 80px; /* adapte cette valeur si besoin */
+  }
+}
+
+

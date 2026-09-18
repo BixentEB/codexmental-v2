@@ -1,0 +1,81 @@
+/* === 🌠 BOUTON FLOTTANT POUR MENU THÈMES === */
+
+/* 🌌 FAB Thème flottant */
+.theme-fab-container {
+  position: fixed;
+  top: 4.2rem; /* Légèrement en dessous du menu sticky */
+  right: 1rem;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
+  opacity: 0;
+  animation: fadeInFab 0.6s ease 0.5s forwards;
+}
+
+@keyframes fadeInFab {
+  to {
+    opacity: 1;
+  }
+}
+
+#theme-fab {
+  width: 40px;
+  height: 40px;
+  font-size: 1.4rem;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(4px);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+#theme-fab:hover {
+  background: rgba(255,255,255,0.2);
+  transform: scale(1.1);
+}
+
+.theme-fab-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-top: 0.4rem;
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: auto;
+}
+
+.theme-fab-options.hidden {
+  opacity: 0;
+  transform: scale(0.9);
+  pointer-events: none;
+}
+
+.theme-fab-options button {
+  width: 36px;
+  height: 36px;
+  font-size: 1.2rem;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(6px);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.theme-fab-options button:hover {
+  background: rgba(255,255,255,0.2);
+  transform: scale(1.1);
+}
+
+/* Cacher complètement sur mobile */
+@media screen and (max-width: 768px) {
+  .theme-fab-container {
+    display: none;
+  }
+}

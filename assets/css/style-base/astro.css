@@ -1,0 +1,116 @@
+/* ===========================
+   🛰️ BADGE ASTRONOMIQUE COMPACT
+=========================== */
+
+#badge-astro {
+  position: absolute;
+  bottom: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  background: rgba(0, 0, 0, 0.6);
+  padding: 4px 10px;
+  border-radius: 16px;
+  font-family: 'Orbitron', sans-serif;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 0 8px rgba(255,255,255,0.12);
+  z-index: 999;
+  opacity: 0.9;
+  transition: opacity 0.3s ease;
+  animation: astroFade 2.4s ease-in;
+  letter-spacing: 0.2px;
+}
+
+body.index #badge-astro {
+  margin-top: 1rem;
+  font-style: italic;
+}
+
+body.index #badge-astro::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120%;
+  height: 100%;
+  border-radius: 24px;
+  background: radial-gradient(circle, rgba(255,255,255,0.08), transparent 70%);
+  filter: blur(12px);
+  z-index: -1;
+}
+
+#badge-astro.pulse {
+  animation: astroFade 2.4s ease-in, pulse 2s infinite;
+  background: radial-gradient(circle at center, rgba(150, 90, 255, 0.8), rgba(30, 0, 60, 0.6));
+  color: #fffbe6;
+  box-shadow: 0 0 16px rgba(255, 230, 255, 0.4);
+}
+
+body:not(.theme-lunaire):not(.index) #badge-astro {
+  position: fixed;
+  bottom: 18px !important;
+  left: unset;
+  right: 18px;
+  transform: none;
+  font-size: 0.75rem;
+  color: white;
+  font-style: normal;
+  margin: 0;
+}
+
+/* ===========================
+   ✨ ANIMATIONS
+=========================== */
+@keyframes astroFade {
+  0%   { opacity: 0; transform: translateY(-5px); }
+  100% { opacity: 0.9; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.cursor-blink {
+  display: inline-block;
+  width: 1px;
+  height: 1em;
+  background: #fff;
+  animation: blink-cursor 1s steps(2, start) infinite;
+  vertical-align: baseline;
+}
+
+@keyframes blink-cursor {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0; }
+}
+
+/* Conteneur réservé pour éviter le saut visuel */
+#astro-container {
+  height: 1.4rem; /* adapte si besoin */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem; /* espace sous le bloc */
+}
+
+#badge-astro {
+  font-size: 0.9rem;
+  font-family: 'Orbitron', sans-serif;
+  opacity: 0.9;
+  transition: opacity 0.3s ease;
+}
+
+/* Affichage des alertes dans home */
+#intro-astro {
+  text-align: center;
+  font-size: 1rem;
+  line-height: 1.6;
+  max-width: 700px;
+  margin: 2rem auto;
+  word-break: break-word;
+}

@@ -1,0 +1,584 @@
+/* blog.css – Version finale corrigée */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+  background-color: var(--bg-primary, #000);
+  color: var(--text-primary, #fff);
+}
+
+.blog-layout {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 2rem;
+  padding: 0 30px;
+  max-width: 100vw;
+  margin-top: 6rem;
+  box-sizing: border-box;
+}
+
+#blog-menu {
+  width: 240px;
+  background-color: var(--menu-bg, #111);
+  border-radius: 12px;
+  border: 1px solid var(--border-color, #333);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  padding: 1rem;
+  margin: 0;
+}
+
+.blog-menu h2 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1rem;
+  margin-bottom: 0.6rem;
+}
+
+.blog-menu details {
+  border: 1px solid var(--menu-border, var(--border-color, #333));
+  margin-bottom: 0.8rem;
+  background-color: var(--menu-card-bg, rgba(255, 255, 255, 0.03));
+  border-radius: 6px;
+  padding: 0.4rem;
+  transition: all 0.3s ease;
+}
+
+.blog-menu summary {
+  color: var(--menu-text, var(--text-primary));
+  text-shadow: 0 0 2px rgba(255, 220, 100, 0.3);
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding: 0.3rem;
+  transition: color 0.3s ease;
+}
+
+.blog-menu details[open] summary {
+  color: var(--menu-text-hover, var(--text-accent));
+}
+
+.blog-menu ul {
+  list-style: none;
+  padding-left: 1rem;
+  margin: 0.4rem 0 0;
+}
+
+.blog-menu li {
+  margin-bottom: 0.3rem;
+}
+
+.blog-menu a {
+  font-size: 0.8rem;
+  text-decoration: none;
+  transition: color 0.3s;
+  color: var(--menu-text, var(--text-primary));
+}
+
+.blog-menu a:hover,
+#blog-menu a.active {
+  color: var(--menu-text-hover, var(--text-accent));
+  font-weight: bold;
+}
+
+#article-viewer {
+  flex: 1;
+  padding: 2rem 2.5rem;
+  border-radius: 1rem;
+  background: var(--bloc-bg, rgba(255, 255, 255, 0.04));
+  border: 1px solid var(--bloc-border, rgba(255, 255, 255, 0.15));
+  box-shadow: 0 0 20px var(--bloc-shadow, rgba(0, 0, 0, 0.2));
+  min-height: 400px;
+  line-height: 1.7;
+  transition: all 0.3s ease;
+  max-width: unset;
+}
+
+body.theme-lunaire #article-viewer {
+  max-width: calc(100vw - 500px);
+}
+body:not(.theme-lunaire) #article-viewer {
+  max-width: 100%;
+}
+
+#article-viewer .placeholder {
+  opacity: 0.6;
+  font-style: italic;
+  color: #ccc;
+}
+#article-viewer .erreur {
+  color: #ff7070;
+  font-weight: bold;
+  margin-top: 1rem;
+}
+#article-viewer > * + * {
+  margin-top: 1rem;
+}
+#article-viewer em,
+#article-viewer i {
+  font-style: italic !important;
+}
+#article-viewer h1,
+#article-viewer h2 {
+  font-family: 'Orbitron', sans-serif;
+}
+
+.article p {
+  margin-bottom: 1.2em;
+  line-height: 1.6;
+}
+.article blockquote {
+  margin: 1.5em 0;
+  font-style: italic;
+  padding-left: 1em;
+  border-left: 2px solid rgba(255,255,255,0.1);
+  line-height: 1.5;
+}
+.article h2 {
+  margin-top: 2em;
+  margin-bottom: 0.8em;
+}
+.article {
+  line-height: 1.6;
+  padding: 0 1rem;
+}
+
+/* Décalage automatique des ancres ciblées par les liens du sommaire */
+[id]:target::before {
+  content: "";
+  display: block;
+  height: 80px; /* Ajuste ici si ton menu est plus petit ou plus grand */
+  margin-top: -80px;
+}
+
+/*Badge "new" devant nouveaux articles moins de 7 jours*/
+/* Badge "NEW" devant le lien */
+.new-badge {
+  display: inline-block;
+  font-size: 0.65em;
+  font-weight: bold;
+  padding: 2px 6px;
+  margin-right: 6px;
+  border-radius: 6px;
+  background-color: var(--btn-bg, rgba(255, 255, 255, 0.08));
+  color: var(--btn-color, #ffd700);
+  border: 1px solid var(--btn-border, rgba(255, 255, 255, 0.3));
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  vertical-align: middle;
+  line-height: 1;
+}
+
+/* Pastille ronde sur le <summary> si la section contient un lien NEW */
+.blog-menu summary {
+  position: relative; /* pour un éventuel positionnement absolu futur */
+}
+
+/* Pastille par défaut (lunaire / solaire) */
+.section-new-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-left: 6px;
+  border-radius: 50%;
+  background: var(--btn-color, #ffd700);
+  box-shadow: 0 0 6px color-mix(in oklab, var(--btn-color, #ffd700) 60%, transparent);
+  vertical-align: middle;
+  animation: dotPulse 2.5s ease-in-out infinite;
+}
+
+/* Option: rendre la pastille un peu plus visible au survol */
+.blog-menu details.has-new summary:hover .section-new-dot {
+  transform: scale(1.15);
+  transition: transform 120ms ease;
+}
+
+/* Overrides doux pour lisibilité selon tes thèmes (si besoin) */
+/* Solaire : reste lumineux et doré */
+body.theme-solaire .section-new-dot {
+  background: #ffb300;
+  box-shadow: 0 0 8px rgba(255, 179, 0, 0.8);
+}
+
+/* Lunaire : reste bleuté clair */
+body.theme-lunaire .section-new-dot {
+  background: #aee6ff;
+  box-shadow: 0 0 8px rgba(174, 230, 255, 0.8);
+}
+
+/* Stellaire : plus coloré pour se démarquer des étoiles */
+body.theme-stellaire .section-new-dot {
+  background: #4ee3ff; /* bleu cyan saturé */
+  box-shadow: 0 0 8px rgba(78, 227, 255, 0.8);
+}
+
+/* Galactique : ton plus foncé pour contraster avec étoiles claires */
+body.theme-galactique .section-new-dot {
+  background: #b06aff; /* violet plus profond */
+  box-shadow: 0 0 8px rgba(176, 106, 255, 0.8);
+}
+
+
+/*symbole mis en valeur ~. */
+.symb-tilt {
+  display: inline-block;
+  transform: rotate(90deg); /* pile vertical */
+  font-style: normal;
+  opacity: 0.95;
+}
+
+
+/* Animation douce */
+@keyframes dotPulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 6px color-mix(in oklab, var(--new-dot, var(--btn-color, #ffd700)) 60%, transparent);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.3);
+    box-shadow: 0 0 10px color-mix(in oklab, var(--new-dot, var(--btn-color, #ffd700)) 80%, transparent);
+    opacity: 0.9;
+  }
+}
+
+
+
+
+/* RESPONSIVE MOBILE */
+
+@media screen and (max-width: 768px) {
+  .blog-layout {
+    flex-direction: column;
+    padding: 1rem;
+  }
+  #blog-menu {
+    width: 100%;
+    margin-left: 0;
+    margin-bottom: 2rem;
+  }
+  #article-viewer {
+    margin-left: 0;
+    padding: 0;
+  }
+}
+
+.blog-menu summary {
+  color: var(--menu-text, var(--text-primary));
+  text-shadow: 0 0 2px rgba(255, 220, 100, 0.3);
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+.blog-menu summary:hover {
+  color: var(--menu-text-hover, var(--text-accent));
+  text-shadow: 0 0 4px rgba(255, 220, 100, 0.5), 0 0 5px rgba(255, 255, 255, 0.15);
+}
+
+.btn-share-article {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4em 0.9em;
+  background: var(--btn-bg, #fff);
+  color: var(--btn-color, #000);
+  border: 1px solid var(--btn-border, #ccc);
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.95em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 0 0 transparent;
+}
+.btn-share-article .icon {
+  font-weight: bold;
+  font-size: 1.2em;
+}
+.btn-share-article:hover {
+  background: var(--btn-hover, #eee);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+  transform: scale(1.03);
+}
+
+/* NOUVEAU CODE POUR LE MENU PARTAGE */
+.btn-share-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.share-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 10px);
+  background-color: var(--share-bg, rgba(0, 0, 0, 0.95)) 
+  border: 1px solid var(--share-border, rgba(255, 255, 255, 0.3));
+  border-radius: 12px;
+  padding: 0.8rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  display: none;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 1000;
+  min-width: 180px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.share-menu:not(.hidden) {
+  display: flex;
+  animation: fadeInDown 0.3s ease-out;
+}
+
+.share-menu::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  right: 15px;
+  border-width: 8px;
+  border-style: solid;
+  border-color: transparent transparent var(--share-bg) transparent;
+}
+
+.share-menu a {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  color: var(--share-link, inherit);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  font-size: 0.95rem;
+}
+
+.share-menu a:hover {
+  background: var(--share-hover, rgba(255, 255, 255, 0.1));
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+  .share-menu {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    border-radius: 16px 16px 0 0;
+    padding: 1.5rem 1rem;
+    top: auto;
+  }
+  
+  .share-menu::before {
+    display: none;
+  }
+  
+  .share-menu:not(.hidden) {
+    animation: slideUp 0.4s ease-out;
+  }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+.hidden {
+  display: none !important;
+}
+
+body.theme-stellaire {
+  --btn-bg: rgba(255, 255, 255, 0.05);
+  --btn-color: #aeeeff;
+  --btn-border: #444;
+  --btn-hover: rgba(255, 255, 255, 0.15);
+  --share-bg: rgba(5, 10, 20, 0.95); /* noir bleuté profond */
+  --share-border: rgba(100, 180, 255, 0.3);
+  --share-link: #aeeeff;
+  --share-hover: rgba(50, 120, 200, 0.3);
+}
+
+
+body.theme-solaire {
+  --btn-bg: rgba(255, 215, 100, 0.1);
+  --btn-color: #462e01;
+  --btn-border: #ffaa00;
+  --btn-hover: rgba(255, 180, 50, 0.3);
+  --share-bg: rgba(255, 240, 200, 0.95);
+  --share-border: rgba(255, 180, 50, 0.5);
+  --share-link: #5a3a00;
+  --share-hover: rgba(255, 200, 100, 0.3);
+}
+
+body.theme-lunaire {
+  --btn-bg: rgba(200, 200, 255, 0.07);
+  --btn-color: #ddeeff;
+  --btn-border: #8899aa;
+  --btn-hover: rgba(150, 150, 255, 0.2);
+  --share-bg: rgba(15, 20, 35, 0.95) !important;
+  --share-border: rgba(120, 160, 220, 0.3);
+  --share-link: #cce6ff;
+  --share-hover: rgba(100, 140, 200, 0.3);
+}
+
+body.theme-galactique {
+  --btn-bg: rgba(100, 0, 255, 0.1);
+  --btn-color: #c2a6ff;
+  --btn-border: #5e3aa9;
+  --btn-hover: rgba(150, 0, 255, 0.2);
+  --share-bg: rgba(30, 0, 50, 0.95);
+  --share-border: rgba(180, 80, 255, 0.3);
+  --share-link: #e2b5ff;
+  --share-hover: rgba(130, 50, 200, 0.3);
+}
+
+.btn-share-article.clicked {
+  animation: haloFlash 0.8s ease-out;
+  box-shadow: 0 0 12px var(--btn-color, #fff);
+}
+
+#article-tools {
+  margin-bottom: 1.5rem;
+  text-align: right;
+}
+
+#article-tools .btn-share-article {
+  background: var(--btn-bg, #fff);
+  color: var(--btn-color, #000);
+  border: 1px solid var(--btn-border, #ccc);
+  font-size: 0.95em;
+  border-radius: 8px;
+  padding: 0.4em 0.9em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+#article-tools .btn-share-article:hover {
+  background: var(--btn-hover, #eee);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+}
+
+body.theme-solaire .blog-menu details[open] summary {
+  color: var(--menu-text-hover) !important;
+  font-weight: bold;
+}
+
+body.theme-solaire .blog-menu a {
+  color: var(--menu-text);
+}
+body.theme-solaire .blog-menu a:hover,
+body.theme-solaire .blog-menu a.active {
+  color: var(--menu-text-hover);
+  font-weight: bold;
+}
+
+body.theme-solaire .blog-menu summary {
+  color: var(--menu-text);
+}
+body.theme-solaire .blog-menu summary:hover {
+  color: var(--menu-text-hover);
+}
+
+body.theme-lunaire .share-menu a {
+  color: var(--share-link) !important;
+}
+
+
+.notes-fin {
+  margin-top: 3rem;
+  padding-bottom: 6rem;
+  font-size: 0.85em;
+  color: var(--text-secondary);
+  text-align: left;
+}
+
+/* === FIX: afficher codex-note et note-small dans le viewer du blog === */
+#article-viewer .codex-note{
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* Optionnel: si tu utilises note-small dans tes articles */
+#article-viewer .note-small{
+  display: block;
+  margin: 1rem 0;
+  padding: 0.85rem 1rem;
+  border-left: 3px solid var(--color-accent, #4e89ff);
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 0.6rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--text-secondary, #ccd6f6);
+}
+
+/* === Sommaire (details.note-collapsible) : carte theme-aware === */
+#article-viewer details.note-collapsible{
+  display: block;
+  margin: 1.2rem 0 1.6rem;
+  padding: 1.05rem 1.15rem;
+  border-radius: 14px;
+
+  background: var(--bloc-bg);
+  border: 1px solid var(--bloc-border);
+  box-shadow: 0 10px 22px var(--bloc-shadow);
+
+  /* petit rendu "verre" si tes thèmes sont sombres */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+#article-viewer details.note-collapsible > summary{
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+
+#article-viewer details.note-collapsible > summary::-webkit-details-marker{
+  display: none;
+}
+
+/* titre */
+#article-viewer details.note-collapsible .note-title{
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: .55rem;
+  color: var(--text-primary);
+}
+
+/* contenu */
+#article-viewer details.note-collapsible .note-body{
+  margin-top: .85rem;
+  color: var(--text-secondary);
+}
+
+/* liens sommaire */
+#article-viewer details.note-collapsible a{
+  color: var(--text-accent, var(--color-accent));
+  text-decoration: none;
+}
+#article-viewer details.note-collapsible a:hover{
+  text-decoration: underline;
+}
+
+
+
+@keyframes haloFlash {
+  0% { transform: scale(1); box-shadow: 0 0 0 transparent; }
+  40% { transform: scale(1.05); box-shadow: 0 0 15px var(--btn-color, #fff); }
+  100% { transform: scale(1); box-shadow: 0 0 0 transparent; }
+}
+
+@media (max-width: 768px) {
+  .blog-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+  #viewer {
+    width: 100%;
+    min-height: 60vh;
+    padding: 1rem;
+  }
+  .menu-lateral {
+    width: 100%;
+  }
+}

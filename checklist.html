@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checklist – Codex Mental</title>
+
+  <!-- 🌞 Favicon -->
+  <link rel="icon" href="/img/logo/favicon-96x96.png" sizes="96x96">
+
+  <!-- 🌐 Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto&display=swap" rel="stylesheet" />
+
+  <!-- 🎨 Styles -->
+  <link rel="stylesheet" href="/assets/css/main.css" />
+
+  <!-- ⚙️ Script principal -->
+  <script type="module" src="/assets/js/main.js"></script>
+</head>
+
+<body class="theme-stellaire">
+  <!-- 🌌 Canvas de fond -->
+  <canvas id="theme-canvas" style="position:fixed; top:0; left:0; z-index:-1;"></canvas>
+
+  <!-- 🧠 Menu injecté dynamiquement -->
+  <header id="menu-placeholder"></header>
+
+  <!-- 📋 Contenu principal -->
+  <main class="container" style="padding-bottom: 3rem;">
+    <h1 class="text-center">✅ Checklist Codex Mental</h1>
+    <h2>Liste non exhaustive des mises à jour à venir sur CM. Je me garde le privilège de modifier, ajouter ou supprimer des idées voire d'oublier d'en noter avant de le faire. 🤭</h2>
+
+   <section class="bloc checklist-codex">
+  <h3>📝 Blog & Articles</h3>
+  <label><input type="checkbox" checked> Finaliser la version mobile responsive du blog</label>
+  <label><input type="checkbox" checked> Intégrer le viewer centralisé (blog + atelier)</label>
+  <label><input type="checkbox" disabled> Rédiger et publier l’article "IA, miroir de l’humanité II"</label>
+  <label><input type="checkbox" disabled> Ajouter fonction de partage "impression" avec filigrane</label>
+  <label><input type="checkbox" disabled> Intégrer cartes thématiques (mini-citation au survol)</label>
+  <label><input type="checkbox" disabled> Ajouter bouton de sélection de langue FR/EN</label>
+  <label><input type="checkbox" disabled> Ajouter métadonnées SEO aux articles et pages principales</label>
+
+  <h3>🎧 Multimédia</h3>
+  <label><input type="checkbox" disabled> Installer lecteur audio Plyr sur le site</label>
+  <label><input type="checkbox" disabled> Créer une playlist publique de démos</label>
+  <label><input type="checkbox" disabled> Prévoir mini-lecteur flottant</label>
+
+  <h3>🌌 Thèmes visuels</h3>
+  <label><input type="checkbox" checked> Nettoyer tous les fichiers de thèmes CSS</label>
+  <label><input type="checkbox" checked> Corriger bordures/cartes thème (filets blancs)</label>
+  <label><input type="checkbox" checked> Lier chaque carte au bon thème via setTheme()</label>
+  <label><input type="checkbox" checked> Faire varier les couleurs selon les thèmes</label>
+  <label><input type="checkbox" checked> Moidifier anciens scripts lune.js / lune.css (SVG actif)</label>
+
+  <h3>🌙 Thème Lunaire</h3>
+  <label><input type="checkbox" checked> Créer une animation SVG des phases lunaires</label>
+  <label><input type="checkbox" disabled> Ajouter un mini calendrier lunaire avec % illumination</label>
+  <label><input type="checkbox" checked> Ajouter transition douce entre phases</label>
+  <label><input type="checkbox" disabled> Bonus : effet éclipse en easter egg</label>
+
+  <h3>☀️ Thème Solaire</h3>
+  <label><input type="checkbox" checked> Améliorer la palette solaire pour meilleure lisibilité</label>
+  <label><input type="checkbox" checked> Ajouter un soleil css (coin haut gauche)</label>
+  <label><input type="checkbox" disabled> Ajouter poussières solaires dorées animées</label>
+  <label><input type="checkbox" disabled> Ajouter lumière diagonale descendante (coin haut gauche)</label>
+  <label><input type="checkbox" disabled> Ajouter une citation solaire dans le blog</label>
+
+  <h3>🌐 Structure du site</h3>
+  <label><input type="checkbox" checked> Harmoniser toutes les pages HTML avec injection menu/footer</label>
+  <label><input type="checkbox" checked> Créer un modèle HTML de base pour duplication rapide</label>
+  <label><input type="checkbox" checked> Créer la page profil complète avec menu responsive mobile</label>
+  <label><input type="checkbox" disabled> Ajouter une zone test dédiée aux animations</label>
+  <label><input type="checkbox" checked> Mettre en place gestion des cookies et consentement</label>
+  <label><input type="checkbox" disabled> Automatiser génération sitemap.xml et robots.txt</label>
+
+  <h3>📂 Organisation technique</h3>
+  <label><input type="checkbox" checked> Créer un fichier mobile.css unifié pour la responsivité</label>
+  <label><input type="checkbox" checked> Créer un fichier viewer.js centralisé (blog + atelier)</label>
+  <label><input type="checkbox" disabled> Réorganiser JS/CSS dans /assets par thème</label>
+  <label><input type="checkbox" checked> Créer une fiche "Réalisations" pour suivi des avancées</label>
+
+  <h3>🦶 Footer & mentions</h3>
+  <label><input type="checkbox" disabled> Ajouter mini-liens légaux et disclaimers</label>
+  <label><input type="checkbox" disabled> Prévoir mentions sur la musique et contenus externes</label>
+
+  <h3>🕳️ Mis de côté</h3>
+  <label><input type="checkbox" disabled> Intégrer lancerAnimation() pour les événements astro</label>
+  <label><input type="checkbox" disabled> Revoir les alertes automatiques (effets visuels dynamiques)</label>
+  <label><input type="checkbox" disabled> Réactiver badge astro/lunaire sur les pages secondaires</label>
+
+  <h3>🎴 Bonus à relancer</h3>
+  <label><input type="checkbox" disabled> Créer série de cartes style tarot Codex</label>
+  <label><input type="checkbox" disabled> Ajouter effets immersifs avancés (glow, slide, swipe)</label>
+
+  <h3>🔮 Projets en veille</h3>
+  <label><input type="checkbox" disabled> Générer QR code vers site (pour CV et cartes)</label>
+  <label><input type="checkbox" disabled> Créer fiche publique “À propos de Codex Mental”</label>
+  <label><input type="checkbox" disabled> Développer IA locale (LM Studio + Whisper + Coqui)</label>
+  <label><input type="checkbox" disabled> Créer un site compagnon HPI + Outils partage en "one shot"</label>
+</section>
+
+    <div class="text-center" style="margin-top: 2rem;">
+      <a href="/index.html" class="codex-btn">← Retour à l'accueil</a>
+    </div>
+  </main>
+
+  <!-- 🦶 Footer injecté dynamiquement -->
+  <div id="footer-placeholder"></div>
+
+  <!-- 👕 Styles spécifiques à cette page -->
+  <style>
+    .checklist-codex {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background: var(--bloc-bg, rgba(255, 255, 255, 0.03));
+      border: 1px solid var(--bloc-border, rgba(255,255,255,0.1));
+      border-radius: 1rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+    .checklist-codex h2, .checklist-codex h3 {
+      color: var(--accent-primary, #4eaaff);
+      margin-top: 1.5rem;
+    }
+    .checklist-codex label {
+      display: block;
+      margin: 0.4em 0;
+      font-size: 1rem;
+    }
+    .codex-btn {
+      background-color: var(--accent-primary, #4eaaff);
+      color: var(--text-primary, #fff);
+      border: none;
+      border-radius: 0.8em;
+      padding: 0.6em 1.2em;
+      font-size: 1rem;
+      font-family: 'Orbitron', sans-serif;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease-in-out;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+      display: inline-block;
+    }
+    .codex-btn:hover {
+      background-color: var(--accent-hover, #74c4ff);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+    }
+  </style>
+</body>
+</html>

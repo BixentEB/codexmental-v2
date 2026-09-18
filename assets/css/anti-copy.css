@@ -1,0 +1,7 @@
+/* anti-copy.css – Empêche la sélection de tout le contenu */
+* {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}

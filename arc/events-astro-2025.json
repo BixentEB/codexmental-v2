@@ -1,0 +1,37 @@
+[
+  {
+    "date": "2025-04-08",
+    "type": "solar_eclipse",
+    "name": "Éclipse solaire totale",
+    "message": "🌑 Éclipse solaire totale visible en Amérique du Nord.",
+    "themeEffect": "solar_eclipse"
+  },
+  {
+    "date": "2025-03-14",
+    "type": "lunar_eclipse",
+    "name": "Éclipse lunaire partielle",
+    "message": "🌘 Éclipse lunaire partielle visible depuis l’Europe.",
+    "themeEffect": "lunar_eclipse"
+  },
+  {
+    "date": "2025-08-12",
+    "type": "meteor_shower",
+    "name": "Perséides",
+    "message": "🌠 Maximum de la pluie d’étoiles Perséides.",
+    "themeEffect": "meteor_shower"
+  },
+  {
+    "date": "2025-10-21",
+    "type": "meteor_shower",
+    "name": "Orionides",
+    "message": "🌠 Maximum de la pluie d’étoiles Orionides.",
+    "themeEffect": "meteor_shower"
+  },
+  {
+    "date": "2025-11-17",
+    "type": "meteor_shower",
+    "name": "Léonides",
+    "message": "🌠 Maximum de la pluie d’étoiles Léonides.",
+    "themeEffect": "meteor_shower"
+  }
+]

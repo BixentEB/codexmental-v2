@@ -1,0 +1,98 @@
+<article data-article>
+  <section data-part="title" class="title-chip">
+    <h1>Titre de l’article</h1>
+    <h2 data-subtitle>Sous-titre (optionnel)</h2>
+    <div id="article-tools"></div>
+  </section>
+
+  <h2>Introduction</h2>
+  <p>… ton intro …</p>
+
+  <h2>Titre de section</h2>
+  <h3>Sous-partie (optionnelle)</h3>
+  <p>…</p>
+
+  <h2>Conclusion</h2>
+  <p>…</p>
+</article>
+
+
+-------------------------------------- COMPLETE --------------------------------------
+
+<article data-article>
+  <!-- Titre + outils -->
+  <section data-part="title" class="title-chip">
+    <h1>Titre de l’article</h1>
+    <h2 data-subtitle>Sous-titre (optionnel)</h2>
+    <div id="article-tools"></div>
+  </section>
+
+  <!-- (Optionnel) Média d’en-tête / galerie -->
+  <section data-part="media">
+    <figure>
+      <img src="/path/hero.jpg" alt="Légende" data-main>
+      <!-- autres <img> si besoin -->
+      <figcaption>Légende (optionnelle)</figcaption>
+    </figure>
+  </section>
+
+  <!-- (Optionnel) Sommaire manuel -->
+<!-- Sommaire pliable -->
+<section class="viewer-block note-card">
+  <details class="note-collapsible">
+    <summary>
+      <h2 class="note-title">🗂️ Sommaire <span class="chev">›</span></h2>
+    </summary>
+    <div class="note-body">
+      <nav class="article-toc">
+        <ol>
+      <li><a href="#section-1-origines-du-syndrome">Section 1 – Origines du syndrome</a></li>
+      <li><a href="#section-2-le-mecanisme-du-camouflage">Section 2 – Le mécanisme du camouflage</a></li>
+      <li><a href="#section-3-l-immersion-profonde-simulation">Section 3 – L’immersion profonde / Simulation</a></li>
+      <li><a href="#section-4-les-atouts-du-cameleon">Section 4 – Les atouts du caméléon</a></li>
+      <li><a href="#section-5-les-limites-et-dangers">Section 5 – Les limites et dangers</a></li>
+      <li><a href="#section-6-transformer-la-contrainte-en-force">Section 6 – Transformer la contrainte en force</a></li>
+      <li><a href="#section-7-exemples-de-cameleons">Section 7 – Exemples de caméléons</a></li>
+      <li><a href="#section-8-normalisation-vs-syndrome">Section 8 – Normalisation vs syndrome</a></li>
+      <li><a href="#conclusion">Conclusion</a></li>
+        </ol>
+      </nav>
+      <p style="margin-top:.5rem">
+        <small>Astuce&nbsp;: clique sur le <b>#</b> d’un titre pour copier un lien direct vers la section.</small>
+      </p>
+    </div>
+  </details>
+</section>
+
+  <!-- Corps : H2 = chapitres auto (pas de section[data-chapter]) -->
+  <h2 id="section-1">Section 1</h2>
+  <h3>Sous-partie</h3>
+  <p>…</p>
+
+  <h2 id="section-2">Section 2</h2>
+  <p>…</p>
+
+  <!-- (Optionnel) Note “encart” : NE PAS l’entourer de section[data-chapter] -->
+  <details class="note-collapsible">
+    <summary><h3 class="note-title">🔎 Note <span class="chev">›</span></h3></summary>
+    <div class="note-body">
+      <p>… contenu de la note …</p>
+    </div>
+  </details>
+
+  <h2 id="conclusion">Conclusion</h2>
+  <p>…</p>
+</article>
+
+<!-- (Optionnel) Extras / Références / Capsules hors article -->
+<section data-part="extras">
+  <!-- encarts, callouts, etc. -->
+</section>
+
+<section data-part="references">
+  <!-- sources, liens -->
+</section>
+
+<section data-part="capsules">
+  <!-- mini-cartes / annexes -->
+</section>

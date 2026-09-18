@@ -1,0 +1,146 @@
+/* === 📱 Responsive Mobile – Codex Mental === */
+@media (max-width: 768px) {
+
+  /* Forcer masquage du menu partage */
+  #share-menu[data-force-hidden] {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+  }
+
+  .blog-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .menu-lateral {
+    width: 100%;
+    order: -1; /* Pour passer au-dessus du viewer */
+    margin-bottom: 1rem;
+  }
+
+  #viewer,
+  .bloc,
+  .article {
+    width: 100%;
+    padding: 1rem;
+    box-sizing: border-box;
+  }
+
+  .article h1 {
+    font-size: 1.6rem;
+  }
+
+  .btn-share-wrapper {
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+
+  #article-viewer {
+    all: unset;
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    font-size: 1rem;
+    line-height: 1.6;
+    white-space: normal;
+    overflow-wrap: break-word;
+  }
+
+  #article-viewer * {
+    white-space: normal !important;
+    display: block;
+  }
+
+  #article-viewer h1,
+  #article-viewer h2,
+  #article-viewer h3 {
+    word-break: normal;
+    line-height: 1.4;
+    margin-bottom: 1rem;
+  }
+
+  #article-viewer p {
+    margin-bottom: 1.2rem;
+    font-size: 1rem;
+  }
+
+  #share-menu {
+    position: fixed;
+    bottom: -100%; /* Déplace complètement hors écran */
+    left: 0;
+    right: 0;
+    width: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s ease-out;
+    z-index: 1000;
+  }
+
+  #share-menu:not(.hidden) {
+    bottom: 0;
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* Forcer onglets empilés sur mobile tous thèmes confondus */
+  .tabs {
+    display: flex !important;
+    flex-direction: column !important;
+    flex-wrap: nowrap !important;
+    overflow: visible !important;
+  }
+
+  .tabs .tab {
+    display: block !important;
+    flex: none !important;
+    width: 100% !important;
+    white-space: normal !important;
+  }
+
+  /* 🌙 Correctif spécial blog mobile + thème lunaire */
+  body.theme-lunaire #article-viewer *:not(.tab-content),
+  body.theme-lunaire .article *:not(.tab-content),
+  body.theme-lunaire .bloc *:not(.tab-content) {
+    display: block !important;
+    writing-mode: initial !important;
+    white-space: normal !important;
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
+    transform: none !important;
+  }
+
+  body.theme-lunaire #article-viewer blockquote,
+  body.theme-lunaire #article-viewer figure,
+  body.theme-lunaire #article-viewer figcaption {
+    display: block !important;
+    white-space: normal !important;
+    writing-mode: initial !important;
+    overflow-wrap: break-word !important;
+    word-break: normal !important;
+    transform: none !important;
+    font-family: 'Roboto', sans-serif !important;
+    line-height: 1.6 !important;
+    width: 100% !important;
+  }
+
+  body.theme-lunaire #article-viewer blockquote {
+    border-left: 4px solid rgba(255,255,255,0.15);
+    padding-left: 1rem;
+    font-style: italic;
+    font-size: 0.95rem;
+  }
+
+  body.theme-lunaire #article-viewer figcaption {
+    font-size: 0.85rem;
+    text-align: left;
+    color: rgba(255,255,255,0.5);
+    margin-top: 0.5rem;
+  }
+
+  /* Correction ponctuation globale */
+  h1, h2, h3, h4, h5, h6 {
+    hanging-punctuation: none;
+  }
+}
+

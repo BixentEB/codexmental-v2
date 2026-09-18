@@ -1,0 +1,20 @@
+/* modules.css – agrégateur CSS du dashboard */
+
+@import url("/dashb/modules/dashboard/ui/layout.css");
+@import url("/dashb/modules/dashboard/ui/panels.css");
+
+/* Garder le header au-dessus */
+body.dashboard header#menu-placeholder,
+body.dashboard #site-header { position: relative; z-index: 5000; }
+
+/* Désactiver tout menu de thème flottant dans /dashb */
+body.dashboard .theme-switcher,
+body.dashboard [data-theme-menu],
+body.dashboard .theme-panel,
+body.dashboard .theme-list,
+body.dashboard .theme-fab-container,
+body.dashboard .theme-overlay,
+body.dashboard .backdrop-blur { display: none !important; }
+
+/* Placeholders (techniques) jamais visibles pour l’utilisateur */
+.panel .placeholder { display: none !important; }

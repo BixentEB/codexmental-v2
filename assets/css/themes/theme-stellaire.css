@@ -1,0 +1,155 @@
+/* === ✨ THÈME STELLAIRE – HARMONISÉ === */
+body.theme-stellaire {
+  /* 🌌 Couleurs principales */
+  --bg-primary: #030617;
+  --text-primary: #ffffff;
+  --text-secondary: #aad8ff;
+  --accent-primary: #77caff;
+  --accent-hover: #9ddfff;
+  --link-color: #9dbdff;
+
+  /* 🧱 Blocs d’articles */
+  --bloc-bg: rgba(255, 255, 255, 0.05);
+  --bloc-border: rgba(255, 255, 255, 0.15);
+  --bloc-shadow: rgba(0, 0, 0, 0.2);
+  --bloc-shadow-hover: rgba(255, 255, 255, 0.25);
+   
+  --h3-color: #4eaaff; /* plus clair que H2 (#77caff) */
+
+  --menu-bg: rgba(10, 10, 30, 0.5);
+  --menu-card-bg: rgba(30, 30, 60, 0.65);
+
+  /* 🔖 Navigation */
+  --logo-color: #77caff;
+  --nav-bg: #111;
+  --nav-link-color: #aad8ff;
+  --nav-link-active-bg: transparent;
+  --nav-link-active-color: #ffffff;
+
+  /* 🟣 Boutons standard */
+  --btn-bg: #4eaaff;
+  --btn-text: #ffffff;
+  --btn-hover: #77caff;
+
+  /* 📤 Bouton de partage (popup) */
+  --share-bg: rgba(10, 20, 30, 0.95);
+  --share-color: #aad8ff;
+  --share-border: rgba(120, 180, 255, 0.2);
+  --share-hover: rgba(255, 255, 255, 0.08);
+}
+
+/* 🌠 Thème mobile – boutons */
+body.theme-stellaire .mobile-nav .theme-buttons button {
+  color: var(--nav-link-color);
+  text-shadow: 0 0 2px rgba(120, 180, 255, 0.3);
+}
+body.theme-stellaire .mobile-nav .theme-buttons button:hover {
+  color: var(--text-primary);
+  text-shadow: 0 0 4px rgba(255, 255, 255, 0.5);
+}
+
+/* ⚛️ Présentation orbitale */
+body.theme-stellaire .theme-atom-wrapper {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  margin: 3rem auto;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+body.theme-stellaire .atom-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--bg-card, #101828);
+  color: var(--text-primary);
+  padding: 1rem;
+  border-radius: 50%;
+  text-align: center;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+  z-index: 2;
+}
+
+body.theme-stellaire .orbit {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  animation: rotate 20s linear infinite;
+  transform-origin: center center;
+  pointer-events: none;
+}
+body.theme-stellaire .orbit1 { animation-delay: 0s; }
+body.theme-stellaire .orbit2 { animation-delay: 5s; }
+body.theme-stellaire .orbit3 { animation-delay: 10s; }
+body.theme-stellaire .orbit4 { animation-delay: 15s; }
+
+body.theme-stellaire .theme-electron {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--btn-bg);
+  color: var(--text-primary);
+  border: none;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  font-weight: bold;
+  box-shadow: 0 0 10px rgba(255,255,255,0.15);
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+@keyframes rotate {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* 💫 Menu collapsible blog */
+body.theme-stellaire .blog-menu details summary {
+  color: #aad8ff;
+}
+body.theme-stellaire .blog-menu details[open] summary {
+  color: #ffffff;
+}
+
+/* Texte et placeholder dans les articles */
+body.theme-stellaire #article-viewer .placeholder {
+  color: #aad8ff;
+}
+body.theme-stellaire #article-viewer em,
+body.theme-stellaire #article-viewer i {
+  color: #cce6ff;
+}
+
+/* 🌌 Variables d’accentuation générales */
+:root {
+  --accent-color: #4f46e5;
+  --accent-hover: #6366f1;
+  --accent-glow: rgba(173, 216, 255, 0.3);
+  --accent-pressed: #3730a3;
+}
+
+/* 🌌 Couleur du lien activé menu blog */
+body.theme-stellaire .blog-menu a.active {
+  color: #aad8ff !important;
+  font-weight: bold;
+}
+
+/* ONGLETS */
+body.theme-stellaire .tabs .tab {
+  background: rgba(120, 180, 255, 0.08); /* voile bleu doux */
+  color: var(--text-secondary, #aad8ff);
+}
+
+body.theme-stellaire .tabs .tab.active {
+  background: var(--accent-primary, #77caff);
+  color: #000; /* texte noir pour contraste maximal */
+}

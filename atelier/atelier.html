@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Atelier – Codex Mental</title>
+
+  <!-- 🌞 Favicon -->
+  <link rel="icon" href="/img/logo/favicon-96x96.png" sizes="96x96" />
+
+  <!-- 🌐 Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto&display=swap" rel="stylesheet" />
+
+  <!-- 🎨 Styles principaux -->
+  <link rel="stylesheet" href="/assets/css/main.css" />
+
+  <!-- 🎨 Styles du menu burger viewer -->
+  <link rel="stylesheet" href="/assets/css/viewer-menu.css" />
+
+  <!-- ⚙️ Script principal -->
+  <script type="module" src="/assets/js/main.js"></script>
+</head>
+
+<body class="theme-stellaire">
+  <!-- 🎨 Canvas d’arrière-plan visuel (étoiles, lune…) -->
+  <canvas id="theme-canvas" style="position:fixed; top:0; left:0; z-index:-1;"></canvas>
+
+  <!-- 🧠 Menu principal (injecté dynamiquement par main.js) -->
+  <header id="menu-placeholder"></header>
+
+  <main class="blog-layout">
+
+    <!-- ✅ DEBUT MENU ATELIER -->
+    <div id="viewer-menu-container">
+      <nav id="viewer-menu" class="blog-menu">
+        <div class="viewer-menu-header">
+          <h2>🧪 Projets de l'atelier</h2>
+          <button id="viewer-menu-close" aria-label="Fermer le menu">×</button>
+        </div>
+
+        <details>
+          <summary>🎬 Introduction</summary>
+          <ul>
+            <li><a href="#" data-viewer="intro">✴ Définition</a></li>
+          </ul>
+        </details>
+
+        <details>
+          <summary>📖 Projets en cours</summary>
+          <ul>
+            <li><a href="#" data-viewer="projets/codexia">📖 Codex Mental</a></li>
+          </ul>
+        </details>
+
+        <details>
+          <summary>🧭 Exploration futuriste</summary>
+          <ul>
+            <li><a href="#" data-viewer="explo/modelexplo">🔎 Modèle d'exploration</a></li>
+            <li><a href="#" data-viewer="explo/cryodynamic">♾️ Cryodynamique</a></li>
+            <li><a href="#" data-viewer="explo/polaris">🌬️ POLARIS</a></li>
+            <li><a href="#" data-viewer="explo/solunar">📡 SOLUNAR</a></li>
+          </ul>
+        </details>
+
+        <details>
+          <summary>🤖 Évolutions de l'IA</summary>
+          <ul>
+            <li><a href="#" data-viewer="aievo/b12">🧬 B12 Project</a></li>
+            <li><a href="#" data-viewer="projets/ia1">📖 IA et outils</a></li>
+          </ul>
+        </details>
+
+        <details>
+          <summary>📲 Applications</summary>
+          <ul>
+            <li><a href="#" data-viewer="apps/heures">⏳ Heures Sacrées</a></li>
+          </ul>
+        </details>
+      </nav>
+
+      <!-- Bouton burger mobile -->
+      <button id="viewer-menu-burger" aria-label="Ouvrir le menu des projets">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <!-- ✅ FIN MENU ATELIER -->
+
+    <!-- 🧱 Zone de visualisation des projets -->
+    <section id="article-viewer">
+      <!-- 🛠️ Ici le viewer.js injectera article + outils de partage -->
+      <div id="article-tools"></div>
+
+      <!-- 📝 Placeholder visible avant choix de projet -->
+      <div class="placeholder">
+        <h2>Bienvenue dans l'atelier</h2>
+        <p>Sélectionnez un projet à gauche pour l'afficher ici.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- 📜 Pied de page injecté par main.js -->
+  <div id="footer-placeholder"></div>
+
+  <!-- 📜 Scripts viewer et burger -->
+  <script src="/assets/js/viewer.js"></script>
+  <script src="/assets/js/viewer-menu.js"></script>
+</body>
+</html>

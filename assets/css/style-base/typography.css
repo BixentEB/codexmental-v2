@@ -1,0 +1,67 @@
+/* ===========================
+   ✍️ TYPOGRAPHIE
+=========================== */
+h1 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.7rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+h2 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.2rem;
+  letter-spacing: 0.4px;
+  margin-bottom: 0.8rem;
+}
+
+h3, h4 {
+  font-family: 'Roboto', sans-serif;
+  margin-bottom: 0.3rem;
+}
+
+h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+h4 {
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+/* Titres: meilleures césures visuelles */
+#article-viewer h1, 
+#article-viewer h2 {
+  text-wrap: balance;            /* Chrome/Edge/Safari récents */
+}
+
+/* Paragraphes “jolis” (utilise cette classe où tu veux) */
+.justify-pretty {
+  text-align: justify;
+  text-wrap: pretty;             /* réduit les “trous” */
+  text-justify: inter-word;      /* fallback */
+  -webkit-hyphens: manual;
+  -ms-hyphens: manual;
+  hyphens: manual;           /* sinon ça remet les “pré-” partout */
+  overflow-wrap: break-word; /* repli propre sans tiret */
+}
+
+/* Variante: auto en desktop, aligné à gauche en mobile */
+@media (max-width: 768px){
+  .justify-pretty {
+    text-align: left;            /* sur mobile, la justification est souvent moche */
+  }
+}
+
+
+/* utilitaire : justification “propre” pour un paragraphe */
+p.jp {
+  text-align: justify;
+  text-wrap: pretty;
+  text-justify: inter-word;
+  hyphens: manual;
+  overflow-wrap: break-word;
+}
+@media (max-width: 768px){ p.jp { text-align:left; } }
+

@@ -1,0 +1,229 @@
+/* === ☀️ THÈME SOLAIRE === */
+body.theme-solaire {
+  --bg-primary: #fff8e1;
+  --text-primary: #6d4706;
+  --text-secondary: #a25a00;
+  --accent-primary: #f57f17;
+  --accent-hover: #ffb300;
+  --link-color: #bf360c;
+
+  --bloc-bg: rgba(255, 236, 179, 0.95);
+  --bloc-border: rgba(210, 140, 20, 0.2);
+  --bloc-shadow: rgba(210, 140, 20, 0.1);
+  --bloc-shadow-hover: rgba(210, 140, 20, 0.25);
+
+  --menu-bg: rgba(255, 240, 200, 0.35);
+  --menu-card-bg: rgba(255, 230, 180, 0.6);
+  --menu-text: #7a4e00;
+  --menu-text-hover: #ff9900;
+  --menu-border: rgba(255, 170, 50, 0.6);
+  --menu-category: #7c5200;
+
+  --logo-color: #e65100;
+  --nav-bg: #111;
+  --nav-link-color: #ff9800;
+  --nav-link-active-bg: #ff9800;
+  --nav-link-active-color: #111;
+
+  --btn-bg: #ffb300;
+  --btn-text: #111;
+  --btn-hover: #f57f17;
+
+  --share-bg: rgba(255, 244, 200, 0.96);
+  --share-color: #5e3a00;
+  --share-border: rgba(255, 190, 100, 0.4);
+  --share-hover: rgba(255, 200, 100, 0.25);
+
+/* === TOC (Sommaire) : couleurs dédiées pour Solaire === */
+--toc-bg:         rgba(210,140,20,0.16);
+--toc-border:     rgba(210,140,20,0.45);
+--toc-shadow:     rgba(210,140,20,0.16);
+--toc-title:      #b45309;   /* titre "Sommaire" plus sombre */
+--toc-text:       #4a2c00;   /* texte / puces */
+--toc-link:       #6d3b00;   /* liens par défaut (brun soutenu) */
+--toc-link-hover: #ff6f00;   /* survol accent solaire */
+--toc-link-visited:#8a4f08;  /* liens visités, lisibles sur fond clair */
+
+
+  --text-accent: #ff6f00;
+}
+
+body.theme-solaire strong {
+  color: #ffb300;
+  font-weight: bold;
+}
+
+body.theme-solaire .mobile-nav .theme-buttons button {
+  color: #ffe082;
+  text-shadow: 0 0 2px rgba(255, 193, 7, 0.4);
+}
+body.theme-solaire .mobile-nav .theme-buttons button:hover {
+  color: #fff8e1;
+  text-shadow: 0 0 4px rgba(255, 255, 200, 0.6);
+}
+
+body.theme-solaire nav a {
+  color: #ffe082 !important;
+}
+body.theme-solaire nav a:hover {
+  color: #fff8e1 !important;
+}
+
+body.theme-solaire .menu-mobile a,
+body.theme-solaire .menu-mobile button {
+  color: #ffb300 !important;
+  text-shadow: 0 0 2px rgba(255, 193, 7, 0.4);
+}
+body.theme-solaire .menu-mobile a:hover,
+body.theme-solaire .menu-mobile button:hover {
+  color: #fff8e1 !important;
+  text-shadow: 0 0 4px rgba(255, 255, 220, 0.6);
+}
+
+body.theme-solaire input,
+body.theme-solaire textarea {
+  background-color: rgba(255, 255, 255, 0.6);
+  color: #4e3200;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.1);
+}
+body.theme-solaire input::placeholder,
+body.theme-solaire textarea::placeholder {
+  color: #8d5200;
+  opacity: 0.7;
+}
+
+.sun-widget {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 480px;
+  height: 480px;
+  background-image: url("/img/visuels/sun-final.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  opacity: 0.85;
+  filter: drop-shadow(0 0 40px rgba(255, 200, 50, 0.5));
+  pointer-events: none;
+  z-index: 10;
+}
+
+@media screen and (max-width: 768px) {
+  .sun-widget {
+    width: 180px;
+    height: 180px;
+    opacity: 0.75;
+  }
+}
+
+body.theme-solaire #article-viewer .placeholder {
+  color: #663300;
+}
+
+body.theme-solaire #blog-menu a.active {
+  color: var(--menu-text-hover) !important;
+  font-weight: bold;
+}
+
+body.theme-solaire {
+  --menu-text: #7a4e00 !important;
+  --menu-text-hover: #ff9900 !important;
+}
+
+:root {
+  --accent-color: #d97706;
+  --accent-hover: #f59e0b;
+  --accent-glow: rgba(255, 200, 100, 0.4);
+  --accent-pressed: #92400e;
+}
+
+body.theme-solaire .blog-menu details summary {
+  color: var(--menu-text) !important;
+}
+body.theme-solaire .blog-menu details[open] summary {
+  color: var(--menu-text-hover) !important;
+}
+
+/* ✅ Correctif pour assurer lisibilité du menu blog dans le thème solaire */
+body.theme-solaire .blog-menu a {
+  color: var(--menu-text) !important;
+  text-shadow: 0 0 1px rgba(0, 0, 0, 0.05);
+  font-weight: normal;
+}
+body.theme-solaire .blog-menu a:hover {
+  color: var(--menu-text-hover) !important;
+  font-weight: bold;
+}
+body.theme-solaire .blog-menu summary {
+  color: var(--menu-text) !important;
+}
+body.theme-solaire .blog-menu details[open] summary {
+  color: var(--menu-text-hover) !important;
+}
+
+/* Onglets colorés */
+body.theme-solaire .tabs .tab {
+  background: rgba(255, 193, 7, 0.1); /* fond plus chaud pour les inactifs */
+  color: #6d4706; /* texte foncé lisible */
+}
+
+body.theme-solaire .tabs .tab.active {
+  background: var(--accent-primary, #f57f17); /* fond accent solaire */
+  color: #fff; /* texte blanc dessus */
+}
+
+/* Correctif pour fond */
+body.theme-solaire {
+  --bg-subtle: rgba(255, 230, 180, 0.3); /* beige translucide doux */
+  --color-accent: #d97706; /* orange solaire (déjà utilisé ailleurs) */
+}
+
+/* Solaire — rendre le bouton "Ciel" (theme-sky) lisible */
+body.theme-solaire .theme-fab-options button[onclick*="theme-sky"],
+body.theme-solaire #mobile-menu button[onclick*="theme-sky"] {
+  background: rgba(255,255,255,0.35);
+  color: #8a97a6;                   /* bleu-gris lisible sur solaire */
+  border: 1px solid rgba(0,0,0,0.08);
+  text-shadow: none;                 /* évite l'orange "glow" solaire */
+  filter: none;                      /* au cas où un filter hérité traîne */
+}
+body.theme-solaire .theme-fab-options button[onclick*="theme-sky"]:hover,
+body.theme-solaire #mobile-menu button[onclick*="theme-sky"]:hover {
+  background: rgba(255,255,255,0.55);
+  color: #1f3752;
+}
+
+/* Carte "Sommaire" (TOC) plus lisible en thème Solaire */
+body.theme-solaire #article-viewer .article-toc {
+  background: var(--toc-bg, var(--bloc-bg));
+  border: 1px solid var(--toc-border, var(--bloc-border));
+  box-shadow: 0 4px 16px var(--toc-shadow, var(--bloc-shadow));
+  color: var(--toc-text, var(--text-primary));
+  padding: 0.75rem 1rem;
+  border-radius: 14px;
+}
+
+/* Sommaire lisible en Solaire (surcharge ciblée) */
+body.theme-solaire #article-viewer .article-toc{
+  background: var(--toc-bg);
+  border: 1px solid var(--toc-border);
+  box-shadow: 0 4px 16px var(--toc-shadow);
+  color: var(--toc-text);
+}
+body.theme-solaire #article-viewer h2 + .article-toc,
+body.theme-solaire #article-viewer .article-toc h2,
+body.theme-solaire #article-viewer .article-toc .title{
+  color: var(--toc-title);
+}
+body.theme-solaire #article-viewer .article-toc a,
+body.theme-solaire #article-viewer .article-toc a:visited{
+  color: var(--toc-link) !important;      /* évite héritages parasites */
+  text-decoration: none;
+}
+body.theme-solaire #article-viewer .article-toc a:hover{
+  color: var(--toc-link-hover) !important;
+  text-decoration: underline;
+}
+body.theme-solaire #article-viewer .article-toc li{
+  color: var(--toc-text);
+}

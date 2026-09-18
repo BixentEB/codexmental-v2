@@ -1,0 +1,78 @@
+/* 🌌 Tableaux stylisés globaux */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.90rem;
+  margin: 1.5rem 0;
+}
+
+th,
+td {
+  padding: 10px 16px;
+  text-align: left;
+  vertical-align: top;
+}
+
+thead th {
+  font-weight: bold;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+tbody td {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* 🌟 Tables compactes */
+table.compact th,
+table.compact td {
+  padding: 6px 12px;
+  font-size: 0.9rem;
+}
+
+/* 🌟 Tables spécifiques Codex */
+.codex-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: auto;
+}
+
+/* Largeurs colonnes si 3 colonnes */
+.codex-table th:nth-child(2),
+.codex-table td:nth-child(2) {
+  width: 140px;
+}
+
+.codex-table th:nth-child(3),
+.codex-table td:nth-child(3) {
+  max-width: 300px;
+  word-break: break-word;
+}
+
+/* 🌌 RAZ totale du responsive tableau Codex */
+.codex-table {
+  display: table !important;
+  width: 100% !important;
+  table-layout: auto !important;
+  min-width: auto !important;
+  overflow: visible !important;
+}
+
+.codex-table th,
+.codex-table td {
+  white-space: normal !important;
+}
+
+/* 🌌 Responsive mobile - tous les tableaux */
+@media screen and (max-width: 768px) {
+  table {
+    margin: 0 auto; /* centré si besoin */
+    max-width: 95%; /* limite la largeur */
+  }
+  table th,
+  table td {
+    font-size: 0.80rem; /* plus petit sur mobile */
+    padding: 4px 8px; /* plus compact */
+    white-space: normal;
+    word-break: break-word;
+  }
+}

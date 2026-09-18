@@ -1,0 +1,125 @@
+
+/* === 🌙 THÈME LUNAIRE — VERSION CORRIGÉE === */
+body.theme-lunaire {
+  /* 🌌 Couleurs de base */
+  --bg-primary: #0b1a33;
+  --text-primary: #dceeff;
+  --text-secondary: #aaccee;
+  --accent-primary: #3b7dd8;
+  --accent-hover: #5da3ff;
+  --link-color: #77aaff;
+
+  /* 🧱 Blocs de contenu */
+  --bloc-bg: rgba(20, 30, 60, 0.95);
+  --bloc-border: rgba(150, 200, 255, 0.1);
+  --bloc-shadow: rgba(150, 200, 255, 0.08);
+  --bloc-shadow-hover: rgba(150, 200, 255, 0.2);
+  
+  --h3-color: #5da3ff; /* plus vif que H2 (#3b7dd8) */
+
+  --menu-bg: rgba(30, 30, 40, 0.45);
+  --menu-card-bg: rgba(50, 50, 70, 0.6);
+  /* 🔖 Navigation */
+  --logo-color: #77aaff;
+  --nav-bg: #111;
+  --nav-link-color: #aaccee;
+  --nav-link-active-bg: #3b7dd8;
+  --nav-link-active-color: #fff;
+
+  /* 🌙 Boutons classiques */
+  --btn-bg: #5da3ff;
+  --btn-text: #fff;
+  --btn-hover: #3b7dd8;
+
+  /* 📤 Bouton de partage (capsule) */
+  --share-bg: rgba(240, 240, 255, 0.94);
+  --share-color: #1a1a2a;
+  --share-border: rgba(160, 160, 255, 0.4);
+  --share-hover: rgba(190, 190, 255, 0.25);
+
+  /* 🌒 Variables d’accentuation globales */
+  --accent-color: #2a2a55;
+  --accent-hover: #3b3b77;
+  --accent-glow: rgba(173, 216, 230, 0.3);
+  --accent-pressed: #1a1a3b;
+}
+
+/* 🌗 Thème mobile – boutons */
+body.theme-lunaire .mobile-nav .theme-buttons button {
+  color: #aaccee;
+  text-shadow: 0 0 2px rgba(150, 200, 255, 0.2);
+}
+body.theme-lunaire .mobile-nav .theme-buttons button:hover {
+  color: #dceeff;
+  text-shadow: 0 0 4px rgba(220, 238, 255, 0.5);
+}
+
+/* 🖋️ Formulaire lunaire */
+body.theme-lunaire input,
+body.theme-lunaire textarea {
+  background-color: rgba(255, 255, 255, 0.06);
+  color: #dceeff;
+  border: 1px solid rgba(120, 180, 255, 0.2);
+}
+body.theme-lunaire input::placeholder,
+body.theme-lunaire textarea::placeholder {
+  color: #aaccee;
+  opacity: 0.75;
+}
+
+/* 📚 Menu collapsible blog */
+body.theme-lunaire .blog-menu details summary {
+  color: #ccc;
+}
+body.theme-lunaire .blog-menu details[open] summary {
+  color: #1295f3;
+}
+
+/* Placeholder blog */
+body.theme-lunaire #article-viewer .placeholder {
+  color: #1295f3;
+}
+
+/* ✅ NOUVELLES RÈGLES POUR CORRIGER L’AFFICHAGE */
+body.theme-lunaire #article-viewer {
+  color: var(--text-primary);
+  background: var(--bloc-bg);
+  padding: 1rem;
+  box-sizing: border-box;
+  line-height: 1.6;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+}
+
+body.theme-lunaire .article p {
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+body.theme-lunaire strong,
+body.theme-lunaire b {
+  color: #b8d8ff; /* bleu ciel doux */
+  font-weight: bold;
+}
+
+/* 🌙 Lien actif dans le menu blog (texte uniquement, sans fond) */
+body.theme-lunaire .blog-menu a.active {
+  color: #77aaff !important; /* Bleu lunaire clair */
+  font-weight: bold;
+}
+
+
+/* ONGLETS */
+body.theme-lunaire .tabs .tab {
+  background: rgba(90, 130, 200, 0.1); /* voile bleu doux */
+  color: var(--text-secondary, #aaccee);
+}
+
+body.theme-lunaire .tabs .tab.active {
+  background: var(--accent-primary, #3b7dd8);
+  color: #fff;
+}
+
+

@@ -1,0 +1,196 @@
+/* =========================================================
+   ☁️ THÈME SKY — version sûre (couleurs + canvas)
+   ========================================================= */
+
+body.theme-sky {
+  /* Couleurs globales */
+  --bg-primary: #e8f2ff;
+  --text-primary: #0f2540;
+  --text-secondary: #2c4a72;
+  --accent-primary: #3a86ff;
+  --accent-hover: #5aa0ff;
+  --link-color: #2b6bff;
+
+  /* Blocs / cartes */
+  --bloc-bg: rgba(255,255,255,0.75);
+  --bloc-border: rgba(0,30,80,0.15);
+  --bloc-shadow: rgba(0,30,80,0.08);
+  --bloc-shadow-hover: rgba(0,30,80,0.18);
+
+  /* Navigation */
+  --logo-color: #2b6bff;
+  --nav-link-color: #a7c8ff;                /* liens inactifs plus clairs sur header sombre */
+  --nav-link-active-bg: rgba(80,140,255,0.22);
+  --nav-link-active-color: #ffffff;
+
+  /* Boutons */
+  --btn-bg: #3a86ff;
+  --btn-text: #ffffff;
+  --btn-hover: #5aa0ff;
+
+  /* Popups / viewer */
+  --share-bg: rgba(250,252,255,0.96);
+  --share-color: #173556;
+  --share-border: rgba(30,90,170,0.18);
+  --share-hover: rgba(58,134,255,0.08);
+
+  /* Variables utilisées par certains modules */
+  --bg-subtle: rgba(255,255,255,0.60);
+  --color-accent: #3a86ff;
+}
+
+/* Canvas (anim gérée par canvas-sky.js) */
+body.theme-sky #theme-canvas {
+  position: fixed; inset: 0; z-index: -1;
+  opacity: 0; transition: opacity .6s ease;
+  pointer-events: none;
+}
+
+/* Divers lisibilité */
+body.theme-sky hr { border-top: 1px solid rgba(0,30,80,0.18); }
+body.theme-sky blockquote{
+  background: rgba(255,255,255,0.6);
+  border-left: 3px solid var(--accent-primary);
+  color: var(--text-secondary);
+}
+
+/* ============================
+   NAV (juste couleurs)
+   ============================ */
+body.theme-sky header nav a{
+  color: var(--nav-link-color);
+}
+body.theme-sky header nav a:hover{
+  color:#fff; background: rgba(80,140,255,0.15);
+}
+body.theme-sky header nav a.active,
+body.theme-sky header nav a[aria-current="page"]{
+  background: var(--nav-link-active-bg);
+  color: var(--nav-link-active-color);
+}
+
+/* ============================
+   Cartes / blocs / viewer (fond clair lisible)
+   ============================ */
+body.theme-sky .bloc,
+body.theme-sky .panel,
+body.theme-sky .card,
+body.theme-sky .viewer,
+body.theme-sky .article{
+  background: rgba(255,255,255,0.86);
+  color: var(--text-primary);
+  border: 1px solid rgba(0,30,80,0.12);
+  box-shadow: 0 8px 24px rgba(0,30,80,0.10);
+}
+body.theme-sky h1, body.theme-sky h2, body.theme-sky h3{ color:#11345a; }
+body.theme-sky .bloc a,
+body.theme-sky .panel a,
+body.theme-sky .viewer a,
+body.theme-sky .article a{ color: var(--link-color); }
+body.theme-sky .bloc a:hover,
+body.theme-sky .panel a:hover,
+body.theme-sky .viewer a:hover,
+body.theme-sky .article a:hover{ color:var(--accent-hover); text-decoration:underline; }
+
+/* Viewer (blog/atelier) : peaufine captions & quotes */
+body.theme-sky #article-viewer,
+body.theme-sky #viewer{
+  background: rgba(255,255,255,0.88);
+  color: var(--text-primary);
+  border-color: rgba(0,30,80,0.12);
+  box-shadow: 0 8px 24px rgba(0,30,80,0.10);
+}
+body.theme-sky #article-viewer .placeholder,
+body.theme-sky #viewer .placeholder{ color:#40608a; opacity:.8; }
+body.theme-sky #article-viewer figcaption,
+body.theme-sky #viewer figcaption{ color:#5a7aa6; }
+body.theme-sky #article-viewer blockquote,
+body.theme-sky #viewer blockquote{
+  background: rgba(255,255,255,0.70);
+  color:#2c4a72;
+  border-left-color: rgba(50,90,160,0.35);
+}
+
+/* ============================
+   Profil — boutons & icônes
+   ============================ */
+body.theme-sky .sous-menu button{
+  --accent-color:#2b6bff;
+  color:var(--accent-color);
+  border-color:var(--accent-color);
+  background: rgba(255,255,255,0.55);
+}
+body.theme-sky .sous-menu button:hover,
+body.theme-sky .sous-menu button.active{
+  background: var(--accent-color);
+  color:#fff;
+  box-shadow:0 0 8px rgba(43,107,255,.45);
+}
+body.theme-sky .icon-btn{
+  background: rgba(255,255,255,0.25);
+  border:1px solid rgba(0,40,90,0.10);
+}
+
+/* Bouton “Télécharger” (profil) */
+body.theme-sky .cv-download .btn{
+  display:inline-block;
+  background: linear-gradient(180deg,#6a88ff,#3a63ff);
+  color:#fff; border:0; border-radius:10px;
+  padding:.9rem 1.3rem; font-weight:600;
+  box-shadow:0 6px 16px rgba(58,99,255,.35);
+  transition: transform .08s ease, box-shadow .2s ease, filter .2s ease;
+}
+body.theme-sky .cv-download .btn:hover{
+  transform: translateY(-1px);
+  box-shadow:0 10px 22px rgba(58,99,255,.42);
+  filter:saturate(1.05);
+}
+
+/* ============================
+   ONGlets — version douce (aucun layout changé)
+   ============================ */
+
+/* Couleurs seulement pour l’onglet (texte + fond au survol) */
+body.theme-sky .tabs .tab{
+  color:#16365b;                         /* lisible au repos */
+  text-shadow:none;
+}
+body.theme-sky .tabs .tab:hover{
+  color:#0f2540;
+  background-color: rgba(255,255,255,0.75); /* sans toucher bordures/rayons */
+}
+
+/* Actif : fond bleu + petit reflet animé discret */
+body.theme-sky .tabs .tab.active,
+body.theme-sky .tabs .tab[aria-selected="true"],
+body.theme-sky .tabs .tab[aria-current="page"]{
+  color:#fff;
+  background-color:#3582ff;              /* accent */
+  position:relative; overflow:hidden;    /* pour le reflet */
+}
+
+/* Reflet animé (ne modifie pas la forme existante) */
+body.theme-sky .tabs .tab.active::after,
+body.theme-sky .tabs .tab[aria-selected="true"]::after,
+body.theme-sky .tabs .tab[aria-current="page"]::after{
+  content:"";
+  position:absolute; inset:0;
+  background: linear-gradient(120deg,
+     transparent 0%,
+     rgba(255,255,255,.30) 18%,
+     transparent 36%);
+  background-size: 250% 100%;
+  animation: skyShine 3.2s linear infinite;
+  pointer-events:none;
+  mix-blend-mode: screen;                 /* évite d’écraser la couleur */
+}
+@keyframes skyShine{
+  0%{ background-position:-200% 0; }
+  100%{ background-position:200% 0; }
+}
+
+/* (optionnel) accessibilité : focus clavier */
+body.theme-sky .tabs .tab:focus-visible{
+  outline:3px solid rgba(53,130,255,.45);
+  outline-offset:2px;
+}

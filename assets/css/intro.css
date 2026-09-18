@@ -1,0 +1,167 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Orbitron', sans-serif;
+  overflow: hidden;
+  background: #00172B;
+}
+
+/* Conteneur plein écran */
+#intro-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 9999;
+  background: #0a2239; /* Bleu profond discret */
+}
+
+/* Image plein écran */
+#intro-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: slowZoom 30s ease-in-out infinite alternate;
+}
+
+/* Animation de zoom lent */
+@keyframes slowZoom {
+  0% {
+    transform: scale(1.07); /* Démarre déjà zoomé un peu */
+  }
+  100% {
+    transform: scale(1.1);  /* Zoom un peu plus */
+  }
+}
+
+/* Canvas étoiles */
+#stars-canvas {
+  position: fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+  z-index:1;
+}
+
+/* Contenu centré */
+#intro-content {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -20%);
+  text-align: center;
+  z-index:2;
+}
+
+/* Logo */
+#intro-logo {
+  width: 200px; /* ou la taille que tu veux */
+  margin-bottom: 1em;
+  filter: brightness(0) invert(1);
+  opacity: 0;
+  transition: opacity 2s ease;
+}
+#intro-logo.show {
+  opacity: 1;
+}
+
+
+/* Titre */
+#intro-content h1 {
+  color: white;
+  opacity: 0;
+  margin: 0.3em 0;
+  animation: fadeInText 2s forwards 1s;
+}
+
+/* Phrase */
+.subtitle {
+  color: white;
+  opacity: 0;
+  margin: 0.3em 0;
+  animation: fadeInText 2s forwards 2s;
+}
+
+/* Signature en bas droite */
+#signature {
+  color: white;
+  font-family: 'Great Vibes', cursive; /* Autre possibilité : Sacramento */
+  font-size: 1.2em;
+  opacity: 0;
+  animation: fadeInText 2s forwards 3s;
+  position: fixed;
+  right: 2rem;
+  bottom: 2rem;
+  z-index:2;
+}
+
+/* Bouton en bas centré */
+#enter-btn {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.6em 1.5em;
+  background: rgba(0,0,0,0.5);
+  border: 1px solid #fff;
+  color: #fff;
+  font-size: 0.80em;
+  opacity: 0;
+  cursor: pointer;
+  animation: fadeInText 2s forwards 4s;
+  border-radius: 4px;
+  transition: background 0.3s, transform 0.3s;
+}
+#enter-btn:hover {
+  background: rgba(255,255,255,0.1);
+  transform: translateX(-50%) scale(1.05);
+}
+
+#intro-note {
+  position: absolute;
+  bottom: 0.8em; /* Un peu au-dessus du bord */
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.6em;
+  opacity: 0.3;
+  color: rgba(255, 255, 255, 0.4);
+  font-style: italic;
+  pointer-events: none; /* Pour qu’on ne puisse pas le sélectionner */
+}
+
+
+/* Animations */
+@keyframes fadeInLogo {
+  to { opacity: 1; }
+}
+@keyframes fadeInText {
+  to { opacity: 1; }
+}
+
+/* Responsive mobile */
+@media (max-width: 768px) {
+  #intro-content {
+    top: 15%;
+    transform: translate(-50%, -15%);
+  }
+  #intro-content h1 {
+    font-size: 1.6em;
+  }
+  .subtitle {
+    font-size: 1em;
+  }
+  #signature {
+    right: 1rem;
+    bottom: 1rem;
+  }
+  #enter-btn {
+    bottom: 1rem;
+  }
+}

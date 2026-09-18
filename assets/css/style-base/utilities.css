@@ -1,0 +1,144 @@
+/* ===========================
+   🔗 LIENS GÉNÉRAUX
+=========================== */
+a {
+  color: var(--link-color, #00bfff);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+/* ===========================
+   🧩 BOUTONS GÉNÉRAUX
+=========================== */
+.theme-buttons button,
+.btn-primary {
+  background-color: var(--btn-bg, #4eaaff);
+  color: var(--btn-text, #fff);
+  border: none;
+  padding: 0.5rem 1rem;
+  font-family: 'Orbitron', sans-serif;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.theme-buttons button:hover,
+.btn-primary:hover {
+  background-color: var(--btn-hover, #74c4ff);
+}
+
+/* ===========================
+   ⬆️ BOUTON RETOUR EN HAUT
+=========================== */
+#scrollTopBtn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  border: none;
+  border-radius: 50%;
+  padding: 0.6rem 0.8rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+  transition: opacity 0.3s ease;
+}
+
+/* ===========================
+   🚀 BOUTONS SWITCHER THEMES
+=========================== */
+.theme-switcher-icons {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 1000;
+}
+
+.theme-switcher-icons button {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  padding: 0.6rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: var(--text-primary);
+  backdrop-filter: blur(6px);
+  transition: background 0.2s ease;
+}
+
+.theme-switcher-icons button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* ===========================
+   ▶️ BOUTON TELECHARGEMENT
+=========================== */
+.file-download {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.btn-download {
+  display: inline-block;
+  padding: 0.8rem 1.6rem;
+  background-color: var(--accent-color, #444);
+  color: white;
+  font-weight: 600;
+  font-family: inherit;
+  text-decoration: none;
+  border-radius: 12px;
+  border: 2px solid transparent;
+  position: relative;
+  overflow: hidden;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+}
+
+.btn-download::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, var(--accent-glow, rgba(255,255,255,0.2)) 0%, transparent 70%);
+  transform: scale(0);
+  transition: transform 0.4s ease;
+  z-index: 0;
+}
+
+.btn-download:hover::before {
+  transform: scale(1.2);
+}
+
+.btn-download:hover {
+  background-color: var(--accent-hover, #666);
+  transform: translateY(-2px);
+}
+
+.btn-download:active {
+  transform: scale(0.96);
+  background-color: var(--accent-pressed, #222);
+}
+
+
+/* ===========================
+   ▶️ SIGNATURE
+=========================== */
+.signature {
+  text-align: center;
+  font-style: italic;
+  opacity: 0.7;
+  margin-top: 3rem;
+  font-size: 0.95rem;
+}
+

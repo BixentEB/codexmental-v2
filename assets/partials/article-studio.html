@@ -1,0 +1,608 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Article Studio v3 — Codex Mental</title>
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128"><rect width="128" height="128" rx="28" fill="%23121739"/><text x="50%" y="62%" font-size="76" text-anchor="middle" fill="%2386c7ff" font-family="Arial, Helvetica, sans-serif">A</text></svg>'>
+<style>
+  /* colle la tooldock sous le bandeau (appbar) */
+  :root{
+    --bg:#0f1220; --bg2:#12162a; --ink:#e9efff; --muted:#a9b5d1;
+    --accent:#86c7ff; --accent2:#b28cff; --line:#22315a;
+    --ok:#4ad295; --warn:#ffbe55; --bad:#ff6b6b; --radius:14px;
+    --mono:ui-monospace,Menlo,Consolas,"Liberation Mono",monospace;
+    --sans:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial;
+    --appbar-h:58px; /* hauteur barre du haut */
+  }
+
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0;background:linear-gradient(180deg,var(--bg),var(--bg2));color:var(--ink);font-family:var(--sans);line-height:1.45}
+
+  header.appbar{position:sticky;top:0;z-index:30;backdrop-filter:saturate(1.1) blur(8px);
+    background:linear-gradient(90deg,rgba(134,199,255,.12),transparent 35%,transparent 65%,rgba(178,140,255,.10));
+    border-bottom:1px solid var(--line);display:flex;gap:10px;align-items:center;padding:10px 14px;flex-wrap:wrap;height:var(--appbar-h)}
+  header .title{font-weight:700}
+  header .spacer{flex:1}
+  .btn{background:#121739;border:1px solid var(--line);color:var(--ink);padding:.45rem .7rem;border-radius:10px;cursor:pointer}
+  .btn:hover{filter:brightness(1.05)}
+  .btn.good{background:rgba(74,210,149,.10);border-color:rgba(74,210,149,.5)}
+  .btn.bad{background:rgba(255,107,107,.12);border-color:rgba(255,107,107,.5)}
+  .btn.small{padding:.35rem .6rem;font-size:.9rem}
+
+  .wrap{display:grid;gap:14px;padding:14px;height:calc(100% - var(--appbar-h))}
+  .wrap{grid-template-columns:minmax(540px,1.2fr) minmax(520px,1fr)}
+
+  .panel{border:1px solid var(--line);border-radius:14px;background:#0c1125;min-height:0;display:flex;flex-direction:column}
+  .panel h2{font-size:1rem;margin:0;padding:10px 12px;border-bottom:1px solid var(--line);color:#cfe3ff}
+  .panel .content{padding:12px;overflow:auto;min-height:0;flex:1}
+
+  /* >>> Toolbars (ajout) */
+  .tooldock{position:sticky;top:calc(var(--appbar-h) + 6px);z-index:20;
+    background:linear-gradient(180deg,rgba(13,17,39,.9),rgba(13,17,39,.85));
+    backdrop-filter:blur(6px);border:1px solid var(--line);border-radius:12px;
+    padding:8px;margin-bottom:10px}
+  .toolbar{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 0}
+  .toolbar:first-child{margin-top:0}
+
+  .row{display:grid;grid-template-columns:180px 1fr;gap:10px;align-items:start;margin-bottom:10px}
+  .row label{color:var(--muted)}
+  input[type="text"],input[type="url"],textarea,select{width:100%;background:#0a0f22;color:#e9efff;border:1px solid var(--line);border-radius:10px;padding:.6rem .7rem;font:inherit}
+  textarea{min-height:110px;resize:vertical}
+  .fieldset{border:1px dashed var(--line);border-radius:12px;padding:10px;margin:12px 0;background:#0b1230}
+  .block{border:1px solid var(--line);border-radius:12px;padding:10px;margin-bottom:12px;background:#0b1130}
+  .block .head{display:flex;gap:8px;align-items:center;margin-bottom:8px}
+  .head .controls{margin-left:auto;display:flex;gap:6px}
+  .inline{display:flex;gap:8px;align-items:center}
+  .code{white-space:pre;font-family:var(--mono);font-size:.92rem;line-height:1.4;background:#050814;padding:12px;border-radius:10px;overflow:auto;min-height:100%;border:1px solid var(--line)}
+  .pill{padding:.2rem .55rem;border-radius:999px;border:1px solid var(--line);color:#a9b5d1;background:#0b1130;font-size:.85rem}
+  .status{display:flex;gap:10px;align-items:center;margin:12px 0}
+  .muted{color:#a9b5d1}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+
+ .block.collapsed .row,
+ .block.collapsed .fieldset,
+ .block.collapsed textarea { display:none; }
+ .block.collapsed { padding-bottom:6px; }
+ .block .head { cursor:default; }
+ .block .head .title { cursor:pointer; }
+ .block.collapsed .head .title::after { content:" (replié)"; color:var(--muted); font-weight:400; }
+
+</style>
+
+</head>
+<body>
+<header class="appbar">
+  <div class="title">🧰 Article Studio v3</div>
+  <div class="spacer"></div>
+  <button id="btn-save" class="btn">Sauver</button>
+  <button id="btn-load" class="btn">Charger</button>
+  <button id="btn-export" class="btn">Export JSON</button>
+  <input id="file-import" type="file" accept="application/json" hidden>
+  <button id="btn-import" class="btn">Import JSON</button>
+  <button id="btn-build" class="btn good">Valider / Construire</button>
+  <button id="btn-download" class="btn">Télécharger .html</button>
+</header>
+
+<div class="wrap">
+  <section class="panel">
+    <h2>Édition (démarrage vide → ajoute tes blocs)</h2>
+    <div id="pill-stats" class="pill">0 mots • ~0 min</div>
+<div class="tooldock">
+  <div class="toolbar" id="toolbar-add">
+    <button class="btn small" data-add="title">+ Titre</button>
+    <button class="btn small" data-add="intro">+ Intro</button>
+    <button class="btn small" data-add="toc">+ Sommaire</button>
+    <button class="btn small" data-add="section">+ Section</button>
+    <button class="btn small" data-add="media">+ Médias</button>
+    <button class="btn small" data-add="note">+ Note</button>
+    <button class="btn small" data-add="hr">+ Séparateur</button>
+    <button class="btn small" data-add="extras">+ Extras</button>
+    <button class="btn small" data-add="refs">+ Références</button>
+    <button class="btn small" data-add="caps">+ Capsules</button>
+    <button class="btn small" data-add="callout">+ Callout</button>
+  </div>
+
+  <!-- Nouvelle barre : mise en forme -->
+  <div class="toolbar" id="toolbar-format">
+    <button class="btn small" data-cmd="bold"><b>B</b></button>
+    <button class="btn small" data-cmd="italic"><i>I</i></button>
+    <button class="btn small" data-cmd="underline"><u>U</u></button>
+    <button class="btn small" data-cmd="code">code</button>
+    <button class="btn small" data-cmd="h3">H3</button>
+    <button class="btn small" data-cmd="h4">H4</button>
+    <button class="btn small" data-cmd="small">small</button>
+    <button class="btn small" data-cmd="mark">mark</button>
+    <button class="btn small" data-cmd="ul">• Liste</button>
+    <button class="btn small" data-cmd="ol">1. Liste</button>
+    <button class="btn small" data-cmd="quote">« Citation »</button>
+    <button class="btn small" data-cmd="hr">— hr —</button>
+    <button class="btn small" data-cmd="link">Lien</button>
+    <button class="btn small" data-cmd="sub">x<sub>2</sub></button>
+    <button class="btn small" data-cmd="sup">x<sup>2</sup></button>
+  </div>
+</div>
+    
+    <div class="content">
+
+        <!-- ancien emplacement barre -->
+
+<div id="blocks"></div>
+
+
+      <div class="status">
+        <div id="pill-save" class="pill">autosave 3 min • Ctrl+S</div>
+        <div id="pill-dirty" class="pill">brouillon non sauvegardé</div>
+      </div>
+      <p class="muted">Astuce : dans une Section, tu peux insérer des images <em>inline</em> avec le bouton dédié — elles apparaîtront au milieu du texte (sans carte en arrière‑plan). Le bloc « Médias » sert à une galerie (en‑tête) ou à une figure autonome.</p>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>HTML final (copier / coller)</h2>
+    <div class="content">
+      <pre id="out" class="code">&lt;!-- Résultat… --&gt;</pre>
+    </div>
+  </section>
+</div>
+
+<script>
+// ======================= Core =======================
+const $=(s,r=document)=>r.querySelector(s);
+const $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+const debounce=(fn,ms=500)=>{let t;return(...a)=>{clearTimeout(t);t=setTimeout(()=>fn(...a),ms)}};
+
+// --- Slug helpers (unicité) ---
+const slugifyBase=s=>(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+  .toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'')||'section';
+function uniqueSlug(base, exceptBlock){
+  const wanted=slugifyBase(base);
+  const existing=new Set(
+    state.blocks.filter(x=>x.type==='section'&&x!==exceptBlock&&x.id).map(x=>x.id)
+  );
+  if(!existing.has(wanted)) return wanted;
+  let i=2; while(existing.has(`${wanted}-${i}`)) i++; return `${wanted}-${i}`;
+}
+
+const KEY='cm-article-studio-v3';
+let state={ blocks:[], updatedAt:Date.now(), dirty:false };
+
+function markDirty(){ state.dirty=true; $('#pill-dirty').textContent='modifications non sauvegardées' }
+
+// ======================= Helpers formatage =======================
+let lastTA=null;
+document.addEventListener('focusin',e=>{ if(e.target.tagName==='TEXTAREA') lastTA=e.target; });
+
+function wrapSelection(ta,before,after=''){
+  if(!ta) return;
+  const s=ta.selectionStart, e=ta.selectionEnd, v=ta.value;
+  const sel=v.slice(s,e)||'';
+  const ins=before+sel+after;
+  ta.value=v.slice(0,s)+ins+v.slice(e);
+  const caret=s+ins.length;
+  ta.focus(); ta.setSelectionRange(caret, caret);
+  ta.dispatchEvent(new Event('input'));
+}
+function insertBlock(ta,html){
+  if(!ta) return;
+  const s=ta.selectionStart, e=ta.selectionEnd, v=ta.value;
+  const ins = `\n${html}\n`;
+  ta.value=v.slice(0,e)+ins+v.slice(e);
+  const caret=e+ins.length;
+  ta.focus(); ta.setSelectionRange(caret, caret);
+  ta.dispatchEvent(new Event('input'));
+}
+function listify(ta,type){
+  if(!ta) return;
+  const v=ta.value, s=ta.selectionStart, e=ta.selectionEnd;
+  const before=v.lastIndexOf('\n', s-1)+1;
+  const after=v.indexOf('\n', e); const end = after===-1? v.length: after;
+  const lines=v.slice(before,end).split(/\n/);
+  const li=lines.map(l=>`  <li>${l.replace(/^\s*([-*]|\d+\.)\s*/,'')}</li>`).join('\n');
+  const wrap=`<${type}>\n${li}\n</${type}>`;
+  ta.value = v.slice(0,before)+wrap+v.slice(end);
+  const caret=before+wrap.length;
+  ta.focus(); ta.setSelectionRange(caret, caret);
+  ta.dispatchEvent(new Event('input'));
+}
+
+// --- Barre de formatage (inline seulement) ---
+function execCmd(cmd){
+  switch(cmd){
+    case 'bold': return wrapSelection(lastTA,'<strong>','</strong>');
+    case 'italic': return wrapSelection(lastTA,'<em>','</em>');
+    case 'underline': return wrapSelection(lastTA,'<u>','</u>');
+    case 'code': return wrapSelection(lastTA,'<code>','</code>');
+    case 'h3': return insertBlock(lastTA,'<h3>Titre niveau 3</h3>');
+    case 'h4': return insertBlock(lastTA,'<h4>Titre niveau 4</h4>');
+    case 'small': return wrapSelection(lastTA,'<small>','</small>');
+    case 'mark': return wrapSelection(lastTA,'<mark>','</mark>');
+    case 'ul': return listify(lastTA,'ul');
+    case 'ol': return listify(lastTA,'ol');
+    case 'quote': return wrapSelection(lastTA,'<blockquote>','</blockquote>');
+    case 'hr': return insertBlock(lastTA,'<hr>');
+    case 'link': return wrapSelection(lastTA,'<a href="https://">','</a>');
+    case 'sub': return wrapSelection(lastTA,'<sub>','</sub>');
+    case 'sup': return wrapSelection(lastTA,'<sup>','</sup>');
+  }
+}
+document.querySelector('.tooldock')?.addEventListener('click',(ev)=>{
+  const btn=ev.target.closest('[data-cmd]'); if(!btn) return;
+  ev.preventDefault(); execCmd(btn.dataset.cmd);
+});
+
+// Un seul écouteur global pour tous les boutons [data-add] (évite les doublons)
+document.addEventListener('click', (ev)=>{
+  const btn = ev.target.closest('button[data-add]');
+  if (!btn) return;
+  ev.preventDefault();
+  addBlock(btn.dataset.add);
+});
+
+
+// --- Hotkeys (Ctrl/⌘) dans les textareas ---
+document.addEventListener('keydown',(e)=>{
+  if(!lastTA) return;
+  const mod = e.ctrlKey || e.metaKey; if(!mod) return;
+  const shift = e.shiftKey; const k = e.key.toLowerCase();
+  if(k==='s') return; // laisse Ctrl+S au système
+  if(k==='b'){ e.preventDefault(); wrapSelection(lastTA,'<strong>','</strong>'); }
+  else if(k==='i'){ e.preventDefault(); wrapSelection(lastTA,'<em>','</em>'); }
+  else if(k==='u'){ e.preventDefault(); wrapSelection(lastTA,'<u>','</u>'); }
+  else if(k==='k'){ e.preventDefault(); wrapSelection(lastTA,'<a href="https://">','</a>'); }
+  else if(k==='l' && !shift){ e.preventDefault(); listify(lastTA,'ul'); }
+  else if(k==='7' && shift){ e.preventDefault(); listify(lastTA,'ol'); }
+  else if(k==='q' && shift){ e.preventDefault(); wrapSelection(lastTA,'<blockquote>','</blockquote>'); }
+});
+
+// ======================= Compteur mots =======================
+function stripTags(x=''){ return String(x).replace(/<[^>]*>/g,' '); }
+function countWords(text=''){
+  const m = stripTags(text).toLowerCase().match(/[a-zàâäçéèêëîïôöùûüÿœ0-9]+/gi);
+  return m ? m.length : 0;
+}
+function updateStats(){
+  let buf=''; state.blocks.forEach(b=>{
+    if(b.type==='title'){ buf+=' '+(b.title||'')+' '+(b.subtitle||''); }
+    if(b.type==='intro'){ buf+=' '+(b.title||'')+' '+(b.html||''); }
+    if(b.type==='section'){ buf+=' '+(b.title||'')+' '+(b.html||''); }
+    if(b.type==='note'){ buf+=' '+(b.title||'')+' '+(b.html||''); }
+    if(b.type==='callout'){ buf+=' '+(b.title||'')+' '+(b.html||''); }
+    if(['extras','refs','caps'].includes(b.type)){ buf+=' '+(b.html||''); }
+  });
+  const words=countWords(buf);
+  const mins=Math.max(1,Math.ceil(words/200));
+  const chip=document.getElementById('pill-stats');
+  if(chip) chip.textContent=`${words} mots • ~${mins} min`;
+}
+
+// ======================= Blocks =======================
+const Blocks={
+  title:{
+    create:()=>({type:'title',title:'Mon titre',subtitle:'',subtitleMode:'data',tools:true,wrap:'p'}),
+    render:(b,idx)=>{
+      const el=document.createElement('div'); el.className='block';
+      el.innerHTML=`<div class="head">
+          <div class="title" data-toggle> Titre (H1) </div>
+          <div class="controls">
+            <button class="btn small" data-act="up">↑</button>
+            <button class="btn small" data-act="down">↓</button>
+            <button class="btn small bad" data-act="del">Supprimer</button>
+          </div>
+        </div>
+        <div class="row"><label>Titre</label><input type="text" class="inp-title" value="${b.title}"></div>
+        <div class="row"><label>Sous-titre</label><input type="text" class="inp-sub" value="${b.subtitle}"></div>
+        <div class="row"><label>Mode sous-titre</label>
+          <div class="inline"><label class="inline"><input type="radio" name="st-${idx}" value="data" ${b.subtitleMode==='data'?'checked':''}> data-subtitle</label>
+          <label class="inline"><input type="radio" name="st-${idx}" value="p" ${b.subtitleMode==='p'?'checked':''}> &lt;p class="subtitle"&gt;</label></div>
+        </div>
+        <div class="row"><label>Slot outils</label><label class="inline"><input type="checkbox" class="chk-tools" ${b.tools?'checked':''}> Inclure &lt;section data-part="tools"&gt;</label></div>
+        <div class="row"><label>Retours à la ligne</label>
+          <select class="sel-wrap"><option value="p" ${b.wrap==='p'?'selected':''}>Paragraphe &lt;p&gt;</option><option value="br" ${b.wrap==='br'?'selected':''}>Saut &lt;br&gt;</option><option value="none" ${b.wrap==='none'?'selected':''}>Aucun</option></select>
+        </div>`;
+      $('.inp-title',el).addEventListener('input',e=>{b.title=e.target.value; markDirty(); build()});
+      $('.inp-sub',el).addEventListener('input',e=>{b.subtitle=e.target.value; markDirty(); build()});
+      $$(`input[name="st-${idx}"]`,el).forEach(r=>r.addEventListener('change',e=>{b.subtitleMode=e.target.value; markDirty(); build()}));
+      $('.chk-tools',el).addEventListener('change',e=>{b.tools=e.target.checked; markDirty(); build()});
+      $('.sel-wrap',el).addEventListener('change',e=>{b.wrap=e.target.value; markDirty(); build()});
+      attachControls(el,b);
+      return el;
+    }
+  },
+  intro:{
+    create:()=>({type:'intro',title:'Introduction',html:''}),
+    render:(b)=>{
+      const el=document.createElement('div'); el.className='block';
+      el.innerHTML=`<div class="head">
+          <div class="title" data-toggle> Introduction </div>
+          <div class="controls"><button class="btn small" data-act="up">↑</button><button class="btn small" data-act="down">↓</button><button class="btn small bad" data-act="del">Supprimer</button></div>
+        </div>
+        <div class="row"><label>Titre H2</label><input type="text" class="inp-title" value="${b.title}"></div>
+        <textarea class="ta-html" placeholder="… intro …">${b.html}</textarea>`;
+      $('.inp-title',el).addEventListener('input',e=>{b.title=e.target.value; markDirty(); build()});
+      $('.ta-html',el).addEventListener('input',debounce(e=>{b.html=e.target.value; markDirty(); build()}));
+      attachControls(el,b); return el;
+    }
+  },
+  toc:{
+    create:()=>({type:'toc',enabled:true,label:'🗂️ Sommaire'}),
+    render:(b)=>{
+      const el=document.createElement('div'); el.className='block';
+      el.innerHTML=`<div class="head">
+          <div class="title" data-toggle> Sommaire automatique </div>
+          <div class="controls"><button class="btn small" data-act="up">↑</button><button class="btn small" data-act="down">↓</button><button class="btn small bad" data-act="del">Supprimer</button></div>
+        </div>
+        <label class="inline"><input type="checkbox" class="chk" ${b.enabled?'checked':''}> Générer la carte Sommaire</label>`;
+      $('.chk',el).addEventListener('change',e=>{b.enabled=e.target.checked; markDirty(); build()});
+      attachControls(el,b); return el;
+    }
+  },
+  section:{
+    create:()=>({type:'section',title:'Titre de section',id:'',html:''}),
+    render:(b)=>{
+      const el=document.createElement('div'); el.className='block';
+      el.innerHTML=`<div class="head">
+          <div class="title" data-toggle> Section (H2) </div>
+          <div class="controls"><button class="btn small" data-act="up">↑</button><button class="btn small" data-act="down">↓</button><button class="btn small" data-act="dup">Dupliquer</button><button class="btn small bad" data-act="del">Supprimer</button></div>
+        </div>
+        <div class="row"><label>Titre H2</label><input type="text" class="inp-title" value="${b.title}"></div>
+        <div class="row inline"><label>ID (ancre)</label><input type="text" class="inp-id" value="${b.id}"><button class="btn small" data-act="slug">Slug</button><button class="btn small" data-act="img">+ Image (inline)</button></div>
+        <textarea class="ta-html" placeholder="… contenu …">${b.html}</textarea>`;
+      $('.inp-title',el).addEventListener('input',e=>{b.title=e.target.value; markDirty(); build()});
+      $('.inp-id',el).addEventListener('input',e=>{b.id=e.target.value; markDirty(); build()});
+      $('.ta-html',el).addEventListener('input',debounce(e=>{b.html=e.target.value; markDirty(); build()}));
+      el.addEventListener('click',ev=>{
+        const a=ev.target.dataset.act; if(!a) return;
+        if(a==='slug'){
+          const base = $('.inp-title',el).value || b.id || 'section';
+          b.id = uniqueSlug(base, b);
+          $('.inp-id',el).value = b.id;
+          markDirty(); build();
+        }
+        if(a==='img'){ insertInlineImage($('.ta-html',el)); }
+      });
+      attachControls(el,b); return el;
+    }
+  },
+  // ===== Nouveau bloc : CALL0UT =====
+  callout:{
+    create:()=>({type:'callout', kind:'info', title:'ℹ️ Info', open:true, html:''}),
+    render:(b)=>{
+      const el=document.createElement('div'); el.className='block';
+      el.innerHTML=`<div class="head">
+          <div class="title" data-toggle> Callout (encart) </div>
+          <div class="controls"><button class="btn small" data-act="up">↑</button><button class="btn small" data-act="down">↓</button><button class="btn small" data-act="dup">Dupliquer</button><button class="btn small bad" data-act="del">Supprimer</button></div>
+        </div>
+        <div class="row">
+          <label>Type</label>
+          <select class="sel-kind">
+            <option value="info" ${b.kind==='info'?'selected':''}>Info (neutre)</option>
+            <option value="warn" ${b.kind==='warn'?'selected':''}>Avertissement</option>
+            <option value="ok"   ${b.kind==='ok'  ?'selected':''}>OK / positif</option>
+          </select>
+        </div>
+        <div class="row"><label>Titre</label><input type="text" class="inp-title" value="${b.title}"></div>
+        <div class="row"><label>Ouvert</label><label class="inline"><input type="checkbox" class="chk-open" ${b.open?'checked':''}> Déplié par défaut</label></div>
+        <textarea class="ta-html" placeholder="… contenu du callout …">${b.html}</textarea>`;
+      $('.sel-kind',el).addEventListener('change',e=>{b.kind=e.target.value; markDirty(); build()});
+      $('.inp-title',el).addEventListener('input',e=>{b.title=e.target.value; markDirty(); build()});
+      $('.chk-open',el).addEventListener('change',e=>{b.open=e.target.checked; markDirty(); build()});
+      $('.ta-html',el).addEventListener('input',debounce(e=>{b.html=e.target.value; markDirty(); build()}));
+      attachControls(el,b); return el;
+    }
+  },
+  media:{
+    create:()=>({type:'media',mode:'header',caption:'',images:[{src:'',alt:'',main:true}]}),
+    render:(b)=>{
+      const el=document.createElement('div'); el.className='block';
+      el.innerHTML=`<div class="head">
+          <div class="title" data-toggle> Médias </div>
+          <div class="controls"><button class="btn small" data-act="up">↑</button><button class="btn small" data-act="down">↓</button><button class="btn small bad" data-act="del">Supprimer</button></div>
+        </div>
+        <div class="row"><label>Placement</label>
+          <select class="sel-mode"><option value="header" ${b.mode==='header'?'selected':''}>Section data-part="media" (sous le titre)</option><option value="inline" ${b.mode==='inline'?'selected':''}>Figure autonome (où placé)</option></select>
+        </div>
+        <div class="row"><label>Légende (figcaption)</label><input type="text" class="inp-cap" value="${b.caption}"></div>
+        <div class="fieldset"><div class="legend">Images</div><div class="imgs"></div><button class="btn small" data-act="add">+ Ajouter une image</button></div>`;
+      $('.sel-mode',el).addEventListener('change',e=>{b.mode=e.target.value; markDirty(); build()});
+      $('.inp-cap',el).addEventListener('input',e=>{b.caption=e.target.value; markDirty(); build()});
+      const list=$('.imgs',el);
+      function renderImgs(){
+        list.innerHTML='';
+        b.images.forEach((im,i)=>{
+          const row=document.createElement('div'); row.className='grid2';
+          row.innerHTML=`<input type="url" placeholder="/img/..." value="${im.src}"><input type="text" placeholder="alt" value="${im.alt}"><label class="inline"><input type="checkbox" ${im.main?'checked':''}> data-main</label><span class="muted">#${i+1}</span>`;
+          const [src,alt,main]=row.querySelectorAll('input');
+          src.addEventListener('input',e=>{im.src=e.target.value; markDirty(); build()});
+          alt.addEventListener('input',e=>{im.alt=e.target.value; markDirty(); build()});
+          main.addEventListener('change',e=>{im.main=e.target.checked; markDirty(); build()});
+          list.appendChild(row);
+        });
+      }
+      renderImgs();
+      el.addEventListener('click',ev=>{ if(ev.target.dataset.act==='add'){ b.images.push({src:'',alt:'',main:false}); renderImgs(); markDirty(); } });
+      attachControls(el,b); return el;
+    }
+  },
+  note:{
+    create:()=>({type:'note',title:'🔎 Note',html:''}),
+    render:(b)=>{
+      const el=document.createElement('div'); el.className='block';
+      el.innerHTML=`<div class="head">
+          <div class="title" data-toggle> Note (encart pliable) </div>
+          <div class="controls"><button class="btn small" data-act="up">↑</button><button class="btn small" data-act="down">↓</button><button class="btn small bad" data-act="del">Supprimer</button></div>
+        </div>
+        <div class="row"><label>Titre</label><input type="text" class="inp-title" value="${b.title}"></div>
+        <textarea class="ta-html" placeholder="… contenu …">${b.html}</textarea>`;
+      $('.inp-title',el).addEventListener('input',e=>{b.title=e.target.value; markDirty(); build()});
+      $('.ta-html',el).addEventListener('input',debounce(e=>{b.html=e.target.value; markDirty(); build()}));
+      attachControls(el,b); return el;
+    }
+  },
+  hr:{
+    create:()=>({type:'hr'}),
+    render:(b)=>{ const el=document.createElement('div'); el.className='block'; el.innerHTML=`<div class="head">
+          <div class="title" data-toggle> Séparateur </div>
+          <div class="controls"><button class="btn small" data-act="up">↑</button><button class="btn small" data-act="down">↓</button><button class="btn small bad" data-act="del">Supprimer</button></div>
+        </div><div class="muted">— &lt;hr&gt; —</div>`; attachControls(el,b); return el; }
+  },
+  extras:{ create:()=>({type:'extras',html:''}), render:(b)=>blockText('Extras',b) },
+  refs:{   create:()=>({type:'refs',html:''}),   render:(b)=>blockText('Références',b) },
+  caps:{   create:()=>({type:'caps',html:''}),   render:(b)=>blockText('Capsules',b) },
+};
+
+function blockText(label,b){
+  const el=document.createElement('div'); el.className='block';
+  el.innerHTML=`<div class="head">
+      <div class="title" data-toggle> ${label} </div>
+      <div class="controls"><button class="btn small" data-act="up">↑</button><button class="btn small" data-act="down">↓</button><button class="btn small bad" data-act="del">Supprimer</button></div>
+    </div>
+    <textarea class="ta-html" placeholder="…">${b.html||''}</textarea>`;
+  $('.ta-html',el).addEventListener('input',debounce(e=>{b.html=e.target.value; markDirty(); build()}));
+  attachControls(el,b); return el;
+}
+
+function attachControls(el,b){
+  // replier/déplier
+  el.querySelector('[data-toggle]')?.addEventListener('click',()=>{
+    el.classList.toggle('collapsed');
+  });
+  // boutons bloc
+  el.addEventListener('click',ev=>{
+    const act=ev.target.dataset.act; if(!act) return; const i=state.blocks.indexOf(b);
+    if(act==='up' && i>0){ const t=state.blocks[i-1]; state.blocks[i-1]=b; state.blocks[i]=t; render(); markDirty(); return; }
+    if(act==='down' && i<state.blocks.length-1){ const t=state.blocks[i+1]; state.blocks[i+1]=b; state.blocks[i]=t; render(); markDirty(); return; }
+    if(act==='dup'){ const copy=JSON.parse(JSON.stringify(b)); state.blocks.splice(i+1,0,copy); render(); markDirty(); return; }
+    if(act==='del'){ if(confirm('Supprimer ce bloc ?')){ state.blocks.splice(i,1); render(); markDirty(); return; } }
+  });
+}
+
+function addBlock(type){
+  const def=Blocks[type]; if(!def){alert('Type inconnu');return;}
+  state.blocks.push(def.create()); render(); markDirty();
+}
+
+// ======================= UI & Build =======================
+const listEl=$('#blocks');
+const out=$('#out');
+
+function escapeHTML(s=''){return s.replace(/[&<>]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]))}
+
+// Texte enrichi : garde les blocs HTML bruts, sinon <p>…<br>
+function paragraphizeRich(s=''){
+  const parts = String(s).split(/\n{2,}/);
+  return parts.map(chunk=>{
+    const trimmed = chunk.trim();
+    if(!trimmed) return '';
+    if(/^\s*</.test(trimmed)) return trimmed;           // bloc HTML : garder tel quel
+    return `<p>${escapeHTML(trimmed).replace(/\n/g,'<br>')}</p>`;
+  }).join('\n');
+}
+
+function render(){
+  listEl.innerHTML='';
+  state.blocks.forEach((b)=>{ const el=Blocks[b.type].render(b,state.blocks.indexOf(b)); listEl.appendChild(el); });
+  build();
+}
+
+function insertInlineImage(textarea){
+  const tpl=`\n<figure>\n  <img src="/img/..." alt="…">\n  <figcaption>…</figcaption>\n</figure>\n`;
+  const {selectionStart:ss, selectionEnd:se, value:v}=textarea;
+  textarea.value=v.slice(0,ss)+tpl+v.slice(se);
+  textarea.dispatchEvent(new Event('input'));
+}
+
+function build(){
+  let html=[];
+  html.push('<article data-article>');
+
+  // Title
+  const t=state.blocks.find(b=>b.type==='title');
+  if(t){
+    const sub=t.subtitle? (t.subtitleMode==='data'?`\n    <h2 data-subtitle>${escapeHTML(t.subtitle)}</h2>`:`\n    <p class="subtitle">${escapeHTML(t.subtitle)}</p>`):'';
+    const tools=t.tools?`\n    <section data-part="tools"></section>`:'';
+    html.push(`  <section data-part="title" class="title-chip">\n    <h1>${escapeHTML(t.title||'')}</h1>${sub}\n  </section>${tools}`);
+  }
+
+  // Other blocks
+  state.blocks.forEach(b=>{
+    if(b.type==='title') return;
+
+    if(b.type==='intro'){
+      html.push(`  <h2>${escapeHTML(b.title||'Introduction')}</h2>\n  ${paragraphizeRich(b.html)}`);
+    }
+
+    if(b.type==='toc' && b.enabled){
+      html.push(`  <section class="viewer-block note-card">\n    <details class="note-collapsible">\n      <summary>\n        <h2 class="note-title">🗂️ Sommaire <span class="chev">›</span></h2>\n      </summary>\n      <div class="note-body">\n        <nav class="article-toc"><ol><!-- rempli côté viewer --></ol></nav>\n        <p style="margin-top:.5rem"><small>Astuce : clique sur le <b>#</b> d’un titre pour copier un lien direct vers la section.</small></p>\n      </div>\n    </details>\n  </section>`);
+    }
+
+    if(b.type==='section'){
+      const id=b.id?` id="${escapeHTML(b.id)}"`:'';
+      html.push(`  <h2${id}>${escapeHTML(b.title||'Section')}</h2>\n  ${paragraphizeRich(b.html)}`);
+    }
+
+    if(b.type==='callout'){
+      const cls = b.kind==='info' ? 'note-card' : `note-card ${b.kind}`;
+      const openAttr = b.open ? ' open' : '';
+      html.push(
+`  <section class="viewer-block ${cls}">
+    <details class="note-collapsible"${openAttr}>
+      <summary><h3 class="note-title">${escapeHTML(b.title||'ℹ️ Info')} <span class="chev">›</span></h3></summary>
+      <div class="note-body">${paragraphizeRich(b.html)}</div>
+    </details>
+  </section>`);
+    }
+
+    if(b.type==='media'){
+      const imgs=b.images.map(im=>`\n        <img src="${escapeHTML(im.src||'')}" alt="${escapeHTML(im.alt||'')}"${im.main?' data-main':''}>`).join('');
+      const fig=`<figure>${imgs}${b.caption?`\n        <figcaption>${escapeHTML(b.caption)}</figcaption>`:''}\n      </figure>`;
+      if(b.mode==='header') html.push(`  <section data-part="media">\n    ${fig}\n  </section>`);
+      else html.push('  '+fig.replace(/\n/g,'\n  '));
+    }
+
+    if(b.type==='note'){
+      html.push(`  <details class="note-collapsible">\n    <summary><h3 class="note-title">${escapeHTML(b.title||'🔎 Note')} <span class="chev">›</span></h3></summary>\n    <div class="note-body">${paragraphizeRich(b.html)}</div>\n  </details>`);
+    }
+
+    if(b.type==='hr'){ html.push('  <hr>'); }
+
+    if(b.type==='extras'){ html.push(`</article>\n\n<section data-part="extras">\n  ${paragraphizeRich(b.html)}\n</section>\n<article data-article>`); }
+    if(b.type==='refs'){ html.push(`</article>\n\n<section data-part="references">\n  ${paragraphizeRich(b.html)}\n</section>\n<article data-article>`); }
+    if(b.type==='caps'){ html.push(`</article>\n\n<section data-part="capsules">\n  ${paragraphizeRich(b.html)}\n</section>\n<article data-article>`); }
+  });
+
+  html.push('</article>');
+  out.textContent=html.join('\n');
+
+  updateStats();
+}
+
+// ======================= Storage & IO =======================
+function save(){ localStorage.setItem(KEY, JSON.stringify(state)); state.dirty=false; $('#pill-dirty').textContent='sauvegardé (local)'; }
+function load(){ const raw=localStorage.getItem(KEY); if(!raw) return alert('Aucun brouillon'); try{ state=Object.assign({blocks:[]}, JSON.parse(raw)); render(); }catch{ alert('Brouillon corrompu'); } }
+$('#btn-save').addEventListener('click',save);
+$('#btn-load').addEventListener('click',load);
+
+document.addEventListener('keydown',e=>{ if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='s'){ e.preventDefault(); save(); } });
+setInterval(()=>{ if(state.dirty) save(); }, 180000);
+
+$('#btn-export').addEventListener('click',()=>{
+  const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([JSON.stringify(state,null,2)],{type:'application/json'})); a.download='article-studio-v3.json'; a.click(); URL.revokeObjectURL(a.href);
+});
+$('#btn-import').addEventListener('click',()=>$('#file-import').click());
+$('#file-import').addEventListener('change',e=>{ const f=e.target.files?.[0]; if(!f) return; const fr=new FileReader(); fr.onload=()=>{ try{ state=Object.assign({blocks:[]}, JSON.parse(fr.result)); render(); save(); }catch{ alert('JSON invalide'); } }; fr.readAsText(f); e.target.value=''; });
+
+$('#btn-build').addEventListener('click',build);
+$('#btn-download').addEventListener('click',()=>{
+  const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([out.textContent],{type:'text/html'})); a.download='article-construit.html'; a.click(); URL.revokeObjectURL(a.href);
+});
+
+// boot
+render();
+</script>
+
+
+
+</body>
+</html>

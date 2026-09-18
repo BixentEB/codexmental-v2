@@ -1,0 +1,282 @@
+/* ===============================
+   🧠 STRUCTURE GÉNÉRALE DU BODY
+   → layout.css
+=============================== */
+
+/* Reset box-sizing global */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-primary, #000);
+  color: var(--text-primary, #fff);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+main.container {
+  max-width: 1000px;
+  margin: 80px auto 0 auto; /* Marge haute pour compenser le header fixe */
+  padding: 0 1rem;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  width: 100%;
+}
+
+/* 📍 Alignement du texte */
+.text-left {
+  text-align: left;
+}
+.text-right {
+  text-align: right;
+}
+.text-center {
+  text-align: center;
+}
+.text-justify {
+  text-align: justify;
+}
+
+/* Notes */
+.codex-note {
+  margin-top: 2rem;
+  padding: 1.2rem;
+  border-left: 4px solid var(--color-accent, #4e89ff); /* fallback si variable absente */
+  background-color: var(--bg-subtle, rgba(78, 137, 255, 0.08));
+  border-radius: 0.6rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-secondary, #ccd6f6);
+}
+
+.codex-note h4 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--color-accent, #89b4ff);
+}
+
+.codex-note:hover {
+  box-shadow: 0 0 8px var(--color-accent, #4e89ff);
+  transition: box-shadow 0.3s ease;
+}
+
+.codex-note {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.tab-content.active .codex-note {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+
+/* 📐 Largeur contrôlée et centrée */
+.text-bloc {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+/* 🧠 Combo utiles */
+.text-left-bloc {
+  text-align: left;
+  max-width: 640px;
+  margin: 0 auto;
+}
+.text-center-bloc {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto;
+}
+.text-justify-bloc {
+  text-align: justify;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.separator {
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.08), transparent);
+  border: none;
+  margin: 2rem 0;
+}
+
+/* TITRE AERE */
+h1.text-center {
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
+}
+
+/* TITRE HOME ESPACE */
+body.home main.container {
+  padding-top: 2.5rem;
+}
+
+/* LISTE SANS PUCE */
+.no-bullets {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+
+/* ✍️ Mise en forme des citations générales */
+blockquote {
+  font-style: italic;
+  color: var(--text-secondary, #ccc);
+  border-left: 3px solid var(--accent, #888);
+  padding-left: 1rem;
+  margin: 1.5rem 0;
+  line-height: 1.6;
+  opacity: 0.85;
+}
+
+/* Lien caché */
+.secret-link {
+  color: inherit;            /* même couleur que le texte */
+  text-decoration: none;     /* pas de souligné */
+  cursor: pointer;           /* main au survol */
+}
+
+
+
+/* 📱 Responsive : centré sur grand écran, gauche sur mobile */
+.text-center-desktop-left-mobile {
+  text-align: center;
+}
+@media (max-width: 768px) {
+  .text-center-desktop-left-mobile {
+    text-align: left;
+  }
+}
+
+
+@media screen and (max-width: 768px) {
+  .container {
+    padding: 0 0.8rem;
+  }
+}
+
+@media (max-width: 600px) {
+  main.container {
+    padding: 0 0.75rem;
+  }
+}
+
+/* ===========================
+   🚟 BANDEAU DE NAVIGATION
+=========================== */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999;
+  background-color: rgba(0, 0, 0, 0.75); /* anciennement #111 ou var() */
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(8px);
+  font-family: 'Orbitron', sans-serif;
+}
+
+.header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.site-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.5rem;
+  color: var(--logo-color, white);
+}
+
+.main-nav {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-link {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1rem;
+  color: var(--nav-link-color, #4eaaff);
+  text-decoration: none;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.nav-link.active {
+  background-color: rgba(78, 170, 255, 0.15);
+  color: #4eaaff;
+  font-weight: bold;
+  border-bottom: 2px solid #4eaaff;
+}
+
+/* ===========================
+   🖼️ THEME CANVAS
+=========================== */
+canvas#theme-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+
+
+/* ===========================
+   🫎 FOOTER
+=========================== */
+footer {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: var(--text-primary, #fff);
+  font-size: 0.9rem;
+}
+
+footer .theme-buttons {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* ===========================
+   🫎 ROOT
+=========================== */
+:root {
+  --bloc-bg: rgba(255, 255, 255, 0.04);
+  --bloc-border: rgba(255, 255, 255, 0.15);
+  --bloc-shadow: rgba(0, 0, 0, 0.2);
+}
+
+
+
+
