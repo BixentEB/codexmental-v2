@@ -48,7 +48,7 @@ function updateMoon() {
   const f = safeClamp(fraction, 0.0001, 0.9999); // 0< f <1
   const k = 2 * f - 1;                           // -1..+1
   const ellA = Math.max(0.001, Math.sqrt(1 - k * k) * r); // demi-axe horizontal de l'ellipse
-  const waxing = angle < 0; // SunCalc: angle<0 => croissante
+  const waxing = phase < 0.5; // SunCalc: phase 0→0.5 croissante, 0.5→1 décroissante
 
   // Cas limites
   if (fraction <= 0.001) {
@@ -109,6 +109,9 @@ export function updateNewMoonWidget() {
   const old = document.getElementById("svg-lune-widget");
   if (old) old.remove();
 
+  // Texture résolue depuis le module lui-même : indépendante de la profondeur de la page.
+  const moonTexture = new URL("../../img/lune/lune-pleine.png", import.meta.url).href;
+
   // Conteneur
   const container = document.createElement("div");
   container.id = "svg-lune-widget";
@@ -134,12 +137,12 @@ export function updateNewMoonWidget() {
       </defs>
 
       <!-- Disque fantôme (lune sombre) -->
-      <image href="/img/lune/lune-pleine.png" width="100%" height="100%"
+      <image href="${moonTexture}" width="100%" height="100%"
              clip-path="url(#moon-clip)"
              style="filter:brightness(0.4);opacity:0.15"/>
 
       <!-- Texture éclairée, découpée par le masque -->
-      <image id="moon-lit" href="/img/lune/lune-pleine.png" width="100%" height="100%"
+      <image id="moon-lit" href="${moonTexture}" width="100%" height="100%"
              mask="url(#moon-mask)" clip-path="url(#moon-clip)"/>
     </svg>
   `;
