@@ -99,7 +99,7 @@ body.theme-solaire textarea::placeholder {
   right: 0;
   width: 480px;
   height: 480px;
-  background-image: url("/img/visuels/sun-final.png");
+  background-image: url("../../../img/visuels/sun-final.png");
   background-repeat: no-repeat;
   background-size: contain;
   opacity: 0.85;
