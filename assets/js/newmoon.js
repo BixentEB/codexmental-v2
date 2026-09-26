@@ -1,5 +1,30 @@
-import { getLunarData, requestLunarObserver } from './lunar-engine.js';
 // newmoon.js — FIX: mask userSpaceOnUse + orientation observateur (parallacticAngle)
+
+function loadSunCalc(callback) {
+  if (window.SunCalc) callback();
+  else {
+    const s = document.createElement("script");
+    s.src = "https://cdn.jsdelivr.net/npm/suncalc@1.9.0/suncalc.min.js";
+    s.onload = callback;
+    document.head.appendChild(s);
+  }
+}
+
+// Fallback position (Rome) — remplace si tu veux une orientation parfaite
+let OBS = { lat: 41.9, lon: 12.5 };
+
+function initObserverPosition() {
+  if (!navigator.geolocation) return;
+  navigator.geolocation.getCurrentPosition(
+    pos => {
+      OBS.lat = pos.coords.latitude;
+      OBS.lon = pos.coords.longitude;
+      updateMoon(); // recalcul immédiat avec la bonne position
+    },
+    () => {},
+    { enableHighAccuracy: false, timeout: 2500 }
+  );
+}
 
 function arcDeg(x) { return x * 180 / Math.PI; }
 
@@ -9,8 +34,10 @@ function safeClamp(v, min, max) { return Math.min(max, Math.max(min, v)); }
  * Met à jour la lune SVG avec la vraie forme des phases
  */
 function updateMoon() {
-  const data = getLunarData();
-  const { fraction, phase, angle } = data;
+  if (!window.SunCalc) return;
+
+  const now = new Date();
+  const { fraction, phase, angle } = SunCalc.getMoonIllumination(now);
   const path = document.getElementById("shadow-path");
   if (!path) return;
 
@@ -21,7 +48,7 @@ function updateMoon() {
   const f = safeClamp(fraction, 0.0001, 0.9999); // 0< f <1
   const k = 2 * f - 1;                           // -1..+1
   const ellA = Math.max(0.001, Math.sqrt(1 - k * k) * r); // demi-axe horizontal de l'ellipse
-  const waxing = phase < 0.5; // SunCalc: phase 0→0.5 croissante, 0.5→1 décroissante
+  const waxing = phase < 0.5; // phase 0→0.5 croissante, 0.5→1 décroissante
 
   // Cas limites
   if (fraction <= 0.001) {
@@ -52,7 +79,8 @@ function updateMoon() {
   }
 
   // Orientation réaliste : angle d’illumination + angle parallactique de l’observateur
-  const rotDeg = arcDeg(angle + data.parallacticAngle);
+  const pos = SunCalc.getMoonPosition(now, OBS.lat, OBS.lon);
+  const rotDeg = arcDeg(angle + pos.parallacticAngle);
   path.setAttribute("transform", `rotate(${rotDeg}, ${cx}, ${cy})`);
 
   // Debug console
@@ -69,7 +97,7 @@ function updateMoon() {
   console.log(
     `${phaseName} | Illum=${(fraction*100).toFixed(1)}% | ` +
     `phase=${phase.toFixed(3)} | angle=${arcDeg(angle).toFixed(1)}° | ` +
-    `parallax=${arcDeg(data.parallacticAngle).toFixed(1)}° | rot=${rotDeg.toFixed(1)}° | waxing=${waxing}`
+    `parallax=${arcDeg(pos.parallacticAngle).toFixed(1)}° | rot=${rotDeg.toFixed(1)}° | waxing=${waxing}`
   );
 }
 
@@ -81,7 +109,7 @@ export function updateNewMoonWidget() {
   const old = document.getElementById("svg-lune-widget");
   if (old) old.remove();
 
-  // Texture résolue depuis le module lui-même : indépendante de la profondeur de la page.
+  // Texture résolue depuis le module lui-même.
   const moonTexture = new URL("../../img/lune/lune-pleine.png", import.meta.url).href;
 
   // Conteneur
@@ -140,7 +168,9 @@ export function updateNewMoonWidget() {
     applySize();
   });
 
-  updateMoon();
-  requestLunarObserver().then(updateMoon);
-  setInterval(updateMoon, 3600000); // maj horaire
+  loadSunCalc(() => {
+    initObserverPosition();
+    updateMoon();
+    setInterval(updateMoon, 3600000); // maj horaire
+  });
 }
