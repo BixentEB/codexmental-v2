@@ -9,13 +9,13 @@ console.log("\u2728 Lancement de l’étoile filante...");
 // Exemple : document.body.classList.add('theme-stellaire');
 
 // Rendu du header/footer dynamique (si tu utilises l’injection HTML)
-fetch('menu.html')
+fetch('/menu.html')
   .then(res => res.text())
   .then(html => {
     document.getElementById('menu-placeholder').innerHTML = html;
   });
 
-fetch('footer.html')
+fetch('/footer.html')
   .then(res => res.text())
   .then(html => {
     document.getElementById('footer-placeholder').innerHTML = html;
