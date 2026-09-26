@@ -17,9 +17,9 @@ import './openmenu.js';
 import { setTheme } from './theme-engine.js';
 import { injectPartial } from './partials.js';
 import { setupScrollButton } from './scroll.js';
-import { activerBadgeAstro } from './badge-astro.js';
+// Astro chargé après le socle UI : une erreur astro ne doit jamais bloquer menu/thèmes.
 import { initEtoileFilante } from './etoile-filante.js';
-import { initThemeObserver } from './theme-observer.js';
+// Observateur astro chargé après le socle UI.
 
 // === 🧭 Alias de thème
 import { resolveInitialTheme, resolveAlias } from './theme-alias.js';
@@ -64,7 +64,7 @@ window.addEventListener("DOMContentLoaded", () => {
     injectPartial('theme-cards-placeholder', 'assets/partials/theme-cards.html');
   }
 
-  activerBadgeAstro();
+  import('./badge-astro.js').then(m => m.activerBadgeAstro()).catch(err => console.error('Astro badge:', err));
   setupScrollButton();
 
   if (currentEffective === "theme-stellaire") {
@@ -76,7 +76,7 @@ window.addEventListener("DOMContentLoaded", () => {
       .catch(err => console.error("❌ Failed to load newmoon.js:", err));
   }
 
-  initThemeObserver();
+  import('./theme-observer.js').then(m => m.initThemeObserver()).catch(err => console.error('Astro observer:', err));
 });
 
 // === 🍔 Log bouton burger
