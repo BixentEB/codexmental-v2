@@ -24,6 +24,9 @@ import { initThemeObserver } from './theme-observer.js';
 // === 🧭 Alias de thème
 import { resolveInitialTheme, resolveAlias } from './theme-alias.js';
 
+const SITE_ROOT = new URL('../../', import.meta.url);
+const siteUrl = (path) => new URL(path, SITE_ROOT).href;
+
 // === 🌠 Initialiser le thème visuel dès le chargement
 (function initTheme() {
   // 🧪 Cas spécial : dashboard ne doit pas être altéré
@@ -55,13 +58,13 @@ window.addEventListener("DOMContentLoaded", () => {
   const currentEffective =
     document.body.dataset.effectiveTheme || resolveAlias(document.body.className);
 
-  injectPartial('menu-placeholder', 'menu.html');
-  injectPartial('footer-placeholder', 'footer.html');
+  injectPartial('menu-placeholder', siteUrl('menu.html'));
+  injectPartial('footer-placeholder', siteUrl('footer.html'));
 
   // 🃏 Cartes de thèmes (partial)
   const cardsTarget = document.getElementById('theme-cards-placeholder');
   if (cardsTarget) {
-    injectPartial('theme-cards-placeholder', 'assets/partials/theme-cards.html');
+    injectPartial('theme-cards-placeholder', siteUrl('assets/partials/theme-cards.html'));
   }
 
   activerBadgeAstro();
