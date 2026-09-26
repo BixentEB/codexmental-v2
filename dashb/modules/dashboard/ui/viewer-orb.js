@@ -14,39 +14,39 @@
 
   const TEX = {
     planets: {
-      soleil: '/dashb/modules/dashboard/assets/textures/planets/sun.jpg',
-      sun: '/dashb/modules/dashboard/assets/textures/planets/sun.jpg',
-      mercure: '/dashb/modules/dashboard/assets/textures/planets/mercury.jpg',
-      mercury: '/dashb/modules/dashboard/assets/textures/planets/mercury.jpg',
-      venus: '/dashb/modules/dashboard/assets/textures/planets/venus.jpg',
-      terre: '/dashb/modules/dashboard/assets/textures/planets/earth.jpg',
-      earth: '/dashb/modules/dashboard/assets/textures/planets/earth.jpg',
-      mars: '/dashb/modules/dashboard/assets/textures/planets/mars.jpg',
-      jupiter: '/dashb/modules/dashboard/assets/textures/planets/jupiter.jpg',
-      saturne: '/dashb/modules/dashboard/assets/textures/planets/saturn.jpg',
-      saturn: '/dashb/modules/dashboard/assets/textures/planets/saturn.jpg',
-      uranus: '/dashb/modules/dashboard/assets/textures/planets/uranus.jpg',
-      neptune: '/dashb/modules/dashboard/assets/textures/planets/neptune.jpg',
-      pluton: '/dashb/modules/dashboard/assets/textures/planets/pluto.jpg',
-      pluto: '/dashb/modules/dashboard/assets/textures/planets/pluto.jpg',
-      ceres: '/dashb/modules/dashboard/assets/textures/planets/ceres.jpg',
-      makemake: '/dashb/modules/dashboard/assets/textures/planets/makemake.jpg',
-      haumea: '/dashb/modules/dashboard/assets/textures/planets/haumea.jpg',
-      eris: '/dashb/modules/dashboard/assets/textures/planets/eris.jpg',
-      planete9: '/dashb/modules/dashboard/assets/textures/planets/planet9.jpg',
-      planet9: '/dashb/modules/dashboard/assets/textures/planets/planet9.jpg'
+      soleil: 'dashb/modules/dashboard/assets/textures/planets/sun.jpg',
+      sun: 'dashb/modules/dashboard/assets/textures/planets/sun.jpg',
+      mercure: 'dashb/modules/dashboard/assets/textures/planets/mercury.jpg',
+      mercury: 'dashb/modules/dashboard/assets/textures/planets/mercury.jpg',
+      venus: 'dashb/modules/dashboard/assets/textures/planets/venus.jpg',
+      terre: 'dashb/modules/dashboard/assets/textures/planets/earth.jpg',
+      earth: 'dashb/modules/dashboard/assets/textures/planets/earth.jpg',
+      mars: 'dashb/modules/dashboard/assets/textures/planets/mars.jpg',
+      jupiter: 'dashb/modules/dashboard/assets/textures/planets/jupiter.jpg',
+      saturne: 'dashb/modules/dashboard/assets/textures/planets/saturn.jpg',
+      saturn: 'dashb/modules/dashboard/assets/textures/planets/saturn.jpg',
+      uranus: 'dashb/modules/dashboard/assets/textures/planets/uranus.jpg',
+      neptune: 'dashb/modules/dashboard/assets/textures/planets/neptune.jpg',
+      pluton: 'dashb/modules/dashboard/assets/textures/planets/pluto.jpg',
+      pluto: 'dashb/modules/dashboard/assets/textures/planets/pluto.jpg',
+      ceres: 'dashb/modules/dashboard/assets/textures/planets/ceres.jpg',
+      makemake: 'dashb/modules/dashboard/assets/textures/planets/makemake.jpg',
+      haumea: 'dashb/modules/dashboard/assets/textures/planets/haumea.jpg',
+      eris: 'dashb/modules/dashboard/assets/textures/planets/eris.jpg',
+      planete9: 'dashb/modules/dashboard/assets/textures/planets/planet9.jpg',
+      planet9: 'dashb/modules/dashboard/assets/textures/planets/planet9.jpg'
     },
     moons: {
-      lune: '/dashb/modules/dashboard/assets/textures/moons/moon.jpg',
-      moon: '/dashb/modules/dashboard/assets/textures/moons/moon.jpg',
-      europa: '/dashb/modules/dashboard/assets/textures/moons/europa.jpg',
-      ganymede: '/dashb/modules/dashboard/assets/textures/moons/ganymede.jpg',
-      io: '/dashb/modules/dashboard/assets/textures/moons/io.jpg',
-      callisto: '/dashb/modules/dashboard/assets/textures/moons/callisto.jpg',
-      phobos: '/dashb/modules/dashboard/assets/textures/moons/phobos.jpg',
-      deimos: '/dashb/modules/dashboard/assets/textures/moons/deimos.jpg'
+      lune: 'dashb/modules/dashboard/assets/textures/moons/moon.jpg',
+      moon: 'dashb/modules/dashboard/assets/textures/moons/moon.jpg',
+      europa: 'dashb/modules/dashboard/assets/textures/moons/europa.jpg',
+      ganymede: 'dashb/modules/dashboard/assets/textures/moons/ganymede.jpg',
+      io: 'dashb/modules/dashboard/assets/textures/moons/io.jpg',
+      callisto: 'dashb/modules/dashboard/assets/textures/moons/callisto.jpg',
+      phobos: 'dashb/modules/dashboard/assets/textures/moons/phobos.jpg',
+      deimos: 'dashb/modules/dashboard/assets/textures/moons/deimos.jpg'
     },
-    placeholder: '/assets/textures/placeholder.jpg'
+    placeholder: 'assets/textures/placeholder.jpg'
   };
 
   const texLoader = new TextureLoader();
