@@ -2,9 +2,10 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8" />
+  <script src="../../assets/js/site-base.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Article Studio v3 — Codex Mental</title>
-<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128"><rect width="128" height="128" rx="28" fill="%23121739"/><text x="50%" y="62%" font-size="76" text-anchor="middle" fill="%2386c7ff" font-family="Arial, Helvetica, sans-serif">A</text></svg>'>
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128"><rect width="128" height="128" rx="28" fill="%23121739"><text x="50%" y="62%" font-size="76" text-anchor="middle" fill="%2386c7ff" font-family="Arial, Helvetica, sans-serif">A</text></svg>'>
 <style>
   /* colle la tooldock sous le bandeau (appbar) */
   :root{
@@ -412,7 +413,7 @@ const Blocks={
         list.innerHTML='';
         b.images.forEach((im,i)=>{
           const row=document.createElement('div'); row.className='grid2';
-          row.innerHTML=`<input type="url" placeholder="/img/..." value="${im.src}"><input type="text" placeholder="alt" value="${im.alt}"><label class="inline"><input type="checkbox" ${im.main?'checked':''}> data-main</label><span class="muted">#${i+1}</span>`;
+          row.innerHTML=`<input type="url" placeholder="img/..." value="${im.src}"><input type="text" placeholder="alt" value="${im.alt}"><label class="inline"><input type="checkbox" ${im.main?'checked':''}> data-main</label><span class="muted">#${i+1}</span>`;
           const [src,alt,main]=row.querySelectorAll('input');
           src.addEventListener('input',e=>{im.src=e.target.value; markDirty(); build()});
           alt.addEventListener('input',e=>{im.alt=e.target.value; markDirty(); build()});
@@ -507,7 +508,7 @@ function render(){
 }
 
 function insertInlineImage(textarea){
-  const tpl=`\n<figure>\n  <img src="/img/..." alt="…">\n  <figcaption>…</figcaption>\n</figure>\n`;
+  const tpl=`\n<figure>\n  <img src="img/..." alt="…">\n  <figcaption>…</figcaption>\n</figure>\n`;
   const {selectionStart:ss, selectionEnd:se, value:v}=textarea;
   textarea.value=v.slice(0,ss)+tpl+v.slice(se);
   textarea.dispatchEvent(new Event('input'));
