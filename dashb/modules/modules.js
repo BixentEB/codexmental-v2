@@ -27,21 +27,21 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // 1) UI / compat (#info-*) + miroir + pont d’événements + close-all
   try {
-    await import('/dashb/modules/dashboard/ui/init.js');
+    await import('dashb/modules/dashboard/ui/init.js');
   } catch (e) {
     console.warn('⚠️ UI init failed:', e);
   }
 
   // 2) Viewer 3D (planète + lune)
   try {
-    await import('/dashb/modules/dashboard/ui/viewer-orb.js');
+    await import('dashb/modules/dashboard/ui/viewer-orb.js');
   } catch (e) {
     console.warn('⚠️ Viewer 3D indisponible:', e);
   }
 
   // 3) Radar (charge aussi tes modules métiers via ses imports)
   try {
-    await import('/dashb/modules/dashboard/simul-system.js');
+    await import('dashb/modules/dashboard/simul-system.js');
   } catch (e) {
     console.warn('⚠️ Radar 2D indisponible:', e);
   }
