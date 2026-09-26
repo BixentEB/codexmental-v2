@@ -85,11 +85,11 @@ function svgSky({mode, dur}){
 <svg viewBox="0 0 360 140" role="img" aria-label="Ciel ${mode}" style="--windDur:${dur}s">
   <defs>
     <radialGradient id="sunHalo" cx="0.22" cy="0.35">
-      <stop offset="0%" stop-color="var(--sky-halo)" stop-opacity=".5">
-      <stop offset="100%" stop-color="var(--sky-halo)" stop-opacity="0">
+      <stop offset="0%" stop-color="var(--sky-halo)" stop-opacity=".5"/>
+      <stop offset="100%" stop-color="var(--sky-halo)" stop-opacity="0"/>
     </radialGradient>
     <clipPath id="cloudClip">
-      <rect x="0" y="0" width="360" height="140" rx="12" ry="12">
+      <rect x="0" y="0" width="360" height="140" rx="12" ry="12"/>
     </clipPath>
   </defs>
 
