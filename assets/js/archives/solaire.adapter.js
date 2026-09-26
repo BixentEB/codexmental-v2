@@ -1,5 +1,5 @@
 // /assets/js/widgets/solaire.adapter.js
-import { getSunInfo } from '/assets/js/astro-solaire.js';
+import { getSunInfo } from 'assets/js/astro-solaire.js';
 
 export default {
   id: 'theme-solaire',
@@ -30,14 +30,14 @@ export default {
       <svg viewBox="0 0 260 160" style="width:100%;height:160px">
         <defs>
           <linearGradient id="sunGrad" x1="0" x2="0" y1="0" y2="1">
-            <stop offset="0%" stop-color="currentColor" stop-opacity=".9"/>
-            <stop offset="100%" stop-color="currentColor" stop-opacity=".2"/>
+            <stop offset="0%" stop-color="currentColor" stop-opacity=".9">
+            <stop offset="100%" stop-color="currentColor" stop-opacity=".2">
           </linearGradient>
         </defs>
         <path d="M20 120 A110 110 0 0 1 240 120" fill="none" stroke="url(#sunGrad)" stroke-width="6" />
         <circle cx="130" cy="60" r="10" fill="currentColor">
-          <animate attributeName="cx" dur="8s" repeatCount="indefinite" values="20;130;240;130;20"/>
-          <animate attributeName="cy" dur="8s" repeatCount="indefinite" values="120;20;120;20;120"/>
+          <animate attributeName="cx" dur="8s" repeatCount="indefinite" values="20;130;240;130;20">
+          <animate attributeName="cy" dur="8s" repeatCount="indefinite" values="120;20;120;20;120">
         </circle>
       </svg>`;
     return true;
