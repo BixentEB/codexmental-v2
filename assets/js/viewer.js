@@ -1,9 +1,9 @@
 // viewer.js — Codex Mental (Blog + Atelier) — build 2025-09-16
 
 document.addEventListener('DOMContentLoaded', () => {
-  const isBlog   = window.location.pathname.includes('/blog');
+  const isBlog   = window.location.pathname.includes('blog');
   const paramKey = isBlog ? 'article' : 'projet';
-  const basePath = isBlog ? '/blog/articles/' : '/atelier/';
+  const basePath = isBlog ? 'blog/articles/' : 'atelier/';
 
   const menuEl   = document.getElementById('viewer-menu');
   const viewerEl = document.getElementById('article-viewer');
@@ -211,7 +211,7 @@ function loadContent(viewerEl, url){
       setBlockHTML('article-capsules','');
 
       // message friendly selon Blog/Atelier
-      const isBlogUrl = url.includes('/blog/');
+      const isBlogUrl = url.includes('blog/');
       const friendly =
         (err.status === 404 || String(err.message||'').startsWith('HTTP_404'))
           ? (isBlogUrl
@@ -410,8 +410,8 @@ function escapeHTML(s){
     .replace(/&/g,'&amp;')
     .replace(/</g,'&lt;')
     .replace(/>/g,'&gt;')
-    .replace(/"/g,'&quot;')
-    .replace(/'/g,'&#39;');
+    .replace(/"g,'&quot;')
+    .replace(/'g,'&#39;');
 }
 // Autorise <br>/<wbr> dans le H1, échappe le reste
 function sanitizeTitleHTML(rawHTML){
@@ -422,8 +422,8 @@ function sanitizeTitleHTML(rawHTML){
     .replace(/<\/?[^>]+>/g,'');
   const tmp=document.createElement('textarea'); tmp.innerHTML=s; s=tmp.value
     .replace(/&/g,'&amp;').replace(/</g,'&lt;')
-    .replace(/>/g,'&gt;').replace(/"/g,'&quot;')
-    .replace(/'/g,'&#39;');
+    .replace(/>/g,'&gt;').replace(/"g,'&quot;')
+    .replace(/'g,'&#39;');
   return s.replaceAll(BR,'<br>').replaceAll(WBR,'<wbr>');
 }
 function stripHTMLComments(s){
@@ -647,7 +647,7 @@ function renderMosaicHTML(imgNodes, caption=''){
   if (i > 0) arr.unshift(arr.splice(i,1)[0]);
   const tiles = arr.map((img,idx)=>{
     const src = img.getAttribute('src');
-    const alt = (img.getAttribute('alt') || '').replace(/"/g,'&quot;');
+    const alt = (img.getAttribute('alt') || '').replace(/"g,'&quot;');
     const cls = idx===0 ? 'tile tile--main' : 'tile';
     return `<figure class="${cls}"><img src="${src}" alt="${alt}" loading="lazy" decoding="async" data-idx="${idx}"></figure>`;
   }).join('');
