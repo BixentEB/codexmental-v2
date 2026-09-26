@@ -2,8 +2,8 @@
 // Theme engine — applique classes + canvas + effets UI
 // ========================================================
 
-import { setupCanvas, initParticles, stopParticles } from '/assets/js/canvas.js';
-import { applyTabEffect, switchTabEffect } from '/assets/js/effects-tabs.js';
+import { setupCanvas, initParticles, stopParticles } from './canvas.js';
+import { applyTabEffect, switchTabEffect } from './effects-tabs.js';
 
 let soleilActif = false;
 let currentTheme = null; // mémorise le dernier thème appliqué
@@ -46,7 +46,7 @@ export async function setTheme(theme) {
   // 4) Arrêt des animations spécifiques du thème précédent (ex: sky)
   if (currentTheme === 'theme-sky') {
     try {
-      const { stopSky } = await import('/assets/js/canvas-sky.js');
+      const { stopSky } = await import('./canvas-sky.js');
       stopSky();
     } catch {
       /* ok si le module n'a jamais été chargé */
@@ -65,7 +65,7 @@ export async function setTheme(theme) {
   if (theme === 'theme-sky') {
     setupCanvas();
     document.getElementById('theme-canvas').style.opacity = '1';
-    const { initSky } = await import('/assets/js/canvas-sky.js');
+    const { initSky } = await import('./canvas-sky.js');
     initSky();
     soleilActif = false;
   }
@@ -85,7 +85,7 @@ export async function setTheme(theme) {
     setupCanvas();
     document.getElementById('theme-canvas').style.opacity = '1';
     if (!soleilActif) {
-      const { initSoleilFlottant } = await import('/assets/js/canvas-solaire.js');
+      const { initSoleilFlottant } = await import('./canvas-solaire.js');
       initSoleilFlottant();
       soleilActif = true;
     }
