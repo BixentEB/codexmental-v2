@@ -2,10 +2,10 @@
 // badge-astro.js – Affiche le badge si événement du jour
 // ========================================================
 
-import { isToday } from '/assets/js/intro-astro.js'; // Réutilisation de la fonction utilitaire
+import { isToday } from 'assets/js/intro-astro.js'; // Réutilisation de la fonction utilitaire
 
 export function activerBadgeAstro() {
-  fetch('/arc/events-astro-2025.json')
+  fetch('arc/events-astro-2025.json')
     .then(res => res.json())
     .then(data => {
       // Filtrer les événements correspondant à aujourd’hui
