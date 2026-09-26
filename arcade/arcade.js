@@ -2,7 +2,7 @@ function loadGame(url) {
   const screen = document.getElementById('arcade-screen');
 
   // Vérifie si c'est PacBunny
-  const isPacBunny = url.includes('/arcade/games/pacbunny/');
+  const isPacBunny = url.includes('arcade/games/pacbunny/');
 
   if (isPacBunny) {
     // Intro avec la tête du lapin et son
@@ -50,24 +50,24 @@ function loadGameContent(url, screen) {
       let cssPath = '';
       let scriptPath = '';
 
-      if (url.includes('/arcade/games/pacbunny/v1/pacbunny-v1.html')) {
-        cssPath = '/arcade/games/pacbunny/v1/pacbunny-v1.css';
-        scriptPath = '/arcade/games/pacbunny/v1/pacbunny-v1.js';
+      if (url.includes('arcade/games/pacbunny/v1/pacbunny-v1.html')) {
+        cssPath = 'arcade/games/pacbunny/v1/pacbunny-v1.css';
+        scriptPath = 'arcade/games/pacbunny/v1/pacbunny-v1.js';
       }
 
-      if (url.includes('/arcade/games/pacbunny/v2/pacbunny-v2.html')) {
-        cssPath = '/arcade/games/pacbunny/v2/pacbunny-v2.css';
-        scriptPath = '/arcade/games/pacbunny/v2/pacbunny-v2.js';
+      if (url.includes('arcade/games/pacbunny/v2/pacbunny-v2.html')) {
+        cssPath = 'arcade/games/pacbunny/v2/pacbunny-v2.css';
+        scriptPath = 'arcade/games/pacbunny/v2/pacbunny-v2.js';
       }
 
-      if (url.includes('/arcade/games/pacbunny/v3/pacbunny-v3.html')) {
-        cssPath = '/arcade/games/pacbunny/v3/pacbunny-v3.css';
-        scriptPath = '/arcade/games/pacbunny/v3/pacbunny-v3.js';
+      if (url.includes('arcade/games/pacbunny/v3/pacbunny-v3.html')) {
+        cssPath = 'arcade/games/pacbunny/v3/pacbunny-v3.css';
+        scriptPath = 'arcade/games/pacbunny/v3/pacbunny-v3.js';
       }
 
       if (url.includes('flappy-bunny.html')) {
-        cssPath = '/arcade/games/flappy-bunny.css';
-        scriptPath = '/arcade/games/flappy-bunny.js';
+        cssPath = 'arcade/games/flappy-bunny.css';
+        scriptPath = 'arcade/games/flappy-bunny.js';
       }
 
       if (cssPath) {
