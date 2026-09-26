@@ -30,7 +30,8 @@ const siteUrl = (path) => new URL(path, SITE_ROOT).href;
 // === 🌠 Initialiser le thème visuel dès le chargement
 (function initTheme() {
   // 🧪 Cas spécial : dashboard ne doit pas être altéré
-  if (location.pathname.startsWith('/dashb/')) return;
+  const isDashboard = document.body.classList.contains('dashboard') || /\/dashb\//.test(location.pathname);
+  if (isDashboard) return;
 
   const params = new URLSearchParams(window.location.search);
   const forceTheme = params.get('forceTheme'); // "main" uniquement pour l'arrivée depuis l'intro
