@@ -82,4 +82,15 @@ function setupThemeFab() {
       }
     });
   }
+}function normalizeMenuLinks(target) {
+  // Les URLs du menu sont écrites depuis la racine du projet.
+  // import.meta.url = .../assets/js/partials.js -> ../../ = racine Codex Mental.
+  const siteRoot = new URL('../../', import.meta.url);
+  target.querySelectorAll('a[href]').forEach(link => {
+    const href = link.getAttribute('href');
+    if (!href || href.startsWith('#') || /^(?:[a-z]+:|\/\/)/i.test(href)) return;
+    link.href = new URL(href.replace(/^\/+/, ''), siteRoot).href;
+  });
 }
+
+
