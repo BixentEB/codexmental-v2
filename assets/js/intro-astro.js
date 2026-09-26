@@ -2,7 +2,7 @@
 // intro-astro.js – Message animé d’introduction + alerte astro
 // ========================================================
 
-import { IDS } from 'assets/js/ids.js';
+import { IDS } from './ids.js';
 
 let currentAlertText = "";
 let isTyping = false;
