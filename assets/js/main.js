@@ -30,7 +30,7 @@ import { resolveInitialTheme, resolveAlias } from './theme-alias.js';
   if (location.pathname.startsWith('/dashb/')) return;
 
   const params = new URLSearchParams(window.location.search);
-  const forceTheme = params.get('forceTheme'); // "main" si on vient de l'intro
+  const forceTheme = params.get('forceTheme'); // "main" uniquement pour l'arrivée depuis l'intro
 
   // 1) Choix visiteur (localStorage) sinon 'theme-main', sauf si ?forceTheme=main
   const initial = (forceTheme === 'main')
