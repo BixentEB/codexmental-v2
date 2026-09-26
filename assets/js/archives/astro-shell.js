@@ -87,6 +87,6 @@ document.addEventListener('DOMContentLoaded', run);
 new MutationObserver(run).observe(document.body, { attributes:true, attributeFilter:['data-effective-theme','class'] });
 
 // Enregistre les adapters
-import skyAdapter   from '/assets/js/widgets/sky.adapter.js';
-import solarAdapter from '/assets/js/widgets/solaire.adapter.js';
+import skyAdapter   from 'assets/js/widgets/sky.adapter.js';
+import solarAdapter from 'assets/js/widgets/solaire.adapter.js';
 [skyAdapter, solarAdapter].forEach(a => a?.id && ADAPTERS.set(a.id, a));
