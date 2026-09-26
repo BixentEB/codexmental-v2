@@ -118,7 +118,7 @@ export function updateNewMoonWidget() {
     <svg id="svg-lune" viewBox="0 0 100 100" width="100%" height="100%">
       <defs>
         <clipPath id="moon-clip">
-          <circle cx="50" cy="50" r="50"/>
+          <circle cx="50" cy="50" r="50">
         </clipPath>
 
         <!-- FIX ICI: repère du masque = userSpaceOnUse + bbox explicite -->
@@ -127,20 +127,20 @@ export function updateNewMoonWidget() {
               maskContentUnits="userSpaceOnUse"
               x="0" y="0" width="100" height="100">
           <!-- Blanc = visible (texture éclairée) -->
-          <rect x="0" y="0" width="100" height="100" fill="white"/>
+          <rect x="0" y="0" width="100" height="100" fill="white">
           <!-- Noir = ombre (on dessine l’ombre, ou un disque plein troué par la zone éclairée) -->
-          <path id="shadow-path" fill="black" fill-rule="evenodd"/>
+          <path id="shadow-path" fill="black" fill-rule="evenodd">
         </mask>
       </defs>
 
       <!-- Disque fantôme (lune sombre) -->
-      <image href="/img/lune/lune-pleine.png" width="100%" height="100%"
+      <image href="img/lune/lune-pleine.png" width="100%" height="100%"
              clip-path="url(#moon-clip)"
-             style="filter:brightness(0.4);opacity:0.15"/>
+             style="filter:brightness(0.4);opacity:0.15">
 
       <!-- Texture éclairée, découpée par le masque -->
-      <image id="moon-lit" href="/img/lune/lune-pleine.png" width="100%" height="100%"
-             mask="url(#moon-mask)" clip-path="url(#moon-clip)"/>
+      <image id="moon-lit" href="img/lune/lune-pleine.png" width="100%" height="100%"
+             mask="url(#moon-mask)" clip-path="url(#moon-clip)">
     </svg>
   `;
 
