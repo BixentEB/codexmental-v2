@@ -4,50 +4,50 @@
 ============================================================ */
 
 /* === 📐 Structure générale === */
-@import url('/assets/css/style-base/layout.css');
-@import url('/assets/css/style-base/typography.css');
-@import url('/assets/css/style-base/forms.css');
-@import url('/assets/css/style-base/table.css');
-@import url('/assets/css/style-base/images.css');
-@import url('/assets/css/style-base/onglets.css');
-@import url('/assets/css/style-base/ascii.css');
-@import url('/assets/css/style-base/page-title.css');
+@import url('style-base/layout.css');
+@import url('style-base/typography.css');
+@import url('style-base/forms.css');
+@import url('style-base/table.css');
+@import url('style-base/images.css');
+@import url('style-base/onglets.css');
+@import url('style-base/ascii.css');
+@import url('style-base/page-title.css');
 
 /* === 🧩 Composants UI (blocs, boutons, menus) === */
-@import url('/assets/css/style-base/components.css');
-@import url('/assets/css/style-base/menu.css');
-@import url('/assets/css/style-base/menu-mobile.css');
-@import url('/assets/css/style-base/utilities.css');
+@import url('style-base/components.css');
+@import url('style-base/menu.css');
+@import url('style-base/menu-mobile.css');
+@import url('style-base/utilities.css');
 
 /* === 🌠 Modules spéciaux === */
-@import url('/assets/css/style-base/astro.css');         /* badges, intro, animations */
-@import url('/assets/css/lune-svg.css');                 /* widget lunaire */
+@import url('style-base/astro.css');         /* badges, intro, animations */
+@import url('lune-svg.css');                 /* widget lunaire */
 
 /* === 🧾 Viewers (blog + atelier) === */
-@import url('/assets/css/style-base/viewer.css');        /* viewer unifié */
-@import url('/assets/css/style-base/blocs.css');         /* style articles */
+@import url('style-base/viewer.css');        /* viewer unifié */
+@import url('style-base/blocs.css');         /* style articles */
 
 /* === 📚 Pages spécifiques === */
-@import url('/assets/css/themes/atelier.css');
-@import url('/assets/css/style-base/blog.css');
-@import url('/assets/css/style-base/checklist.css');
+@import url('themes/atelier.css');
+@import url('style-base/blog.css');
+@import url('style-base/checklist.css');
 
 /* === 🎨 Thèmes dynamiques === */
-@import url('/assets/css/themes/themes.css');
-@import url('/assets/css/themes/theme-cards.css');
+@import url('themes/themes.css');
+@import url('themes/theme-cards.css');
 
 /* === 🎨 Effets dynamiques === */
-@import url("/assets/css/effects/effects-tabs.css");
-@import url("/assets/css/effects/effects-buttons.css");
-@import url("/assets/css/effects/effects-cards.css");
-@import url("/assets/css/effects/effects-headings.css");
+@import url("effects/effects-tabs.css");
+@import url("effects/effects-buttons.css");
+@import url("effects/effects-cards.css");
+@import url("effects/effects-headings.css");
 
 
 /* === 🛡️ Utilitaires divers === */
-@import url('/assets/css/helpers.css');
-@import url('/assets/css/anti-copy.css');
-@import url('/assets/css/cookie.css');
+@import url('helpers.css');
+@import url('anti-copy.css');
+@import url('cookie.css');
 
 
 /* === 📱 Responsive mobile global === */
-@import url('/assets/css/style-base/mobile.css');
+@import url('style-base/mobile.css');
