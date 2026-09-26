@@ -4,14 +4,12 @@
   const root = document.documentElement;
   const body = document.body;
 
-  // Forcer le thème stellaire proprement
-  const toRemove = [...body.classList].filter(c => c.startsWith('theme-') && c !== 'theme-stellaire');
-  toRemove.forEach(c => body.classList.remove(c));
-  body.classList.add('theme-stellaire', 'lab', 'dashboard');
-  root.dataset.theme = 'theme-stellaire';
-  try { localStorage.setItem('codex-theme', 'theme-stellaire'); } catch {}
+  // DashB garde son identité visuelle propre, indépendante des thèmes globaux.
+  [...body.classList].filter(c => c.startsWith('theme-')).forEach(c => body.classList.remove(c));
+  body.classList.add('lab', 'dashboard');
+  delete root.dataset.theme;
 
-  // Retirer un éventuel sélecteur de thème flottant dans ce contexte
+  // Aucun sélecteur de thème dans le dashboard.
   document.querySelectorAll('.theme-switcher,[data-theme-menu],.theme-panel,.theme-list,.theme-fab-container,.theme-overlay,.backdrop-blur')
     .forEach(n => n.remove());
 
@@ -27,21 +25,21 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // 1) UI / compat (#info-*) + miroir + pont d’événements + close-all
   try {
-    await import('dashb/modules/dashboard/ui/init.js');
+    await import('./dashboard/ui/init.js');
   } catch (e) {
     console.warn('⚠️ UI init failed:', e);
   }
 
   // 2) Viewer 3D (planète + lune)
   try {
-    await import('dashb/modules/dashboard/ui/viewer-orb.js');
+    await import('./dashboard/ui/viewer-orb.js');
   } catch (e) {
     console.warn('⚠️ Viewer 3D indisponible:', e);
   }
 
   // 3) Radar (charge aussi tes modules métiers via ses imports)
   try {
-    await import('dashb/modules/dashboard/simul-system.js');
+    await import('./dashboard/simul-system.js');
   } catch (e) {
     console.warn('⚠️ Radar 2D indisponible:', e);
   }
