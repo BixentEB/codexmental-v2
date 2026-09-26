@@ -14,8 +14,8 @@
   --frame-border: 1px;
 
   position: relative;
-  margin-top: 80px;                                   /* sous le bandeau noir */
-  margin-inline: clamp(8px, 2vw, 24px);
+  margin-top: 54px;                                   /* juste sous le menu global */
+  margin-inline: clamp(6px, 1vw, 16px);
   margin-bottom: 10px;                                /* moins d’air en bas */
 
   /* on réserve de l’espace à gauche/droite pour les titres */
@@ -31,9 +31,9 @@
 
 /* ---------- Grille : gouttières fixes + centre fluide ---------- */
 main.dashboard{
-  min-height: calc(100vh - 130px);
+  min-height: calc(100vh - 76px);
   display: grid;
-  grid-template-columns: 360px 1fr 360px;             /* blocs latéraux + centre */
+  grid-template-columns: minmax(0, 300px) minmax(0, 1fr) minmax(0, 300px);             /* blocs latéraux + centre */
   grid-template-rows: auto 1fr auto;
   gap: clamp(10px, 1.2vw, 16px);
   align-items: stretch;
@@ -71,7 +71,7 @@ main.dashboard{
 /* Canvas : centré, ratio respecté, léger décalage vers le bas */
 #simul-system{
   display: block;
-  width: min(100%, 1200px);
+  width: min(100%, 1500px);
   height: auto;
   margin-inline: auto;
   margin-top: 18px;                                   /* équilibre visuel haut/bas */
