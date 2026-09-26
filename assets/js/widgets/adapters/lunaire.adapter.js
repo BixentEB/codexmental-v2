@@ -65,8 +65,8 @@ export function renderViz(d){
   return `
 <svg viewBox="0 0 ${w} ${h}" role="img" aria-label="Phase lunaire">
   <defs>
-    <mask id="moonMask"><rect width="${w}" height="${h}" fill="#000"><circle cx="${cx}" cy="${cy}" r="${R}" fill="#fff"><circle cx="${maskX}" cy="${cy}" r="${R}" fill="#000"></mask>
+    <mask id="moonMask"><rect width="${w}" height="${h}" fill="#000"/><circle cx="${cx}" cy="${cy}" r="${R}" fill="#fff"/><circle cx="${maskX}" cy="${cy}" r="${R}" fill="#000"/></mask>
   </defs>
-  <circle class="aw-moon-disk" cx="${cx}" cy="${cy}" r="${R}" mask="url(#moonMask)">
+  <circle class="aw-moon-disk" cx="${cx}" cy="${cy}" r="${R}" mask="url(#moonMask)"/>
 </svg>`;
 }
