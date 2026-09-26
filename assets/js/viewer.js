@@ -1,9 +1,17 @@
 // viewer.js — Codex Mental (Blog + Atelier) — build 2025-09-16
 
 document.addEventListener('DOMContentLoaded', () => {
-  const isBlog   = window.location.pathname.includes('/blog');
+  const isBlog   = window.location.pathname.includes('/blog/');
   const paramKey = isBlog ? 'article' : 'projet';
-  const basePath = isBlog ? '/blog/articles/' : '/atelier/';
+
+  // Résoudre les fragments depuis la page qui les héberge.
+  // Blog :    blog/articles/...
+  // Atelier : atelier/...
+  // Cela fonctionne aussi bien sur codexmental.com que sous /codexmental-v2/ sur GitHub Pages.
+  const pageDir = new URL('./', window.location.href);
+  const basePath = isBlog
+    ? new URL('articles/', pageDir).href
+    : pageDir.href;
 
   const menuEl   = document.getElementById('viewer-menu');
   const viewerEl = document.getElementById('article-viewer');
