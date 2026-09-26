@@ -51,7 +51,7 @@ export function renderMoonDetails({ planetKey }) {
     return `
       <div class="moon-block">
         <p><strong>${m.name}</strong></p>
-        ${m.image ? `<img src="/dashb/modules/dashboard/img/moons/${m.image}" alt="${m.name}" style="max-width: 80px; border-radius: 8px;" />` : ''}
+        ${m.image ? `<img src="dashb/modules/dashboard/img/moons/${m.image}" alt="${m.name}" style="max-width: 80px; border-radius: 8px;" />` : ''}
         <p>Diamètre : ${m.diameter || '—'}</p>
         <p>Orbite : ${m.orbit || '—'}</p>
         ${m.period ? `<p>Période orbitale : ${m.period}</p>` : ''}
