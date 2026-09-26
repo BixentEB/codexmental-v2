@@ -1,7 +1,7 @@
 // /assets/js/widgets/astro-shell.js
-import * as Sky from 'assets/js/widgets/adapters/sky.adapter.js';
-import * as Solaire from 'assets/js/widgets/adapters/solaire.adapter.js';
-import * as Lunaire from 'assets/js/widgets/adapters/lunaire.adapter.js';
+import * as Sky from '/assets/js/widgets/adapters/sky.adapter.js';
+import * as Solaire from '/assets/js/widgets/adapters/solaire.adapter.js';
+import * as Lunaire from '/assets/js/widgets/adapters/lunaire.adapter.js';
 
 const REGISTRY = { sky: Sky, solaire: Solaire, lunaire: Lunaire };
 
@@ -117,13 +117,13 @@ const Shell = {
       <svg viewBox="0 0 360 150" aria-hidden="true">
         <defs>
           <radialGradient id="awPulse" cx="50%" cy="50%">
-            <stop offset="0%" stop-color="#fff" stop-opacity=".35">
-            <stop offset="100%" stop-color="#fff" stop-opacity="0">
+            <stop offset="0%" stop-color="#fff" stop-opacity=".35"/>
+            <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
           </radialGradient>
         </defs>
         <circle cx="180" cy="75" r="28" fill="url(#awPulse)">
-          <animate attributeName="r" values="20;34;20" dur="4s" repeatCount="indefinite">
-          <animate attributeName="opacity" values=".7;.25;.7" dur="4s" repeatCount="indefinite">
+          <animate attributeName="r" values="20;34;20" dur="4s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values=".7;.25;.7" dur="4s" repeatCount="indefinite"/>
         </circle>
       </svg>
     `;
