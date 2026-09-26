@@ -121,7 +121,7 @@ function handleThemeChange(currentTheme) {
 
   // ———— GALACTIQUE (inchangé pour l’instant)
   if (currentTheme === "galactique") {
-    fetch('/arc/events-astro-2025.json')
+    fetch(new URL('../../arc/events-astro-2025.json', import.meta.url))
       .then(res => res.json())
       .then(data => {
         afficherNoteAstro(data, currentTheme);
@@ -152,6 +152,17 @@ export function initThemeObserver() {
 
   observer.observe(document.body, { attributes: true, attributeFilter: ["class", "data-effective-theme"] });
 
+  // Le changement manuel de thème modifie classe + dataset très vite ; cet événement
+  // garantit que le bandeau Astro suit toujours le thème effectivement sélectionné.
+  document.body.addEventListener('codex:themechange', () => {
+    const currentTheme = detectCurrentTheme();
+    if (!currentTheme || currentTheme === previousTheme) return;
+    previousTheme = currentTheme;
+    handleThemeChange(currentTheme);
+  });
+
   // Activation initiale
-  handleThemeChange(detectCurrentTheme());
+  const initialTheme = detectCurrentTheme();
+  previousTheme = initialTheme;
+  handleThemeChange(initialTheme);
 }
