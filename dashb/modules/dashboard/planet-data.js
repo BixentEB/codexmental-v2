@@ -18,7 +18,7 @@ export function updatePlanetUI(data = {}, planetKey = null) {
   const symbolTarget = document.getElementById('planet-symbol');
   if (symbolTarget) {
     symbolTarget.innerHTML = data.symbolImg
-      ? `<img src="/dashb/modules/dashboard/img/symbols/${data.symbolImg}" alt="${data.name}" class="symbol-img">`
+      ? `<img src="dashb/modules/dashboard/img/symbols/${data.symbolImg}" alt="${data.name}" class="symbol-img">`
       : `<span class="symbol-text">${data.symbol || ""}</span>`;
   }
 
