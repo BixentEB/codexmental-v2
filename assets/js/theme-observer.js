@@ -3,7 +3,7 @@
 // (ajout du thème 'sky' et prise en charge de l’alias 'theme-main')
 // ========================================================
 
-import { afficherNoteAstro, lancerIntroAstro, setCurrentAlertText } from "/assets/js/intro-astro.js";
+import { afficherNoteAstro, lancerIntroAstro, setCurrentAlertText } from "./intro-astro.js";
 
 /**
  * Retourne un identifiant de thème normalisé :
@@ -56,8 +56,8 @@ function handleThemeChange(currentTheme) {
     console.log("🌙 Thème lunaire : chargement modules...");
     Promise.all([
       import("https://esm.sh/suncalc"),
-      import("/assets/js/newmoon.js"),
-      import("/assets/js/astro-lunaire.js")
+      import("./newmoon.js"),
+      import("./astro-lunaire.js")
     ])
       .then(([SunCalcModule, moonModule, lunarModule]) => {
         moonModule.updateNewMoonWidget(SunCalcModule.default);
@@ -77,7 +77,7 @@ function handleThemeChange(currentTheme) {
     console.log("☀️ Thème solaire : chargement des données SunCalc...");
     Promise.all([
       import("https://esm.sh/suncalc"),
-      import("/assets/js/astro-solaire.js")
+      import("./astro-solaire.js")
     ])
       .then(([SunCalcModule, solarModule]) => {
         if (typeof solarModule.getSunInfo === "function") {
@@ -105,7 +105,7 @@ function handleThemeChange(currentTheme) {
   // ———— STELLAIRE
   if (currentTheme === "stellaire") {
     console.log("🌟 Thème stellaire : calcul des planètes visibles...");
-    import("/assets/js/astro-stellaire.js")
+    import("./astro-stellaire.js")
       .then(mod => mod.getStellarInfo())
       .then(text => {
         setCurrentAlertText(text || "🪐 Aucune donnée stellaire.");
