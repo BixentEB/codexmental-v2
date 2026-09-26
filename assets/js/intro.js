@@ -50,8 +50,8 @@ function startCanvas() {
   animateStars();
 }
 
-// Bouton Entrer → force le thème favori (alias 'theme-main')
+// Bouton Entrer → ouvre simplement l'accueil
 document.getElementById('enter-btn')?.addEventListener('click', (e) => {
   e.preventDefault();
-  window.location.href = "/home.html?forceTheme=main";
+  window.location.href = new URL("../../home.html", import.meta.url).href;
 });
