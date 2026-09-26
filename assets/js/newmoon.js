@@ -111,6 +111,7 @@ export function updateNewMoonWidget() {
 
   // Texture résolue depuis le module lui-même.
   const moonTexture = new URL("../../img/lune/lune-pleine.png", import.meta.url).href;
+  console.log("🌙 Texture lunaire :", moonTexture);
 
   // Conteneur
   const container = document.createElement("div");
