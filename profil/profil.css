@@ -481,3 +481,14 @@ body.theme-solaire .icon-btn {
 .creation-flow{min-height:150px;display:flex;align-items:center;justify-content:center;gap:14px;padding:18px;background:linear-gradient(90deg,rgba(18,38,64,.7),rgba(33,17,54,.7))}.creation-flow span{display:flex;flex-direction:column;align-items:center;gap:7px;min-width:105px;font-size:1.45rem;animation:creationStep 7.5s ease-in-out infinite}.creation-flow span b{font:600 .58rem 'Orbitron',sans-serif;color:#b9ddff;letter-spacing:.08em}.creation-flow i{font-style:normal;color:var(--accent-primary,#8bbcff);opacity:.4;font-size:1.6rem}.creation-flow span:nth-of-type(2){animation-delay:1.5s}.creation-flow span:nth-of-type(3){animation-delay:3s}.creation-flow span:nth-of-type(4){animation-delay:4.5s}.creation-flow span:nth-of-type(5){animation-delay:6s}@keyframes creationStep{0%,18%,100%{transform:scale(1);filter:none}8%{transform:scale(1.14);filter:drop-shadow(0 0 9px rgba(116,195,255,.65))}}
 @media(max-width:640px){.civ-visual,.imagination-visual,.concept-map{height:230px}.creation-flow{flex-wrap:wrap;gap:8px}.creation-flow span{min-width:72px}.creation-flow i{font-size:1rem}.thought{font-size:.5rem}.concept-node{font-size:.52rem}}
 @media(prefers-reduced-motion:reduce){.civ-mist,.imagination-visual path,.idea-core,.concept-node,.creation-flow span{animation-play-state:paused}}
+
+/* Imagination V2 — arborescence élargie */
+.imagination-tree{height:330px;background:radial-gradient(circle at 50% 50%,rgba(131,73,173,.24),transparent 30%),radial-gradient(circle at 18% 52%,rgba(54,105,180,.09),transparent 26%),#050817}
+.imagination-tree .idea-core{padding:18px 13px;font-size:.72rem}
+.imagination-tree .root-music{left:8%;top:10%}.imagination-tree .root-emotion{left:5%;top:32%}.imagination-tree .root-memory{left:6%;bottom:29%}.imagination-tree .root-question{left:9%;bottom:8%}
+.imagination-tree .branch-scene{right:16%;top:8%}.imagination-tree .branch-character{right:5%;top:27%}.imagination-tree .branch-world{right:4%;top:48%}.imagination-tree .branch-idea{right:5%;bottom:24%}.imagination-tree .branch-text{right:14%;bottom:7%}.imagination-tree .branch-create{right:31%;top:44%}
+.imagination-tree .thought{animation:thoughtBreathe 5.5s ease-in-out infinite}.imagination-tree .thought:nth-of-type(2n){animation-delay:-2.2s}.imagination-tree .thought:nth-of-type(3n){animation-delay:-3.7s}
+.imagination-note{position:absolute;z-index:3;left:50%;bottom:8px;transform:translateX(-50%);width:70%;text-align:center;font-size:.62rem;color:#c9d9ff;opacity:.42}
+@keyframes thoughtBreathe{50%{box-shadow:0 0 22px rgba(151,76,218,.28);filter:brightness(1.16)}}
+@media(max-width:640px){.imagination-tree{height:310px}.imagination-tree .thought{font-size:.45rem;padding:5px 6px}.imagination-note{width:90%;font-size:.52rem}}
+@media(prefers-reduced-motion:reduce){.imagination-tree .thought{animation-play-state:paused}}
