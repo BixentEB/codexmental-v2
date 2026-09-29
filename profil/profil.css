@@ -508,3 +508,23 @@ body.theme-solaire .icon-btn {
 .concept-map-expanded{height:500px;min-height:500px}
 .concept-map-expanded .concept-node{margin:0!important;animation:none}
 .concept-map-expanded .n1{left:6%;top:8%}.concept-map-expanded .n2{right:5%;top:8%}.concept-map-expanded .n3{left:27%;top:22%}.concept-map-expanded .n4{right:25%;top:22%}.concept-map-expanded .n5{left:5%;top:43%}.concept-map-expanded .n6{right:4%;top:43%}.concept-map-expanded .n7{left:18%;top:58%}.concept-map-expanded .n8{right:17%;top:58%}.concept-map-expanded .n9{left:5%;bottom:9%}.concept-map-expanded .n10{right:4%;bottom:9%}.concept-map-expanded .n11{left:27%;bottom:4%}.concept-map-expanded .n12{right:26%;bottom:4%}.concept-map-expanded .n13{left:43%;top:6%}.concept-map-expanded .n14{left:43%;bottom:24%}.concept-map-expanded .n15{left:4%;top:25%}.concept-map-expanded .n16{right:7%;top:26%}
+
+
+/* Concepts — nuage d'idées ouvert */
+.idea-cloud{position:relative;width:min(100%,920px);height:520px;margin:2rem auto 2.4rem;overflow:hidden;border:1px solid color-mix(in srgb,var(--accent-primary,#66ccff) 26%,transparent);border-radius:18px;background:radial-gradient(circle at 52% 46%,rgba(46,144,195,.10),transparent 38%),rgba(2,8,19,.68)}
+.idea-cloud:before{content:"";position:absolute;inset:0;background-image:radial-gradient(circle,rgba(255,255,255,.52) 0 1px,transparent 1.25px);background-size:73px 61px;opacity:.16;pointer-events:none}
+.idea-cloud .idea{position:absolute;z-index:2;white-space:nowrap;font-family:'Orbitron',sans-serif;transform:translate(-50%,-50%);transition:filter .25s ease,transform .25s ease}
+.idea-cloud .concept{display:flex;flex-direction:column;gap:4px;text-align:center;color:#aee6ff;text-shadow:0 0 12px rgba(79,191,255,.16);animation:ideaDrift 8s ease-in-out infinite}
+.idea-cloud .concept b{font-size:.68rem;font-weight:500;letter-spacing:.035em}
+.idea-cloud .concept small{font-size:.46rem;letter-spacing:.08em;color:#718da5;opacity:.9}
+.idea-cloud .concept:hover{filter:brightness(1.35);transform:translate(-50%,-50%) scale(1.08)}
+.idea-cloud .impulse{font-size:.58rem;letter-spacing:.08em;color:#ff6ca8;opacity:.55;font-style:italic;animation:impulseGlow 6s ease-in-out infinite}
+.idea-cloud .c1{left:11%;top:13%}.idea-cloud .c2{left:82%;top:12%;animation-delay:-2s}.idea-cloud .c3{left:31%;top:25%;animation-delay:-4s}.idea-cloud .c4{left:66%;top:25%;animation-delay:-1s}
+.idea-cloud .c5{left:11%;top:38%;animation-delay:-5s}.idea-cloud .c6{left:86%;top:38%;animation-delay:-3s}.idea-cloud .c7{left:24%;top:49%;animation-delay:-1.5s}.idea-cloud .c8{left:74%;top:50%;animation-delay:-4.5s}
+.idea-cloud .c9{left:12%;top:65%;animation-delay:-2.5s}.idea-cloud .c10{left:87%;top:65%;animation-delay:-.5s}.idea-cloud .c11{left:30%;top:76%;animation-delay:-3.5s}.idea-cloud .c12{left:67%;top:77%;animation-delay:-5.5s}
+.idea-cloud .c13{left:48%;top:12%;animation-delay:-1.2s}.idea-cloud .c14{left:49%;top:62%;animation-delay:-4.2s}.idea-cloud .c15{left:17%;top:83%;animation-delay:-2.2s}.idea-cloud .c16{left:84%;top:84%;animation-delay:-3.2s}
+.idea-cloud .i1{left:50%;top:39%;font-size:.82rem;opacity:.82}.idea-cloud .i2{left:40%;top:45%}.idea-cloud .i3{left:59%;top:47%}.idea-cloud .i4{left:39%;top:57%}.idea-cloud .i5{left:61%;top:58%}.idea-cloud .i6{left:49%;top:90%}.idea-cloud .i7{left:49%;top:72%;font-size:.7rem;opacity:.72}.idea-cloud .i8{left:50%;top:25%}
+@keyframes ideaDrift{0%,100%{translate:0 0}50%{translate:0 -5px}}
+@keyframes impulseGlow{0%,100%{opacity:.38}50%{opacity:.78;text-shadow:0 0 12px rgba(255,83,151,.45)}}
+@media(max-width:640px){.idea-cloud{height:600px}.idea-cloud .concept b{font-size:.53rem}.idea-cloud .concept small{font-size:.37rem}.idea-cloud .impulse{font-size:.46rem}.idea-cloud .c3{left:28%}.idea-cloud .c4{left:70%}.idea-cloud .c7{left:22%}.idea-cloud .c8{left:76%}}
+@media(prefers-reduced-motion:reduce){.idea-cloud .idea{animation-play-state:paused}}
