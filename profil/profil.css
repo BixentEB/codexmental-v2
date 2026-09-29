@@ -492,3 +492,12 @@ body.theme-solaire .icon-btn {
 @keyframes thoughtBreathe{50%{box-shadow:0 0 22px rgba(151,76,218,.28);filter:brightness(1.16)}}
 @media(max-width:640px){.imagination-tree{height:310px}.imagination-tree .thought{font-size:.45rem;padding:5px 6px}.imagination-note{width:90%;font-size:.52rem}}
 @media(prefers-reduced-motion:reduce){.imagination-tree .thought{animation-play-state:paused}}
+
+/* Concepts — constellation étendue */
+.concept-map-expanded{height:430px;min-height:430px}
+.concept-map-expanded .concept-core{z-index:4}
+.concept-map-expanded .concept-node{font-size:.58rem;padding:7px 9px;white-space:nowrap}
+.concept-map-expanded .n1{left:6%;top:10%}.concept-map-expanded .n2{right:5%;top:9%}.concept-map-expanded .n3{left:27%;top:21%}.concept-map-expanded .n4{right:25%;top:21%}.concept-map-expanded .n5{left:5%;top:39%}
+.concept-map-expanded .n6{right:4%;top:38%}.concept-map-expanded .n7{left:17%;top:54%}.concept-map-expanded .n8{right:16%;top:54%}.concept-map-expanded .n9{left:4%;bottom:13%}.concept-map-expanded .n10{right:4%;bottom:12%}
+.concept-map-expanded .n11{left:26%;bottom:5%}.concept-map-expanded .n12{right:25%;bottom:4%}.concept-map-expanded .n13{left:40%;top:7%}.concept-map-expanded .n14{left:40%;bottom:20%}.concept-map-expanded .n15{left:2%;top:24%}.concept-map-expanded .n16{right:8%;top:26%}
+@media(max-width:640px){.concept-map-expanded{height:500px;min-height:500px}.concept-map-expanded .concept-node{font-size:.43rem;padding:5px 6px}.concept-map-expanded .n3{left:20%}.concept-map-expanded .n4{right:18%}.concept-map-expanded .n13{left:35%}.concept-map-expanded .n14{left:35%}}
