@@ -366,11 +366,31 @@ body.theme-solaire .icon-btn {
 }
 .cosmos-system {
   position: absolute;
+  z-index: 3;
   left: 51%;
   top: 47%;
   width: 18px;
   height: 18px;
   animation: cosmosVoyage 18s linear infinite;
+}
+.cosmos-system::before {
+  content: "";
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  width: 145px;
+  height: 3px;
+  transform: translateY(-50%) rotate(-8deg);
+  transform-origin: right center;
+  border-radius: 50%;
+  background: linear-gradient(90deg, transparent, rgba(105,174,255,.08) 28%, rgba(160,211,255,.42) 72%, rgba(255,230,151,.72));
+  filter: blur(1.6px);
+  opacity: .62;
+  box-shadow:
+    -28px 7px 0 -1px rgba(123,185,255,.18),
+    -62px -5px 0 -1px rgba(255,255,255,.12);
+  pointer-events: none;
+  z-index: -1;
 }
 .cosmos-sun {
   position: absolute;
