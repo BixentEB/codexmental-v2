@@ -1,23 +1,38 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lab · Codex Mental</title>
-  <link rel="stylesheet" href="../assets/css/main.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lab – Codex Mental</title>
+
+  <link rel="icon" href="../img/logo/favicon-96x96.png" sizes="96x96" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <script type="module" src="../assets/js/main.js"></script>
 </head>
-<body>
-  <div id="menu-container"></div>
-  <main style="max-width:1100px;margin:0 auto;padding:8rem 2rem 4rem;">
-    <p style="opacity:.65;letter-spacing:.14em;">CODEX MENTAL · LAB</p>
-    <h1>🧪 Lab</h1>
-    <p>Applications, outils, interfaces et expérimentations qui ont quitté le stade de l’idée pour devenir quelque chose d’utilisable.</p>
-    <section style="margin-top:2.5rem;">
+
+<body class="theme-stellaire">
+  <canvas id="theme-canvas" style="position:fixed; top:0; left:0; z-index:-1;"></canvas>
+
+  <!-- Menu global injecté par main.js, comme Blog / Atelier -->
+  <header id="menu-placeholder"></header>
+
+  <main class="container" style="padding-top:7rem;padding-bottom:4rem;">
+    <div class="title-chip"><span>🧪 LAB · CRÉATIONS</span></div>
+
+    <section class="bloc">
+      <p class="profil-kicker">CODEX MENTAL · LAB</p>
+      <h1>🧪 Lab</h1>
+      <p>Applications, outils, interfaces et expérimentations qui ont quitté le stade de l’idée pour devenir quelque chose d’utilisable.</p>
+    </section>
+
+    <section class="bloc">
       <h2>🌌 ChatGPT · Ciel étoilé</h2>
       <p>Premier objet du Lab : une personnalisation CSS conçue pour transformer l’interface de ChatGPT en espace de travail nocturne et étoilé.</p>
       <p><small>Première fiche en préparation.</small></p>
     </section>
   </main>
-  <script type="module" src="../assets/js/main.js"></script>
+
+  <div id="footer-placeholder"></div>
 </body>
 </html>
