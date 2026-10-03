@@ -1,7 +1,93 @@
-<div class="bloc-cadre">
-<header><p class="profil-kicker">PASSIONS · FASCINATIONS</p><h2>🏰 Les choses qui m’attirent sans toujours s’expliquer</h2><p class="accent-text-soft">Certaines passions commencent par une question. D’autres par une attraction immédiate dont je ne connais pas forcément la raison.</p></header>
-<section><h3>Les châteaux et les lieux</h3><p>J’ai toujours aimé les châteaux, les architectures anciennes et les lieux capables de donner l’impression qu’ils portent encore leur histoire. Certains provoquent quelque chose de beaucoup plus personnel : le Château Frontenac, par exemple, possède sur moi un effet que je sais constater sans vraiment savoir l’expliquer.</p></section>
-<section><h3>Habiter et partir</h3><p>Les bateaux, notamment les yachts, me fascinent également. Il y a quelque chose qui me plaît dans l’idée d’un espace que l’on organise comme un lieu de vie mais qui, contrairement à une maison, peut partir explorer.</p><p>Ce principe se retrouve jusque dans les univers que j’aime imaginer : bases, vaisseaux, refuges, lieux mobiles ou isolés à partir desquels on peut découvrir le monde autour.</p></section>
-<section><h3>Pas besoin de tout expliquer</h3><p>Je cherche souvent à comprendre pourquoi quelque chose fonctionne sur moi. Mais certaines fascinations résistent à l’analyse. Peut-être n’ont-elles d’ailleurs pas besoin d’être entièrement démontées pour être appréciées.</p></section>
-<footer class="profil-intro-signature"><p><strong>Il y a les choses que je cherche. Et celles qui semblent me trouver. 🧭</strong></p></footer>
+<style>
+.fascinations-page{--fasc-glow:rgba(99,190,255,.38)}
+.fascinations-page .fascinations-lead{max-width:780px;margin-bottom:1.5rem}
+.fascinations-gallery{display:grid;grid-template-columns:1.35fr .65fr;grid-template-rows:260px 220px;gap:14px;margin:1.8rem 0}
+.fascination-window{position:relative;overflow:hidden;border-radius:22px;isolation:isolate;background:#07111d;border:1px solid rgba(147,210,255,.18);box-shadow:0 18px 45px rgba(0,0,0,.28)}
+.fascination-window::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,transparent 25%,rgba(2,7,15,.2) 48%,rgba(2,7,15,.92) 100%);pointer-events:none}
+.fascination-window img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 1.2s cubic-bezier(.2,.7,.2,1),filter 1.2s ease}
+.fascination-window:hover img{transform:scale(1.045);filter:saturate(1.08) contrast(1.03)}
+.fascination-window.frontenac{grid-row:1 / span 2}
+.fascination-window.frontenac img{object-position:center 45%}
+.fascination-caption{position:absolute;z-index:2;left:22px;right:22px;bottom:18px;text-shadow:0 2px 14px #000}
+.fascination-caption small{display:block;font:600 .68rem/1.2 Orbitron,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#8fd5ff;margin-bottom:.35rem}
+.fascination-caption strong{display:block;font-size:1.18rem;color:#fff;margin-bottom:.25rem}
+.fascination-caption span{display:block;color:rgba(238,247,255,.82);font-size:.9rem;line-height:1.4}
+.fascination-window.mystery{background:
+ radial-gradient(circle at 72% 32%,rgba(137,85,255,.32),transparent 18%),
+ radial-gradient(circle at 30% 64%,rgba(36,177,255,.24),transparent 22%),
+ radial-gradient(circle at 50% 50%,rgba(255,255,255,.07) 0 1px,transparent 1.5px) 0 0/23px 23px,
+ linear-gradient(145deg,#07101f,#130d27 60%,#050a12)}
+.fascination-window.mystery::before{content:"?";position:absolute;inset:0;display:grid;place-items:center;font:300 7rem/1 Orbitron,sans-serif;color:rgba(255,255,255,.07);text-shadow:0 0 35px rgba(126,104,255,.3);animation:fascPulse 5s ease-in-out infinite}
+@keyframes fascPulse{50%{transform:scale(1.08);opacity:.65}}
+.fascinations-thoughts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.2rem;margin-top:1.6rem}
+.fascinations-thoughts section{margin:0;padding:0 0 0 1rem;border-left:2px solid rgba(108,199,255,.35)}
+.fascinations-thoughts h3{margin-top:0}
+.fascination-credit{font-size:.72rem;opacity:.55;margin-top:.7rem}
+@media(max-width:760px){
+ .fascinations-gallery{grid-template-columns:1fr;grid-template-rows:none}
+ .fascination-window,.fascination-window.frontenac{grid-row:auto;min-height:250px}
+ .fascination-window.frontenac{min-height:340px}
+ .fascinations-thoughts{grid-template-columns:1fr}
+}
+</style>
+
+<div class="bloc-cadre fascinations-page">
+<header class="fascinations-lead">
+<p class="profil-kicker">PASSIONS · FASCINATIONS</p>
+<h2>🏰 Ce qui m’attire avant même que je sache pourquoi</h2>
+<p class="accent-text-soft">Il y a ce que je cherche à comprendre. Et puis il y a ces lieux, ces horizons et ces idées qui provoquent d’abord quelque chose — l’explication vient après, si elle vient.</p>
+</header>
+
+<div class="fascinations-gallery" aria-label="Galerie de fascinations">
+<figure class="fascination-window frontenac">
+<img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Panoramic_view_of_Chateau_Frontenac_from_Levis_2.png?width=1600" alt="Québec et le Château Frontenac vus depuis Lévis" loading="lazy">
+<figcaption class="fascination-caption">
+<small>Lieux · architectures</small>
+<strong>Le Château Frontenac</strong>
+<span>Un lieu que je n’ai pas seulement voulu voir : il produit sur moi un effet que je constate sans vraiment savoir l’expliquer.</span>
+</figcaption>
+</figure>
+
+<figure class="fascination-window">
+<img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Ocean_horizon_view_(Unsplash).jpg?width=1200" alt="Horizon marin" loading="lazy">
+<figcaption class="fascination-caption">
+<small>Habiter · partir</small>
+<strong>Un chez-soi qui peut explorer</strong>
+<span>Bateaux, yachts, bases, refuges, vaisseaux : habiter quelque part sans renoncer au départ.</span>
+</figcaption>
+</figure>
+
+<figure class="fascination-window mystery">
+<figcaption class="fascination-caption">
+<small>Mystère · inconnu</small>
+<strong>Ne pas tout expliquer trop vite</strong>
+<span>Le « je ne sais pas » n’est pas une fin. C’est parfois exactement l’endroit où commence la fascination.</span>
+</figcaption>
+</figure>
+</div>
+
+<div class="fascinations-thoughts">
+<section>
+<h3>🏰 Les lieux qui semblent porter quelque chose</h3>
+<p>J’ai toujours aimé les châteaux, les architectures anciennes et les endroits capables de donner l’impression qu’ils portent encore leur histoire. Certains dépassent la simple beauté : ils déclenchent une sensation, une énergie ou une envie de rester là quelques minutes de plus.</p>
+</section>
+<section>
+<h3>🌊 Habiter l’exploration</h3>
+<p>Les bateaux — notamment les yachts — me fascinent aussi pour une raison très différente : ce sont des lieux de vie capables de partir. Cette idée revient jusque dans les univers que j’aime imaginer ou construire : bases, refuges, vaisseaux, lieux mobiles ou isolés depuis lesquels découvrir ce qui se trouve autour.</p>
+</section>
+<section>
+<h3>🌌 Le vertige des horizons</h3>
+<p>La mer, le ciel, les étoiles, les profondeurs : j’aime les espaces qui donnent immédiatement l’impression qu’il existe davantage au-delà de ce que je vois. Ils appellent autant l’exploration que l’imagination.</p>
+</section>
+<section>
+<h3>✨ Garder une place pour l’inexpliqué</h3>
+<p>Mon premier réflexe est souvent de chercher comment quelque chose fonctionne. Mais je n’ai pas besoin de transformer chaque fascination en certitude. Certaines questions peuvent rester ouvertes, être observées, confrontées au réel — et continuer malgré tout à faire rêver.</p>
+</section>
+</div>
+
+<p class="fascination-credit">Images : Château Frontenac — Wilfredor, CC0 · Horizon marin — image CC0 via Wikimedia Commons.</p>
+
+<footer class="profil-intro-signature">
+<p><strong>Il y a les choses que je cherche. Et celles qui semblent me trouver. 🧭</strong></p>
+</footer>
 </div>
