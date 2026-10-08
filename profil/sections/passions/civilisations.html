@@ -1,5 +1,25 @@
+<style>
+.civil-gallery{display:grid;grid-template-columns:1.25fr .75fr;grid-template-rows:220px 220px;gap:14px;margin:1.6rem 0 2rem}
+.civil-card{position:relative;overflow:hidden;border-radius:18px;min-height:180px;background:#172331;isolation:isolate;box-shadow:0 12px 32px #0005}
+.civil-card:first-child{grid-row:span 2}
+.civil-card img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s}
+.civil-card:hover img{transform:scale(1.045)}
+.civil-card:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(4,11,23,.91),transparent 75%)}
+.civil-caption{position:absolute;z-index:1;bottom:20px;left:22px;right:20px;color:#fff;text-shadow:0 2px 8px #000}
+.civil-caption small{display:block;color:#c5eaff;letter-spacing:.12em;font-size:.7rem;font-weight:800;margin-bottom:7px}
+.civil-caption strong{display:block;font-size:clamp(1.15rem,2.5vw,1.75rem);line-height:1.18}
+.civil-caption span{display:block;font-size:.9rem;margin-top:8px;line-height:1.4}
+.civil-myth{background:radial-gradient(ellipse at 55% 20%,#567b92 0%,#243b57 38%,#11152e 75%);}
+.civil-myth:before{content:"✧";position:absolute;top:4%;right:12%;font-size:8rem;color:#d5e8f62b}
+.civil-credit{font-size:.74rem;opacity:.65;margin-top:-1.4rem;margin-bottom:1.5rem}
+@media(max-width:700px){.civil-gallery{grid-template-columns:1fr;grid-template-rows:auto}.civil-card,.civil-card:first-child{grid-row:auto;height:235px}.civil-card:first-child{height:310px}}
+</style>
 <div class="bloc-cadre">
-<header><p class="profil-kicker">PASSIONS · CIVILISATIONS</p><h2>🏛️ Chercher les traces</h2><p class="accent-text-soft">L’Histoire m’intéresse moins comme une suite de dates que comme une immense accumulation de traces, de choix, de répétitions et de questions.</p></header>
+<header><p class="profil-kicker">PASSIONS · CIVILISATIONS</p><h2>🏛️ Chercher les traces</h2><p class="accent-text-soft">L’Histoire m’intéresse moins comme une suite de dates que comme une immense accumulation de traces, de choix, de répétitions et de questions.</p></header><div class="civil-gallery" aria-label="Regards sur les civilisations">
+<figure class="civil-card"><img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Pyramids_in_Giza_-_Egypt.jpg?width=1600" alt="Pyramides de Gizeh sous le ciel égyptien"><figcaption class="civil-caption"><small>ÉGYPTE · MÉMOIRE DE PIERRE</small><strong>Des millénaires qui nous regardent</strong><span>Des monuments encore présents, longtemps après ceux qui les ont imaginés.</span></figcaption></figure>
+<figure class="civil-card"><img loading="lazy" src="https://images.unsplash.com/photo-1461360370896-922624d12aa1?auto=format&amp;fit=crop&amp;w=1100&amp;q=85" alt="Vestiges anciens, témoins du passé"><figcaption class="civil-caption"><small>ARCHÉOLOGIE · TRACES</small><strong>Lire ce qui demeure</strong></figcaption></figure>
+<figure class="civil-card civil-myth"><figcaption class="civil-caption"><small>MYTHES · RÉCITS</small><strong>Au-delà des sources</strong><span>Atlantide, Mu, Hyperborée : l'imaginaire, sans confusion avec l'Histoire établie.</span></figcaption></figure>
+</div><p class="civil-credit">Photographies : Wikimedia Commons et Unsplash · illustration mythique originale en CSS.</p>
 <section><h3>Ce qui reste</h3><p>Depuis l’enfance, je suis fasciné par l’Histoire et l’archéologie : comprendre comment des sociétés vivaient, ce qu’elles construisaient, ce qu’elles croyaient savoir et ce qu’elles ont laissé derrière elles.</p><p>L’Égypte occupe une place particulière dans cette fascination. Ses monuments, ses symboles, son rapport au temps et la quantité de traces qui nous sont parvenues donnent l’impression étrange de pouvoir encore dialoguer, à des millénaires de distance, avec une civilisation disparue.</p></section>
 <section><h3>Entre Histoire et légende</h3><p>Les cités mythiques m’attirent également : Atlantis, Mu, Hyperborée… Je ne les place pas sur le même plan que les sites établis par l’archéologie. Ce qui m’intéresse justement est cette frontière où les sources deviennent fragmentaires, où le récit prend le relais et où il faut distinguer ce que l’on sait, ce que l’on suppose et ce que l’on imagine.</p></section>
 <section><h3>Les schémas</h3><p>Je remarque facilement les mécanismes qui semblent revenir d’une époque à l’autre. Les décors changent, les technologies évoluent, mais certains comportements humains paraissent étonnamment persistants.</p><p>Peut-être est-ce aussi pour cela que je regarde autant vers le passé : non pour y vivre, mais pour essayer de mieux lire le présent.</p></section>
