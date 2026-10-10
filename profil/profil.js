@@ -12,6 +12,30 @@ if (burgerBtn && nav) {
   });
 }
 
+
+// Afficher automatiquement l'introduction du chapitre sélectionné.
+function openSectionIntro(section) {
+  const intro = sousMenu.querySelector('button[data-subsection="index"]');
+  if (!intro) return;
+  sousMenu.querySelectorAll('button').forEach(button => button.classList.remove('active'));
+  intro.classList.add('active');
+  fetch(`sections/${section}/index.html`)
+    .then(res => {
+      if (!res.ok) throw new Error("Introduction introuvable");
+      return res.text();
+    })
+    .then(html => {
+      if (sousMenu.dataset.section === section && intro.classList.contains('active')) {
+        visualizer.innerHTML = html;
+      }
+    })
+    .catch(err => {
+      if (sousMenu.dataset.section === section) {
+        visualizer.textContent = `Erreur introduction : ${err.message}`;
+      }
+    });
+}
+
 // 🌟 Boutons du menu SVG
 iconButtons.forEach(btn => {
   btn.addEventListener('click', () => {
@@ -34,6 +58,7 @@ iconButtons.forEach(btn => {
       .then(html => {
         sousMenu.innerHTML = html;
         sousMenu.dataset.section = section; // stocke la section active
+        openSectionIntro(section);
       })
       .catch(err => {
         sousMenu.innerHTML = `<p style="color:red;">Erreur sous-menu : ${err.message}</p>`;
@@ -114,6 +139,7 @@ mobileIconButtons.forEach(btn => {
       .then(html => {
         sousMenu.innerHTML = html;
         sousMenu.dataset.section = section;
+        openSectionIntro(section);
       })
       .catch(err => {
         sousMenu.innerHTML = `<p style="color:red;">Erreur sous-menu : ${err.message}</p>`;
