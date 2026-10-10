@@ -528,3 +528,11 @@ body.theme-solaire .icon-btn {
 @keyframes impulseGlow{0%,100%{opacity:.38}50%{opacity:.78;text-shadow:0 0 12px rgba(255,83,151,.45)}}
 @media(max-width:640px){.idea-cloud{height:600px}.idea-cloud .concept b{font-size:.53rem}.idea-cloud .concept small{font-size:.37rem}.idea-cloud .impulse{font-size:.46rem}.idea-cloud .c3{left:28%}.idea-cloud .c4{left:70%}.idea-cloud .c7{left:22%}.idea-cloud .c8{left:76%}}
 @media(prefers-reduced-motion:reduce){.idea-cloud .idea{animation-play-state:paused}}
+
+
+/* Profil : introduction sur sa propre ligne, puis onglets du chapitre. */
+.sous-menu{display:flex;flex-direction:column;align-items:center;gap:.65rem;width:100%}
+.sous-menu .profil-submenu-intro{width:100%;display:flex;justify-content:center;padding:0 0 .75rem;border-bottom:1px solid color-mix(in srgb,var(--accent-color,#9bcaff) 38%,transparent)}
+.sous-menu .profil-submenu-intro button{font-weight:700}
+.sous-menu .profil-submenu-pages{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:.65rem;width:100%}
+@media(max-width:768px){.sous-menu .profil-submenu-intro,.sous-menu .profil-submenu-pages{max-width:100%}}
