@@ -536,3 +536,6 @@ body.theme-solaire .icon-btn {
 .sous-menu .profil-submenu-intro button{font-weight:700}
 .sous-menu .profil-submenu-pages{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:.65rem;width:100%}
 @media(max-width:768px){.sous-menu .profil-submenu-intro,.sous-menu .profil-submenu-pages{max-width:100%}}
+
+/* Garder les onglets sur une rangée desktop, même si les boutons sont peu nombreux. */
+@media(min-width:769px){.sous-menu .profil-submenu-pages{flex-direction:row;flex-wrap:wrap;gap:.65rem}}
