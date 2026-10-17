@@ -1,73 +1,13 @@
 <style>
-  .ref-visual-grid {
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:16px;
-  margin:1.5rem 0
-  }
-  .ref-visual-grid figure {
-  margin:0;
-  overflow:hidden;
-  border:1px solid rgba(147,200,255,.22);
-  border-radius:16px;
-  background:rgba(14,26,46,.65)
-  }
-  .ref-visual-grid img {
-  display:block;
-  width:100%;
-  height:175px;
-  object-fit:contain;
-  background:rgba(8,16,30,.6);
-  transition:transform .6s ease
-  }
-  .ref-visual-grid figure:hover img {
-  transform:scale(1.04)
-  }
-  .ref-visual-grid figcaption {
-  padding:13px 16px;
-  font-size:.85rem
-  }
-  .ref-visual-grid strong {
-  display:block;
-  color:#a3d9ff;
-  margin-bottom:4px
-  }
-  .ref-photo-note {
-  font-size:.76rem;
-  opacity:.65
-  }
-  @media(max-width:650px) {
-  .ref-visual-grid {
-  grid-template-columns:1fr
-  }
-  }
-  .ref-work-list {
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:12px;
-  margin:18px 0
-  }
-  .ref-work-list article {
-  padding:17px;
-  border:1px solid rgba(147,200,255,.22);
-  border-radius:14px;
-  background:rgba(14,26,46,.65)
-  }
-  .ref-work-list h4 {
-  color:#9fd9ff;
-  margin:0 0 7px
-  }
-  .ref-work-list p {
-  margin:0;
-  line-height:1.65
-  }
-  @media(max-width:650px) {
-  .ref-work-list {
-  grid-template-columns:1fr
-  }
-  }
-  </style>
-<div class="bloc-cadre">
+.works-page .ref-work-list {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:20px 0;}
+.works-page .ref-work-list article {display:grid;grid-template-columns:80px minmax(0,1fr);gap:16px;align-items:center;padding:14px;border:1px solid rgba(147,200,255,.24);border-radius:15px;background:rgba(14,26,46,.65);}
+.works-page .work-symbol {display:grid;place-items:center;height:100px;border-radius:10px;font-size:46px;background:radial-gradient(circle,#2b466c,#0c1629 75%);}
+.works-page .ref-work-list h4 {color:#9fd9ff;margin:0 0 8px;}
+.works-page .ref-work-list p {margin:0;line-height:1.65;}
+.works-page section p,.works-page li {line-height:1.75;}
+@media(max-width:650px){.works-page .ref-work-list{grid-template-columns:1fr}}
+</style>
+<div class="bloc-cadre works-page">
   <header>
     <p class="profil-kicker">RÉFÉRENCES · COLLECTION VIVANTE</p>
     <h2>📖 Livres, œuvres & idées</h2>
@@ -76,26 +16,26 @@
   <section>
     <h3>Des portes vers d'autres univers</h3>
     <div class="ref-work-list">
-      <article>
+      <article><div class="work-symbol" aria-hidden="true">🪞</div><div>
         <h4>Alice & le miroir</h4>
         <p>Lewis Carroll et John Tenniel : passages, jeux de langage et logique renversée.</p>
-      </article>
-      <article>
+      </div></article>
+      <article><div class="work-symbol" aria-hidden="true">🧩</div><div>
         <h4>The Talos Principle</h4>
         <p>Conscience, héritage humain et voix d'Alexandra Drennan. Une œuvre qui m'a profondément marqué.</p>
-      </article>
-      <article>
+      </div></article>
+      <article><div class="work-symbol" aria-hidden="true">🏰</div><div>
         <h4>Le Château ambulant</h4>
         <p>Sophie, l'atelier de chapeaux et le désir de vivre dans un univers dont le quotidien est aussi merveilleux que l'impossible.</p>
-      </article>
-      <article>
+      </div></article>
+      <article><div class="work-symbol" aria-hidden="true">🌪️</div><div>
         <h4>Le Magicien d'Oz</h4>
         <p>Le voyage vers un ailleurs et l'imaginaire du film de 1939, à explorer sans lui prêter une influence plus grande que celle que je lui donne.</p>
-      </article>
-      <article>
+      </div></article>
+      <article><div class="work-symbol" aria-hidden="true">🌑</div><div>
         <h4>Alice: Madness Returns</h4>
         <p>Une interprétation plus sombre d'Alice, à laquelle je suis attaché pour son atmosphère.</p>
-      </article>
+      </div></article>
     </div>
   </section>
   <section>
