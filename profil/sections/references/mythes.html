@@ -1,145 +1,33 @@
 <style>
-  .codex-ref .ref-feature {
-  display:grid;
-  grid-template-columns:minmax(180px,36%) 1fr;
-  gap:24px;
-  align-items:center;
-  margin:24px 0;
-  padding:16px;
-  border:1px solid rgba(160,200,245,.22);
-  border-radius:18px;
-  background:rgba(17,30,50,.24)
-  }
-  .codex-ref .ref-feature:nth-of-type(even) {
-  grid-template-columns:1fr minmax(180px,36%)
-  }
-  .codex-ref .ref-feature:nth-of-type(even) .ref-art {
-  order:2
-  }
-  .codex-ref .ref-art {
-  margin:0;
-  min-width:0
-  }
-  .codex-ref .ref-art img {
-  width:100%;
-  height:auto;
-  max-height:470px;
-  object-fit:contain;
-  display:block;
-  border-radius:10px
-  }
-  .codex-ref .ref-art figcaption {
-  font-size:.75rem;
-  opacity:.7;
-  margin-top:7px
-  }
-  .codex-ref h3 {
-  margin-top:0
-  }
-  .codex-ref .ref-intro {
-  font-size:1.08rem;
-  line-height:1.7
-  }
-  .codex-ref .ref-note {
-  padding:18px;
-  border-left:3px solid #9bc9ff;
-  background:rgba(55,88,128,.18);
-  border-radius:0 12px 12px 0;
-  margin:22px 0
-  }
-  @media(max-width:700px) {
-  .codex-ref .ref-feature,.codex-ref .ref-feature:nth-of-type(even) {
-  grid-template-columns:1fr
-  }
-  .codex-ref .ref-feature:nth-of-type(even) .ref-art {
-  order:0
-  }
-  .codex-ref .ref-art img {
-  max-height:380px
-  }
-  }
-  .codex-ref .ref-feature,.codex-ref .ref-feature:nth-of-type(even) {
-  grid-template-columns:minmax(145px,26%) minmax(0,1fr);
-  align-items:start;
-  gap:20px
-  }
-  .codex-ref .ref-feature:nth-of-type(even) .ref-art {
-  order:0
-  }
-  .codex-ref .ref-art img {
-  max-height:300px
-  }
-  .codex-ref .ref-feature>div {
-  min-width:0
-  }
-  .codex-ref .ref-feature p {
-  line-height:1.75
-  }
-  @media(max-width:700px) {
-  .codex-ref .ref-feature,.codex-ref .ref-feature:nth-of-type(even) {
-  grid-template-columns:minmax(100px,32%) minmax(0,1fr)
-  }
-  }
-  @media(max-width:480px) {
-  .codex-ref .ref-feature,.codex-ref .ref-feature:nth-of-type(even) {
-  grid-template-columns:1fr
-  }
-  .codex-ref .ref-art {
-  max-width:210px
-  }
-  }
-  .codex-ref .ref-feature,.codex-ref .ref-feature:nth-of-type(even) {
-  grid-template-columns:minmax(135px,26%) minmax(0,1fr)!important;
-  gap:17px!important;
-  padding:14px!important
-  }
-  .codex-ref .ref-art img {
-  max-height:240px!important;
-  object-fit:contain!important
-  }
-  .codex-ref .ref-art figcaption {
-  line-height:1.4
-  }
-  .codex-ref .ref-feature p {
-  line-height:1.65
-  }
-  @media(max-width:480px) {
-  .codex-ref .ref-feature,.codex-ref .ref-feature:nth-of-type(even) {
-  grid-template-columns:1fr!important
-  }
-  }
-  </style>
-<div class="bloc-cadre codex-ref">
+.myths-page .ref-feature {display:grid;grid-template-columns:minmax(160px,29%) minmax(0,1fr);gap:18px;align-items:center;padding:17px;margin:17px 0;border:1px solid rgba(155,200,245,.24);border-radius:16px;background:rgba(14,27,49,.55);}
+.myths-page .myth-symbol {display:grid;place-items:center;min-height:175px;font-size:75px;border-radius:12px;background:radial-gradient(circle,#32466e,#101729 75%);}
+.myths-page .ref-feature h3 {margin:0 0 10px;color:#92d4ff;}
+.myths-page .ref-feature p,.myths-page section p {line-height:1.75;}
+.myths-page .ref-note {padding:17px;border-left:3px solid #9bc9ff;background:rgba(50,85,125,.2);}
+@media(max-width:530px){.myths-page .ref-feature{grid-template-columns:1fr}.myths-page .myth-symbol{min-height:125px}}
+</style>
+<div class="bloc-cadre myths-page">
   <header>
     <p class="profil-kicker">RÉFÉRENCES · MYTHOLOGIE</p>
     <h2>🏛️ Figures mythologiques</h2>
     <p class="accent-text-soft ref-intro">Derrière les dieux, les monstres et les légendes, des récits qui questionnent le destin, la justice et les apparences.</p>
   </header>
   <article class="ref-feature">
-    <figure class="ref-art">
-      <img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Strudwick_-_A_Golden_Thread.jpg" alt="Les trois Parques dans une peinture symboliste">
-      <figcaption>John Melhuish Strudwick, A Golden Thread.</figcaption>
-    </figure>
+    <div class="myth-symbol" aria-hidden="true">🧵</div>
     <div>
       <h3>Les Moires / Parques — Le fil du temps</h3>
       <p>Clotho file, Lachésis mesure ou attribue, Atropos coupe. Le destin devient une matière que l'on tisse : quelle place reste-t-il à la liberté ?</p>
     </div>
   </article>
   <article class="ref-feature">
-    <figure class="ref-art">
-      <img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Winged_Isis--Egyptian-saam-1929.8.154_1.jpg" alt="Représentation égyptienne d'Isis">
-      <figcaption>Isis ailée, sculpture égyptienne, Smithsonian American Art Museum (CC0).</figcaption>
-    </figure>
+    <div class="myth-symbol" aria-hidden="true">🪽</div>
     <div>
       <h3>Isis — Le pouvoir du savoir</h3>
       <p>Magicienne, protectrice et fidèle à Osiris, Isis obtient dans un récit le nom secret de Rê. Même l'autorité suprême peut être mise en question par la connaissance.</p>
     </div>
   </article>
   <article class="ref-feature">
-    <figure class="ref-art">
-      <img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Medusa_barney.jpg" alt="Méduse dans une interprétation picturale">
-      <figcaption>Alice Pike Barney, interprétation artistique de Méduse.</figcaption>
-    </figure>
+    <div class="myth-symbol" aria-hidden="true">🐍</div>
     <div>
       <h3>Méduse — Qui a fait d'elle un monstre ?</h3>
       <p>Les représentations archaïques montrent une Gorgone terrifiante, dont le visage sert aussi à protéger. Chez Hésiode, Méduse est la seule Gorgone mortelle. Dans les <em>Métamorphoses</em> d'Ovide, elle est une femme célèbre pour sa beauté, violentée par Neptune dans le temple de Minerve, puis punie par la déesse.</p>
@@ -147,20 +35,14 @@
     </div>
   </article>
   <article class="ref-feature">
-    <figure class="ref-art">
-      <img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Bes_amulet_MET_10.130.1986_front.jpg" alt="Amulette égyptienne de Bès">
-      <figcaption>Amulette de Bès, Metropolitan Museum of Art (CC0).</figcaption>
-    </figure>
+    <div class="myth-symbol" aria-hidden="true">🛡️</div>
     <div>
       <h3>Bès et la Gorgone — Effrayer pour protéger</h3>
       <p>Leurs visages grimaçants rappellent une fonction apotropaïque : repousser le mal par une apparence redoutable. Une ressemblance de fonction ne suffit toutefois pas à établir une filiation directe.</p>
     </div>
   </article>
   <article class="ref-feature">
-    <figure class="ref-art">
-      <img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Beguiling_of_Merlin.jpg" alt="Morgane et Merlin dans la peinture préraphaélite">
-      <figcaption>Edward Burne-Jones, The Beguiling of Merlin.</figcaption>
-    </figure>
+    <div class="myth-symbol" aria-hidden="true">🔮</div>
     <div>
       <h3>Morgane et Merlin — Le savoir ambigu</h3>
       <p>Magie, guérison, enchantement et pouvoir : selon les versions du cycle arthurien, Morgane peut être protectrice ou adversaire. Merlin est à la fois conseiller et personnage lié à l'étrange.</p>
