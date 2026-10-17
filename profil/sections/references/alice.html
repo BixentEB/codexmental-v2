@@ -1,93 +1,102 @@
 <style>
-/* Alice — mise en page éditoriale, sans cadres d'images imposés. */
-.alice-page .alice-hero {
-  margin: 1.5rem 0 2rem;
-  padding: 24px 28px;
-  border-left: 3px solid #86caff;
-  border-radius: 0 12px 12px 0;
-  background: linear-gradient(90deg, rgba(55,104,163,.19), rgba(15,26,48,.1));
-}
-.alice-page .alice-hero h3 { margin: 0 0 10px; color: #91d4ff; }
-.alice-page .alice-hero p { margin: 0; line-height: 1.7; }
-.alice-page .alice-themes {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0,1fr));
-  gap: 24px 32px;
-  margin: 26px 0 32px;
-}
-.alice-page .alice-themes article {
-  min-width: 0;
-  padding: 0 0 0 17px;
-  border-left: 2px solid rgba(131,197,249,.48);
-}
-.alice-page .alice-themes h3 {
-  margin: 0 0 10px;
-  color: #8bd1ff;
-  font-size: 1.06rem;
-}
-.alice-page .alice-themes p { margin: 0; line-height: 1.75; }
-.alice-page section p { line-height: 1.75; }
-@media (max-width: 650px) {
-  .alice-page .alice-themes { grid-template-columns: 1fr; gap: 22px; }
-  .alice-page .alice-hero { padding: 18px 20px; }
-}
+/* Alice : chapitres immersifs, sans cartes à icônes. */
+.alice-page { --alice-ink:#eaf3ff; --alice-muted:#b5c9e3; --alice-blue:#8cd6ff; color:var(--alice-ink); }
+.alice-page, .alice-page * { box-sizing:border-box; }
+.alice-page .alice-lead {max-width:72ch; line-height:1.8; color:var(--alice-muted);}
+.alice-page .alice-opening { margin:26px 0 38px; padding:25px 28px; border:1px solid rgba(147,200,255,.25); border-radius:15px; background:linear-gradient(110deg,#182d4e,#10182c 70%); color:#eef6ff; }
+.alice-page .alice-opening h3 {color:#a8ddff; margin:0 0 10px;}
+.alice-page .alice-opening p {margin:0; line-height:1.85; color:#e4eefc;}
+.alice-page .alice-intro {max-width:74ch; margin:0 0 40px;}
+.alice-page .alice-intro p,.alice-page .alice-outro p {line-height:1.85;}
+.alice-page .alice-chapter {margin:0 0 44px; border:0; padding:0; background:transparent;}
+.alice-page .alice-chapter h3 {margin:0 0 13px; color:#9cddff; font-size:clamp(1.1rem,2.2vw,1.45rem);}
+.alice-page .alice-art {position:relative; display:block; width:100%; height:clamp(165px,24vw,260px); padding:0; border:1px solid rgba(138,192,252,.35); border-radius:14px; overflow:hidden; cursor:zoom-in; background:linear-gradient(125deg,#162b49,#30213f 53%,#0d233b); color:#fff;}
+.alice-page .alice-art img {display:block; width:100%; height:100%; object-fit:cover; object-position:center 48%; transition:transform .3s ease;}
+.alice-page .alice-art:hover img {transform:scale(1.025);}
+.alice-page .alice-art:focus-visible {outline:3px solid #9adfff;outline-offset:3px;}
+.alice-page .alice-art .alice-expand {position:absolute;right:13px;bottom:12px;padding:7px 11px;background:rgba(3,9,23,.75);border-radius:8px;font:600 12px/1.3 Arial,sans-serif;}
+.alice-page .alice-chapter-copy {padding:18px 2px 0;max-width:76ch;}
+.alice-page .alice-chapter-copy p {line-height:1.85;margin:0 0 12px;}
+.alice-page .alice-chapter-copy p:last-child {margin-bottom:0;}
+.alice-page .alice-outro {border-top:1px solid rgba(147,200,255,.24);padding-top:20px;margin-top:10px;}
+.alice-page .alice-outro h3 {color:#9cddff;}
+.alice-page .alice-viewer[hidden] {display:none;}
+.alice-page .alice-viewer {position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;padding:65px 18px 28px;background:rgba(0,4,15,.94);}
+.alice-page .alice-viewer img {display:block;max-width:100%;max-height:100%;object-fit:contain;border-radius:8px;}
+.alice-page .alice-close {position:absolute;top:15px;right:20px;z-index:1;border:1px solid #91c7ec;background:#14233a;color:#fff;padding:9px 15px;border-radius:9px;cursor:pointer;}
+@media(max-width:650px){.alice-page .alice-opening{padding:19px}.alice-page .alice-art{height:185px}.alice-page .alice-chapter{margin-bottom:35px}}
 </style>
 <div class="bloc-cadre alice-page">
   <header>
     <p class="profil-kicker">RÉFÉRENCES · UNIVERS</p>
-    <h2>🪞 Alice, au-delà du miroir</h2>
-    <p class="accent-text-soft">Alice est bien plus qu'une héroïne que j'apprécie. C'est un monde de portes, de reflets et de règles mouvantes, dans lequel mon imagination a fini par tracer ses propres chemins.</p>
+    <h2>Alice, au-delà du miroir</h2>
+    <p class="alice-lead">Un univers où le merveilleux rencontre l'absurde, où les règles se déplacent et où chaque passage ouvre une autre manière de regarder le monde.</p>
   </header>
-  <div class="alice-hero">
-    <div>
-      <h3>Et si l'autre côté avait sa propre logique ?</h3>
-      <p>Une porte entrouverte, un passage impossible, un sourire qui reste lorsque le chat a disparu : il suffit parfois d'une image pour commencer à imaginer un monde entier.</p>
-    </div>
+  <div class="alice-opening">
+    <h3>Et si l'autre côté révélait notre propre logique ?</h3>
+    <p>Nous pensons voir le monde tel qu'il est. Pourtant, le miroir nous montre déjà quelque chose que nous ne pouvons pas observer directement : notre propre visage, inversé. Et si traverser le miroir ne signifiait pas fuir la réalité, mais découvrir ses contradictions, ses angles morts, et les évidences que nous ne questionnons plus ?</p>
   </div>
-  <section>
+  <section class="alice-intro">
     <h3>Une histoire, plusieurs Alice</h3>
-    <p>Je suis particulièrement attaché à l'univers visuel d'<em>Alice au pays des merveilles</em> de Disney, ainsi qu'à l'idée du passage <em>De l'autre côté du miroir</em>. Les récits de Lewis Carroll sont une origine, mais ce ne sont pas nécessairement les intentions de l'auteur que je cherche à retrouver. Ce sont les images et les possibilités qu'elles éveillent en moi.</p>
-    <p>Puis il y a eu <em>Alice: Madness Returns</em>, avec son atmosphère plus sombre. Cette version a nourri l'envie d'inventer ma propre histoire alternative, sans simplement recopier le conte ni le jeu.</p>
+    <p>Je suis particulièrement attaché à l'univers visuel d'<em>Alice au pays des merveilles</em> de Disney et à l'idée du passage <em>De l'autre côté du miroir</em>. Les récits de Lewis Carroll en sont l'origine, mais ce qui m'attire avant tout, ce sont les images, les paradoxes et les possibilités qu'ils éveillent.</p>
+    <p><em>Alice: Madness Returns</em> m'a ensuite ouvert une autre porte, plus sombre. Cette atmosphère m'a donné envie d'imaginer ma propre histoire, sans reproduire simplement le conte ni le jeu.</p>
   </section>
-  <div class="alice-themes">
-    <article>
-      
-        <h3>Les portes et les passages</h3>
-        <p>Changer de pièce peut signifier changer de monde. Couloirs, seuils et jardins deviennent des promesses : derrière la prochaine porte, les évidences peuvent cesser de fonctionner.</p>
-      </article>
-    <article>
-      
-        <h3>Le Chat du Cheshire</h3>
-        <p>Il disparaît, mais son sourire demeure. J'aime cette contradiction visuelle, cette présence qui ne se laisse pas réduire à ce que l'on voit. Elle m'amuse autant qu'elle m'invite à réfléchir.</p>
-      </article>
-    <article>
-      
-        <h3>Les reflets et l'identité</h3>
-        <p>Les changements de taille, les doubles, les miroirs : ce sont autant de manières de bousculer les repères. L'apparence et les règles ne sont plus des choses définitivement acquises.</p>
-      </article>
-    <article>
-      
-        <h3>Un conte plus sombre</h3>
-        <p>Avec <em>Madness Returns</em>, Alice pouvait aussi habiter des paysages inquiétants. Cette tonalité a ouvert la voie à mes propres scènes, à mes personnages et à une histoire dont je ne connaissais pas encore la fin.</p>
-      </article>
+  <section class="alice-chapter">
+    <h3>01 — Les portes et les passages</h3>
+    <button class="alice-art" type="button" data-alice-full="../../assets/images/references/alice/alice-portes-passages.webp" aria-label="Voir l'illustration complète : les portes et les passages">
+      <img src="../../assets/images/references/alice/alice-portes-passages.webp" alt="Porte ouverte sur un paysage merveilleux" loading="lazy" onerror="this.style.display='none';this.parentElement.querySelector('.alice-expand').textContent='Illustration à intégrer';">
+      <span class="alice-expand">Voir l'image entière ↗</span>
+    </button>
+    <div class="alice-chapter-copy"><p>Il suffit parfois d'une porte entrouverte pour que tout change. Un couloir, un jardin ou un escalier deviennent des frontières entre ce que nous connaissons et ce que nous n'avons pas encore osé imaginer.</p><p>Ce qui me plaît, c'est ce moment juste avant le passage : celui où toutes les possibilités existent encore.</p></div>
+  </section>
+  <section class="alice-chapter">
+    <h3>02 — Le Chat du Cheshire</h3>
+    <button class="alice-art" type="button" data-alice-full="../../assets/images/references/alice/alice-chat-cheshire.webp" aria-label="Voir l'illustration complète : le Chat du Cheshire">
+      <img src="../../assets/images/references/alice/alice-chat-cheshire.webp" alt="Chat du Cheshire dans une forêt nocturne" loading="lazy" onerror="this.style.display='none';this.parentElement.querySelector('.alice-expand').textContent='Illustration à intégrer';">
+      <span class="alice-expand">Voir l'image entière ↗</span>
+    </button>
+    <div class="alice-chapter-copy"><p>Il disparaît, mais son sourire demeure. J'aime cette contradiction : une présence qui échappe au regard sans cesser d'exister dans notre esprit.</p><p>Son humour et sa folie apparente ont quelque chose de lucide. Dans un monde où tout le monde semble déraisonnable, qui décide de ce qui est normal ? Le Chat me plaît parce qu'il ne répond pas toujours aux questions : il les retourne.</p></div>
+  </section>
+  <section class="alice-chapter">
+    <h3>03 — Les reflets et l'identité</h3>
+    <button class="alice-art" type="button" data-alice-full="../../assets/images/references/alice/alice-miroir-identite.webp" aria-label="Voir l'illustration complète : les reflets et l'identité">
+      <img src="../../assets/images/references/alice/alice-miroir-identite.webp" alt="Alice face à son reflet dans un miroir ancien" loading="lazy" onerror="this.style.display='none';this.parentElement.querySelector('.alice-expand').textContent='Illustration à intégrer';">
+      <span class="alice-expand">Voir l'image entière ↗</span>
+    </button>
+    <div class="alice-chapter-copy"><p>Que voyons-nous vraiment dans un miroir ? Une image familière, mais inversée : une version de nous-mêmes que nous ne rencontrons jamais de cette façon sans lui.</p><p>Le reflet devient alors une question autant qu'une réponse. Peut-être que l'autre côté ne possède pas une logique étrangère, mais qu'il révèle, en la retournant, une part de la nôtre qui nous échappe.</p></div>
+  </section>
+  <section class="alice-chapter">
+    <h3>04 — Un conte plus sombre</h3>
+    <button class="alice-art" type="button" data-alice-full="../../assets/images/references/alice/alice-conte-sombre.webp" aria-label="Voir l'illustration complète : un conte plus sombre">
+      <img src="../../assets/images/references/alice/alice-conte-sombre.webp" alt="Château fantastique dans un paysage nocturne" loading="lazy" onerror="this.style.display='none';this.parentElement.querySelector('.alice-expand').textContent='Illustration à intégrer';">
+      <span class="alice-expand">Voir l'image entière ↗</span>
+    </button>
+    <div class="alice-chapter-copy"><p>Le merveilleux n'est pas forcément rassurant. Avec <em>Alice: Madness Returns</em>, les décors familiers deviennent parfois inquiétants, presque fragiles, comme si le rêve pouvait se fissurer.</p><p>J'aime cette rencontre entre la beauté, l'étrangeté et une part d'ombre. Elle laisse une place immense à l'invention, aux atmosphères et aux histoires qui ne suivent pas nécessairement les chemins attendus.</p></div>
+  </section>
+  <section class="alice-outro">
+    <h3>Des inspirations, pas des modèles à recopier</h3>
+    <p>Lewis Carroll, les illustrations de John Tenniel, le film d'animation Disney de 1951 et <em>Alice: Madness Returns</em> ne m'inspirent pas de la même manière. Je peux apprécier le travail de Tim Burton sans me reconnaître particulièrement dans sa version d'Alice : ce sont les atmosphères et ce qu'elles déclenchent en moi qui font la différence.</p>
+    <p>Ce que je garde d'Alice, ce n'est pas une histoire à reproduire, mais une invitation à regarder autrement — et, parfois, à inventer ce qui se trouve derrière la prochaine porte.</p>
+  </section>
+  <div class="alice-viewer" hidden role="dialog" aria-modal="true" aria-label="Illustration d'Alice en grand">
+    <button class="alice-close" type="button" aria-label="Fermer l'illustration">Fermer ×</button>
+    <img alt="Illustration d'Alice agrandie">
   </div>
-  <section>
-    <h3>La folie du Chat, ou la lucidité déguisée</h3>
-    <p>Le Chat du Cheshire m'amuse par son humour, sa folie apparente et son décalage. Mais derrière sa manière de parler, il y a une idée que je trouve étonnamment juste : « We're all mad here ». Ce n'est pas simplement une jolie réplique absurde. Elle renverse la situation : ceux qui prétendent représenter la normalité ne se comportent pas toujours de façon particulièrement rationnelle.</p>
-    <p>J'aime cette liberté de questionner ce que les autres tiennent pour évident. Dans cet univers, les règles peuvent changer, les mots prendre plusieurs sens et l'absurde révéler quelque chose de très sérieux. Alice et le Chat forment pour moi un duo indissociable, comme deux façons de regarder le même miroir : celle qui cherche son chemin et celui qui sourit devant les contradictions.</p>
-  </section>
-  <section>
-    <h3>Ce que je garde, et ce que je laisse</h3>
-    <p>Mon attachement va aux récits de Lewis Carroll et aux illustrations de John Tenniel, au film d'animation Disney de 1951, ainsi qu'à la réinterprétation plus sombre d'<em>Alice: Madness Returns</em>. J'apprécie Tim Burton comme créateur, mais sa version d'Alice ne fait pas partie de celles auxquelles je suis attaché. Les adaptations ne sont pas interchangeables : leurs atmosphères et leurs façons d'imaginer le merveilleux changent profondément ce qu'elles éveillent en moi.</p>
-  </section>
-  <section>
-    <h3>Quand l'imaginaire devient un lieu</h3>
-    <p>Mon attachement à Alice dépasse le plaisir de retrouver un univers familier. Ses portes, ses miroirs et ses contradictions me donnent envie d'imaginer d'autres chemins, d'autres ambiances et parfois mes propres histoires.</p>
-    <p>Lorsque je crée, une idée peut prendre la forme d'une scène presque palpable : je visualise des lieux, des mouvements et des atmosphères avant même de chercher à les décrire. C'est cette liberté d'exploration que j'aime retrouver dans l'univers d'Alice, sans avoir besoin d'en exposer ici tous les détails.</p>
-  </section>
-  <footer class="profil-intro-signature">
-    <p>
-    <strong>Alice m'a donné envie de regarder derrière la porte. Puis d'imaginer ce qui s'y trouvait. 🪞</strong>
-  </p>
-</footer>
 </div>
+<script>
+(function(){
+  const root=document.querySelector('.alice-page');
+  if(!root)return;
+  const viewer=root.querySelector('.alice-viewer'),big=viewer.querySelector('img'),close=viewer.querySelector('.alice-close');
+  let previous=null;
+  function hide(){viewer.hidden=true;big.removeAttribute('src');document.removeEventListener('keydown',onKey);if(previous&&document.contains(previous))previous.focus();}
+  function onKey(e){if(e.key==='Escape')hide();}
+  root.querySelectorAll('[data-alice-full]').forEach(button=>button.addEventListener('click',()=>{
+    const thumbnail=button.querySelector('img');
+    if(!thumbnail||!thumbnail.complete||!thumbnail.naturalWidth)return;
+    previous=button;big.src=button.dataset.aliceFull;big.alt=thumbnail.alt;viewer.hidden=false;close.focus();document.addEventListener('keydown',onKey);
+  }));
+  close.addEventListener('click',hide);
+  viewer.addEventListener('click',e=>{if(e.target===viewer)hide();});
+})();
+</script>
