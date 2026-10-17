@@ -149,3 +149,39 @@ mobileIconButtons.forEach(btn => {
     btn.classList.add('active');
   });
 });
+
+
+// Alice : ouverture des illustrations, même dans les pages chargées via innerHTML.
+document.addEventListener('click', (event) => {
+  const trigger = event.target.closest('.alice-page [data-alice-full]');
+  if (trigger) {
+    const root = trigger.closest('.alice-page');
+    const viewer = root?.querySelector('.alice-viewer');
+    const largeImage = viewer?.querySelector('img');
+    const thumbnail = trigger.querySelector('img');
+    if (!viewer || !largeImage || !thumbnail || !thumbnail.naturalWidth) return;
+    largeImage.src = trigger.dataset.aliceFull;
+    largeImage.alt = thumbnail.alt;
+    viewer.hidden = false;
+    viewer.dataset.open = 'true';
+    viewer.querySelector('.alice-close')?.focus();
+    return;
+  }
+  const close = event.target.closest('.alice-page .alice-close');
+  const backdrop = event.target.matches('.alice-page .alice-viewer') ? event.target : null;
+  if (close || backdrop) {
+    const viewer = (close || backdrop).closest('.alice-viewer');
+    viewer.hidden = true;
+    viewer.removeAttribute('data-open');
+    viewer.querySelector('img')?.removeAttribute('src');
+  }
+});
+document.addEventListener('keydown', (event) => {
+  if (event.key !== 'Escape') return;
+  const viewer = document.querySelector('.alice-page .alice-viewer[data-open]');
+  if (viewer) {
+    viewer.hidden = true;
+    viewer.removeAttribute('data-open');
+    viewer.querySelector('img')?.removeAttribute('src');
+  }
+});
