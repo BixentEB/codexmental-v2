@@ -1,52 +1,35 @@
 <style>
+/* Alice — mise en page éditoriale, sans cadres d'images imposés. */
 .alice-page .alice-hero {
   margin: 1.5rem 0 2rem;
-  padding: 28px;
-  border: 1px solid rgba(125,190,245,.25);
-  border-radius: 18px;
-  background: radial-gradient(circle at 85% 20%,rgba(80,135,210,.23),transparent 42%),linear-gradient(130deg,#0b1730,#080d1e);
+  padding: 24px 28px;
+  border-left: 3px solid #86caff;
+  border-radius: 0 12px 12px 0;
+  background: linear-gradient(90deg, rgba(55,104,163,.19), rgba(15,26,48,.1));
 }
 .alice-page .alice-hero h3 { margin: 0 0 10px; color: #91d4ff; }
-.alice-page .alice-hero p { margin: 0; max-width: 700px; line-height: 1.7; }
-.alice-page .alice-grid { display: grid; grid-template-columns: 1fr; gap: 18px; margin: 1.6rem 0; }
-.alice-page .alice-grid article {
+.alice-page .alice-hero p { margin: 0; line-height: 1.7; }
+.alice-page .alice-themes {
   display: grid;
-  grid-template-columns: minmax(210px,38%) minmax(0,1fr);
-  align-items: center;
-  overflow: hidden;
-  border: 1px solid rgba(145,200,250,.24);
-  border-radius: 16px;
-  background: rgba(12,25,47,.6);
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: 24px 32px;
+  margin: 26px 0 32px;
 }
-.alice-page .alice-visual {
-  position: relative;
-  min-height: 205px;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  background: radial-gradient(circle at 50% 40%,rgba(87,160,230,.24),transparent 65%),#101c35;
+.alice-page .alice-themes article {
+  min-width: 0;
+  padding: 0 0 0 17px;
+  border-left: 2px solid rgba(131,197,249,.48);
 }
-.alice-page .alice-visual::after {
-  content: "";
-  position: absolute;
-  inset: 9px;
-  border: 1px solid rgba(170,220,255,.13);
-  border-radius: 12px;
-  pointer-events: none;
+.alice-page .alice-themes h3 {
+  margin: 0 0 10px;
+  color: #8bd1ff;
+  font-size: 1.06rem;
 }
-.alice-page .alice-symbol { font-size: clamp(70px,12vw,112px); line-height: 1; filter: drop-shadow(0 10px 20px rgba(0,0,0,.4)); }
-.alice-page .alice-grid article:nth-child(2) .alice-visual { background: radial-gradient(circle,#24456a,#081425 75%); }
-.alice-page .alice-grid article:nth-child(3) .alice-visual { background: radial-gradient(circle,#46507a,#121529 75%); }
-.alice-page .alice-grid article:nth-child(4) .alice-visual { background: radial-gradient(circle at 60% 30%,#584361,#151326 75%); }
-.alice-page .alice-body { padding: 22px 26px; min-width: 0; }
-.alice-page .alice-body h3 { margin: 0 0 10px; color: #8bd1ff; }
-.alice-page .alice-body p { margin: 0; line-height: 1.75; }
-@media(max-width:600px) {
-  .alice-page .alice-grid article { grid-template-columns: 1fr; }
-  .alice-page .alice-visual { min-height: 160px; }
-  .alice-page .alice-body { padding: 18px; }
+.alice-page .alice-themes p { margin: 0; line-height: 1.75; }
+.alice-page section p { line-height: 1.75; }
+@media (max-width: 650px) {
+  .alice-page .alice-themes { grid-template-columns: 1fr; gap: 22px; }
+  .alice-page .alice-hero { padding: 18px 20px; }
 }
 </style>
 <div class="bloc-cadre alice-page">
@@ -66,35 +49,27 @@
     <p>Je suis particulièrement attaché à l'univers visuel d'<em>Alice au pays des merveilles</em> de Disney, ainsi qu'à l'idée du passage <em>De l'autre côté du miroir</em>. Les récits de Lewis Carroll sont une origine, mais ce ne sont pas nécessairement les intentions de l'auteur que je cherche à retrouver. Ce sont les images et les possibilités qu'elles éveillent en moi.</p>
     <p>Puis il y a eu <em>Alice: Madness Returns</em>, avec son atmosphère plus sombre. Cette version a nourri l'envie d'inventer ma propre histoire alternative, sans simplement recopier le conte ni le jeu.</p>
   </section>
-  <div class="alice-grid">
+  <div class="alice-themes">
     <article>
-      <div class="alice-visual" aria-hidden="true"><span class="alice-symbol">🚪</span></div>
-      <div class="alice-body">
+      
         <h3>Les portes et les passages</h3>
         <p>Changer de pièce peut signifier changer de monde. Couloirs, seuils et jardins deviennent des promesses : derrière la prochaine porte, les évidences peuvent cesser de fonctionner.</p>
-      </div>
-    </article>
+      </article>
     <article>
-      <div class="alice-visual" aria-hidden="true"><span class="alice-symbol">🐈</span></div>
-      <div class="alice-body">
+      
         <h3>Le Chat du Cheshire</h3>
         <p>Il disparaît, mais son sourire demeure. J'aime cette contradiction visuelle, cette présence qui ne se laisse pas réduire à ce que l'on voit. Elle m'amuse autant qu'elle m'invite à réfléchir.</p>
-      </div>
-    </article>
+      </article>
     <article>
-      <div class="alice-visual" aria-hidden="true"><span class="alice-symbol">🪞</span></div>
-      <div class="alice-body">
+      
         <h3>Les reflets et l'identité</h3>
         <p>Les changements de taille, les doubles, les miroirs : ce sont autant de manières de bousculer les repères. L'apparence et les règles ne sont plus des choses définitivement acquises.</p>
-      </div>
-    </article>
+      </article>
     <article>
-      <div class="alice-visual" aria-hidden="true"><span class="alice-symbol">🏰</span></div>
-      <div class="alice-body">
+      
         <h3>Un conte plus sombre</h3>
         <p>Avec <em>Madness Returns</em>, Alice pouvait aussi habiter des paysages inquiétants. Cette tonalité a ouvert la voie à mes propres scènes, à mes personnages et à une histoire dont je ne connaissais pas encore la fin.</p>
-      </div>
-    </article>
+      </article>
   </div>
   <section>
     <h3>La folie du Chat, ou la lucidité déguisée</h3>
