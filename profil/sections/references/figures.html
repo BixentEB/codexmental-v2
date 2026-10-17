@@ -1,83 +1,14 @@
 <style>
-  .figures-editorial .figure-entry {
-  display:grid;
-  grid-template-columns:minmax(200px,39%) 1fr;
-  gap:24px;
-  align-items:center;
-  margin:25px 0;
-  padding:18px;
-  border:1px solid rgba(151,203,255,.23);
-  border-radius:17px;
-  background:rgba(11,23,42,.4)
-  }
-  .figures-editorial .figure-image {
-  margin:0
-  }
-  .figures-editorial .figure-image img {
-  width:100%;
-  height:auto;
-  max-height:430px;
-  object-fit:contain;
-  border-radius:10px;
-  display:block
-  }
-  .figures-editorial .figure-image figcaption {
-  font-size:.75rem;
-  opacity:.7;
-  margin-top:7px
-  }
-  .figures-editorial .figure-copy p,.figures-editorial section p {
-  line-height:1.8
-  }
-  .figures-editorial .figure-voices {
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:16px;
-  margin:20px 0
-  }
-  .figures-editorial .figure-voices article {
-  padding:18px;
-  border:1px solid rgba(150,200,245,.2);
-  border-radius:13px;
-  background:rgba(20,38,65,.25)
-  }
-  .figures-editorial .figure-voices h3 {
-  margin-top:0;
-  color:#9fd9ff
-  }
-  .figures-editorial .figure-note {
-  padding:19px;
-  border-left:3px solid #9bc9ff;
-  background:rgba(60,95,140,.17);
-  margin:25px 0
-  }
-  @media(max-width:700px) {
-  .figures-editorial .figure-entry,.figures-editorial .figure-voices {
-  grid-template-columns:1fr
-  }
-  }
-  .figures-editorial .figure-entry {
-  grid-template-columns:minmax(140px,27%) minmax(0,1fr);
-  gap:20px;
-  align-items:start
-  }
-  .figures-editorial .figure-image img {
-  max-height:300px
-  }
-  @media(max-width:700px) {
-  .figures-editorial .figure-entry {
-  grid-template-columns:minmax(100px,32%) minmax(0,1fr)
-  }
-  }
-  @media(max-width:480px) {
-  .figures-editorial .figure-entry {
-  grid-template-columns:1fr
-  }
-  .figures-editorial .figure-image {
-  max-width:220px
-  }
-  }
-  </style>
+.figures-editorial .figure-entry {display:grid;grid-template-columns:minmax(180px,31%) minmax(0,1fr);gap:22px;align-items:center;margin:24px 0;padding:18px;border:1px solid rgba(151,203,255,.23);border-radius:17px;background:rgba(11,23,42,.4);}
+.figures-editorial .figure-image {margin:0;}
+.figures-editorial .figure-image img {display:block;width:100%;height:auto;max-height:330px;object-fit:contain;border-radius:10px;}
+.figures-editorial .figure-image figcaption {font-size:.75rem;opacity:.7;margin-top:8px;}
+.figures-editorial .figure-copy p,.figures-editorial section p {line-height:1.8;}
+.figures-editorial .figure-voices {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:20px 0;}
+.figures-editorial .figure-voices article {padding:18px;border:1px solid rgba(150,200,245,.2);border-radius:13px;background:rgba(20,38,65,.25);}
+.figures-editorial .figure-voices h3 {margin-top:0;color:#9fd9ff;}
+@media(max-width:650px){.figures-editorial .figure-entry,.figures-editorial .figure-voices{grid-template-columns:1fr}.figures-editorial .figure-image{max-width:310px}}
+</style>
 <div class="bloc-cadre figures-editorial">
   <header>
     <p class="profil-kicker">RÉFÉRENCES · PERSONNAGES</p>
