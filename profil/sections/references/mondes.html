@@ -1,63 +1,30 @@
 <style>
-  .world-feature {
-  display:grid;
-  grid-template-columns:minmax(0,1fr);
-  gap:14px;
-  padding:18px;
-  border:1px solid rgba(155,196,246,.23);
-  border-radius:16px;
-  background:rgba(16,31,53,.32);
-  margin:20px 0
-  }
-  .world-feature figure {
-  margin:0
-  }
-  .world-feature img {
-  display:block;
-  width:100%;
-  max-height:265px;
-  height:auto;
-  object-fit:contain
-  }
-  .world-feature figcaption {
-  font-size:.76rem;
-  opacity:.75;
-  margin-top:8px
-  }
-  .world-feature p {
-  line-height:1.75
-  }
-  @media(min-width:700px) {
-  .world-feature {
-  grid-template-columns:minmax(0,1fr) minmax(0,1fr)
-  }
-  .world-feature figure {
-  grid-column:1;
-  grid-row:1/4
-  }
-  .world-feature h3,.world-feature p {
-  grid-column:2
-  }
-  }
-  </style>
-<div class="bloc-cadre">
+.worlds-page .world-feature {display:grid;grid-template-columns:minmax(155px,30%) minmax(0,1fr);gap:20px;align-items:center;margin:18px 0;padding:18px;border:1px solid rgba(150,200,245,.25);border-radius:16px;background:rgba(13,28,51,.55);}
+.worlds-page .world-symbol {display:grid;place-items:center;min-height:195px;border-radius:12px;background:radial-gradient(circle,#294b71,#0c1529 75%);font-size:85px;}
+.worlds-page .world-feature h3 {margin:0 0 10px;color:#91d3ff;}
+.worlds-page .world-feature p {line-height:1.75;}
+@media(max-width:540px){.worlds-page .world-feature{grid-template-columns:1fr}.worlds-page .world-symbol{min-height:140px}}
+</style>
+<div class="bloc-cadre worlds-page">
   <header>
     <p class="profil-kicker">RÉFÉRENCES · MYTHOLOGIE</p>
     <h2>🌌 Mondes mythiques</h2>
     <p class="accent-text-soft">Des îles introuvables, des royaumes cachés et des lieux qui nourrissent l'imaginaire.</p>
   </header>
   <section class="world-feature">
+  <div class="world-symbol" aria-hidden="true">🌙</div>
+  <div>
     <h3>Avalon — L'île des passages</h3>
     <p>Dans les traditions arthuriennes, Avalon est associée à Arthur, à la guérison et à Morgane. Une île à la frontière du monde connu et de l'Autre Monde. Ce qui me plaît dans cette image, c'est le passage : un lieu qui semble à la fois une fin, un refuge et la promesse d'un retour.</p>
-    <figure>
-      <img loading="lazy" style="display:block;max-width:100%;height:auto;border-radius:14px" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Burne-Jones_Last_Sleep_of_Arthur_in_Avalon_v2.jpg" alt="Le dernier sommeil d'Arthur à Avalon, peinture d'Edward Burne-Jones">
-      <figcaption>Edward Burne-Jones, <em>The Last Sleep of Arthur in Avalon</em>.</figcaption>
-    </figure>
-  </section>
+  </div>
+</section>
   <section class="world-feature">
+  <div class="world-symbol" aria-hidden="true">🌊</div>
+  <div>
     <h3>Atlantide — La civilisation engloutie</h3>
     <p>Platon raconte l'Atlantide dans le <em>Timée</em> et le <em>Critias</em>. Depuis, ce récit a inspiré d'innombrables visions de mondes disparus. Il faut distinguer le texte antique, les hypothèses ultérieures et les créations imaginaires. Ce qui m'attire est moins l'idée de prouver son existence que d'imaginer ce qu'une civilisation perdue pourrait avoir laissé derrière elle : des connaissances, des objets, des histoires.</p>
-  </section>
+  </div>
+</section>
   <footer class="profil-intro-signature">
     <p>
     <strong>Certains mondes n'ont pas besoin de figurer sur une carte pour nous faire voyager.</strong>
