@@ -594,3 +594,8 @@ body.theme-solaire .icon-btn {
 .voyage-page .voyage-placeholder h3{color:var(--voyage-aqua)}
 .voyage-page .voyage-muted{font-size:.86rem;opacity:.75}
 @media(max-width:580px){.voyage-page .voyage-chapter{grid-template-columns:36px minmax(0,1fr);gap:12px}.voyage-page .voyage-chapter>span{min-height:36px}.voyage-page .voyage-question{padding:17px}}
+
+/* Le titre de rubrique remplace le bouton Intro : même action, même état actif. */
+.sous-menu button.profil-section-heading{display:block;width:max-content;max-width:100%;align-self:center;margin:0 auto .15rem;padding:.5rem .9rem;font-size:clamp(.9rem,1.6vw,1.1rem);font-weight:700;letter-spacing:.07em;opacity:1;border:1px solid var(--accent-color,#9bd8ff);border-radius:5px;background:transparent;color:var(--accent-color,#9bd8ff);text-shadow:none;cursor:pointer}
+.sous-menu button.profil-section-heading:hover,.sous-menu button.profil-section-heading.active{background:rgba(255,255,255,.06);box-shadow:0 0 9px var(--accent-color,#9bd8ff);transform:none}
+.sous-menu button.profil-section-heading:focus-visible{outline:2px solid currentColor;outline-offset:3px}
