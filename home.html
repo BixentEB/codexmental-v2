@@ -25,13 +25,59 @@
 
 
   <style>
-.cm-v2-hero{text-align:center;padding:3rem 1rem 2rem}.cm-v2-hero h1{font-family:Orbitron,sans-serif;font-size:clamp(1.5rem,4vw,2.8rem);margin:0 0 1rem;color:var(--text-primary)}.cm-v2-hero p{max-width:650px;margin:auto;line-height:1.8}.cm-v2-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1rem;margin:2rem 0}.cm-v2-card{display:block;padding:1.5rem;border:1px solid rgba(150,180,220,.25);border-radius:14px;background:rgba(100,120,170,.07);color:var(--text-primary);text-decoration:none;transition:transform .2s,border-color .2s,box-shadow .2s}.cm-v2-card:hover,.cm-v2-card:focus-visible{transform:translateY(-3px);border-color:currentColor;box-shadow:0 0 16px rgba(110,170,255,.18)}.cm-v2-card h2{font-family:Orbitron,sans-serif;font-size:1.1rem;margin:0 0 .8rem}.cm-v2-card p{font-size:.92rem;line-height:1.6;margin:0}.cm-v2-section{margin:2rem 0;line-height:1.75}.cm-v2-section h2{font-family:Orbitron,sans-serif;font-size:1.2rem}.cm-v2-note{border-left:2px solid currentColor;padding:.5rem 1rem;opacity:.85}.cm-v2-section details{margin:.7rem 0;padding:.8rem 1rem;border:1px solid rgba(150,180,220,.25);border-radius:10px}.cm-v2-section summary{cursor:pointer;font-weight:bold}@media(max-width:600px){.cm-v2-hero{padding:2rem .4rem 1rem}.cm-v2-grid{grid-template-columns:1fr}.cm-v2-section details:not([open]){margin:.4rem 0}}
-</style></head><body class="theme-main home"><canvas id="theme-canvas" style="position:fixed;top:0;left:0;z-index:-1"></canvas><header id="menu-placeholder"></header><main class="container" style="padding-bottom:3rem"><section class="cm-v2-hero"><h1>CODEX MENTAL</h1><p>Un univers d'idées, d'écrits et de créations numériques. Choisissez une porte et laissez-vous guider par votre curiosité.</p></section><section class="cm-v2-grid" aria-label="Explorer les rubriques"><a class="cm-v2-card" href="codex.html"><h2>CODEX</h2><p>Découvrir l'origine du site, son identité et ses évolutions.</p></a>
-<a class="cm-v2-card" href="blog/blog.html"><h2>Blog</h2><p>Lire les réflexions, observations et articles.</p></a>
-<a class="cm-v2-card" href="atelier/atelier.html"><h2>Atelier</h2><p>Explorer les idées, créations et expérimentations.</p></a>
-<a class="cm-v2-card" href="lab/index.html"><h2>Lab</h2><p>Découvrir les applications et projets numériques.</p></a>
-<a class="cm-v2-card" href="dashb/index.html"><h2>DashB</h2><p>Accéder à la console et à ses outils.</p></a>
-<a class="cm-v2-card" href="profil/index.html"><h2>Profil</h2><p>Découvrir la personne derrière le projet.</p></a></section><section class="cm-v2-section"><p class="cm-v2-note">Un lieu où l'imaginaire rencontre l'expérimentation. Pour comprendre l'univers et suivre ses évolutions, entrez dans <a href="codex.html">CODEX</a>.</p></section><section id="theme-cards-placeholder" class="theme-cards-container"></section></main>  <!-- 🦶 Footer injecté dynamiquement -->
+/* Accueil orbital : styles isolés, couleurs héritées des thèmes CODEX */
+.cm-portal{--orbital-glow:currentColor;max-width:1100px;margin:0 auto;padding:1.2rem 1rem 3rem;color:inherit}
+.cm-portal-intro{text-align:center;margin:1rem auto 0;max-width:760px}
+.cm-portal-intro h1{font-family:Orbitron,sans-serif;font-size:clamp(1.7rem,4vw,2.9rem);letter-spacing:.07em;margin:.5rem 0}
+.cm-portal-intro p{line-height:1.7;opacity:.82;margin:0 auto}
+.cm-orbit-stage{height:390px;max-width:760px;margin:0 auto;position:relative;display:grid;place-items:center;isolation:isolate}
+.cm-orbit-stage::before{content:"";position:absolute;width:min(80vw,370px);height:min(80vw,370px);border-radius:50%;background:radial-gradient(circle,currentColor 0%,transparent 68%);opacity:.045;pointer-events:none}
+.cm-orbit-ring{position:absolute;left:50%;top:50%;width:360px;height:165px;border:1px solid currentColor;border-radius:50%;opacity:.24;pointer-events:none;animation:cm-orbit-a 26s linear infinite}
+.cm-orbit-ring::after{content:"";position:absolute;left:12%;top:13%;height:5px;width:5px;border-radius:50%;background:currentColor;box-shadow:0 0 10px 3px currentColor}
+.cm-orbit-ring:nth-child(2){animation-name:cm-orbit-b;animation-duration:31s;opacity:.18}
+.cm-orbit-ring:nth-child(3){animation-name:cm-orbit-c;animation-duration:35s;opacity:.15}
+@keyframes cm-orbit-a{from{transform:translate(-50%,-50%) rotate(-25deg)}to{transform:translate(-50%,-50%) rotate(335deg)}}
+@keyframes cm-orbit-b{from{transform:translate(-50%,-50%) rotate(40deg)}to{transform:translate(-50%,-50%) rotate(400deg)}}
+@keyframes cm-orbit-c{from{transform:translate(-50%,-50%) rotate(105deg)}to{transform:translate(-50%,-50%) rotate(465deg)}}
+.cm-orbit-core{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;width:190px;height:190px;border-radius:50%;border:1px solid currentColor;color:inherit;background:radial-gradient(circle at 45% 40%,rgba(110,145,200,.2),rgba(8,12,29,.91) 75%);box-shadow:0 0 35px rgba(100,155,235,.13),inset 0 0 28px rgba(110,145,210,.13);text-decoration:none;text-align:center;transition:box-shadow .2s,transform .2s}
+.cm-orbit-core:hover,.cm-orbit-core:focus-visible{transform:scale(1.035);box-shadow:0 0 40px rgba(120,180,255,.32);outline-offset:5px}
+.cm-orbit-core strong{font-family:Orbitron,sans-serif;font-size:1.25rem;line-height:1.5;letter-spacing:.06em}
+.cm-orbit-core span{font-size:.7rem;letter-spacing:.12em;opacity:.8;margin-top:.5rem}
+.cm-portal-heading{font-family:Orbitron,sans-serif;text-align:center;font-size:1.1rem;margin:0 0 1.1rem}
+.cm-portal-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
+.cm-portal-card{color:inherit;text-decoration:none;display:block;padding:1.25rem;border-radius:12px;border:1px solid rgba(155,185,220,.28);background:rgba(90,115,160,.07);transition:border-color .2s,transform .2s,box-shadow .2s}
+.cm-portal-card:hover,.cm-portal-card:focus-visible{transform:translateY(-3px);border-color:currentColor;box-shadow:0 0 18px rgba(120,165,245,.16)}
+.cm-portal-card strong{display:block;font-family:Orbitron,sans-serif;font-size:1rem;margin-bottom:.5rem}
+.cm-portal-card span{font-size:.9rem;opacity:.85;line-height:1.6}
+.cm-portal-note{text-align:center;opacity:.75;font-size:.86rem;margin:2rem auto 0}
+@media(max-width:720px){.cm-orbit-stage{height:320px}.cm-orbit-ring{width:270px;height:125px}.cm-orbit-core{width:155px;height:155px}.cm-orbit-core strong{font-size:1rem}.cm-portal-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:420px){.cm-portal-grid{grid-template-columns:1fr}.cm-orbit-stage{height:285px}.cm-orbit-ring{width:225px;height:100px}.cm-orbit-core{width:135px;height:135px}.cm-orbit-core strong{font-size:.9rem}}
+@media(prefers-reduced-motion:reduce){.cm-orbit-ring{animation:none!important;transform:translate(-50%,-50%) rotate(-25deg)}.cm-orbit-ring:nth-child(2){transform:translate(-50%,-50%) rotate(40deg)}.cm-orbit-ring:nth-child(3){transform:translate(-50%,-50%) rotate(105deg)}.cm-orbit-core,.cm-portal-card{transition:none}}
+</style></head>
+<body class="theme-main home">
+<canvas id="theme-canvas" style="position:fixed;top:0;left:0;z-index:-1"></canvas>
+<header id="menu-placeholder"></header>
+<main class="container">
+<div class="cm-portal">
+<section class="cm-portal-intro" aria-labelledby="cm-portal-title">
+<h1 id="cm-portal-title">Bienvenue dans mon univers</h1>
+<p>Un espace où les idées se croisent, où les réflexions s'écrivent et où les créations prennent vie.</p>
+</section>
+<div class="cm-orbit-stage" aria-label="Animation orbitale autour de CODEX MENTAL">
+<div class="cm-orbit-ring" aria-hidden="true"></div><div class="cm-orbit-ring" aria-hidden="true"></div><div class="cm-orbit-ring" aria-hidden="true"></div>
+<a class="cm-orbit-core" href="codex.html" aria-label="Découvrir l'univers CODEX MENTAL"><strong>CODEX<br>MENTAL</strong><span>DÉCOUVRIR L'UNIVERS</span></a>
+</div>
+<section aria-labelledby="cm-explore-title"><h2 class="cm-portal-heading" id="cm-explore-title">Choisissez votre destination</h2>
+<div class="cm-portal-grid"><a class="cm-portal-card" href="blog/blog.html"><strong>Blog</strong><span>Réflexions, observations et écrits.</span></a>
+<a class="cm-portal-card" href="atelier/atelier.html"><strong>Atelier</strong><span>Idées, créations et expérimentations.</span></a>
+<a class="cm-portal-card" href="lab/index.html"><strong>Lab</strong><span>Applications et projets numériques.</span></a>
+<a class="cm-portal-card" href="dashb/index.html"><strong>DashB</strong><span>Console et explorations interactives.</span></a>
+<a class="cm-portal-card" href="profil/index.html"><strong>Profil</strong><span>Parcours, pensées et fragments personnels.</span></a>
+<a class="cm-portal-card" href="codex.html"><strong>CODEX</strong><span>L'histoire, les thèmes et les évolutions du site.</span></a></div></section>
+<p class="cm-portal-note">Chaque rubrique est une porte différente vers un même univers.</p>
+<section id="theme-cards-placeholder" class="theme-cards-container"></section>
+</div></main>
+  <!-- 🦶 Footer injecté dynamiquement -->
   <div id="footer-placeholder"></div>
 
   <!-- 🍪 Info bannière cookies -->
