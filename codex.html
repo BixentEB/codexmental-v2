@@ -40,7 +40,13 @@
 .cm-codex .cm-evolutions details{border-bottom:1px solid rgba(145,180,220,.25);padding:.8rem}
 .cm-codex .cm-evolutions summary{cursor:pointer}
 @media(max-width:600px){.cm-codex{padding:1.2rem .4rem}.cm-codex .tabs{flex-wrap:nowrap;overflow-x:auto}.cm-codex .tab{flex-shrink:0}}
-</style></head><body class="theme-main home"><canvas id="theme-canvas" style="position:fixed;top:0;left:0;z-index:-1"></canvas><header id="menu-placeholder"></header><main class="container"><div class="cm-codex"><h1>L'univers Codex</h1><p class="cm-codex-intro">Un carnet d'idées, de découvertes et d'expérimentations en constante évolution.</p>
+
+/* Les cinq cartes restent sur une seule rangée sur écran large. */
+.cm-codex .theme-cards{display:flex;flex-wrap:nowrap;justify-content:center;gap:clamp(6px,1.2vw,16px);max-width:100%;margin-inline:auto}
+.cm-codex .theme-card{flex:0 1 170px;min-width:0}
+.cm-codex .theme-card img{max-width:100%;height:auto}
+@media(max-width:650px){.cm-codex .theme-cards{overflow-x:auto;justify-content:flex-start;scroll-snap-type:x proximity;padding-bottom:12px}.cm-codex .theme-card{flex:0 0 135px;scroll-snap-align:start}}
+</style></head><body class="theme-main codex-page"><canvas id="theme-canvas" style="position:fixed;top:0;left:0;z-index:-1"></canvas><header id="menu-placeholder"></header><main class="container"><div class="cm-codex"><h1>L'univers Codex</h1><p class="cm-codex-intro">Un carnet d'idées, de découvertes et d'expérimentations en constante évolution.</p>
 <section class="bloc tabs-section">
   <ul class="tabs">
     <li class="tab active" data-tab="presentation">Codex</li>
