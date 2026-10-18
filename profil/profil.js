@@ -203,3 +203,13 @@ document.addEventListener('keydown', (event) => {
     viewer.querySelector('img')?.removeAttribute('src');
   }
 });
+
+
+// Les cartes de l'accueil ouvrent les mêmes rubriques que les icônes.
+document.addEventListener('click', event => {
+  const card = event.target.closest('[data-open-profile]');
+  if (!card) return;
+  const section = card.dataset.openProfile;
+  const icon = Array.from(iconButtons).find(button => button.dataset.path === section);
+  if (icon) icon.click();
+});
