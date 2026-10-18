@@ -539,3 +539,12 @@ body.theme-solaire .icon-btn {
 
 /* Garder les onglets sur une rangée desktop, même si les boutons sont peu nombreux. */
 @media(min-width:769px){.sous-menu .profil-submenu-pages{flex-direction:row;flex-wrap:wrap;gap:.65rem}}
+
+/* Références : familles visuelles sans niveau de navigation supplémentaire. */
+.sous-menu .references-groups{display:grid;gap:.9rem;width:100%;max-width:960px}
+.sous-menu .references-group{text-align:center}
+.sous-menu .references-group h3{display:flex;align-items:center;justify-content:center;gap:.8rem;margin:0 0 .55rem;color:#d8a456;font-size:.78rem;letter-spacing:.07em;font-weight:600}
+.sous-menu .references-group h3::before,.sous-menu .references-group h3::after{content:"";height:1px;flex:1;max-width:190px;background:linear-gradient(90deg,transparent,rgba(216,164,86,.45))}
+.sous-menu .references-group h3::after{transform:rotate(180deg)}
+.sous-menu .references-group .profil-submenu-pages{gap:.5rem}
+@media(max-width:650px){.sous-menu .references-groups{gap:.75rem}.sous-menu .references-group h3{font-size:.7rem}}
