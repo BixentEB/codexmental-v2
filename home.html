@@ -27,7 +27,7 @@
   <style>
 /* Portail orbital isolé : conserve le moteur des thèmes et le menu partagé. */
 .cm-gateway{--orbit-accent:var(--accent-color,var(--primary-color,#8cbfff));max-width:1080px;margin:0 auto;padding:clamp(1rem,3vh,2rem) 1rem 2.5rem;color:inherit}
-.cm-gateway-lead{text-align:center;letter-spacing:.08em;font-size:clamp(.85rem,1.5vw,1rem);opacity:.85;margin:.5rem 0 0}
+.cm-gateway-subtitle{text-align:center;max-width:650px;margin:.7rem auto 0;opacity:.7;font-size:.86rem;line-height:1.6}.cm-gateway-lead{text-align:center;letter-spacing:.08em;font-size:clamp(.85rem,1.5vw,1rem);opacity:.85;margin:.5rem 0 0}
 .cm-system{height:min(69vh,620px);min-height:480px;position:relative;isolation:isolate;margin:auto}
 .cm-system::before{content:"";position:absolute;left:50%;top:48%;width:min(65vw,430px);height:min(65vw,430px);transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,var(--orbit-accent),transparent 65%);opacity:.07;pointer-events:none}
 .cm-ring{position:absolute;top:48%;left:50%;width:min(51vw,440px);height:min(22vw,185px);border:1px solid currentColor;border-radius:50%;opacity:.23;pointer-events:none;animation:cm-spin-one 28s linear infinite}
@@ -46,11 +46,11 @@
 @media(max-width:650px){.cm-system{height:480px;min-height:0}.cm-ring{width:min(70vw,310px);height:min(31vw,140px)}.cm-destination{font-size:.78rem;padding:.7rem .4rem}.cm-destination[data-section="blog"],.cm-destination[data-section="lab"]{left:12%}.cm-destination[data-section="atelier"],.cm-destination[data-section="dashb"]{left:88%}.cm-orbit-description{top:61%;font-size:.78rem}.cm-nucleus{width:70px;height:70px}}
 @media(max-width:370px){.cm-system{height:420px}.cm-destination{font-size:.68rem}.cm-ring{width:225px;height:95px}}
 @media(prefers-reduced-motion:reduce){.cm-ring{animation:none;transform:translate(-50%,-50%) rotate(-20deg)}.cm-ring:nth-child(2){transform:translate(-50%,-50%) rotate(43deg)}.cm-ring:nth-child(3){transform:translate(-50%,-50%) rotate(110deg)}.cm-destination{transition:none}}
-body.home #footer-placeholder{display:none}\n</style></head><body class="theme-main home">
+body.home #footer-placeholder{display:none!important}\n</style></head><body class="theme-main home">
 <canvas id="theme-canvas" style="position:fixed;top:0;left:0;z-index:-1"></canvas>
 <header id="menu-placeholder"></header>
 <main class="container"><section class="cm-gateway" aria-label="Explorer CODEX MENTAL">
-<p class="cm-gateway-lead">Les idées n'ont pas de frontières.</p>
+<p class="cm-gateway-lead">Les idées n'ont pas de frontières.</p><p class="cm-gateway-subtitle">Écrits, expériences et créations : six chemins pour explorer un même univers.</p>
 <div class="cm-system" aria-label="Portail de navigation orbital">
 <div class="cm-ring" aria-hidden="true"></div><div class="cm-ring" aria-hidden="true"></div><div class="cm-ring" aria-hidden="true"></div>
 <div class="cm-nucleus" aria-hidden="true"></div>
@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded',()=>{
  });
 });
 </script>  <!-- 🦶 Footer injecté dynamiquement -->
-  <div id="footer-placeholder"></div>
+  <div id="footer-placeholder" hidden style="display:none!important" aria-hidden="true"></div>
 
   <!-- 🍪 Info bannière cookies -->
   <div id="cookie-banner">
