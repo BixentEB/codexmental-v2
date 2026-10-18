@@ -548,3 +548,26 @@ body.theme-solaire .icon-btn {
 .sous-menu .references-group h3::after{transform:rotate(180deg)}
 .sous-menu .references-group .profil-submenu-pages{gap:.5rem}
 @media(max-width:650px){.sous-menu .references-groups{gap:.75rem}.sous-menu .references-group h3{font-size:.7rem}}
+
+/* GAMING V1 : chapitres, encadrés et cartes responsives */
+.gaming-page{--gaming-gold:#ddb477;--gaming-blue:#a8dafa}
+.gaming-page .gaming-header{margin-bottom:1.8rem}
+.gaming-page .gaming-lead{font-size:1.08rem;line-height:1.85;max-width:76ch;color:#c3d9ed}
+.gaming-page p{line-height:1.85}
+.gaming-page .gaming-chapter{display:grid;grid-template-columns:45px minmax(0,1fr);gap:18px;margin:2.3rem 0}
+.gaming-page .gaming-number{display:grid;place-items:center;align-self:start;border:1px solid rgba(221,180,119,.48);border-radius:12px;color:var(--gaming-gold);min-height:42px;font-weight:700}
+.gaming-page .gaming-chapter h3{margin-top:0;color:var(--gaming-blue)}
+.gaming-page .gaming-thought{margin:1.7rem 0;padding:22px 25px;border:1px solid rgba(221,180,119,.35);border-radius:16px;background:linear-gradient(135deg,rgba(26,47,76,.45),rgba(37,28,43,.2))}
+.gaming-page .gaming-thought h3{margin-top:0;color:var(--gaming-gold)}
+.gaming-page .gaming-feature-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;margin:1.8rem 0}
+.gaming-page .gaming-feature-grid article{padding:18px;border-radius:14px;border:1px solid rgba(157,202,244,.24);background:rgba(22,39,64,.38)}
+.gaming-page .gaming-feature-grid article>span{display:block;font-size:1.35rem;color:var(--gaming-gold);margin-bottom:10px}
+.gaming-page .gaming-feature-grid h3{font-size:1.02rem;color:var(--gaming-blue);margin:0 0 9px}
+.gaming-page .gaming-feature-grid p{font-size:.95rem;margin:0}
+.gaming-page .gaming-note,.gaming-page .gaming-gallery-placeholder{padding:22px;border:1px dashed rgba(157,202,244,.36);border-radius:14px;margin:1.8rem 0;background:rgba(17,35,58,.25)}
+.gaming-page .gaming-gallery-placeholder{text-align:center;padding:40px 20px}
+.gaming-page .gaming-gallery-placeholder>span{font-size:3rem;color:var(--gaming-gold)}
+.gaming-page .gaming-gallery-placeholder h3{color:var(--gaming-blue)}
+.gaming-page .gaming-small{font-size:.85rem;opacity:.75}
+@media(max-width:800px){.gaming-page .gaming-feature-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:580px){.gaming-page .gaming-feature-grid{grid-template-columns:1fr}.gaming-page .gaming-chapter{grid-template-columns:36px minmax(0,1fr);gap:12px}.gaming-page .gaming-number{min-height:36px}.gaming-page .gaming-thought{padding:17px}}
