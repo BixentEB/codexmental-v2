@@ -5,6 +5,22 @@ const iconButtons = document.querySelectorAll('.menu-icons-svg .icon-btn');
 const burgerBtn = document.querySelector('.burger-btn');
 const nav = document.querySelector('.profil-nav');
 
+
+// Titre permanent de la rubrique active, indépendant du bouton Intro.
+const profileSectionNames = {
+  bio: 'Mon parcours', passions: 'Passions', influences: 'Influences',
+  references: 'Références', gaming: 'Gaming', voyages: 'Voyages',
+  aspirations: 'Aspirations'
+};
+function renderProfileSubmenu(section, html) {
+  const heading = document.createElement('h2');
+  heading.className = 'profil-section-heading';
+  heading.textContent = profileSectionNames[section] || section;
+  sousMenu.innerHTML = html;
+  sousMenu.prepend(heading);
+  sousMenu.dataset.section = section;
+}
+
 // 🌟 Toggle du menu burger
 if (burgerBtn && nav) {
   burgerBtn.addEventListener('click', () => {
@@ -56,8 +72,7 @@ iconButtons.forEach(btn => {
         return res.text();
       })
       .then(html => {
-        sousMenu.innerHTML = html;
-        sousMenu.dataset.section = section; // stocke la section active
+        renderProfileSubmenu(section, html); // stocke la section active
         openSectionIntro(section);
       })
       .catch(err => {
@@ -137,8 +152,7 @@ mobileIconButtons.forEach(btn => {
         return res.text();
       })
       .then(html => {
-        sousMenu.innerHTML = html;
-        sousMenu.dataset.section = section;
+        renderProfileSubmenu(section, html);
         openSectionIntro(section);
       })
       .catch(err => {
