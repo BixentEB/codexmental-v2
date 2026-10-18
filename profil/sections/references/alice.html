@@ -55,20 +55,3 @@
     <img alt="Illustration d'Alice agrandie">
   </div>
 </div>
-<script>
-(function(){
-  const root=document.querySelector('.alice-page');
-  if(!root)return;
-  const viewer=root.querySelector('.alice-viewer'),big=viewer.querySelector('img'),close=viewer.querySelector('.alice-close');
-  let previous=null;
-  function hide(){viewer.hidden=true;big.removeAttribute('src');document.removeEventListener('keydown',onKey);if(previous&&document.contains(previous))previous.focus();}
-  function onKey(e){if(e.key==='Escape')hide();}
-  root.querySelectorAll('[data-alice-full]').forEach(button=>button.addEventListener('click',()=>{
-    const thumbnail=button.querySelector('img');
-    if(!thumbnail||!thumbnail.complete||!thumbnail.naturalWidth)return;
-    previous=button;big.src=button.dataset.aliceFull;big.alt=thumbnail.alt;viewer.hidden=false;close.focus();document.addEventListener('keydown',onKey);
-  }));
-  close.addEventListener('click',hide);
-  viewer.addEventListener('click',e=>{if(e.target===viewer)hide();});
-})();
-</script>
