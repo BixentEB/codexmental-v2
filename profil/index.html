@@ -84,9 +84,25 @@
     <!-- 🌌 Visualiseur dynamique -->
     <nav class="sous-menu"></nav>
     <div class="profil-visualizer">
-      <div class="bloc-cadre">
-        <h2>Bienvenue dans mon espace Profil</h2>
-        <p>Choisissez une rubrique ci-dessus pour découvrir mes passions, influences et plus encore.</p>
+      <div class="bloc-cadre profil-landing">
+        <header class="profil-landing-head">
+          <p class="profil-kicker">CODEX MENTAL · PORTRAIT EN MOUVEMENT</p>
+          <h2>Bienvenue dans mon univers <span aria-hidden="true">✦</span></h2>
+          <p>Un espace pour rassembler ce qui m'anime, me questionne et m'inspire. Entre expériences vécues, mondes imaginaires et horizons encore à explorer, chaque rubrique dévoile une facette différente d'un même parcours.</p>
+        </header>
+        <div class="profil-landing-grid" aria-label="Explorer les rubriques du profil">
+          <button type="button" class="profil-landing-card" data-open-profile="bio"><span class="profil-landing-symbol">◉</span><strong>Mon parcours</strong><span>Ce que je suis, ce que j'ai traversé et les idées qui me construisent.</span></button>
+          <button type="button" class="profil-landing-card" data-open-profile="passions"><span class="profil-landing-symbol">♡</span><strong>Passions</strong><span>Les curiosités et les sujets qui nourrissent mon imaginaire.</span></button>
+          <button type="button" class="profil-landing-card" data-open-profile="influences"><span class="profil-landing-symbol">♫</span><strong>Influences</strong><span>La musique et les émotions qui ouvrent d'autres univers.</span></button>
+          <button type="button" class="profil-landing-card" data-open-profile="references"><span class="profil-landing-symbol">▣</span><strong>Références</strong><span>Les œuvres, figures et symboles qui résonnent en moi.</span></button>
+          <button type="button" class="profil-landing-card" data-open-profile="gaming"><span class="profil-landing-symbol">✧</span><strong>Gaming</strong><span>Explorer, coopérer, bâtir et apprendre à travers le jeu.</span></button>
+          <button type="button" class="profil-landing-card" data-open-profile="voyages"><span class="profil-landing-symbol">✈</span><strong>Voyages</strong><span>Découvrir des lieux, des cultures et de nouvelles perspectives.</span></button>
+          <button type="button" class="profil-landing-card" data-open-profile="aspirations"><span class="profil-landing-symbol">↗</span><strong>Aspirations</strong><span>Mes fondations, ma destinée et les horizons que j'imagine.</span></button>
+        </div>
+        <aside class="profil-landing-contact">
+          <div><h3>Une idée, une question, un échange ?</h3><p>CODEX est aussi une porte ouverte à la discussion.</p></div>
+          <a href="../contact.html" class="profil-landing-contact-link">Me contacter <span aria-hidden="true">↗</span></a>
+        </aside>
       </div>
     </div>
   </main>
