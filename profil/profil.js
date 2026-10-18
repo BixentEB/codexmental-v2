@@ -13,10 +13,14 @@ const profileSectionNames = {
   aspirations: 'Aspirations'
 };
 function renderProfileSubmenu(section, html) {
-  const heading = document.createElement('h2');
+  const heading = document.createElement('button');
+  heading.type = 'button';
   heading.className = 'profil-section-heading';
+  heading.dataset.subsection = 'index';
   heading.textContent = profileSectionNames[section] || section;
+  heading.setAttribute('aria-label', 'Revenir à l’introduction : ' + heading.textContent);
   sousMenu.innerHTML = html;
+  sousMenu.querySelector('.profil-submenu-intro')?.remove();
   sousMenu.prepend(heading);
   sousMenu.dataset.section = section;
 }
@@ -31,7 +35,7 @@ if (burgerBtn && nav) {
 
 // Afficher automatiquement l'introduction du chapitre sélectionné.
 function openSectionIntro(section) {
-  const intro = sousMenu.querySelector('button[data-subsection="index"]');
+  const intro = sousMenu.querySelector('.profil-section-heading[data-subsection="index"]');
   if (!intro) return;
   sousMenu.querySelectorAll('button').forEach(button => button.classList.remove('active'));
   intro.classList.add('active');
@@ -97,8 +101,8 @@ iconButtons.forEach(btn => {
 
 // 🌟 Sous-menus dynamiques avec delegation
 document.addEventListener('click', (event) => {
-  if (event.target.matches('.sous-menu button')) {
-    const btn = event.target;
+  const btn = event.target.closest('.sous-menu button[data-subsection]');
+  if (btn) {
     const sub = btn.dataset.subsection;
     const section = sousMenu.dataset.section; // récupère la section active
 
