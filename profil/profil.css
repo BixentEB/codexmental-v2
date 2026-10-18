@@ -624,3 +624,22 @@ body.theme-solaire .icon-btn {
 .profil-landing-contact-link:hover{background:rgba(136,203,244,.12)}
 @media(max-width:800px){.profil-landing-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:540px){.profil-landing-grid{grid-template-columns:1fr}.profil-landing-card{min-height:auto}.profil-landing-contact{align-items:flex-start;flex-direction:column}.profil-landing-head{text-align:left}}
+
+
+/* Accueil profil V2 : grille équilibrée 4 + 3 et lien de contact sans soulignement. */
+@media(min-width:801px){
+  .profil-landing-grid{grid-template-columns:repeat(12,minmax(0,1fr));gap:1rem}
+  .profil-landing-card{grid-column:span 3}
+  .profil-landing-card:nth-child(n+5){grid-column:span 4}
+}
+.profil-landing-contact-link,
+.profil-landing-contact-link:link,
+.profil-landing-contact-link:visited,
+.profil-landing-contact-link:hover,
+.profil-landing-contact-link:focus,
+.profil-landing-contact-link span{
+  text-decoration:none !important;
+  text-decoration-line:none !important;
+}
+.profil-landing-contact-link{font-weight:600;letter-spacing:.025em;transition:background .2s,border-color .2s,transform .2s}
+.profil-landing-contact-link:hover{transform:translateY(-2px);border-color:#b8e4ff}
