@@ -52,16 +52,20 @@
 .cm-stellar-scene canvas{width:100%;height:100%;display:block}
 body.theme-stellaire .cm-stellar-scene{display:block}
 body.theme-stellaire .cm-ring,body.theme-stellaire .cm-nucleus{display:none}
-body.theme-stellaire .cm-system::before{opacity:.035}
+body.theme-stellaire .cm-system::before{display:none}
 body.theme-stellaire .cm-destination{color:#c8e4ff;text-shadow:0 0 9px rgba(107,182,255,.65)}
 body.theme-stellaire .cm-destination:hover,body.theme-stellaire .cm-destination:focus-visible{color:#fff;text-shadow:0 0 12px #a7d9ff,0 0 25px #5399ff}
 body.theme-stellaire .cm-orbit-description{top:61%;color:#b8d9ff;text-shadow:0 0 12px #366ca7}
 body.theme-stellaire .cm-system{height:min(75vh,690px);min-height:520px}
-body.theme-stellaire .cm-stellar-scene{inset:-12% -9%;z-index:0}
+body.theme-stellaire .cm-stellar-scene{position:fixed;inset:0;z-index:-1;overflow:visible}
 body.theme-stellaire .cm-destination{z-index:3;font-weight:700}
-body.theme-stellaire .cm-destination::before{content:"";position:absolute;left:50%;top:50%;width:52px;height:52px;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(93,169,255,.17),transparent 70%);pointer-events:none}
+body.theme-stellaire .cm-destination::before{display:none}
 body.theme-stellaire .cm-system::before{background:radial-gradient(ellipse,rgba(30,90,160,.18),transparent 70%);opacity:1}
-@media(max-width:650px){body.theme-stellaire .cm-system{height:510px;min-height:0}body.theme-stellaire .cm-stellar-scene{inset:0 -5%}}
+@media(max-width:650px){body.theme-stellaire .cm-system{height:510px;min-height:0}body.theme-stellaire .cm-stellar-scene{inset:0}}
+body.theme-stellaire #theme-canvas{opacity:0!important}
+body.theme-stellaire .cm-system{isolation:auto}
+body.theme-stellaire .cm-stellar-scene{z-index:0;position:fixed;pointer-events:none}
+body.theme-stellaire .cm-destination,body.theme-stellaire .cm-orbit-description{position:absolute;z-index:2}
 body.home #footer-placeholder{display:none!important}
 </style></head><body class="theme-main home">
 <canvas id="theme-canvas" style="position:fixed;top:0;left:0;z-index:-1"></canvas>
@@ -96,98 +100,64 @@ document.addEventListener('DOMContentLoaded',()=>{
 });
 </script>
 <script>
-/* Stellaire V3 — ciel profond, réseau de constellations et météores. */
+/* Stellaire V4 — un seul ciel plein écran, sans raccord ni répétition. */
 (() => {
- const canvas=document.getElementById('cm-stellar-canvas');
- if(!canvas)return;
- const ctx=canvas.getContext('2d',{alpha:true});if(!ctx)return;
- const stage=document.querySelector('.cm-system');
- const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
- const anchors=[{x:.5,y:.16},{x:.22,y:.31},{x:.78,y:.31},{x:.22,y:.69},{x:.78,y:.69},{x:.5,y:.84}];
- const edges=[[0,1],[0,2],[1,3],[2,4],[3,5],[4,5],[1,4],[2,3],[0,5]];
- let width=0,height=0,dpr=1,stars=[],mist=[],meteors=[],frame=0,active=false,visible=!document.hidden,last=0,nextMeteor=0;
- let pointer={x:0,y:0},hover=-1;
- const rand=(i,k=0)=>{const x=Math.sin(i*127.1+k*311.7)*43758.5453;return x-Math.floor(x)};
- const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+ const canvas=document.getElementById('cm-stellar-canvas'),ctx=canvas?.getContext('2d',{alpha:true});
+ if(!ctx)return;
+ const reduced=matchMedia('(prefers-reduced-motion: reduce)');
+ let w=0,h=0,dpr=1,stars=[],meteors=[],raf=0,enabled=false,visible=!document.hidden,next=0,last=0;
+ const hash=(n,k=1)=>{const v=Math.sin(n*127.1+k*311.7)*43758.5453;return v-Math.floor(v)};
  function resize(){
-  const r=canvas.getBoundingClientRect();width=r.width;height=r.height;
-  dpr=Math.min(devicePixelRatio||1,2);canvas.width=Math.max(1,Math.round(width*dpr));canvas.height=Math.max(1,Math.round(height*dpr));ctx.setTransform(dpr,0,0,dpr,0,0);
-  stars=Array.from({length:Math.min(850,Math.max(300,Math.floor(width*height/800)))},(_,i)=>({
-   x:rand(i,1)*width,y:rand(i,2)*height,r:.3+Math.pow(rand(i,3),5)*2.5,
-   phase:rand(i,4)*6.28,speed:.18+rand(i,5)*1.5,depth:.2+rand(i,6)*.8,
-   hue:rand(i,7)>.88?36:rand(i,8)>.48?208:235
+  w=innerWidth;h=innerHeight;dpr=Math.min(devicePixelRatio||1,2);
+  canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);
+  const count=Math.min(1100,Math.max(220,Math.round(w*h/2400)));
+  stars=Array.from({length:count},(_,i)=>({
+   x:hash(i,1)*w,y:hash(i,2)*h,
+   r:.23+Math.pow(hash(i,3),4)*1.3,
+   a:.13+hash(i,4)*.46,
+   phase:hash(i,5)*6.283,
+   speed:.10+hash(i,6)*.34,
+   twinkle:hash(i,7)<.24,
+   color:hash(i,8)<.11?'255,216,180':hash(i,9)<.24?'171,200,255':'222,231,246'
   }));
-  mist=Array.from({length:36},(_,i)=>({x:rand(i,31)*width,y:rand(i,32)*height,r:50+rand(i,33)*150,a:.008+rand(i,34)*.018}));
  }
- function meteor(t){
-  const angle=.35+rand(Math.floor(t),9)*.35;
-  const x=width*(.15+Math.random()*.8),y=height*(Math.random()*.55);
-  meteors.push({x,y,vx:-Math.cos(angle)*(9+Math.random()*6),vy:Math.sin(angle)*(9+Math.random()*6),life:0,max:28+Math.random()*17});
+ function meteor(){
+  const angle=.28+Math.random()*.30;
+  meteors.push({x:w*(.35+Math.random()*.75),y:h*(.02+Math.random()*.35),vx:-Math.cos(angle)*8,vy:Math.sin(angle)*8,age:0,duration:46});
  }
- function render(ms){
-  if(!active||!visible)return;
-  const t=reduced.matches?0:ms*.001;
-  ctx.clearRect(0,0,width,height);
-  const cx=width*.5,cy=height*.5;
-  const neb=ctx.createRadialGradient(cx,cy,10,cx,cy,Math.min(width*.48,390));
-  neb.addColorStop(0,'rgba(37,85,173,.19)');neb.addColorStop(.45,'rgba(37,58,145,.09)');neb.addColorStop(1,'rgba(5,10,35,0)');
-  ctx.fillStyle=neb;ctx.fillRect(0,0,width,height);
-  ctx.save();ctx.globalCompositeOperation='screen';
-  for(const m of mist){
-   const g=ctx.createRadialGradient(m.x,m.y,0,m.x,m.y,m.r);
-   g.addColorStop(0,'rgba(77,125,220,'+m.a+')');g.addColorStop(1,'rgba(77,125,220,0)');
-   ctx.fillStyle=g;ctx.fillRect(m.x-m.r,m.y-m.r,m.r*2,m.r*2);
-  }
+ function draw(ms){
+  if(!enabled||!visible)return;
+  const t=ms/1000,dt=Math.min((ms-last)/16.7||1,2);last=ms;
+  ctx.clearRect(0,0,w,h);
   for(const s of stars){
-   const flicker=.68+.32*Math.sin(t*s.speed+s.phase);
-   const a=(.17+.68*flicker)*s.depth;
-   const x=s.x+pointer.x*s.depth*16,y=s.y+pointer.y*s.depth*12;
-   ctx.fillStyle='hsla('+s.hue+',90%,88%,'+a+')';
-   ctx.beginPath();ctx.arc(x,y,s.r,0,Math.PI*2);ctx.fill();
-   if(s.r>1.8){ctx.strokeStyle='rgba(154,200,255,'+(a*.28)+')';ctx.lineWidth=.65;ctx.beginPath();ctx.moveTo(x-6,y);ctx.lineTo(x+6,y);ctx.moveTo(x,y-6);ctx.lineTo(x,y+6);ctx.stroke();}
-  }
-  const p=anchors.map((a,i)=>({x:a.x*width+Math.sin(t*.16+i)*4,y:a.y*height+Math.cos(t*.13+i)*4}));
-  for(const [a,b] of edges){
-   const v=p[a],w=p[b];ctx.beginPath();ctx.moveTo(v.x,v.y);ctx.lineTo(w.x,w.y);
-   ctx.strokeStyle=hover===a||hover===b?'rgba(144,206,255,.65)':'rgba(102,158,255,.18)';
-   ctx.lineWidth=hover===a||hover===b?1.6:.8;ctx.stroke();
-  }
-  for(let i=0;i<p.length;i++){
-   const q=p[i],radius=hover===i?48:33;
-   const glow=ctx.createRadialGradient(q.x,q.y,0,q.x,q.y,radius);
-   glow.addColorStop(0,'rgba(235,250,255,.9)');glow.addColorStop(.08,'rgba(107,200,255,.8)');
-   glow.addColorStop(.24,'rgba(65,148,255,.3)');glow.addColorStop(1,'rgba(48,105,255,0)');
-   ctx.fillStyle=glow;ctx.beginPath();ctx.arc(q.x,q.y,radius,0,6.283);ctx.fill();
-   ctx.fillStyle='#e9f7ff';ctx.beginPath();ctx.arc(q.x,q.y,hover===i?4:2.5,0,6.283);ctx.fill();
-   ctx.strokeStyle='rgba(173,215,255,.55)';ctx.lineWidth=.7;ctx.beginPath();ctx.moveTo(q.x-10,q.y);ctx.lineTo(q.x+10,q.y);ctx.moveTo(q.x,q.y-10);ctx.lineTo(q.x,q.y+10);ctx.stroke();
+   const flicker=s.twinkle?(.78+.22*Math.sin(t*s.speed*2*Math.PI+s.phase)):1;
+   ctx.fillStyle='rgba('+s.color+','+(s.a*flicker)+')';
+   ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();
   }
   if(!reduced.matches){
-   if(ms>nextMeteor){meteor(ms*.001);nextMeteor=ms+3800+Math.random()*5500;}
+   if(ms>next){meteor();next=ms+12000+Math.random()*15000;}
    for(let i=meteors.length-1;i>=0;i--){
-    const m=meteors[i];m.x+=m.vx;m.y+=m.vy;m.life++;
-    const a=Math.sin(Math.PI*m.life/m.max)*.9;
-    const trail=ctx.createLinearGradient(m.x,m.y,m.x-m.vx*15,m.y-m.vy*15);
-    trail.addColorStop(0,'rgba(225,247,255,'+a+')');trail.addColorStop(.3,'rgba(103,188,255,'+(a*.55)+')');trail.addColorStop(1,'rgba(80,140,255,0)');
-    ctx.strokeStyle=trail;ctx.lineWidth=1.7;ctx.beginPath();ctx.moveTo(m.x,m.y);ctx.lineTo(m.x-m.vx*15,m.y-m.vy*15);ctx.stroke();
-    if(m.life>m.max)meteors.splice(i,1);
+    const m=meteors[i];m.x+=m.vx*dt;m.y+=m.vy*dt;m.age+=dt;
+    const a=Math.sin(Math.PI*Math.min(1,m.age/m.duration))*.65;
+    const g=ctx.createLinearGradient(m.x,m.y,m.x-m.vx*13,m.y-m.vy*13);
+    g.addColorStop(0,'rgba(235,245,255,'+a+')');g.addColorStop(.2,'rgba(169,199,255,'+(a*.5)+')');g.addColorStop(1,'rgba(169,199,255,0)');
+    ctx.strokeStyle=g;ctx.lineWidth=1.1;ctx.beginPath();ctx.moveTo(m.x,m.y);ctx.lineTo(m.x-m.vx*13,m.y-m.vy*13);ctx.stroke();
+    if(m.age>=m.duration)meteors.splice(i,1);
    }
   }
-  ctx.restore();
-  if(!reduced.matches)frame=requestAnimationFrame(render);
+  if(!reduced.matches)raf=requestAnimationFrame(draw);
  }
  function sync(){
-  const enabled=document.body.classList.contains('theme-stellaire');
-  if(enabled===active)return;active=enabled;cancelAnimationFrame(frame);
-  if(active){resize();frame=requestAnimationFrame(render);}else ctx.clearRect(0,0,width,height);
+  const should=document.body.classList.contains('theme-stellaire');
+  if(should===enabled)return;
+  enabled=should;cancelAnimationFrame(raf);
+  if(enabled){resize();last=0;next=performance.now()+8000;raf=requestAnimationFrame(draw)}
+  else ctx.clearRect(0,0,w,h);
  }
- const observer=new MutationObserver(sync);observer.observe(document.body,{attributes:true,attributeFilter:['class']});
- const links=[...document.querySelectorAll('.cm-destination')];
- links.forEach((el,i)=>{el.addEventListener('mouseenter',()=>hover=i);el.addEventListener('focus',()=>hover=i);el.addEventListener('mouseleave',()=>hover=-1);el.addEventListener('blur',()=>hover=-1)});
- document.addEventListener('visibilitychange',()=>{visible=!document.hidden;cancelAnimationFrame(frame);if(visible&&active)frame=requestAnimationFrame(render)});
- window.addEventListener('resize',()=>{if(active){resize();cancelAnimationFrame(frame);frame=requestAnimationFrame(render)}});
- stage.addEventListener('pointermove',e=>{const r=stage.getBoundingClientRect();pointer.x=(e.clientX-r.left)/r.width-.5;pointer.y=(e.clientY-r.top)/r.height-.5});
- stage.addEventListener('pointerleave',()=>{pointer.x=0;pointer.y=0});
- reduced.addEventListener('change',()=>{if(active){cancelAnimationFrame(frame);frame=requestAnimationFrame(render)}});
+ new MutationObserver(sync).observe(document.body,{attributes:true,attributeFilter:['class']});
+ addEventListener('resize',()=>{if(enabled){resize();cancelAnimationFrame(raf);raf=requestAnimationFrame(draw)}});
+ document.addEventListener('visibilitychange',()=>{visible=!document.hidden;cancelAnimationFrame(raf);if(visible&&enabled){last=0;raf=requestAnimationFrame(draw)}});
+ reduced.addEventListener('change',()=>{if(enabled){cancelAnimationFrame(raf);raf=requestAnimationFrame(draw)}});
  sync();
 })();
 </script>  <!-- 🦶 Footer injecté dynamiquement -->
