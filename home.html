@@ -46,6 +46,16 @@
 @media(max-width:650px){.cm-system{height:480px;min-height:0}.cm-ring{width:min(70vw,310px);height:min(31vw,140px)}.cm-destination{font-size:.78rem;padding:.7rem .4rem}.cm-destination[data-section="blog"],.cm-destination[data-section="lab"]{left:12%}.cm-destination[data-section="atelier"],.cm-destination[data-section="dashb"]{left:88%}.cm-orbit-description{top:61%;font-size:.78rem}.cm-nucleus{width:70px;height:70px}}
 @media(max-width:370px){.cm-system{height:420px}.cm-destination{font-size:.68rem}.cm-ring{width:225px;height:95px}}
 @media(prefers-reduced-motion:reduce){.cm-ring{animation:none;transform:translate(-50%,-50%) rotate(-20deg)}.cm-ring:nth-child(2){transform:translate(-50%,-50%) rotate(43deg)}.cm-ring:nth-child(3){transform:translate(-50%,-50%) rotate(110deg)}.cm-destination{transition:none}}
+
+/* Prototype Stellaire V2 : scène dédiée, sans modifier les autres thèmes. */
+.cm-stellar-scene{display:none;position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.cm-stellar-scene canvas{width:100%;height:100%;display:block}
+body.theme-stellaire .cm-stellar-scene{display:block}
+body.theme-stellaire .cm-ring,body.theme-stellaire .cm-nucleus{display:none}
+body.theme-stellaire .cm-system::before{opacity:.035}
+body.theme-stellaire .cm-destination{color:#c8e4ff;text-shadow:0 0 9px rgba(107,182,255,.65)}
+body.theme-stellaire .cm-destination:hover,body.theme-stellaire .cm-destination:focus-visible{color:#fff;text-shadow:0 0 12px #a7d9ff,0 0 25px #5399ff}
+body.theme-stellaire .cm-orbit-description{top:60%;color:#a9cfff;text-shadow:0 0 12px #366ca7}
 body.home #footer-placeholder{display:none!important}\n</style></head><body class="theme-main home">
 <canvas id="theme-canvas" style="position:fixed;top:0;left:0;z-index:-1"></canvas>
 <header id="menu-placeholder"></header>
@@ -53,7 +63,7 @@ body.home #footer-placeholder{display:none!important}\n</style></head><body clas
 <p class="cm-gateway-lead">Les idées n'ont pas de frontières.</p><p class="cm-gateway-subtitle">Écrits, expériences et créations : six chemins pour explorer un même univers.</p>
 <div class="cm-system" aria-label="Portail de navigation orbital">
 <div class="cm-ring" aria-hidden="true"></div><div class="cm-ring" aria-hidden="true"></div><div class="cm-ring" aria-hidden="true"></div>
-<div class="cm-nucleus" aria-hidden="true"></div>
+<div class="cm-nucleus" aria-hidden="true"></div><div class="cm-stellar-scene" aria-hidden="true"><canvas id="cm-stellar-canvas"></canvas></div>
 <a class="cm-destination" data-section="codex" data-description="L'univers du site, ses thèmes et ses évolutions." href="codex.html">CODEX</a>
 <a class="cm-destination" data-section="blog" data-description="Pensées, réflexions et articles." href="blog/blog.html">Blog</a>
 <a class="cm-destination" data-section="atelier" data-description="Créations, inspirations et expérimentations." href="atelier/atelier.html">Atelier</a>
@@ -77,6 +87,87 @@ document.addEventListener('DOMContentLoaded',()=>{
   link.addEventListener('blur',()=>{description.textContent=initial;});
  });
 });
+</script>
+<script>
+/* Stellaire V2 — étoiles déterministes, connexions organiques et profondeur. */
+(() => {
+ const canvas=document.getElementById('cm-stellar-canvas');
+ if(!canvas)return;
+ const ctx=canvas.getContext('2d');
+ if(!ctx)return;
+ const stage=canvas.parentElement;
+ const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
+ let w=0,h=0,dpr=1,raf=0,active=false,visible=!document.hidden;
+ let pointer={x:0,y:0},stars=[];
+ const seeded=i=>{let v=Math.sin(i*127.1+78.233)*43758.5453;return v-Math.floor(v)};
+ const anchors=[{x:.5,y:.10},{x:.18,y:.29},{x:.82,y:.29},{x:.18,y:.69},{x:.82,y:.69},{x:.5,y:.89}];
+ const links=[[0,1],[0,2],[1,3],[2,4],[3,5],[4,5],[1,4],[2,3]];
+ function resize(){
+  const r=stage.getBoundingClientRect();w=r.width;h=r.height;
+  dpr=Math.min(window.devicePixelRatio||1,2);
+  canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  stars=Array.from({length:Math.min(115,Math.max(55,Math.floor(w*h/4000)))},(_,i)=>({
+   x:seeded(i*3+1)*w,y:seeded(i*3+2)*h,r:.45+seeded(i*3+3)*1.4,
+   phase:seeded(i+901)*Math.PI*2,speed:.3+seeded(i+500)*1.1,
+   depth:.25+seeded(i+300)*.75
+  }));
+ }
+ function draw(t){
+  if(!active||!visible)return;
+  ctx.clearRect(0,0,w,h);
+  const time=reduced.matches?0:t*.001;
+  const shiftX=pointer.x*10,shiftY=pointer.y*7;
+  for(const star of stars){
+   const alpha=.18+(.25+.22*Math.sin(time*star.speed+star.phase))*star.depth;
+   ctx.beginPath();ctx.fillStyle='rgba(179,211,255,'+alpha+')';
+   ctx.arc(star.x+shiftX*star.depth,star.y+shiftY*star.depth,star.r,0,Math.PI*2);ctx.fill();
+  }
+  const positions=anchors.map((p,i)=>({
+   x:p.x*w+Math.sin(time*.16+i*1.8)*5+shiftX*.35,
+   y:p.y*h+Math.cos(time*.14+i*2.1)*4+shiftY*.35
+  }));
+  ctx.lineWidth=1;
+  for(const [a,b] of links){
+   const p=positions[a],q=positions[b];
+   const grad=ctx.createLinearGradient(p.x,p.y,q.x,q.y);
+   grad.addColorStop(0,'rgba(100,166,255,.09)');
+   grad.addColorStop(.5,'rgba(131,194,255,.35)');
+   grad.addColorStop(1,'rgba(100,166,255,.09)');
+   ctx.strokeStyle=grad;ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);ctx.stroke();
+  }
+  positions.forEach((p,i)=>{
+   const glow=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,22);
+   glow.addColorStop(0,'rgba(220,239,255,.75)');
+   glow.addColorStop(.14,'rgba(117,189,255,.35)');
+   glow.addColorStop(1,'rgba(80,144,255,0)');
+   ctx.fillStyle=glow;ctx.beginPath();ctx.arc(p.x,p.y,22,0,Math.PI*2);ctx.fill();
+   ctx.fillStyle='#e4f4ff';ctx.beginPath();ctx.arc(p.x,p.y,2.5,0,Math.PI*2);ctx.fill();
+  });
+  const cx=w*.5,cy=h*.48;
+  const nebula=ctx.createRadialGradient(cx,cy,8,cx,cy,Math.min(w*.35,210));
+  nebula.addColorStop(0,'rgba(75,126,218,.13)');
+  nebula.addColorStop(1,'rgba(40,72,145,0)');
+  ctx.fillStyle=nebula;ctx.beginPath();ctx.arc(cx,cy,Math.min(w*.35,210),0,Math.PI*2);ctx.fill();
+  if(!reduced.matches)raf=requestAnimationFrame(draw);
+ }
+ function sync(){
+  const enabled=document.body.classList.contains('theme-stellaire')||
+   document.body.dataset.effectiveTheme==='theme-stellaire';
+  if(enabled===active)return;
+  active=enabled;cancelAnimationFrame(raf);
+  if(active){resize();raf=requestAnimationFrame(draw);}
+  else ctx.clearRect(0,0,w,h);
+ }
+ const obs=new MutationObserver(sync);
+ obs.observe(document.body,{attributes:true,attributeFilter:['class','data-effective-theme']});
+ document.addEventListener('visibilitychange',()=>{visible=!document.hidden;cancelAnimationFrame(raf);if(visible&&active)raf=requestAnimationFrame(draw)});
+ window.addEventListener('resize',()=>{if(active){resize();cancelAnimationFrame(raf);raf=requestAnimationFrame(draw)}});
+ stage.addEventListener('pointermove',e=>{const r=stage.getBoundingClientRect();pointer.x=(e.clientX-r.left)/r.width-.5;pointer.y=(e.clientY-r.top)/r.height-.5});
+ stage.addEventListener('pointerleave',()=>{pointer.x=0;pointer.y=0});
+ reduced.addEventListener('change',()=>{if(active){cancelAnimationFrame(raf);raf=requestAnimationFrame(draw)}});
+ sync();
+})();
 </script>  <!-- 🦶 Footer injecté dynamiquement -->
   <div id="footer-placeholder" hidden style="display:none!important" aria-hidden="true"></div>
 
