@@ -1191,6 +1191,35 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
         return;
       }
       if(id==='profil'){
+        // Restore the original Portrait visual language without importing its legacy page layout.
+        if(!document.getElementById('codex-portrait-visual-styles')){
+          try{
+            var cssResponse=await fetch(new URL('../../profil/profil.css',location.href));
+            if(cssResponse.ok){
+              var rawCSS=await cssResponse.text();
+              var sheet=new CSSStyleSheet();sheet.replaceSync(rawCSS);
+              function scopeRules(rules){
+                return Array.from(rules).map(function(rule){
+                  if(rule.type===CSSRule.STYLE_RULE){
+                    return rule.selectorText.split(',').map(function(sel){
+                      return '#codex-reader-content .codex-imported-content '+sel.trim();
+                    }).join(',')+'{'+rule.style.cssText+'}';
+                  }
+                  if(rule.type===CSSRule.MEDIA_RULE||rule.type===CSSRule.SUPPORTS_RULE)
+                    return '@'+(rule.type===CSSRule.MEDIA_RULE?'media ':'supports ')+rule.conditionText+'{'+scopeRules(rule.cssRules)+'}';
+                  if(rule.type===CSSRule.KEYFRAMES_RULE)return rule.cssText;
+                  return '';
+                }).join('\n');
+              }
+              var visualStyle=document.createElement('style');
+              visualStyle.id='codex-portrait-visual-styles';
+              visualStyle.textContent=scopeRules(sheet.cssRules)+
+                '\n#codex-reader-content .codex-imported-content :is(.imagination-visual,.imagination-tree,.idea-cloud,.music-capsule,.music-player){background-image:revert-layer!important;box-shadow:revert-layer!important;}'+
+                '\n#codex-reader-content .codex-imported-content :is(.imagination-tree,.idea-cloud){background:initial!important;background-color:#07101f!important;}';
+              document.head.appendChild(visualStyle);
+            }
+          }catch(error){console.warn('Styles Portrait indisponibles',error);}
+        }
         // Portrait is a modular page: its sections and subsections live in separate HTML fragments.
         var profileSections=[
           ['bio','Mon parcours'],['passions','Passions'],['influences','Influences'],
@@ -1230,7 +1259,24 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
                 var page=new DOMParser().parseFromString(html,'text/html');
                 var fragment=document.createElement('div');fragment.className='codex-imported-content';
                 fragment.innerHTML=(page.querySelector('main,article')||page.body).innerHTML;
-                readerSetContent(cleanFragment(fragment,url));
+                // Fragment-specific CSS is part of the original design (music capsules, etc.).
+                // Keep trusted CSS scoped to this imported content, not the whole site.
+                fragment.querySelectorAll('style').forEach(function(style){
+                  var scoped=document.createElement('style');
+                  scoped.textContent=style.textContent.replace(/(^|})\\s*([^@{}][^{}]*)\\{/g,function(all,sep,selectors){
+                    return sep+' '+selectors.split(',').map(function(sel){return '#codex-reader-content .codex-imported-content '+sel.trim();}).join(',')+'{';
+                  });
+                  style.replaceWith(scoped);
+                });
+                // Preserve Portrait's semantic headers, media players and illustrations.
+                fragment.querySelectorAll('script,link,nav,[onclick]').forEach(function(el){el.remove();});
+                fragment.querySelectorAll('[href],[src]').forEach(function(el){
+                  ['href','src'].forEach(function(attr){
+                    var value=el.getAttribute(attr);
+                    if(value&&!value.startsWith('#')&&!/^(?:data:|javascript:)/i.test(value))el.setAttribute(attr,new URL(value,url).href);
+                  });
+                });
+                readerSetContent(fragment);
               }catch(error){
                 if(request===readerRequest&&readerOpen&&selection===profileSelection)readerMessage('Cette partie du Portrait est indisponible.',url);
               }
