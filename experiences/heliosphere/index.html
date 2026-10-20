@@ -9,7 +9,16 @@
 .codex-theme-list a{display:block!important;padding:11px 12px!important;border-radius:7px;color:#dce4ff!important;text-decoration:none!important;font-size:12px!important;font-weight:500!important;letter-spacing:0!important;margin:0!important;white-space:nowrap}
 .codex-theme-list a:hover,.codex-theme-list a:focus-visible{background:#27335c!important;color:#fff!important}
 @media(max-width:850px){.codex-theme-switch{font-size:11px}.codex-theme-switch summary{padding:6px 9px}.codex-theme-list{right:auto;left:0}}
-</style></head><body>
+</style><style id="codex-reader-navigation-polish">
+#codex-reader-subcategories:not([hidden]){display:flex!important;align-items:center;flex-wrap:wrap;gap:10px;padding:10px 0 12px;margin:0 0 2px;border-top:1px solid rgba(220,184,122,.25)}
+#codex-reader-subcategories button{appearance:none;background:rgba(12,17,32,.76);color:#e3d7c6;border:1px solid rgba(219,181,115,.45);border-radius:7px;padding:8px 15px;font-size:12px;font-weight:600;cursor:pointer;transition:background .2s,border-color .2s}
+#codex-reader-subcategories button.active,#codex-reader-subcategories button:hover{background:rgba(169,123,57,.27);border-color:#d9b475;color:#ffe3ae}
+.codex-reader-category-intro{max-width:68ch}
+.codex-reader-category-intro h2{margin-bottom:18px}
+.codex-reader-category-intro p{font-size:clamp(14px,1vw,17px);line-height:1.85;max-width:65ch}
+@media(max-width:700px){#codex-reader-subcategories:not([hidden]){gap:7px;padding:9px 0}#codex-reader-subcategories button{padding:8px 11px;font-size:12px}}
+</style>
+</head><body>
 <title>Héliosphère — CODEX Mental</title><link rel="icon" type="image/png" href="../../assets/images/favicon-96x96.png">
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1408,6 +1417,15 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
         var iaGroup=codexArticleGroups.find(function(group){
           return (group.querySelector('summary')?.textContent||'').toLowerCase()==='intelligence artificielle';
         });
+        var psychGroup=codexArticleGroups.find(function(group){return (group.querySelector('summary')?.textContent||'').trim()==='Psychologie';});
+        var hpGroup=codexArticleGroups.find(function(group){return (group.querySelector('summary')?.textContent||'').trim()==='Haut Potentiel';});
+        var personalGroup=codexArticleGroups.find(function(group){return (group.querySelector('summary')?.textContent||'').trim()==='Réflexions personnelles';});
+        var introspectionGroup=codexArticleGroups.find(function(group){return (group.querySelector('summary')?.textContent||'').trim()==='Introspection';});
+        if(personalGroup&&introspectionGroup){
+          var destination=introspectionGroup.querySelector('.codex-reader-article-list');
+          var source=personalGroup.querySelector('.codex-reader-article-list');
+          if(destination&&source)Array.from(source.children).forEach(function(item){destination.appendChild(item);});
+        }
         var expressionsGroup=codexArticleGroups.find(function(group){
           return (group.querySelector('summary')?.textContent||'')==="Expressions d'intelligences";
         });
@@ -1435,13 +1453,13 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
             b.setAttribute('aria-pressed',String(active));
           });
           subcategoryBar.replaceChildren();
-          var children=group===iaGroup&&expressionsGroup?[iaGroup,expressionsGroup]:[group];
+          var children=group===iaGroup&&expressionsGroup?[iaGroup,expressionsGroup]:group===psychGroup&&hpGroup?[psychGroup,hpGroup]:[group];
           subcategoryBar.hidden=children.length===1;
           if(children.length>1){
             children.forEach(function(child,index){
               var sub=document.createElement('button');
               sub.type='button';
-              sub.textContent=index===0?'Articles & réflexions':"Expressions d'intelligences";
+              sub.textContent=group===psychGroup?(index===0?'Psychologie':'Haut potentiel'):(index===0?'Articles & réflexions':"Expressions d'intelligences");
               sub.setAttribute('aria-pressed',String(index===0));
               sub.classList.toggle('active',index===0);
               sub.addEventListener('click',function(){
@@ -1463,15 +1481,15 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
           }else{
             readerMenu.querySelectorAll('button.codex-reader-menu-item').forEach(function(item){item.classList.remove('active');});
             var introductions={
-              'Intelligence artificielle':"Des usages quotidiens aux grandes questions sur la création, la pensée et nos relations avec les intelligences artificielles. Explorez les articles et les expressions nées de ces échanges.",
-              'Psychologie':"Comprendre les comportements, les émotions, la cognition et les différentes manières de percevoir le monde.",
-              'Haut Potentiel':"Réflexions sur le haut potentiel, ses représentations, ses nuances et les expériences qui l'entourent.",
-              'Philosophie':"Questionner les idées, l'existence, les valeurs et les évidences pour ouvrir d'autres perspectives.",
-              'États modifiés de conscience':"Explorer les perceptions et les états de conscience, entre témoignages, interrogations et regards critiques.",
-              'Exploration':"Curiosités, découvertes et pistes de réflexion sur le monde, l'univers et les territoires encore inconnus.",
-              'Rêves & Onirisme':"Rêves, expériences nocturnes et questions autour de l'imaginaire et de la conscience pendant le sommeil.",
-              'Symbolique & ésotérisme':"Symboles, mythes et interprétations : des sujets à explorer en distinguant traditions, ressentis et connaissances.",
-              'Introspection':"Un espace pour examiner les pensées, les ressentis et les chemins de réflexion intérieure.",
+              'Intelligence artificielle':"L'intelligence artificielle transforme notre manière de chercher, de créer et de dialoguer. Cette rubrique explore autant ses possibilités concrètes que ses limites et les questions qu'elle soulève. Deux chemins sont proposés : les articles et réflexions sur l'IA, puis les expressions d'intelligences issues de nos échanges.",
+              'Psychologie':"Pourquoi pensons-nous, ressentons-nous et réagissons-nous différemment ? Cette rubrique rassemble des réflexions sur les comportements, la cognition et les expériences humaines. Elle distingue les articles de psychologie générale de ceux consacrés au haut potentiel, sans réduire l'un à l'autre.",
+              'Haut Potentiel':"Explorer les différentes facettes du haut potentiel, entre vécu, représentations et questions ouvertes. Une place pour nuancer les idées reçues et interroger les façons de penser et de s'adapter.",
+              'Philosophie':"Une invitation à questionner les évidences, les valeurs et les idées qui structurent notre vision du monde. Ici, les réponses ne sont pas nécessairement définitives : les questions elles-mêmes font partie du cheminement.",
+              'États modifiés de conscience':"Que savons-nous de notre conscience et de ses variations ? Cette rubrique aborde les perceptions inhabituelles, les expériences subjectives et les hypothèses qui les entourent, en distinguant le vécu personnel des explications établies.",
+              'Exploration':"Du cosmos aux idées futuristes, cette rubrique suit la curiosité là où elle mène. Elle réunit découvertes, hypothèses et projets de pensée, avec le plaisir d'explorer sans confondre imagination et connaissance.",
+              'Rêves & Onirisme':"Les rêves sont des territoires singuliers, à la frontière de la mémoire, de l'imagination et du sommeil. Cette rubrique rassemble récits, interrogations et explorations des expériences oniriques.",
+              'Symbolique & ésotérisme':"Les symboles, les mythes et les coïncidences invitent à plusieurs niveaux de lecture. Cette rubrique les explore comme objets culturels, imaginaires et personnels, en gardant distinctes les interprétations et les connaissances vérifiables.",
+              'Introspection':"Observer ses pensées, revenir sur une expérience ou suivre une intuition : l'introspection ouvre un espace de réflexion personnelle. On y retrouve également les textes autrefois classés dans « Réflexions personnelles », désormais réunis ici.",
               'Réflexions personnelles':"Des réflexions ouvertes sur différents sujets, à retrouver ici en attendant leur reclassement dans les rubriques appropriées."
             };
             var label=group.querySelector('summary')?.textContent.trim()||'';
@@ -1485,7 +1503,7 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
           }
         }
         codexArticleGroups.forEach(function(group){
-          if(group===expressionsGroup&&iaGroup)return;
+          if((group===expressionsGroup&&iaGroup)||(group===hpGroup&&psychGroup)||(group===personalGroup&&introspectionGroup))return;
           var button=document.createElement('button');
           button.type='button';
           var label=group.querySelector('summary')?.textContent.trim()||'Catégorie';
