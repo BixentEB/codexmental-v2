@@ -154,6 +154,16 @@ body{padding-top:72px!important}
 </style>
 <nav class="codex-experience-nav" aria-label="Navigation CODEX"><a class="codex-home" href="./" data-solar-section="home" title="Revoir le système solaire">✦ CODEX MENTAL</a><a href="../../codex.html" data-solar-section="codex">Codex</a><a href="../../blog/blog.html" data-solar-section="blog">Blog</a><a href="../../atelier/atelier.html" data-solar-section="atelier">Atelier</a><a href="../../lab/index.html" data-solar-section="lab">Lab</a><a href="../../dashb/index.html" data-solar-section="dashb">DashB</a><a href="../../profil/index.html" data-solar-section="profil">Profil</a><details class="codex-theme-switch"><summary>Thèmes <span aria-hidden="true">⌄</span></summary><div class="codex-theme-list" role="group" aria-label="Nouveaux univers"><a href="../heliosphere/">Héliosphère</a><a href="../galactique/">Galactique</a><div class="codex-theme-settings"><div class="codex-theme-settings-title">Réglages · Héliosphère</div><div id="solar-settings-slot"></div></div></div></details></nav>
 <div class="cm-signature cm-monogram" role="img" aria-label="Monogramme CODEX Mental"></div>
+<section id="codex-reader" class="codex-reader" hidden aria-label="Lecture d'une rubrique CODEX">
+  <div class="codex-reader-shell">
+    <div class="codex-reader-top">
+      <div><span class="codex-reader-eyebrow">CODEX MENTAL · EXPLORATION</span><h2 id="codex-reader-title">Rubrique</h2></div>
+      <button id="codex-reader-close" type="button" aria-label="Fermer la rubrique et revoir la planète">✕ &nbsp; Retour à la planète</button>
+    </div>
+    <iframe id="codex-reader-frame" title="Contenu de la rubrique" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+  </div>
+</section>
+
 <div class="wrap">
   <h1>Héliosphère <span style="font-size:.48em;opacity:.55;letter-spacing:.1em">· Laboratoire 3D</span></h1>
 
@@ -1080,12 +1090,50 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
     if(!document.hidden)astroNextAt=performance.now()+astroRand(15,30)*60000;
   });
 
+  /* ---------- Lecteur CODEX, premier prototype partagé ---------- */
+  var reader=document.getElementById('codex-reader');
+  var readerFrame=document.getElementById('codex-reader-frame');
+  var readerTitle=document.getElementById('codex-reader-title');
+  var readerClose=document.getElementById('codex-reader-close');
+  var readerPending=null;
+  var readerOpen=false;
+  var readerRoutes={
+    codex:'../../codex.html',
+    blog:'../../blog/blog.html',
+    atelier:'../../atelier/atelier.html',
+    lab:'../../lab/index.html',
+    dashb:'../../dashb/index.html',
+    profil:'../../profil/index.html'
+  };
+  function closeCodexReader(){
+    readerPending=null;
+    readerOpen=false;
+    reader.hidden=true;
+    document.body.classList.remove('codex-reader-open');
+    readerFrame.removeAttribute('src');
+    readerClose.blur();
+  }
+  function openCodexReader(id){
+    if(!readerRoutes[id]||!SECTIONS[id])return;
+    readerPending=null;
+    readerTitle.textContent=SECTIONS[id].name;
+    if(readerFrame.getAttribute('src')!==readerRoutes[id])readerFrame.setAttribute('src',readerRoutes[id]);
+    reader.hidden=false;
+    readerOpen=true;
+    document.body.classList.add('codex-reader-open');
+    readerClose.focus({preventScroll:true});
+  }
+  readerClose.addEventListener('click',closeCodexReader);
+  reader.addEventListener('keydown',function(e){if(e.key==='Escape'){e.preventDefault();closeCodexReader();}});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&readerOpen){e.preventDefault();closeCodexReader();}});
   /* ---------- État, sélection, vols de caméra ---------- */
   var paused = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var speed = 1, showOrbits = true, hover = null, selected = null, flight = null, lastSel = new T.Vector3();
   var simT = 0, last = performance.now();
 
   function select(id) {
+    closeCodexReader();
+    readerPending = id && readerRoutes[id] ? id : null;
     selected = id;
     document.getElementById('solar-return-sun').hidden = !id;
     document.body.classList.toggle('solar-selected',!!id);
@@ -1131,6 +1179,7 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
         flight = null;
         controls.enabled = true;
         if (P) lastSel.copy(P.pos);
+        if (readerPending && readerPending === selected) openCodexReader(readerPending);
       }
     } else if (P) {
       tmpV.copy(P.pos).sub(lastSel);
@@ -1492,5 +1541,19 @@ body.solar-selected #solar-return-sun:not([hidden]){
 </style>
 <style id="cm-monogram-style">
 .cm-signature.cm-monogram{width:34px!important;height:34px!important;min-width:0!important;min-height:0!important;right:15px!important;bottom:12px!important;padding:0!important;background-color:#d5ad63!important;opacity:.48!important;mask:url('../../assets/images/codex-monogramme.png') center/contain no-repeat;-webkit-mask:url('../../assets/images/codex-monogramme.png') center/contain no-repeat;border:0!important;box-shadow:none!important;font-size:0!important;pointer-events:none!important}
+</style>
+<style id="codex-reader-style">
+.codex-reader[hidden]{display:none!important}
+.codex-reader{position:fixed;z-index:9000;inset:42px 0 0;display:flex;justify-content:center;align-items:stretch;padding:clamp(12px,3vw,34px);pointer-events:none}
+.codex-reader-shell{pointer-events:auto;width:min(1220px,100%);height:100%;display:flex;flex-direction:column;overflow:hidden;border:1px solid rgba(182,195,238,.22);border-radius:18px;background:rgba(5,9,22,.78);box-shadow:0 18px 80px rgba(0,0,0,.48);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.codex-reader-top{flex:none;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px clamp(14px,2.4vw,26px);border-bottom:1px solid rgba(190,200,245,.17)}
+.codex-reader-eyebrow{display:block;color:#b6c1e7;font:600 9px/1.6 system-ui;letter-spacing:.2em}
+.codex-reader-top h2{margin:2px 0 0;color:#f4f5ff;font:400 clamp(20px,2.4vw,29px)/1.25 system-ui}
+#codex-reader-close{flex:none;border:1px solid rgba(188,201,250,.3);border-radius:22px;padding:9px 13px;color:#e7edff;background:rgba(24,32,61,.8);cursor:pointer;font:500 12px system-ui}
+#codex-reader-close:hover{background:rgba(61,72,112,.9)}
+#codex-reader-frame{display:block;flex:1;width:100%;min-height:0;border:0;background:#fff;color:#111}
+body.codex-reader-open #solar-return-sun{display:none!important}
+body.codex-reader-open .solar-hover{display:none!important}
+@media(max-width:700px){.codex-reader{inset:42px 0 0;padding:7px}.codex-reader-shell{border-radius:12px}.codex-reader-top{padding:11px 12px}.codex-reader-top h2{font-size:19px}#codex-reader-close{font-size:11px;padding:8px 10px}}
 </style>
 </body></html>
