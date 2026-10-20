@@ -2347,4 +2347,64 @@ window.addEventListener('resize',sync);sync();
  }
 }
 </style>
+<style id="codex-mobile-navigation-v6">
+@media(max-width:700px){
+ .codex-reader .codex-reader-shell{padding-top:18px!important}
+ .codex-reader .codex-reader-top{display:flex!important;flex-wrap:wrap!important;align-items:center!important;gap:8px!important}
+ .codex-reader .codex-reader-top button{position:static!important;white-space:normal!important}
+ .codex-reader #codex-reader-categories{display:none!important}
+ .codex-reader #codex-reader-subcategories{display:none!important}
+ .codex-reader .codex-mobile-pickers{display:grid;grid-template-columns:1fr;gap:9px;margin:12px 0 10px}
+ .codex-reader .codex-mobile-pickers label{display:grid;gap:5px;color:#e4c58d;font:600 12px system-ui}
+ .codex-reader .codex-mobile-pickers select{width:100%;min-width:0;box-sizing:border-box;appearance:auto;background:#141827;color:#f6e7cf;border:1px solid rgba(224,188,125,.55);border-radius:9px;padding:12px;font:600 14px system-ui}
+ .codex-reader .codex-reader-layout{gap:10px!important}
+ .codex-reader #codex-reader-menu:not([hidden]){height:auto!important;max-height:52vh!important;overflow-y:auto!important}
+ .codex-reader #codex-reader-menu.codex-category-mode .codex-reader-accordion>summary{display:none!important}
+ .codex-reader #codex-reader-menu.codex-category-mode .codex-reader-article-list{max-height:none!important;height:auto!important;overflow:visible!important}
+ .codex-reader #codex-reader-content{min-height:260px!important}
+}
+@media(min-width:701px){.codex-mobile-pickers{display:none!important}}
+</style>
+<script id="codex-mobile-navigation-v6">
+(function(){
+ const reader=document.getElementById('codex-reader'),menu=document.getElementById('codex-reader-menu');
+ if(!reader||!menu)return;
+ const categories=document.getElementById('codex-reader-categories');
+ // Categories are created asynchronously when Codex loads.
+ const holder=document.createElement('div');holder.className='codex-mobile-pickers';
+ const categoryLabel=document.createElement('label');categoryLabel.textContent='Catégorie';
+ const categorySelect=document.createElement('select');categorySelect.setAttribute('aria-label','Choisir une catégorie');categoryLabel.appendChild(categorySelect);
+ const subLabel=document.createElement('label');subLabel.textContent='Sous-catégorie';
+ const subSelect=document.createElement('select');subSelect.setAttribute('aria-label','Choisir une sous-catégorie');subLabel.appendChild(subSelect);
+ holder.append(categoryLabel,subLabel);
+ const layout=menu.closest('.codex-reader-layout');layout.before(holder);
+ function update(){
+   const bar=document.getElementById('codex-reader-categories'),sub=document.getElementById('codex-reader-subcategories');
+   if(!bar||bar.hidden||!bar.children.length){holder.hidden=true;return;}
+   holder.hidden=false;
+   const buttons=Array.from(bar.querySelectorAll('button'));
+   const current=buttons.findIndex(b=>b.classList.contains('active'));
+   const signature=buttons.map(b=>b.textContent).join('|');
+   if(categorySelect.dataset.signature!==signature){
+     categorySelect.replaceChildren();
+     buttons.forEach((b,i)=>categorySelect.add(new Option(b.textContent,i)));
+     categorySelect.dataset.signature=signature;
+   }
+   categorySelect.value=String(Math.max(0,current));
+   const subs=sub&&!sub.hidden?Array.from(sub.querySelectorAll('button')):[];
+   subLabel.hidden=subs.length<2;
+   const subSignature=subs.map(b=>b.textContent).join('|');
+   if(subSelect.dataset.signature!==subSignature){
+     subSelect.replaceChildren();subs.forEach((b,i)=>subSelect.add(new Option(b.textContent,i)));
+     subSelect.dataset.signature=subSignature;
+   }
+   subSelect.value=String(Math.max(0,subs.findIndex(b=>b.classList.contains('active'))));
+ }
+ categorySelect.addEventListener('change',()=>{const bar=document.getElementById('codex-reader-categories');bar?.querySelectorAll('button')[Number(categorySelect.value)]?.click();update();});
+ subSelect.addEventListener('change',()=>{const bar=document.getElementById('codex-reader-subcategories');bar?.querySelectorAll('button')[Number(subSelect.value)]?.click();update();});
+ const observer=new MutationObserver(update);
+ observer.observe(reader,{childList:true,subtree:true,attributes:true,attributeFilter:['class','hidden','aria-pressed']});
+ update();
+})();
+</script>
 </body></html>
