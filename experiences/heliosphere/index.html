@@ -1324,7 +1324,7 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
           });
           introList.appendChild(btn);
         });
-        readerMessage('Choisissez une rubrique ou un article dans le menu.');
+        readerMessage('Sélectionnez un article.');
         try{
           var blogRoute=new URL('../../blog/blog.html',location.href);
           var blogResponse=await fetch(blogRoute);
@@ -2046,5 +2046,16 @@ window.addEventListener('resize',sync);sync();
  .codex-reader #codex-reader-content{box-sizing:border-box!important;width:100%!important;min-height:clamp(350px,54dvh,560px)!important;max-height:min(70dvh,720px)!important;overflow-y:auto!important;align-self:start!important;padding:clamp(24px,3vw,42px)!important}
  .codex-reader .codex-reader-top{width:100%!important;box-sizing:border-box!important}
 }
+</style>
+<style id="codex-reader-fixed-panels-v2">
+/* Desktop: fixed reader geometry; only the menu and article scroll. */
+@media(min-width:701px){
+ .codex-reader{overflow:hidden!important}
+ .codex-reader .codex-reader-shell{height:auto!important;max-height:calc(100dvh - 165px)!important;overflow:hidden!important}
+ .codex-reader .codex-reader-layout{height:clamp(340px,68dvh,740px)!important;max-height:calc(100dvh - 200px)!important;min-height:0!important;overflow:hidden!important;align-items:stretch!important}
+ .codex-reader #codex-reader-menu{height:100%!important;min-height:0!important;max-height:none!important;overflow-y:auto!important;overscroll-behavior:contain!important;scrollbar-gutter:stable!important}
+ .codex-reader #codex-reader-content{height:100%!important;min-height:0!important;max-height:none!important;overflow-y:auto!important;overscroll-behavior:contain!important;scrollbar-gutter:stable!important}
+}
+.codex-reader #codex-reader-content .codex-reader-message{opacity:.64;font-size:12px;line-height:1.6}
 </style>
 </body></html>
