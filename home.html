@@ -67,9 +67,41 @@ body.theme-stellaire .cm-system{isolation:auto}
 body.theme-stellaire .cm-stellar-scene{z-index:0;position:fixed;pointer-events:none}
 body.theme-stellaire .cm-destination,body.theme-stellaire .cm-orbit-description{position:absolute;z-index:2}
 body.home #footer-placeholder{display:none!important}
+</style><style id="codex-solar-style">
+#codex-solar-stage{display:none;position:fixed;inset:0;z-index:0;background:#02040d;touch-action:none}
+#codex-solar-stage canvas{width:100%;height:100%;display:block}
+html.codex-solar-active #codex-solar-stage{display:block}
+html.codex-solar-active body{background:#02040d!important}
+html.codex-solar-active #theme-canvas{opacity:0!important;visibility:hidden}
+html.codex-solar-active main.container{display:none!important}
+html.codex-solar-active #menu-placeholder{position:relative;z-index:20}
+#codex-solar-ui{display:none;position:fixed;inset:0;z-index:8;pointer-events:none;color:#e8e8f3;font-family:Roboto,Arial,sans-serif}
+html.codex-solar-active #codex-solar-ui{display:block}
+#codex-solar-ui button,#codex-solar-ui a{pointer-events:auto}
+.codex-solar-heading{position:absolute;bottom:6vh;left:4vw;max-width:420px;text-shadow:0 3px 25px #000}
+.codex-solar-heading small{font-size:.65rem;letter-spacing:.32em;color:#e3ba8e}
+.codex-solar-heading h1{font-family:Orbitron,sans-serif;font-size:clamp(1.7rem,4vw,3.7rem);font-weight:400;letter-spacing:.13em;margin:.5rem 0}
+.codex-solar-heading p{font-size:.83rem;line-height:1.65;color:#bbc3d8}
+.codex-solar-tools{position:absolute;right:3vw;bottom:4vh;display:flex;gap:.5rem}
+.codex-solar-tools button,#codex-solar-nav{background:#101727c9;border:1px solid #ffffff44;color:#e9eaf3;border-radius:24px;padding:.65rem 1rem;cursor:pointer;backdrop-filter:blur(9px)}
+#codex-solar-tip{position:fixed;z-index:30;pointer-events:none;background:#101727e8;border:1px solid #bba98e66;padding:.6rem 1rem;border-radius:9px;font-size:.78rem;color:white}
+#codex-solar-status{color:#c9d1e5;font-size:.75rem;min-height:1rem}
+#codex-solar-nav{position:absolute;top:80px;right:3vw}
+#codex-solar-links{position:absolute;right:3vw;top:128px;background:#07101ddf;border:1px solid #ffffff38;border-radius:14px;padding:12px;min-width:160px;backdrop-filter:blur(12px)}
+#codex-solar-links a{display:block;color:#e9edf8;text-decoration:none;padding:8px;font-size:.85rem}
+#codex-solar-links a:hover{color:#ffd7a4}
+@media(max-width:700px){.codex-solar-heading{bottom:9vh;left:5vw;max-width:58vw}.codex-solar-heading p{font-size:.7rem}.codex-solar-tools{bottom:2vh;right:3vw;gap:.3rem;flex-direction:column}.codex-solar-tools button{padding:.55rem .7rem;font-size:.72rem}#codex-solar-nav{top:75px;right:4vw}}
 </style></head><body class="theme-main home">
 <canvas id="theme-canvas" style="position:fixed;top:0;left:0;z-index:-1"></canvas>
 <header id="menu-placeholder"></header>
+<div id="codex-solar-stage" aria-label="Système solaire interactif en trois dimensions"></div>
+<div id="codex-solar-ui">
+ <div class="codex-solar-heading"><small>CODEX MENTAL · EXPLORATION</small><h1>Héliosphère</h1><p>Un univers vivant à explorer. Faites pivoter la caméra, approchez-vous des astres ou découvrez une destination.</p><div id="codex-solar-status" aria-live="polite">Touchez une planète pour l’explorer</div></div>
+ <button id="codex-solar-nav" aria-expanded="false" aria-controls="codex-solar-links">Destinations ✦</button>
+ <div id="codex-solar-links" hidden><a href="codex.html">Codex</a><a href="blog/blog.html">Blog</a><a href="atelier/atelier.html">Atelier</a><a href="lab/index.html">Lab</a><a href="dashb/index.html">DashB</a><a href="profil/index.html">Profil</a></div>
+ <div class="codex-solar-tools"><button id="codex-solar-pause">Pause</button><button id="codex-solar-reset">Recentrer</button></div>
+</div><div id="codex-solar-tip" hidden></div>
+<script type="module" src="assets/js/solar-experience.js"></script>
 <main class="container"><section class="cm-gateway" aria-label="Explorer CODEX MENTAL">
 <p class="cm-gateway-lead">Les idées n'ont pas de frontières.</p><p class="cm-gateway-subtitle">Écrits, expériences et créations : six chemins pour explorer un même univers.</p>
 <div class="cm-system" aria-label="Portail de navigation orbital">
