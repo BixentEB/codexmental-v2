@@ -1192,26 +1192,64 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
         return;
       }
       if(id==='codex'){
+        // Codex is the single library: presentation plus all legacy Blog articles.
         var panels=Array.from(doc.querySelectorAll('.tab-content'));
         var tabs=Array.from(doc.querySelectorAll('[data-tab]')).filter(function(el){return !el.closest('.tab-content');});
-        if(panels.length&&tabs.length){
-          tabs.forEach(function(tab){
-            var btn=document.createElement('button');btn.type='button';btn.className='codex-reader-menu-item';
-            btn.textContent=tab.textContent.trim();
-            btn.addEventListener('click',function(){
-              readerMenu.querySelectorAll('button').forEach(function(x){x.classList.remove('active');});
-              btn.classList.add('active');
-              var panel=panels.find(function(p){return p.id===tab.dataset.tab;});
-              if(!panel)return;
-              var fragment=document.createElement('div');fragment.className='codex-imported-content';
-              fragment.innerHTML=panel.innerHTML;
-              readerSetContent(cleanFragment(fragment,new URL(route,location.href)));
-            });
-            readerMenu.appendChild(btn);
+        var intro=document.createElement('div');intro.className='codex-reader-group';
+        intro.textContent='À propos de Codex';readerMenu.appendChild(intro);
+        tabs.forEach(function(tab){
+          var btn=document.createElement('button');btn.type='button';btn.className='codex-reader-menu-item';
+          btn.textContent=tab.textContent.trim();
+          btn.addEventListener('click',function(){
+            readerMenu.querySelectorAll('button').forEach(function(x){x.classList.remove('active');});
+            btn.classList.add('active');
+            var panel=panels.find(function(p){return p.id===tab.dataset.tab;});
+            if(!panel)return;
+            var fragment=document.createElement('div');fragment.className='codex-imported-content';
+            fragment.innerHTML=panel.innerHTML;
+            readerSetContent(cleanFragment(fragment,new URL(route,location.href)));
           });
-          readerMenu.querySelector('button')?.click();
-          return;
+          readerMenu.appendChild(btn);
+        });
+        readerMenu.querySelector('button')?.click();
+        try{
+          var blogRoute=new URL('../../blog/blog.html',location.href);
+          var blogResponse=await fetch(blogRoute);
+          if(!blogResponse.ok)throw Error('HTTP '+blogResponse.status);
+          var blogDoc=new DOMParser().parseFromString(await blogResponse.text(),'text/html');
+          if(request!==readerRequest||!readerOpen)return;
+          var blogBase=new URL('../../blog/articles/',location.href);
+          blogDoc.querySelectorAll('#viewer-menu details').forEach(function(group){
+            var links=group.querySelectorAll('a[data-viewer]');if(!links.length)return;
+            var heading=document.createElement('div');heading.className='codex-reader-group';
+            heading.textContent=group.querySelector('summary')?.textContent.trim()||'Articles';
+            readerMenu.appendChild(heading);
+            links.forEach(function(link){
+              var btn=document.createElement('button');btn.type='button';btn.className='codex-reader-menu-item';
+              btn.textContent=link.textContent.trim();
+              var articleUrl=new URL(link.dataset.viewer+'.html',blogBase).href;
+              btn.addEventListener('click',async function(){
+                readerMenu.querySelectorAll('button').forEach(function(x){x.classList.remove('active');});
+                btn.classList.add('active');
+                readerMessage('Chargement de l’article…');
+                try{
+                  var response=await fetch(articleUrl);if(!response.ok)throw Error('HTTP '+response.status);
+                  var articleDoc=new DOMParser().parseFromString(await response.text(),'text/html');
+                  if(request!==readerRequest||!readerOpen)return;
+                  var target=articleDoc.querySelector('main,article')||articleDoc.body;
+                  var fragment=document.createElement('div');fragment.className='codex-imported-content';
+                  fragment.innerHTML=target.innerHTML;
+                  readerSetContent(cleanFragment(fragment,articleUrl));
+                }catch(err){if(request===readerRequest&&readerOpen)readerMessage('Cet article est momentanément indisponible.',articleUrl);}
+              });
+              readerMenu.appendChild(btn);
+            });
+          });
+        }catch(err){
+          var note=document.createElement('div');note.className='codex-reader-group';
+          note.textContent='Catalogue des articles indisponible';readerMenu.appendChild(note);
         }
+        return;
       }
       content.innerHTML=source.innerHTML;
       cleanFragment(content,new URL(route,location.href));
