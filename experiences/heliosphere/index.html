@@ -166,7 +166,8 @@ body{padding-top:72px!important}
     <div class="loading" id="loading">Calcul des textures du système solaire…</div>
   </div>
 
-  <button id="solar-settings-toggle" class="solar-settings-toggle" type="button" aria-controls="solar-settings-panel" aria-expanded="false">⚙ Réglages</button>
+  <button id="solar-return-sun" type="button" hidden aria-label="Revenir à la vue générale du Soleil">☀ Retour au Soleil</button>
+<button id="solar-settings-toggle" class="solar-settings-toggle" type="button" aria-controls="solar-settings-panel" aria-expanded="false">⚙ Réglages</button>
 <div class="under">
     <div class="info" aria-live="polite">
       <h2><span class="dot" id="infoDot"></span><span id="infoTitle">Accueil</span></h2>
@@ -985,6 +986,7 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
 
   function select(id) {
     selected = id;
+    document.getElementById('solar-return-sun').hidden = !id;
     var key = id || 'home', s = SECTIONS[key];
     document.getElementById('infoTitle').textContent = s.name;
     document.getElementById('infoText').textContent = s.text;
@@ -1212,6 +1214,7 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
   var infoText=document.getElementById('infoText');infoText?.parentNode?.appendChild(jump);
   var jumpTimer=setInterval(function(){var key=selected;if(CODEX_LINKS[key]){jump.href=CODEX_LINKS[key];jump.style.display='inline-block';jump.hidden=false;}else{jump.hidden=true;jump.style.display='none';}},250);
   window.addEventListener('pagehide',function(){clearInterval(jumpTimer);},{once:true});
+  document.getElementById('solar-return-sun').addEventListener('click', function(){select(null);});
   syncPause();
   if (window.innerWidth < 640 || (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4)) { quality = 'std'; qualitySel.value = 'std'; }
   resize();
@@ -1301,4 +1304,11 @@ toggle?.addEventListener('click',function(){
 });
 })();
 </script>
+<style>
+#solar-return-sun{position:fixed;z-index:13;left:clamp(18px,4vw,68px);bottom:clamp(185px,24vh,235px);padding:10px 16px;border-radius:22px;border:1px solid #b9c8ff66;background:#090f26c9;color:#edf1ff;backdrop-filter:blur(14px);font:600 12px system-ui;cursor:pointer;box-shadow:0 5px 20px #0005}
+#solar-return-sun:hover{background:#273453dd;border-color:#d8e3ff}
+#solar-return-sun[hidden]{display:none!important}
+@media(max-width:700px){#solar-return-sun{left:18px;bottom:215px;font-size:11px;padding:8px 12px}}
+@media(max-height:550px){#solar-return-sun{bottom:85px}}
+</style>
 </body></html>
