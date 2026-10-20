@@ -2348,4 +2348,68 @@ window.addEventListener('resize',sync);sync();
 }
 </style>
 
+
+<style id="codex-mobile-tier-picker-v7">
+@media(max-width:700px){
+ .codex-reader #codex-reader-categories,.codex-reader #codex-reader-subcategories{display:none!important}
+ .codex-reader .codex-mobile-tier-picker{display:flex;flex-direction:column;gap:8px;margin:12px 0 10px}
+ .codex-reader .codex-mobile-tier-picker[hidden]{display:none!important}
+ .codex-reader .codex-mobile-tier-picker select{display:block;width:100%;box-sizing:border-box;min-width:0;background:#141825;color:#f5dfb8;border:1px solid rgba(220,183,120,.48);border-radius:10px;padding:11px 13px;font:600 14px/1.4 system-ui}
+ .codex-reader .codex-mobile-tier-picker select[hidden]{display:none!important}
+}
+@media(min-width:701px){.codex-mobile-tier-picker{display:none!important}}
+</style>
+<script id="codex-mobile-tier-picker-v7">
+(function(){
+ const reader=document.getElementById('codex-reader'),menu=document.getElementById('codex-reader-menu');
+ if(!reader||!menu)return;
+ const layout=menu.closest('.codex-reader-layout');
+ if(!layout)return;
+ const holder=document.createElement('div');holder.className='codex-mobile-tier-picker';holder.hidden=true;
+ const primary=document.createElement('select'),secondary=document.createElement('select');
+ primary.setAttribute('aria-label','Catégorie du Codex');secondary.setAttribute('aria-label','Sous-catégorie du Codex');
+ holder.append(primary,secondary);layout.before(holder);
+ const categoryBar=()=>document.getElementById('codex-reader-categories');
+ const subBar=()=>document.getElementById('codex-reader-subcategories');
+ function fill(select,buttons){
+   const signature=buttons.map(b=>b.textContent.trim()).join('\u001f');
+   if(select.dataset.items!==signature){
+     select.replaceChildren(...buttons.map((b,i)=>new Option(b.textContent.trim(),String(i))));
+     select.dataset.items=signature;
+   }
+   const selected=buttons.findIndex(b=>b.classList.contains('active')||b.getAttribute('aria-pressed')==='true');
+   select.value=String(Math.max(0,selected));
+ }
+ function sync(){
+   const bar=categoryBar();
+   if(!bar||bar.hidden||!bar.querySelector('button')){holder.hidden=true;return;}
+   holder.hidden=false;
+   fill(primary,Array.from(bar.querySelectorAll('button')));
+   const sub=subBar();
+   const buttons=sub&&!sub.hidden?Array.from(sub.querySelectorAll('button')):[];
+   secondary.hidden=buttons.length<2;
+   if(buttons.length)fill(secondary,buttons);
+ }
+ primary.addEventListener('change',()=>{categoryBar()?.querySelectorAll('button')[Number(primary.value)]?.click();sync();});
+ secondary.addEventListener('change',()=>{subBar()?.querySelectorAll('button')[Number(secondary.value)]?.click();sync();});
+ // Only observe source navigation nodes, never our generated selects.
+ let watchedCategory=null,watchedSub=null;
+ const sourceObserver=new MutationObserver(sync);
+ function attach(){
+   const bar=categoryBar(),sub=subBar();
+   if(bar!==watchedCategory||sub!==watchedSub){
+     sourceObserver.disconnect();
+     if(bar)sourceObserver.observe(bar,{childList:true,subtree:true,attributes:true,attributeFilter:['class','hidden','aria-pressed']});
+     if(sub)sourceObserver.observe(sub,{childList:true,subtree:true,attributes:true,attributeFilter:['class','hidden','aria-pressed']});
+     watchedCategory=bar;watchedSub=sub;
+   }
+   sync();
+ }
+ const structureObserver=new MutationObserver(attach);
+ structureObserver.observe(reader,{childList:true,subtree:false});
+ menu.addEventListener('click',()=>queueMicrotask(sync));
+ reader.addEventListener('click',()=>queueMicrotask(sync));
+ attach();
+})();
+</script>
 </body></html>
