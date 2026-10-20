@@ -1352,9 +1352,11 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
     });
     cometLineMat.opacity = showOrbits ? .05 : 0; cometLine.visible = showOrbits;
 
-    /* étiquettes */
+    /* Étiquettes responsives : noms seuls, placement anti-collision.
+       Les planètes restent cliquables via le raycaster même si un nom est masqué. */
     camera.updateMatrixWorld();
     var sunDist = camera.position.length();
+    var placements = [];
     planets.forEach(function (P) {
       var el = els[P.id]; if (!el) return;
       camSpace.copy(P.pos).applyMatrix4(camera.matrixWorldInverse);
@@ -1362,19 +1364,55 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
       v3.copy(P.pos).project(camera);
       var x = (v3.x * .5 + .5) * W, y = (-v3.y * .5 + .5) * H;
       var rp = Math.min(P.rPx, 90);
-      var cls = mobile ? 'below' : (x > W - 190 ? 'left' : 'right');
       var hid = behind || x < -40 || x > W + 40 || y < -40 || y > H + 40;
       if (!hid && camera.position.distanceTo(P.pos) > sunDist) {
         v3.set(0, 0, 0).project(camera);
         var sx = (v3.x * .5 + .5) * W, sy = (-v3.y * .5 + .5) * H;
         if (Math.hypot(sx - x, sy - y) < sunPx * 1.05) hid = true;
       }
-      var full = 'pl ' + cls + (selected === P.id ? ' active' : '') + (hover === P.id ? ' hov' : '') +
-        (selected && selected !== P.id ? ' dim' : '') + (hid ? ' hid' : '');
-      if (el.className !== full) el.className = full;
       el.style.transform = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px)';
       el.style.setProperty('--s', Math.max(rp, 6).toFixed(1) + 'px');
       el.style.setProperty('--hit', Math.max(34, rp * 2 + 16).toFixed(1) + 'px');
+      placements.push({P:P,el:el,x:x,y:y,hid:hid});
+    });
+    // Priorité à la planète sélectionnée / survolée, puis aux plus proches de l'écran.
+    placements.sort(function(a,b){
+      var pa=(a.P.id===selected?100:a.P.id===hover?50:0);
+      var pb=(b.P.id===selected?100:b.P.id===hover?50:0);
+      return pb-pa || Math.hypot(a.x-W/2,a.y-H/2)-Math.hypot(b.x-W/2,b.y-H/2);
+    });
+    var occupied = [];
+    var stageRect = stage.getBoundingClientRect();
+    var margin = mobile ? 10 : 14;
+    var titleZone = {left:0,top:H-(mobile?175:145),right:mobile?Math.min(W*.68,340):Math.min(W*.34,400),bottom:H};
+    function overlaps(a,b,pad){
+      return a.left < b.right+pad && a.right+pad > b.left &&
+             a.top < b.bottom+pad && a.bottom+pad > b.top;
+    }
+    placements.forEach(function(item){
+      var P=item.P,el=item.el,chosen=null;
+      var preferred = item.x > W*.65 ? ['left','above','below','right'] :
+                      item.x < W*.32 ? ['right','above','below','left'] :
+                      ['right','left','above','below'];
+      if (mobile) preferred = ['right','left','above','below'];
+      if (!item.hid) {
+        for(var ci=0;ci<preferred.length;ci++){
+          var cls=preferred[ci];
+          el.className='pl '+cls+(selected===P.id?' active':'')+(hover===P.id?' hov':'');
+          var rect=el.querySelector('.lbl').getBoundingClientRect();
+          var box={left:rect.left-stageRect.left,top:rect.top-stageRect.top,
+                   right:rect.right-stageRect.left,bottom:rect.bottom-stageRect.top};
+          if(box.left<margin || box.right>W-margin || box.top<margin+42 || box.bottom>H-margin)continue;
+          if(overlaps(box,titleZone,8))continue;
+          if(occupied.some(function(other){return overlaps(box,other,mobile?12:9)}))continue;
+          chosen={cls:cls,box:box};break;
+        }
+      }
+      var full='pl '+(chosen?chosen.cls:preferred[0])+
+        (selected===P.id?' active':'')+(hover===P.id?' hov':'')+
+        (selected&&selected!==P.id?' dim':'')+(!chosen?' hid':'');
+      if(el.className!==full)el.className=full;
+      if(chosen)occupied.push(chosen.box);
     });
 
     composer.render();
@@ -1565,5 +1603,16 @@ body.solar-selected #solar-return-sun:not([hidden]){
 body.codex-reader-open #solar-return-sun{display:none!important}
 body.codex-reader-open .solar-hover{display:none!important}
 @media(max-width:700px){.codex-reader{inset:42px 0 0;padding:7px}.codex-reader-shell{border-radius:12px}.codex-reader-top{padding:11px 12px}.codex-reader-top h2{font-size:19px}#codex-reader-close{font-size:11px;padding:8px 10px}}
+</style>
+<style id="solar-responsive-labels">
+/* Une seule information dans l'espace : le nom de la destination. */
+#labels .pl .lbl i{display:none!important}
+#labels .pl .lbl{gap:0;line-height:1.2}
+#labels .pl.above .lbl{left:50%;top:auto;bottom:calc(var(--s) + 8px);transform:translateX(-50%);text-align:center;align-items:center}
+@media(max-width:700px){
+  #labels .pl .lbl b{font-size:clamp(12px,3.3vw,15px);letter-spacing:0}
+  /* Le titre reste dans son coin, sans empiéter sur la navigation. */
+  .stage .solar-title, .solar-title{max-width:60vw}
+}
 </style>
 </body></html>
