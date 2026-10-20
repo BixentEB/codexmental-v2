@@ -1872,6 +1872,50 @@ body.solar-selected #solar-return-sun:not([hidden]):hover,
  .solar-title,.stage .solar-title{font-size:clamp(22px,6vw,34px)!important;max-width:65vw!important}
 }
 </style>
+<style id="codex-reader-responsive-v5">
+/* Use available screen width without turning the content into a modal site. */
+@media(min-width:701px){
+ .codex-reader .codex-reader-shell{width:min(1320px,92vw)!important;max-height:84dvh!important}
+ .codex-reader .codex-reader-layout{grid-template-columns:clamp(230px,22vw,315px) minmax(0,1fr)!important;max-height:calc(84dvh - 64px)!important;gap:20px!important}
+ .codex-reader #codex-reader-menu,.codex-reader #codex-reader-content{max-height:calc(84dvh - 64px)!important}
+ .codex-reader #codex-reader-content{font-size:clamp(14px,1vw,16px)!important;padding:clamp(22px,3vw,42px)!important}
+ .codex-reader #codex-reader-menu .codex-reader-accordion>summary{font-size:13px!important}
+ .codex-reader #codex-reader-menu .codex-reader-menu-item{font-size:12px!important}
+}
+@media(max-width:700px){
+ .codex-reader{padding:12px 12px 85px!important;overflow-y:auto!important;overscroll-behavior:contain!important}
+ .codex-reader .codex-reader-shell{margin-top:0!important;gap:10px!important}
+ .codex-reader .codex-reader-layout{gap:12px!important}
+ .codex-reader #codex-reader-menu{max-height:none!important;overflow:visible!important;padding:8px!important}
+ .codex-reader #codex-reader-content{max-height:none!important;min-height:190px!important;overflow:visible!important;padding:20px 18px 55px!important;line-height:1.75!important}
+ .codex-reader .codex-reader-accordion>summary{padding:13px 30px 13px 13px!important}
+ .codex-reader .codex-reader-menu-item{padding:12px!important}
+ .codex-reader .codex-reader-menu-toggle{display:block!important;width:100%!important;padding:12px 16px!important;border:1px solid rgba(225,211,173,.35)!important;border-radius:10px!important;background:rgba(13,19,35,.75)!important;color:#f2d7a4!important;text-align:left!important;font:600 14px system-ui!important;cursor:pointer!important}
+ .codex-reader #codex-reader-menu[hidden]{display:none!important}
+ .codex-reader .codex-reader-layout>.codex-reader-menu-toggle{order:0}
+ .codex-reader #codex-reader-menu{order:1}
+ .codex-reader #codex-reader-content{order:2}
+ .codex-reader .codex-reader-top{padding:5px 0!important}
+}
+@media(min-width:701px){.codex-reader-menu-toggle{display:none!important}}
+/* Dedicated lower-left title space, independent of the explorer. */
+.solar-title,.stage .solar-title{position:fixed!important;left:clamp(16px,2.8vw,52px)!important;bottom:clamp(35px,7vh,80px)!important;top:auto!important;z-index:5!important;pointer-events:none!important;max-width:55vw!important}
+@media(max-width:700px){.solar-title,.stage .solar-title{bottom:70px!important;font-size:clamp(21px,5vw,29px)!important;max-width:70vw!important}}
+</style>
+<script id="codex-reader-mobile-nav-v5">
+(function(){
+const reader=document.getElementById('codex-reader'),menu=document.getElementById('codex-reader-menu'),layout=menu?.parentElement;
+if(!reader||!menu||!layout)return;
+const toggle=document.createElement('button');toggle.type='button';toggle.className='codex-reader-menu-toggle';toggle.textContent='☰  Rubriques et articles';toggle.setAttribute('aria-expanded','false');layout.insertBefore(toggle,menu);
+const mobile=()=>matchMedia('(max-width:700px)').matches;
+function closeMenu(){if(mobile()){menu.hidden=true;toggle.setAttribute('aria-expanded','false');toggle.textContent='☰  Rubriques et articles';}}
+function sync(){if(mobile()){if(toggle.getAttribute('aria-expanded')!=='true')menu.hidden=true;}else{menu.hidden=false;}}
+toggle.addEventListener('click',()=>{menu.hidden=!menu.hidden;toggle.setAttribute('aria-expanded',String(!menu.hidden));toggle.textContent=menu.hidden?'☰  Rubriques et articles':'✕  Fermer les rubriques';});
+menu.addEventListener('click',e=>{if(e.target.closest('button.codex-reader-menu-item')){closeMenu();reader.scrollTop=0;}});
+new MutationObserver(()=>{if(!reader.hidden)closeMenu();}).observe(reader,{attributes:true,attributeFilter:['hidden']});
+window.addEventListener('resize',sync);sync();
+})();
+</script>
 <style id="solar-responsive-labels">
 /* Une seule information dans l'espace : le nom de la destination. */
 #labels .pl .lbl i{display:none!important}
