@@ -2115,4 +2115,54 @@ window.addEventListener('resize',sync);sync();
  }
 }
 </style>
+<style id="codex-balanced-accordion-v3">
+/* Allocate remaining panel height to the active group; closed categories never scroll. */
+@media(min-width:701px){
+ .codex-reader #codex-reader-menu{
+   overflow:hidden!important;
+   height:100%!important;
+   min-height:0!important;
+   display:flex!important;
+   flex-direction:column!important;
+   gap:5px!important;
+   padding:8px!important;
+   box-sizing:border-box!important;
+ }
+ .codex-reader #codex-reader-menu .codex-reader-accordion{
+   flex:0 0 auto!important;
+   min-height:0!important;
+   margin:0!important;
+ }
+ .codex-reader #codex-reader-menu .codex-reader-accordion>summary{
+   padding:9px 29px 9px 11px!important;
+   line-height:1.25!important;
+   min-height:0!important;
+ }
+ .codex-reader #codex-reader-menu .codex-reader-accordion[open]{
+   flex:1 1 auto!important;
+   min-height:92px!important;
+   max-height:min(38dvh,350px)!important;
+   display:flex!important;
+   flex-direction:column!important;
+   overflow:hidden!important;
+   border-color:rgba(229,193,131,.55)!important;
+ }
+ .codex-reader #codex-reader-menu .codex-reader-accordion[open]>summary{
+   flex:0 0 auto!important;
+   font-size:13px!important;
+   letter-spacing:.015em!important;
+   background:linear-gradient(95deg,rgba(194,154,88,.13),transparent 80%)!important;
+ }
+ .codex-reader #codex-reader-menu .codex-reader-accordion[open] .codex-reader-article-list{
+   flex:1 1 auto!important;
+   min-height:0!important;
+   max-height:none!important;
+   overflow-y:auto!important;
+   overflow-x:hidden!important;
+   overscroll-behavior:contain!important;
+   scrollbar-width:thin!important;
+   scrollbar-color:rgba(223,207,167,.6) transparent!important;
+ }
+}
+</style>
 </body></html>
