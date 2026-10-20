@@ -92,14 +92,14 @@ void main(){
  p.xz=mat2(cs,-sn,sn,cs)*p.xz;
  vec4 mv=modelViewMatrix*vec4(p,1.0);
  gl_Position=projectionMatrix*mv;
- float fade=1.0-smoothstep(115.0,185.0,r);
+ float fade=1.0-smoothstep(160.0,190.0,r);
  float pulse=0.88+0.12*sin(uTime*1.8+aPhase);
  gl_PointSize=clamp(aSize*uScale*pulse*(230.0/max(10.0,-mv.z)),0.65,26.0);
  vec3 warm=vec3(1.0,0.68,0.42);
  vec3 ice=vec3(0.46,0.68,1.0);
- vec3 pink=vec3(0.95,0.40,0.82);
+ vec3 pink=vec3(0.83,0.53,0.78);
  vColor=mix(warm,ice,smoothstep(0.05,0.9,aTint));
- vColor=mix(vColor,pink,smoothstep(0.83,1.0,aTint)*0.42);
+ vColor=mix(vColor,pink,smoothstep(0.83,1.0,aTint)*0.22);
  vAlpha=fade;
 }`;
 const fragment=String.raw`
@@ -119,38 +119,60 @@ void main(){
 const dustVertex=String.raw`
 attribute float aSize;varying float vOpacity;
 uniform float uTime;uniform float uScale;
-void main(){vec3 p=position;float r=length(p.xz);float a=uTime*.008/(1.0+r*.01);p.xz=mat2(cos(a),-sin(a),sin(a),cos(a))*p.xz;vec4 mv=modelViewMatrix*vec4(p,1.);gl_Position=projectionMatrix*mv;gl_PointSize=clamp(aSize*uScale*230.0/max(-mv.z,10.0),1.,55.);vOpacity=.45*1.0-smoothstep(55.,185.,r);}
+void main(){vec3 p=position;float r=length(p.xz);float a=uTime*.008/(1.0+r*.01);p.xz=mat2(cos(a),-sin(a),sin(a),cos(a))*p.xz;vec4 mv=modelViewMatrix*vec4(p,1.);gl_Position=projectionMatrix*mv;gl_PointSize=clamp(aSize*uScale*230.0/max(-mv.z,10.0),1.,55.);vOpacity=.24*(1.0-smoothstep(100.,185.,r));}
 `;
 const dustFragment=String.raw`
 varying float vOpacity;
-void main(){float d=length(gl_PointCoord-.5);float a=exp(-d*d*9.0)*vOpacity;if(a<.005)discard;gl_FragColor=vec4(.28,.14,.33,a);}
+void main(){float d=length(gl_PointCoord-.5);float a=exp(-d*d*9.0)*vOpacity;if(a<.005)discard;gl_FragColor=vec4(.055,.035,.09,a);}
 `;
 function material(v,f,opts={}){return new THREE.ShaderMaterial({vertexShader:v,fragmentShader:f,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,...opts});}
 function build(){
  if(galaxy){scene.remove(galaxy);galaxy.traverse(o=>{o.geometry?.dispose();o.material?.dispose();});}
  galaxy=new THREE.Group();scene.add(galaxy);
- const rnd=randomGenerator(settings.seed),count=Math.round(presets[settings.quality]*settings.density/100),dustCount=Math.floor(count*.31);
- const pos=new Float32Array(count*3),sizes=new Float32Array(count),phases=new Float32Array(count),tints=new Float32Array(count);
+ const rnd=randomGenerator(settings.seed),count=Math.round(presets[settings.quality]*settings.density/100);
+ const diskCount=Math.floor(count*.33),bulgeCount=Math.floor(count*.16),dustCount=Math.floor(count*.23);
+ const total=count+diskCount+bulgeCount;
+ const pos=new Float32Array(total*3),sizes=new Float32Array(total),phases=new Float32Array(total),tints=new Float32Array(total);
  const dp=new Float32Array(dustCount*3),ds=new Float32Array(dustCount);
  const spread=settings.turbulence,arms=settings.arms,twist=settings.twist;
- for(let i=0;i<count;i++){
-   const r=R*Math.pow(rnd(),.74),bulge=rnd()<.13;
-   const arm=Math.floor(rnd()*arms);
-   const angle=arm*PI2/arms + Math.log1p(r)*twist*.31 + (rnd()-.5)*(0.17+spread*(.24+r/R*.7));
-   const radial=r+(rnd()-.5)*spread*5.0;
-   const height=(rnd()-.5)*(2.2+spread*6.0)*(1-r/R*.62)+(bulge?(rnd()-.5)*22*(1-r/R):0);
+ const normal=()=>Math.sqrt(-2*Math.log(Math.max(.00001,rnd())))*Math.cos(PI2*rnd());
+ const spiral=(r,arm,offset=0)=>arm*PI2/arms+Math.log1p(r)*twist*.31+offset;
+ // Arm ridges have correlated deviations: independent random noise alone creates artificial fan blades.
+ const corr=(r,arm)=>Math.sin(r*.068+arm*2.1)*(.17+spread*.13)+Math.sin(r*.19+arm*1.4)*(.065+spread*.09);
+ for(let i=0;i<total;i++){
+   const isDisk=i>=count&&i<count+diskCount,isBulge=i>=count+diskCount;
+   let r,angle,height,luminosity;
+   if(isBulge){
+     r=Math.min(76,Math.abs(normal())*15+Math.pow(rnd(),2)*13);
+     angle=rnd()*PI2;
+     height=normal()*Math.max(1.4,13*(1-r/90));
+     luminosity=.65+rnd()*1.2;
+   }else if(isDisk){
+     r=R*Math.pow(rnd(),.83);
+     angle=rnd()*PI2;
+     height=normal()*(.85+2.2*(1-r/R));
+     luminosity=.32+rnd()*.65;
+   }else{
+     r=R*Math.pow(rnd(),.82);
+     const arm=Math.floor(rnd()*arms);
+     const width=(.09+spread*.22)+(r/R)*(.12+spread*.32);
+     angle=spiral(r,arm,corr(r,arm)+normal()*width);
+     height=normal()*(.7+spread*1.8)*(1-r/R*.5);
+     luminosity=.55+rnd()*1.1;
+   }
    const idx=i*3;
-   pos[idx]=Math.cos(angle)*radial;pos[idx+1]=height;pos[idx+2]=Math.sin(angle)*radial;
-   sizes[i]=.55+Math.pow(rnd(),5)*3.6+(bulge?1.0:0);
+   pos[idx]=Math.cos(angle)*r;pos[idx+1]=height;pos[idx+2]=Math.sin(angle)*r;
+   sizes[i]=luminosity*(.65+Math.pow(rnd(),5)*2.5);
    phases[i]=rnd()*PI2;
-   tints[i]=Math.min(1,Math.max(0,.18+.65*r/R+(rnd()-.5)*.42));
+   tints[i]=isBulge?.03+rnd()*.2:isDisk?.22+rnd()*.65:Math.min(1,.22+.62*r/R+(rnd()-.5)*.4);
  }
+ // Dust lanes follow the leading edge of the arms and are no longer additive purple stars.
  for(let i=0;i<dustCount;i++){
-   const r=12+R*Math.pow(rnd(),.8),arm=Math.floor(rnd()*arms);
-   const angle=arm*PI2/arms+Math.log1p(r)*twist*.31+(rnd()-.5)*(.28+spread*.65);
+   const r=13+R*Math.pow(rnd(),.86),arm=Math.floor(rnd()*arms);
+   const angle=spiral(r,arm,corr(r,arm)-.17+normal()*(.07+spread*.12));
    const idx=i*3;
-   dp[idx]=Math.cos(angle)*r;dp[idx+1]=(rnd()-.5)*5;dp[idx+2]=Math.sin(angle)*r;
-   ds[i]=3+rnd()*11;
+   dp[idx]=Math.cos(angle)*r;dp[idx+1]=normal()*1.35;dp[idx+2]=Math.sin(angle)*r;
+   ds[i]=3+rnd()*7;
  }
  function points(p,attributes,mat){
   const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.BufferAttribute(p,3));
@@ -159,11 +181,11 @@ function build(){
  }
  const px=Math.min(devicePixelRatio||1,settings.quality==='ultra'?2:settings.quality==='eco'?1:1.5);
  const uScale={value:px},uTime={value:0},uExposure={value:settings.exposure};
- points(dp,{aSize:ds},material(dustVertex,dustFragment,{uniforms:{uScale,uTime}}));
+ points(dp,{aSize:ds},material(dustVertex,dustFragment,{uniforms:{uScale,uTime},blending:THREE.NormalBlending,depthTest:false}));
  points(pos,{aSize:sizes,aPhase:phases,aTint:tints},material(vertex,fragment,{uniforms:{uScale,uTime,uExposure}}));
  galaxy.userData={uTime,uExposure};
- $('countOut').textContent=new Intl.NumberFormat('fr-FR').format(count);
- $('status').textContent='Simulation procédurale · '+new Intl.NumberFormat('fr-FR').format(count)+' étoiles';
+ $('countOut').textContent=new Intl.NumberFormat('fr-FR').format(total);
+ $('status').textContent='Simulation procédurale · '+new Intl.NumberFormat('fr-FR').format(total)+' étoiles';
  if(renderer){renderer.setPixelRatio(px);resize();}
 }
 function makeGlow(size,color,opacity){
