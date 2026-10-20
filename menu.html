@@ -19,15 +19,10 @@
 
 <!-- 🌌 Bouton flottant pour menu thème (desktop only) -->
 <div class="theme-fab-container">
-  <button id="theme-fab" aria-label="Changer de thème">🌌</button>
-  <div class="theme-fab-options hidden">
-    <button onclick="setTheme('theme-solaire')">🌞</button>
-    <button onclick="setTheme('theme-lunaire')">🌙</button>
-    <button onclick="setTheme('theme-galactique')">🪐</button>
-    <button onclick="setTheme('theme-stellaire')">✨</button>
-    <button onclick="setTheme('theme-sky')">☁</button>
-    <a href="/codexmental-v2/experiences/galactique/" title="Galactique — nouveau laboratoire 3D" aria-label="Ouvrir Galactique 3D" style="display:inline-flex;align-items:center;justify-content:center;min-width:36px;min-height:36px;text-decoration:none;color:inherit">🌌</a>
-    <a href="/codexmental-v2/experiences/heliosphere/" title="Héliosphère — laboratoire 3D" aria-label="Ouvrir Héliosphère 3D" style="display:inline-flex;align-items:center;justify-content:center;min-width:36px;min-height:36px;text-decoration:none;color:inherit">🪐<span class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Héliosphère</span></a>
+  <button id="theme-fab" aria-label="Afficher les thèmes" aria-expanded="false" style="font-size:12px;width:auto;min-width:74px;padding:0 12px">Thèmes ⌄</button>
+  <div class="theme-fab-options hidden" style="min-width:170px">
+    <a href="/codexmental-v2/experiences/heliosphere/" style="display:block;padding:10px 14px;text-decoration:none;color:inherit">Héliosphère</a>
+    <a href="/codexmental-v2/experiences/galactique/" style="display:block;padding:10px 14px;text-decoration:none;color:inherit">Galactique</a>
   </div>
 </div>
 
@@ -42,13 +37,8 @@
     <li><a href="/codexmental-v2/dashb/index.html" class="nav-link">DashB</a></li>
     <li><a href="/codexmental-v2/profil/index.html" class="nav-link">Profil</a></li>
     <li><hr></li>
-    <li><strong>🎨 Thèmes</strong></li>
-    <li><button onclick="setTheme('theme-solaire')">Solaire</button></li>
-    <li><button onclick="setTheme('theme-lunaire')">Lunaire</button></li>
-    <li><button onclick="setTheme('theme-galactique')">Galactique</button></li>
-    <li><button onclick="setTheme('theme-stellaire')">Stellaire</button></li>
-    <li><button onclick="setTheme('theme-sky')">Ciel</button></li>
-    <li><a href="/codexmental-v2/experiences/galactique/" style="display:block;padding:8px 12px">🌌 Galactique 3D · nouveau</a></li>
-    <li><a href="/codexmental-v2/experiences/heliosphere/" style="display:block;padding:8px 12px">🪐 Héliosphère 3D · nouveau</a></li>
+    <li><strong>Thèmes</strong></li>
+    <li><a href="/codexmental-v2/experiences/heliosphere/" style="display:block;padding:8px 12px">Héliosphère</a></li>
+    <li><a href="/codexmental-v2/experiences/galactique/" style="display:block;padding:8px 12px">Galactique</a></li>
   </ul>
 </nav>
