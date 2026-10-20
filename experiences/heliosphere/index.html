@@ -980,6 +980,95 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
     tabsEl.appendChild(b); tabButtons[id] = b;
   });
 
+  /* ---------- Événements astronomiques rares (temps réel) ----------
+     Un événement toutes les 15–30 min de visite active. Aucun nouveau
+     rendu coûteux : trois objets réutilisés, un seul phénomène à la fois.
+     La comète permanente du système solaire reste inchangée.
+  -------------------------------------------------------------- */
+  var astroRand = function(a,b){return a+Math.random()*(b-a);};
+  var astroNextAt = performance.now()+astroRand(15,30)*60000;
+  var astroActive = null, astroLastType = '', astroDuration = 0, astroElapsed = 0;
+  var astroDirection = new T.Vector3(), astroStart = new T.Vector3(), astroEnd = new T.Vector3();
+  var astroBody = new T.Group();
+  var astroRock = new T.Mesh(
+    new T.IcosahedronGeometry(.55,1),
+    new T.MeshStandardMaterial({color:0xb0a59b,roughness:1,flatShading:true})
+  );
+  astroBody.add(astroRock);
+  var astroBodyGlow = glowSprite(glowTexA,3);
+  astroBody.add(astroBodyGlow);
+  scene.add(astroBody); astroBody.visible=false;
+  var astroStreakGeo = new T.BufferGeometry().setFromPoints([new T.Vector3(),new T.Vector3()]);
+  var astroStreak = new T.Line(astroStreakGeo,new T.LineBasicMaterial({
+    color:0xaad7ff,transparent:true,opacity:0,depthWrite:false,blending:T.AdditiveBlending
+  }));
+  scene.add(astroStreak);astroStreak.visible=false;
+  var astroFlare = glowSprite(glowTexA,SUN_R*3);
+  scene.add(astroFlare);astroFlare.visible=false;
+  var astroStreakPos = astroStreakGeo.attributes.position;
+  var astroTmp = new T.Vector3();
+
+  function astroBegin(){
+    var types=['wanderer','flare','streak'].filter(function(type){return type!==astroLastType;});
+    astroActive=types[Math.floor(Math.random()*types.length)];
+    astroLastType=astroActive;astroElapsed=0;
+    astroDuration=astroActive==='wanderer'?astroRand(20,32):astroActive==='flare'?astroRand(9,16):astroRand(2.5,4.5);
+    astroBody.visible=astroActive==='wanderer';
+    astroFlare.visible=astroActive==='flare';
+    astroStreak.visible=astroActive==='streak';
+    if(astroActive==='wanderer'){
+      var angle=astroRand(0,Math.PI*2),radius=astroRand(60,110);
+      astroStart.set(Math.cos(angle)*radius,astroRand(-9,9),Math.sin(angle)*radius);
+      astroEnd.set(-astroStart.x*.85,astroRand(-10,10),-astroStart.z*.85);
+      astroRock.scale.setScalar(astroRand(.65,1.2));
+    }else if(astroActive==='flare'){
+      var theta=astroRand(0,Math.PI*2),phi=astroRand(-.6,.6);
+      astroDirection.set(Math.cos(theta)*Math.cos(phi),Math.sin(phi),Math.sin(theta)*Math.cos(phi));
+      astroFlare.position.copy(astroDirection).multiplyScalar(SUN_R*1.1);
+    }else{
+      // Camera-relative distant light trail, not a meteor inside space.
+      astroDirection.set(0,0,-1).applyQuaternion(camera.quaternion);
+      astroStart.copy(camera.position).addScaledVector(astroDirection,astroRand(160,230));
+      astroStart.addScaledVector(new T.Vector3(1,0,0).applyQuaternion(camera.quaternion),astroRand(-55,55));
+      astroStart.addScaledVector(new T.Vector3(0,1,0).applyQuaternion(camera.quaternion),astroRand(-28,28));
+      astroEnd.copy(astroStart).add(new T.Vector3(astroRand(25,55),astroRand(-12,12),astroRand(-10,10)));
+    }
+  }
+  function astroUpdate(dt,now){
+    // Do not count inactive/background tab time toward events.
+    if(document.hidden || paused)return;
+    if(!astroActive){
+      if(now>=astroNextAt)astroBegin();
+      return;
+    }
+    astroElapsed+=dt;
+    var t=Math.min(1,astroElapsed/astroDuration);
+    var envelope=Math.sin(Math.PI*t);
+    if(astroActive==='wanderer'){
+      astroBody.position.lerpVectors(astroStart,astroEnd,t);
+      astroRock.rotation.y+=dt*.3;
+      astroBodyGlow.material.opacity=.2+.55*envelope;
+    }else if(astroActive==='flare'){
+      astroFlare.scale.setScalar(SUN_R*(1.4+2.2*envelope));
+      astroFlare.material.opacity=.45*envelope;
+    }else{
+      astroTmp.lerpVectors(astroStart,astroEnd,t);
+      astroStreakPos.setXYZ(0,astroTmp.x,astroTmp.y,astroTmp.z);
+      astroStreakPos.setXYZ(1,astroTmp.x-(astroEnd.x-astroStart.x)*.19,
+        astroTmp.y-(astroEnd.y-astroStart.y)*.19,astroTmp.z-(astroEnd.z-astroStart.z)*.19);
+      astroStreakPos.needsUpdate=true;
+      astroStreak.material.opacity=.8*envelope;
+    }
+    if(t>=1){
+      astroBody.visible=astroFlare.visible=astroStreak.visible=false;
+      astroActive=null;astroNextAt=now+astroRand(15,30)*60000;
+    }
+  }
+  document.addEventListener('visibilitychange',function(){
+    // If the user returns after a long absence, restart the quiet interval.
+    if(!document.hidden)astroNextAt=performance.now()+astroRand(15,30)*60000;
+  });
+
   /* ---------- État, sélection, vols de caméra ---------- */
   var paused = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var speed = 1, showOrbits = true, hover = null, selected = null, flight = null, lastSel = new T.Vector3();
@@ -1165,6 +1254,7 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
     /* caméra */
     stepCamera(dt);
     controls.update();
+    astroUpdate(dt,now);
 
     /* survol */
     if (needPick && pointerIn && !flight) {
