@@ -10,7 +10,7 @@
 #viewport:after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 39%,rgba(0,0,10,.56) 100%)}
 .top{position:fixed;z-index:10;top:0;left:0;right:0;display:flex;align-items:center;gap:clamp(10px,1.5vw,25px);padding:15px clamp(16px,3vw,44px);background:linear-gradient(#030514e8,#03051400)}
 .top a{color:#c4cae6;text-decoration:none;font-size:12px;font-weight:600;white-space:nowrap}.top a:hover,.top a:focus-visible{color:#fff}
-.brand{font-size:15px!important;letter-spacing:.18em;color:#e7c58b!important;margin-right:auto}.back{margin-left:auto;color:#94b7ff!important}
+.brand{font-size:15px!important;letter-spacing:.18em;color:#e7c58b!important;margin-right:auto}
 .heading{position:fixed;z-index:4;top:clamp(74px,11vh,120px);left:clamp(22px,5vw,80px);pointer-events:none;max-width:460px}
 .eyebrow{font-size:10px;letter-spacing:.38em;color:#bca8eb;font-weight:700}.heading h1{font-size:clamp(28px,4vw,58px);font-weight:300;letter-spacing:.15em;margin:10px 0 7px;text-shadow:0 0 35px #6753b588}.heading p{font-size:12px;line-height:1.8;letter-spacing:.045em;color:#a9b0d0;max-width:340px}
 .panel{position:fixed;z-index:10;bottom:clamp(15px,3vw,38px);left:clamp(14px,3vw,42px);width:min(365px,calc(100vw - 28px));padding:18px 20px;border:1px solid #b7a8ff2c;border-radius:15px;background:#080c21bb;backdrop-filter:blur(22px);box-shadow:0 12px 50px #0006}
@@ -39,14 +39,18 @@ button,select{border:1px solid #9998d044;background:#ffffff0a;color:#e8e7ff;bord
 /* Compact mobile controls: allow the galaxy to remain the focus. */
 @media(max-width:800px){.panel{max-height:50dvh;overflow-y:auto;bottom:12px}.panel:not(.expanded) #panelBody{display:none}.panel:not(.expanded){width:auto;min-width:235px;max-height:none}.panel h2{margin-bottom:0}.panel.expanded h2{margin-bottom:14px}.stats{bottom:90px;right:15px}.heading{top:135px}.heading h1{font-size:clamp(25px,7vw,38px)}.top{background:linear-gradient(#030514f0,#03051400)} }
 @media(max-width:480px){.heading{top:132px}.panel{max-width:calc(100vw - 24px)}.top{padding:10px 13px}.codex-theme-switch{margin-left:0}}
+
+/* Signature discrète, visible dans les captures. */
+.cm-signature{position:fixed;z-index:6;right:20px;bottom:8px;pointer-events:none;font:600 9px/1.4 system-ui,sans-serif;letter-spacing:.16em;color:rgba(208,217,255,.36);text-shadow:0 1px 5px #000}
+@media(max-width:800px){.cm-signature{bottom:5px;right:12px;font-size:8px}}
 </style>
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
 </head><body>
 <div id="viewport" aria-label="Visualisation tridimensionnelle d'une galaxie spirale"></div>
 <nav class="top" aria-label="Navigation CODEX">
-<a class="brand" href="../../home.html">✦ CODEX</a>
+<a class="brand" href="./" id="galaxyHome" title="Revoir la galaxie">✦ CODEX MENTAL</a>
 <a href="../../codex.html">Codex</a><a href="../../blog/blog.html">Blog</a><a href="../../atelier/atelier.html">Atelier</a><a href="../../lab/index.html">Lab</a><a href="../../dashb/index.html">DashB</a><a href="../../profil/index.html">Profil</a>
-<details class="codex-theme-switch"><summary>Thèmes <span aria-hidden="true">⌄</span></summary><div class="codex-theme-list" role="group" aria-label="Nouveaux univers"><a href="../heliosphere/">Héliosphère</a><a href="../galactique/">Galactique</a></div></details><a class="back" href="../../home.html">← Retour</a>
+<details class="codex-theme-switch"><summary>Thèmes <span aria-hidden="true">⌄</span></summary><div class="codex-theme-list" role="group" aria-label="Nouveaux univers"><a href="../heliosphere/">Héliosphère</a><a href="../galactique/">Galactique</a></div></details>
 </nav>
 <div class="heading"><div class="eyebrow">CODEX · EXPÉRIENCE EXPÉRIMENTALE</div><h1>GALACTIQUE</h1><p>Une galaxie procédurale vivante. Explorez ses bras, traversez ses poussières et découvrez son cœur lumineux.</p></div>
 <section class="panel" aria-label="Laboratoire galactique">
@@ -57,11 +61,12 @@ button,select{border:1px solid #9998d044;background:#ffffff0a;color:#e8e7ff;bord
 <div class="line"><label for="turbulence">Turbulence</label><input id="turbulence" type="range" min="0" max="2" step=".05" value=".75"><output id="turbulenceOut">0.75</output></div>
 <div class="line"><label for="exposure">Éclat</label><input id="exposure" type="range" min=".35" max="2.4" step=".05" value=".75"><output id="exposureOut">0.75</output></div>
 <div class="line"><label for="quality">Qualité</label><select id="quality"><option value="eco">Éco</option><option value="balanced">Équilibrée</option><option value="high" selected>Élevée</option><option value="ultra">Ultra</option></select><output id="countOut">—</output></div>
-<div class="actions"><button id="pause">⏸ Pause</button><button id="reset">↺ Réinitialiser vue</button><button id="random">✧ Nouvelle graine</button></div>
+<div class="actions"><button id="pause">⏸ Pause</button><button id="reset">↺ Revoir la galaxie</button><button id="random">✧ Nouvelle graine</button></div>
 <p class="hint">Glisser : orbiter · Molette ou pincement : zoomer · Les réglages régénèrent la structure en direct.</p>
 </div></section>
 <div class="stats"><strong>NGC · CODEX 01</strong><span id="status">Initialisation de la simulation…</span></div>
 <div id="error" role="alert"></div>
+<div class="cm-signature" aria-label="Signature CODEX Mental">✦ CM · CODEX MENTAL</div>
 <script type="module">
 import * as THREE from 'three';
 import {EffectComposer} from 'three/addons/postprocessing/EffectComposer.js';
@@ -71,6 +76,7 @@ import {OutputPass} from 'three/addons/postprocessing/OutputPass.js';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
 
 const $=id=>document.getElementById(id),host=$('viewport');
+$('galaxyHome').addEventListener('click',event=>{event.preventDefault();$('reset').click();});
 const settings={density:100,arms:4,twist:4.5,turbulence:.75,exposure:.75,quality:'high',seed:741};
 const presets={eco:35000,balanced:85000,high:160000,ultra:260000};
 let renderer,scene,camera,controls,composer,bloom,galaxy,core,halo,background,clock,paused=false,last=0;
