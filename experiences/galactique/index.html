@@ -24,6 +24,17 @@ button,select{border:1px solid #9998d044;background:#ffffff0a;color:#e8e7ff;bord
 #error{position:fixed;z-index:15;top:45%;left:50%;transform:translate(-50%,-50%);padding:18px;background:#141629;max-width:90%;display:none}
 @media(max-width:800px){.top{flex-wrap:wrap;gap:8px 15px;padding:12px 16px}.brand{width:100%}.back{margin-left:0}.heading{top:125px}.heading p{display:none}.panel{padding:13px 15px;bottom:12px}.stats{right:17px;bottom:260px}.heading h1{font-size:29px}}
 @media(max-width:480px){.top a{font-size:10px}.heading{top:110px}.heading h1{font-size:25px}.panel{width:min(345px,calc(100vw - 24px));left:12px}.stats{bottom:253px}}
+
+/* Shared new-generation theme switcher: native keyboard/touch disclosure. */
+.codex-theme-switch{position:relative;z-index:10010;font:600 12px/1.4 system-ui,-apple-system,Segoe UI,sans-serif;color:#d9e1ff;flex:none}
+.codex-theme-switch summary{list-style:none;display:flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid rgba(173,185,230,.28);border-radius:9px;background:rgba(18,24,49,.82);cursor:pointer;white-space:nowrap;user-select:none}
+.codex-theme-switch summary::-webkit-details-marker{display:none}
+.codex-theme-switch summary:hover,.codex-theme-switch summary:focus-visible{border-color:rgba(194,207,255,.68);background:rgba(36,43,78,.94);outline-offset:3px}
+.codex-theme-switch[open] summary{border-color:rgba(194,207,255,.55)}
+.codex-theme-list{position:absolute;top:calc(100% + 7px);right:0;min-width:175px;padding:6px;border:1px solid rgba(173,185,230,.26);border-radius:11px;background:#0b1023;box-shadow:0 16px 38px rgba(0,0,0,.55);display:grid;gap:2px}
+.codex-theme-list a{display:block!important;padding:11px 12px!important;border-radius:7px;color:#dce4ff!important;text-decoration:none!important;font-size:12px!important;font-weight:500!important;letter-spacing:0!important;margin:0!important;white-space:nowrap}
+.codex-theme-list a:hover,.codex-theme-list a:focus-visible{background:#27335c!important;color:#fff!important}
+@media(max-width:850px){.codex-theme-switch{font-size:11px}.codex-theme-switch summary{padding:6px 9px}.codex-theme-list{right:auto;left:0}}
 </style>
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
 </head><body>
@@ -31,7 +42,7 @@ button,select{border:1px solid #9998d044;background:#ffffff0a;color:#e8e7ff;bord
 <nav class="top" aria-label="Navigation CODEX">
 <a class="brand" href="../../home.html">✦ CODEX</a>
 <a href="../../codex.html">Codex</a><a href="../../blog/blog.html">Blog</a><a href="../../atelier/atelier.html">Atelier</a><a href="../../lab/index.html">Lab</a><a href="../../dashb/index.html">DashB</a><a href="../../profil/index.html">Profil</a>
-<a class="back" href="../../home.html">← Retour</a>
+<details class="codex-theme-switch"><summary>Thèmes <span aria-hidden="true">⌄</span></summary><div class="codex-theme-list" role="group" aria-label="Nouveaux univers"><a href="../heliosphere/">Héliosphère</a><a href="../galactique/">Galactique</a></div></details><a class="back" href="../../home.html">← Retour</a>
 </nav>
 <div class="heading"><div class="eyebrow">CODEX · EXPÉRIENCE EXPÉRIMENTALE</div><h1>GALACTIQUE</h1><p>Une galaxie procédurale vivante. Explorez ses bras, traversez ses poussières et découvrez son cœur lumineux.</p></div>
 <section class="panel" aria-label="Laboratoire galactique">
