@@ -2036,4 +2036,15 @@ window.addEventListener('resize',sync);sync();
   .stage .solar-title, .solar-title{max-width:60vw}
 }
 </style>
+<style id="codex-reader-stable-desktop-v1">
+/* Stable anchor: accordion expansion and article length never move the explorer. */
+@media (min-width:701px){
+ .codex-reader{align-items:flex-start!important;justify-content:center!important;overflow-y:auto!important;overscroll-behavior:contain!important;padding-top:clamp(35px,7vh,82px)!important;padding-bottom:110px!important}
+ .codex-reader .codex-reader-shell{margin-top:0!important;width:min(1380px,calc(100% - 36px))!important;max-height:none!important;height:auto!important;min-height:0!important;overflow:visible!important;gap:14px!important}
+ .codex-reader .codex-reader-layout{display:grid!important;grid-template-columns:clamp(225px,23vw,310px) minmax(0,1fr)!important;align-items:start!important;gap:clamp(16px,2vw,28px)!important;max-height:none!important;min-height:0!important;overflow:visible!important}
+ .codex-reader #codex-reader-menu{box-sizing:border-box!important;width:100%!important;height:auto!important;min-height:350px!important;max-height:min(70dvh,720px)!important;overflow-y:auto!important;overflow-x:hidden!important;align-self:start!important}
+ .codex-reader #codex-reader-content{box-sizing:border-box!important;width:100%!important;min-height:clamp(350px,54dvh,560px)!important;max-height:min(70dvh,720px)!important;overflow-y:auto!important;align-self:start!important;padding:clamp(24px,3vw,42px)!important}
+ .codex-reader .codex-reader-top{width:100%!important;box-sizing:border-box!important}
+}
+</style>
 </body></html>
