@@ -1219,11 +1219,21 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
           var blogDoc=new DOMParser().parseFromString(await blogResponse.text(),'text/html');
           if(request!==readerRequest||!readerOpen)return;
           var blogBase=new URL('../../blog/articles/',location.href);
+          var codexArticleGroups=[];
           blogDoc.querySelectorAll('#viewer-menu details').forEach(function(group){
             var links=group.querySelectorAll('a[data-viewer]');if(!links.length)return;
-            var heading=document.createElement('div');heading.className='codex-reader-group';
+            var accordion=document.createElement('details');
+            accordion.className='codex-reader-accordion';
+            var heading=document.createElement('summary');
             heading.textContent=group.querySelector('summary')?.textContent.trim()||'Articles';
-            readerMenu.appendChild(heading);
+            accordion.appendChild(heading);
+            var articleList=document.createElement('div');articleList.className='codex-reader-article-list';
+            accordion.appendChild(articleList);
+            accordion.addEventListener('toggle',function(){
+              if(accordion.open)codexArticleGroups.forEach(function(other){if(other!==accordion)other.open=false;});
+            });
+            codexArticleGroups.push(accordion);
+            readerMenu.appendChild(accordion);
             links.forEach(function(link){
               var btn=document.createElement('button');btn.type='button';btn.className='codex-reader-menu-item';
               btn.textContent=link.textContent.trim();
@@ -1235,12 +1245,17 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
                 try{
                   var response=await fetch(articleUrl);if(!response.ok)throw Error('HTTP '+response.status);
                   var articleDoc=new DOMParser().parseFromString(await response.text(),'text/html');
-                  if(request!==readerRequest||!readerOpen)return;
+                  if(request!==readerRequest||!readerOpen||!btn.isConnected)return;
                   var target=articleDoc.querySelector('main,article')||articleDoc.body;
                   var fragment=document.createElement('div');fragment.className='codex-imported-content';
                   fragment.innerHTML=target.innerHTML;
                   readerSetContent(cleanFragment(fragment,articleUrl));
                 }catch(err){if(request===readerRequest&&readerOpen)readerMessage('Cet article est momentanément indisponible.',articleUrl);}
+              });
+              articleList.appendChild(btn);
+            });
+          });
+        }catch(err){if(request===readerRequest&&readerOpen)readerMessage('Cet article est momentanément indisponible.',articleUrl);}
               });
               readerMenu.appendChild(btn);
             });
@@ -1809,6 +1824,13 @@ body.solar-selected #solar-return-sun:not([hidden]):hover,
  .codex-reader-menu-item{flex:0 0 auto;white-space:nowrap}
  #codex-reader-content{min-height:0;max-height:calc(78dvh - 120px);padding:16px}
 }
+</style>
+<style id="codex-reader-accordion-style">
+.codex-reader .codex-reader-accordion{border-bottom:1px solid rgba(220,224,255,.12);margin:2px 0;background:transparent!important;color:#e9ecf6}
+.codex-reader .codex-reader-accordion>summary{display:list-item;cursor:pointer;padding:10px 8px;font:600 12px/1.5 system-ui;color:#d8c9ab;list-style-position:inside}
+.codex-reader .codex-reader-accordion[open]>summary{color:#ffdc9c}
+.codex-reader .codex-reader-article-list{padding:0 3px 8px 12px;display:flex;flex-direction:column;gap:2px}
+.codex-reader .codex-reader-article-list .codex-reader-menu-item{text-align:left;width:100%}
 </style>
 <style id="codex-glass-blocks-v3">
 /* Strong isolation from legacy page styling, without losing content. */
