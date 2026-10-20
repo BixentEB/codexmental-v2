@@ -152,16 +152,13 @@ body{padding-top:72px!important}
 
 .cm-signature{position:fixed;z-index:9998;right:18px;bottom:9px;pointer-events:none;color:rgba(210,222,255,.36);font:600 9px/1.4 system-ui,sans-serif;letter-spacing:.16em;text-shadow:0 1px 5px #000}
 </style>
-<nav class="codex-experience-nav" aria-label="Navigation CODEX"><a class="codex-home" href="../../home.html" title="Accueil CODEX Mental">✦ CODEX MENTAL</a><a href="../../codex.html">Codex</a><a href="../../blog/blog.html">Blog</a><a href="../../atelier/atelier.html">Atelier</a><a href="../../lab/index.html">Lab</a><a href="../../dashb/index.html">DashB</a><a href="../../profil/index.html">Profil</a><details class="codex-theme-switch"><summary>Thèmes <span aria-hidden="true">⌄</span></summary><div class="codex-theme-list" role="group" aria-label="Nouveaux univers"><a href="../heliosphere/">Héliosphère</a><a href="../galactique/">Galactique</a><div class="codex-theme-settings"><div class="codex-theme-settings-title">Réglages · Héliosphère</div><div id="solar-settings-slot"></div></div></div></details></nav>
+<nav class="codex-experience-nav" aria-label="Navigation CODEX"><a class="codex-home" href="./" data-solar-section="home" title="Revoir le système solaire">✦ CODEX MENTAL</a><a href="../../codex.html" data-solar-section="codex">Codex</a><a href="../../blog/blog.html" data-solar-section="blog">Blog</a><a href="../../atelier/atelier.html" data-solar-section="atelier">Atelier</a><a href="../../lab/index.html" data-solar-section="lab">Lab</a><a href="../../dashb/index.html" data-solar-section="dashb">DashB</a><a href="../../profil/index.html" data-solar-section="profil">Profil</a><details class="codex-theme-switch"><summary>Thèmes <span aria-hidden="true">⌄</span></summary><div class="codex-theme-list" role="group" aria-label="Nouveaux univers"><a href="../heliosphere/">Héliosphère</a><a href="../galactique/">Galactique</a><div class="codex-theme-settings"><div class="codex-theme-settings-title">Réglages · Héliosphère</div><div id="solar-settings-slot"></div></div></div></details></nav>
 <div class="cm-signature" aria-label="Signature CODEX Mental">✦ CM · CODEX MENTAL</div>
 <div class="wrap">
   <h1>Héliosphère <span style="font-size:.48em;opacity:.55;letter-spacing:.1em">· Laboratoire 3D</span></h1>
 
   <div class="stage" id="stage">
-    <div class="bar">
-      <div class="brand">Codex Mental</div>
-      <nav class="tabs" id="tabs" aria-label="Sections"></nav>
-    </div>
+    
     <div id="labels"></div>
     <div class="loading" id="loading">Calcul des textures du système solaire…</div>
   </div>
@@ -615,7 +612,7 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
   var TAU = Math.PI * 2, DEG = Math.PI / 180;
   var stage = document.getElementById('stage');
   var labelsEl = document.getElementById('labels');
-  var tabsEl = document.getElementById('tabs');
+  var tabsEl = null;
   var loadingEl = document.getElementById('loading');
 
   function fail(msg) { loadingEl.textContent = msg; loadingEl.classList.remove('done'); }
@@ -983,12 +980,15 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
     hit.addEventListener('click', function () { select(P.id); });
     els[P.id] = d;
   });
+  // One navigation only: the header controls the camera, not legacy pages.
   var tabButtons = {};
-  ['home', 'codex', 'blog', 'atelier', 'lab', 'dashb', 'profil'].forEach(function (id) {
-    var b = document.createElement('button');
-    b.type = 'button'; b.textContent = SECTIONS[id].name;
-    b.addEventListener('click', function () { select(id === 'home' ? null : id); });
-    tabsEl.appendChild(b); tabButtons[id] = b;
+  document.querySelectorAll('.codex-experience-nav a[data-solar-section]').forEach(function(link){
+    var id=link.dataset.solarSection;
+    tabButtons[id]=link;
+    link.addEventListener('click',function(event){
+      event.preventDefault();
+      select(id==='home'?null:id);
+    });
   });
 
   /* ---------- Événements astronomiques rares (temps réel) ----------
@@ -1481,5 +1481,13 @@ body.solar-selected #solar-return-sun:not([hidden]){
  cursor:pointer!important;backdrop-filter:blur(8px);
 }
 @media(max-width:700px){body.solar-selected #solar-return-sun:not([hidden]){left:18px!important;bottom:185px!important}}
+</style>
+<style id="solar-single-nav">
+/* A single, unobtrusive top navigation, matching Galactique. */
+.codex-experience-nav a[data-solar-section]{padding:5px 2px;border-bottom:1px solid transparent;transition:color .2s,border-color .2s}
+.codex-experience-nav a[data-solar-section]:hover{color:#fff}
+.codex-experience-nav a[data-solar-section][aria-current="true"]{color:#ffda9b;border-color:#ffcf7d}
+.codex-experience-nav .codex-home{border-bottom:0!important}
+.stage .bar{display:none!important}
 </style>
 </body></html>
