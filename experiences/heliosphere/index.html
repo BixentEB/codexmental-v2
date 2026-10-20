@@ -166,12 +166,12 @@ body{padding-top:72px!important}
     <div class="loading" id="loading">Calcul des textures du système solaire…</div>
   </div>
 
-  <button id="solar-return-sun" type="button" hidden aria-label="Revenir à la vue générale du Soleil">☀ Retour au Soleil</button>
-<button id="solar-settings-toggle" class="solar-settings-toggle" type="button" aria-controls="solar-settings-panel" aria-expanded="false">⚙ Réglages</button>
+  <button id="solar-settings-toggle" class="solar-settings-toggle" type="button" aria-controls="solar-settings-panel" aria-expanded="false">⚙ Réglages</button>
 <div class="under">
     <div class="info" aria-live="polite">
       <h2><span class="dot" id="infoDot"></span><span id="infoTitle">Accueil</span></h2>
       <p id="infoText"></p>
+      <button id="solar-return-sun" type="button" hidden aria-label="Revenir à la vue générale du Soleil">☀ Retour au Soleil</button>
     </div>
     <div class="ctrl" id="solar-settings-panel">
       <div class="row">
@@ -1006,24 +1006,29 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
     controls.minDistance = id ? byId[id].def.r * 1.5 : 10;
   }
   function ease(k) { return k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2; }
-  var qI = new T.Quaternion(), qT = new T.Quaternion(), vDir = new T.Vector3(), vTo = new T.Vector3();
+  // Keep a stable viewing direction throughout each flight. The former
+  // quaternion turn could cross the pole and flip the camera abruptly.
+  var flightOffset = new T.Vector3();
   function stepCamera(dt) {
     var P = selected ? byId[selected] : null;
     if (flight) {
       flight.t += dt;
       var k = Math.min(1, flight.t / flight.dur), e = ease(k);
-      var tgt, toOff;
-      if (flight.id) {
-        var Q = byId[flight.id]; tgt = Q.pos;
-        toOff = camDirFor(Q).multiplyScalar(selDist(Q));
-      } else { tgt = ZERO; toOff = homeCamPos(); }
-      var lf = flight.fromOff.length(), lt = toOff.length();
-      vDir.copy(flight.fromOff).normalize(); vTo.copy(toOff).normalize();
-      qT.setFromUnitVectors(vDir, vTo); qI.identity().slerp(qT, e);
-      vDir.applyQuaternion(qI).multiplyScalar(Math.exp(Math.log(lf) + (Math.log(lt) - Math.log(lf)) * e));
+      var tgt = flight.id ? byId[flight.id].pos : ZERO;
+      var targetDistance = flight.id ? selDist(byId[flight.id]) : homeCamPos().length();
+      var startDistance = flight.fromOff.length();
+      // Translate and zoom without changing the camera's orientation.
+      // The start offset is captured at selection time and remains fixed.
+      flightOffset.copy(flight.fromOff).normalize().multiplyScalar(
+        Math.exp(Math.log(Math.max(startDistance,.01)) * (1-e) + Math.log(targetDistance) * e)
+      );
       controls.target.lerpVectors(flight.fromTgt, tgt, e);
-      camera.position.copy(controls.target).add(vDir);
-      if (k >= 1) { flight = null; controls.enabled = true; if (P) lastSel.copy(P.pos); }
+      camera.position.copy(controls.target).add(flightOffset);
+      if (k >= 1) {
+        flight = null;
+        controls.enabled = true;
+        if (P) lastSel.copy(P.pos);
+      }
     } else if (P) {
       tmpV.copy(P.pos).sub(lastSel);
       camera.position.add(tmpV);
@@ -1310,5 +1315,13 @@ toggle?.addEventListener('click',function(){
 #solar-return-sun[hidden]{display:none!important}
 @media(max-width:700px){#solar-return-sun{left:18px;bottom:215px;font-size:11px;padding:8px 12px}}
 @media(max-height:550px){#solar-return-sun{bottom:85px}}
+</style>
+<style id="solar-return-placement">
+/* The return action belongs to the selected destination's info panel. */
+.under .info #solar-return-sun{position:static!important;display:inline-flex;align-items:center;left:auto!important;right:auto!important;bottom:auto!important;margin-top:9px;padding:7px 11px;font-size:11px;border-radius:18px;background:#18244375;border-color:#b9c8ff38;box-shadow:none}
+.under .info #solar-return-sun[hidden]{display:none!important}
+.under .info #solar-return-sun:hover{background:#344467a8}
+.under .info{background:#080d2088!important;border-color:#b0baf520!important;box-shadow:none!important}
+.under .info p{opacity:.85}
 </style>
 </body></html>
