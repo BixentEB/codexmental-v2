@@ -1141,26 +1141,87 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
           :'Le Lab rassemble des applications et expériences numériques. Ouvre-les dans leur espace dédié.',route);
         return;
       }
-      var source=doc.querySelector('main')||doc.querySelector('article')||doc.querySelector('.content')||doc.body;
-      var content=source.cloneNode(true);
-      content.querySelectorAll('script,style,link,iframe,header,footer,nav,.navbar,.site-header,.site-footer,.codex-theme-switch').forEach(function(el){el.remove();});
-      content.querySelectorAll('[id]').forEach(function(el){el.removeAttribute('id');});
-      content.querySelectorAll('[href],[src]').forEach(function(el){
-        ['href','src'].forEach(function(attr){var val=el.getAttribute(attr);if(val&&!val.startsWith('#')&&!/^(?:data:|javascript:)/i.test(val))el.setAttribute(attr,new URL(val,new URL(route,location.href)).href);});
-      });
-      content.classList.add('codex-imported-content');
-      // Category headings become a lightweight local table of contents.
-      var headings=Array.from(content.querySelectorAll('h2,h3')).filter(function(h){return h.textContent.trim().length>2;}).slice(0,28);
-      if(headings.length){
-        headings.forEach(function(h,i){
-          var btn=document.createElement('button');btn.type='button';
-          btn.textContent=h.textContent.trim();btn.className='codex-reader-menu-item';
-          btn.addEventListener('click',function(){h.scrollIntoView({behavior:'smooth',block:'start'});});
-          readerMenu.appendChild(btn);
+      // Import the content, never the legacy page layout or its theme.
+      var source=doc.querySelector('main')||doc.querySelector('article')||doc.body;
+      var content=document.createElement('div');
+      content.className='codex-imported-content';
+      function cleanFragment(fragment,base){
+        fragment.querySelectorAll('script,style,link,iframe,header,footer,nav,button,[onclick],.site-header,.site-footer,.codex-theme-switch').forEach(function(el){el.remove();});
+        fragment.querySelectorAll('[style]').forEach(function(el){el.removeAttribute('style');});
+        fragment.querySelectorAll('[id]').forEach(function(el){el.removeAttribute('id');});
+        fragment.querySelectorAll('[href],[src]').forEach(function(el){
+          ['href','src'].forEach(function(attr){
+            var val=el.getAttribute(attr);
+            if(val&&!val.startsWith('#')&&!/^(?:data:|javascript:)/i.test(val))el.setAttribute(attr,new URL(val,base).href);
+          });
         });
-      }else{
-        var tag=document.createElement('span');tag.textContent=SECTIONS[id].name;readerMenu.appendChild(tag);
+        return fragment;
       }
+      if(id==='atelier'||id==='blog'){
+        // Existing articles are standalone fragments; their index pages are only menus.
+        var links=Array.from(doc.querySelectorAll('#viewer-menu a[data-viewer]'));
+        var base=new URL(id==='blog'?'../../blog/articles/':'../../atelier/',location.href);
+        var groups=Array.from(doc.querySelectorAll('#viewer-menu details'));
+        groups.forEach(function(group){
+          var heading=document.createElement('div');heading.className='codex-reader-group';
+          heading.textContent=group.querySelector('summary')?.textContent.trim()||'Rubrique';
+          readerMenu.appendChild(heading);
+          group.querySelectorAll('a[data-viewer]').forEach(function(link){
+            var btn=document.createElement('button');btn.type='button';btn.className='codex-reader-menu-item';
+            btn.textContent=link.textContent.trim();
+            var fragmentUrl=new URL(link.dataset.viewer+'.html',base).href;
+            btn.addEventListener('click',async function(){
+              readerMenu.querySelectorAll('button').forEach(function(x){x.classList.remove('active');});
+              btn.classList.add('active');
+              readerMessage('Chargement de l’article…');
+              try{
+                var res=await fetch(fragmentUrl);if(!res.ok)throw Error('HTTP '+res.status);
+                var html=await res.text();if(request!==readerRequest||!readerOpen)return;
+                var articleDoc=new DOMParser().parseFromString(html,'text/html');
+                var fragment=document.createElement('div');fragment.className='codex-imported-content';
+                var target=articleDoc.querySelector('main,article')||articleDoc.body;
+                fragment.innerHTML=target.innerHTML;
+                readerSetContent(cleanFragment(fragment,fragmentUrl));
+              }catch(err){if(request===readerRequest)readerMessage('Article indisponible pour le moment.',fragmentUrl);}
+            });
+            readerMenu.appendChild(btn);
+          });
+        });
+        if(!links.length){readerMessage('Aucun article trouvé dans cette rubrique.',route);}
+        else readerMenu.querySelector('button')?.click();
+        return;
+      }
+      if(id==='codex'){
+        var panels=Array.from(doc.querySelectorAll('.tab-content'));
+        var tabs=Array.from(doc.querySelectorAll('[data-tab]')).filter(function(el){return !el.closest('.tab-content');});
+        if(panels.length&&tabs.length){
+          tabs.forEach(function(tab){
+            var btn=document.createElement('button');btn.type='button';btn.className='codex-reader-menu-item';
+            btn.textContent=tab.textContent.trim();
+            btn.addEventListener('click',function(){
+              readerMenu.querySelectorAll('button').forEach(function(x){x.classList.remove('active');});
+              btn.classList.add('active');
+              var panel=panels.find(function(p){return p.id===tab.dataset.tab;});
+              if(!panel)return;
+              var fragment=document.createElement('div');fragment.className='codex-imported-content';
+              fragment.innerHTML=panel.innerHTML;
+              readerSetContent(cleanFragment(fragment,new URL(route,location.href)));
+            });
+            readerMenu.appendChild(btn);
+          });
+          readerMenu.querySelector('button')?.click();
+          return;
+        }
+      }
+      content.innerHTML=source.innerHTML;
+      cleanFragment(content,new URL(route,location.href));
+      var headings=Array.from(content.querySelectorAll('h2,h3')).filter(function(h){return h.textContent.trim().length>2;}).slice(0,28);
+      headings.forEach(function(h){
+        var btn=document.createElement('button');btn.type='button';
+        btn.textContent=h.textContent.trim();btn.className='codex-reader-menu-item';
+        btn.addEventListener('click',function(){h.scrollIntoView({behavior:'smooth',block:'start'});});
+        readerMenu.appendChild(btn);
+      });
       readerSetContent(content);
     }catch(err){
       if(request===readerRequest)readerMessage('Impossible de charger cette rubrique dans le lecteur.',route);
@@ -1710,6 +1771,22 @@ body.solar-selected #solar-return-sun:not([hidden]):hover,
  .codex-reader-menu-item{flex:0 0 auto;white-space:nowrap}
  #codex-reader-content{min-height:0;max-height:calc(78dvh - 120px);padding:16px}
 }
+</style>
+<style id="codex-glass-blocks-v3">
+/* Strong isolation from legacy page styling, without losing content. */
+.codex-reader .codex-reader-shell{background:transparent!important;border:none!important;box-shadow:none!important}
+.codex-reader .codex-reader-layout{background:transparent!important}
+.codex-reader #codex-reader-content,.codex-reader #codex-reader-menu{background:rgba(8,13,27,.53)!important;background-image:none!important;color:#e9ecf6!important;border:1px solid rgba(205,216,255,.18)!important}
+.codex-reader #codex-reader-content *{text-shadow:none!important}
+.codex-reader #codex-reader-content :is(section,div,article,main,ul,li,details){background:transparent!important;background-image:none!important;box-shadow:none!important;color:inherit!important}
+.codex-reader #codex-reader-content :is(h1,h2,h3,h4,p,span,li){color:#e9ecf6!important}
+.codex-reader #codex-reader-content :is(h1,h2,h3,h4){color:#fff!important}
+.codex-reader #codex-reader-content :is(.tab-content:not(.active)){display:block!important}
+.codex-reader #codex-reader-content .codex-imported-content{width:100%;max-width:100%;background:transparent!important}
+.codex-reader .codex-reader-group{font:700 11px/1.5 system-ui;color:#d9b777;margin:12px 4px 3px}
+.codex-reader .codex-reader-menu-item.active{background:rgba(213,173,100,.14);color:#ffda95}
+.codex-reader #codex-reader-close{border:none!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;outline:none!important;font:500 11px system-ui!important}
+@media(max-width:700px){.codex-reader .codex-reader-group{flex:0 0 auto;white-space:nowrap;margin:8px 4px}}
 </style>
 <style id="solar-responsive-labels">
 /* Une seule information dans l'espace : le nom de la destination. */
