@@ -166,12 +166,13 @@ body{padding-top:72px!important}
     <div class="loading" id="loading">Calcul des textures du système solaire…</div>
   </div>
 
-  <div class="under">
+  <button id="solar-settings-toggle" class="solar-settings-toggle" type="button" aria-controls="solar-settings-panel" aria-expanded="false">⚙ Réglages</button>
+<div class="under">
     <div class="info" aria-live="polite">
       <h2><span class="dot" id="infoDot"></span><span id="infoTitle">Accueil</span></h2>
       <p id="infoText"></p>
     </div>
-    <div class="ctrl">
+    <div class="ctrl" id="solar-settings-panel">
       <div class="row">
         <button class="btn" id="pause" type="button">Pause</button>
         <label for="speed">Vitesse</label>
@@ -1271,4 +1272,33 @@ body{padding:0!important;margin:0!important;background:#03040a!important}
 }
 @media(max-height:550px){.wrap>h1{bottom:20px}.under .info{display:none}.under{max-width:300px}}
 </style>
+<style id="codex-solar-minimal-ui">
+/* Planet hit targets remain intact; only their visible white rings disappear. */
+.pl.hov .hit,.pl.active .hit{box-shadow:none!important}
+.under{max-width:min(410px,75vw)!important;right:20px!important;bottom:24px!important}
+.under .info{max-width:360px!important;min-width:200px}
+.under .info:has(#infoTitle:not(:empty)){display:block}
+.under .ctrl{display:none!important}
+body.solar-settings-open .under .ctrl{display:block!important;position:fixed;right:20px;bottom:67px;max-width:min(340px,calc(100vw - 32px))!important;width:300px}
+.solar-settings-toggle{position:fixed;z-index:12;right:20px;bottom:20px;cursor:pointer;color:#dfe6ff;background:#0b1024c9;border:1px solid #a9baf455;border-radius:20px;padding:9px 15px;font:600 12px system-ui;backdrop-filter:blur(12px)}
+.under{right:135px!important;bottom:18px!important;pointer-events:none}
+.under .info{pointer-events:auto}
+body.solar-settings-open .under .info{display:none}
+@media(max-width:700px){
+ .solar-settings-toggle{right:12px;bottom:12px}
+ .under{left:12px!important;right:125px!important;bottom:12px!important;max-width:calc(100vw - 150px)!important}
+ .under .info{max-width:100%!important;min-width:0;padding:9px!important}
+ body.solar-settings-open .under .ctrl{right:12px;bottom:55px}
+}
+</style>
+<script>
+(function(){
+const toggle=document.getElementById('solar-settings-toggle');
+toggle?.addEventListener('click',function(){
+ const open=document.body.classList.toggle('solar-settings-open');
+ toggle.setAttribute('aria-expanded',String(open));
+ toggle.textContent=open?'✕ Fermer':'⚙ Réglages';
+});
+})();
+</script>
 </body></html>
