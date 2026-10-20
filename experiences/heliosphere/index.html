@@ -1255,11 +1255,6 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
               articleList.appendChild(btn);
             });
           });
-        }catch(err){if(request===readerRequest&&readerOpen)readerMessage('Cet article est momentanément indisponible.',articleUrl);}
-              });
-              readerMenu.appendChild(btn);
-            });
-          });
         }catch(err){
           var note=document.createElement('div');note.className='codex-reader-group';
           note.textContent='Catalogue des articles indisponible';readerMenu.appendChild(note);
