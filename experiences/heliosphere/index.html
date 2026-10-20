@@ -1455,6 +1455,34 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
             });
           }
           showGroup(children[0]);
+          // A category opens on a concise introduction, not an arbitrary article.
+          // Codex itself is the exception: its first article introduces the site.
+          if(group===intro){
+            var first=introList.querySelector('button');
+            if(first)first.click();
+          }else{
+            readerMenu.querySelectorAll('button.codex-reader-menu-item').forEach(function(item){item.classList.remove('active');});
+            var introductions={
+              'Intelligence artificielle':"Des usages quotidiens aux grandes questions sur la création, la pensée et nos relations avec les intelligences artificielles. Explorez les articles et les expressions nées de ces échanges.",
+              'Psychologie':"Comprendre les comportements, les émotions, la cognition et les différentes manières de percevoir le monde.",
+              'Haut Potentiel':"Réflexions sur le haut potentiel, ses représentations, ses nuances et les expériences qui l'entourent.",
+              'Philosophie':"Questionner les idées, l'existence, les valeurs et les évidences pour ouvrir d'autres perspectives.",
+              'États modifiés de conscience':"Explorer les perceptions et les états de conscience, entre témoignages, interrogations et regards critiques.",
+              'Exploration':"Curiosités, découvertes et pistes de réflexion sur le monde, l'univers et les territoires encore inconnus.",
+              'Rêves & Onirisme':"Rêves, expériences nocturnes et questions autour de l'imaginaire et de la conscience pendant le sommeil.",
+              'Symbolique & ésotérisme':"Symboles, mythes et interprétations : des sujets à explorer en distinguant traditions, ressentis et connaissances.",
+              'Introspection':"Un espace pour examiner les pensées, les ressentis et les chemins de réflexion intérieure.",
+              'Réflexions personnelles':"Des réflexions ouvertes sur différents sujets, à retrouver ici en attendant leur reclassement dans les rubriques appropriées."
+            };
+            var label=group.querySelector('summary')?.textContent.trim()||'';
+            var introduction=document.createElement('section');
+            introduction.className='codex-reader-category-intro';
+            var heading=document.createElement('h2');heading.textContent=button.textContent;introduction.appendChild(heading);
+            var paragraph=document.createElement('p');
+            paragraph.textContent=introductions[label]||'Découvrez les articles et réflexions de cette rubrique.';
+            introduction.appendChild(paragraph);
+            readerSetContent(introduction);
+          }
         }
         codexArticleGroups.forEach(function(group){
           if(group===expressionsGroup&&iaGroup)return;
