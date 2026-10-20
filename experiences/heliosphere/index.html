@@ -2058,4 +2058,27 @@ window.addEventListener('resize',sync);sync();
 }
 .codex-reader #codex-reader-content .codex-reader-message{opacity:.64;font-size:12px;line-height:1.6}
 </style>
+<style id="codex-submenu-scroll-v1">
+/* Keep the primary accordion list visible: only an expanded group's article list scrolls. */
+@media(min-width:701px){
+ .codex-reader #codex-reader-menu{overflow-y:auto!important;scrollbar-gutter:stable!important}
+ .codex-reader #codex-reader-menu .codex-reader-accordion[open] .codex-reader-article-list{
+   max-height:clamp(110px,24dvh,245px)!important;
+   overflow-y:auto!important;overscroll-behavior:contain!important;
+   scrollbar-width:thin!important;scrollbar-color:rgba(223,207,167,.55) transparent!important;
+ }
+ .codex-reader #codex-reader-menu .codex-reader-accordion[open]{min-height:0!important}
+ /* Intermediate tablet-like desktop widths: prevent the title from meeting the reader. */
+ .stage .solar-title,.solar-title{bottom:clamp(12px,2.3vh,26px)!important;left:clamp(14px,2vw,38px)!important}
+ .codex-reader .codex-reader-layout{max-height:calc(100dvh - 245px)!important;height:clamp(300px,62dvh,680px)!important}
+}
+@media(min-width:701px) and (max-height:750px){
+ .codex-reader{padding-top:18px!important}
+ .codex-reader .codex-reader-layout{height:calc(100dvh - 240px)!important;min-height:240px!important}
+ .stage .solar-title,.solar-title{bottom:12px!important}
+}
+@media(max-width:700px){
+ .stage .solar-title,.solar-title{bottom:18px!important;left:14px!important}
+}
+</style>
 </body></html>
