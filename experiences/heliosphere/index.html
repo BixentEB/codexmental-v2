@@ -1120,6 +1120,8 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
   }
   async function openCodexReader(id){
     if(!readerRoutes[id]||!SECTIONS[id])return;
+    var eyebrow=document.querySelector('.codex-reader-eyebrow');
+    if(eyebrow)eyebrow.textContent='CODEX MENTAL · '+({codex:'CONNAISSANCES',atelier:'CRÉATION',lab:'EXPÉRIMENTATION',dashb:'OBSERVATOIRE',profil:'IDENTITÉ & PARCOURS'}[id]||'EXPLORATION');
     readerPending=null;readerTitle.textContent=SECTIONS[id].name;
     reader.hidden=false;readerOpen=true;
     document.body.classList.add('codex-reader-open');
@@ -1186,6 +1188,70 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
         });
         if(!links.length){readerMessage('Aucun article trouvé dans cette rubrique.',route);}
         else readerMenu.querySelector('button')?.click();
+        return;
+      }
+      if(id==='profil'){
+        // Portrait is a modular page: its sections and subsections live in separate HTML fragments.
+        var profileSections=[
+          ['bio','Mon parcours'],['passions','Passions'],['influences','Influences'],
+          ['references','Références'],['gaming','Gaming'],['voyages','Voyages'],
+          ['aspirations','Aspirations']
+        ];
+        var profileGroups=[];
+        var profileBase=new URL('../../profil/',location.href);
+        var profileSelection=0;
+        readerMessage('Choisissez une rubrique du Portrait.');
+        profileSections.forEach(function(entry){
+          var section=entry[0],title=entry[1];
+          var accordion=document.createElement('details');
+          accordion.className='codex-reader-accordion';
+          var summary=document.createElement('summary');summary.textContent=title;
+          accordion.appendChild(summary);
+          var list=document.createElement('div');list.className='codex-reader-article-list';
+          accordion.appendChild(list);readerMenu.appendChild(accordion);
+          profileGroups.push(accordion);
+          accordion.addEventListener('toggle',function(){
+            if(accordion.open)profileGroups.forEach(function(other){if(other!==accordion)other.open=false;});
+          });
+          function addPage(label,relative){
+            var btn=document.createElement('button');btn.type='button';
+            btn.className='codex-reader-menu-item';btn.textContent=label;
+            list.appendChild(btn);
+            btn.addEventListener('click',async function(){
+              var selection=++profileSelection;
+              readerMenu.querySelectorAll('button').forEach(function(x){x.classList.remove('active');});
+              btn.classList.add('active');
+              readerMessage('Chargement de la rubrique…');
+              var url=new URL(relative,profileBase).href;
+              try{
+                var response=await fetch(url);if(!response.ok)throw Error('HTTP '+response.status);
+                var html=await response.text();
+                if(request!==readerRequest||!readerOpen||selection!==profileSelection)return;
+                var page=new DOMParser().parseFromString(html,'text/html');
+                var fragment=document.createElement('div');fragment.className='codex-imported-content';
+                fragment.innerHTML=(page.querySelector('main,article')||page.body).innerHTML;
+                readerSetContent(cleanFragment(fragment,url));
+              }catch(error){
+                if(request===readerRequest&&readerOpen&&selection===profileSelection)readerMessage('Cette partie du Portrait est indisponible.',url);
+              }
+            });
+            return btn;
+          }
+          var introButton=addPage('Introduction','sections/'+section+'/index.html');
+          (async function(){
+            try{
+              var menuUrl=new URL('sections/'+section+'/sousmenu.html',profileBase);
+              var response=await fetch(menuUrl);if(!response.ok)throw Error('HTTP '+response.status);
+              var submenu=new DOMParser().parseFromString(await response.text(),'text/html');
+              if(request!==readerRequest||!readerOpen)return;
+              submenu.querySelectorAll('button[data-subsection]').forEach(function(button){
+                var subsection=button.dataset.subsection;
+                if(!subsection||subsection==='index')return;
+                addPage(button.textContent.trim(),'sections/'+section+'/'+subsection+'.html');
+              });
+            }catch(error){/* The introduction remains available even without a submenu. */}
+          })();
+        });
         return;
       }
       if(id==='codex'){
