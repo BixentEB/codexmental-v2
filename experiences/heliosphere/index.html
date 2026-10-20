@@ -1126,6 +1126,9 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
     reader.hidden=false;readerOpen=true;
     document.body.classList.add('codex-reader-open');
     readerMenu.replaceChildren();
+    readerMenu.classList.remove('codex-category-mode');
+    var oldCategoryBar=document.getElementById('codex-reader-categories');
+    if(oldCategoryBar){oldCategoryBar.hidden=true;oldCategoryBar.replaceChildren();}
     var request=++readerRequest,route=readerRoutes[id];
     readerMessage('Chargement du contenu…');
     try{
@@ -2203,8 +2206,8 @@ window.addEventListener('resize',sync);sync();
 <style id="codex-two-tier-navigation-v1">
 @media(min-width:701px){
  .codex-reader #codex-reader-categories{
-   display:flex!important;align-items:center;gap:7px;
-   width:100%;box-sizing:border-box;overflow-x:auto;overflow-y:hidden;
+   display:flex!important;align-items:center;align-content:start;flex-wrap:wrap;gap:7px;
+   width:100%;box-sizing:border-box;overflow:visible;
    scrollbar-width:thin;scrollbar-color:rgba(229,193,131,.4) transparent;
    padding:4px 1px 9px;margin:0;
  }
