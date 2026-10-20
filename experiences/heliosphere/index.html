@@ -171,7 +171,7 @@ body{padding-top:72px!important}
     <div class="info" aria-live="polite">
       <h2><span class="dot" id="infoDot"></span><span id="infoTitle">Accueil</span></h2>
       <p id="infoText"></p>
-      <button id="solar-return-sun" type="button" hidden aria-label="Revenir à la vue générale du Soleil">☀ Retour au Soleil</button>
+      <button id="solar-return-sun" type="button" hidden aria-label="Revenir à la vue générale du Soleil">ou retour au soleil</button>
     </div>
     <div class="ctrl" id="solar-settings-panel">
       <div class="row">
@@ -918,6 +918,10 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
     return { pts: pts, seed: seed, base: C(colHex) };
   }
   var tailIon = makeTail(0x7fb4ff, 1.5), tailDust = makeTail(0xffe2a8, 1.8);
+  // Hide the foreground comet and its trails; they distract during navigation.
+  cometFrame.visible = false;
+  tailIon.pts.visible = false;
+  tailDust.pts.visible = false;
   var tmpA = new T.Vector3(), tmpB = new T.Vector3(), tmpV = new T.Vector3();
   function updateTail(tl, headPos, dir, len, curve, vel, intensity) {
     var p = tl.pts.geometry.attributes.position, c = tl.pts.geometry.attributes.color;
@@ -1215,7 +1219,7 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
   }
 
   // Experiment navigation: planetary selection remains cinematic; explicit page links stay accessible.
-  var jump = document.createElement('a');jump.id='codex-jump';jump.hidden=true;jump.textContent='Ouvrir cette section ↗';jump.style.cssText='display:none;margin-top:10px;color:#9cd5ff;font-weight:700;text-decoration:none'; 
+  var jump = document.createElement('a');jump.id='codex-jump';jump.hidden=true;jump.textContent='Accéder à cette section ↗';jump.style.cssText='display:none;margin-top:10px;color:#9cd5ff;font-weight:700;text-decoration:none'; 
   var infoText=document.getElementById('infoText');infoText?.parentNode?.appendChild(jump);
   var jumpTimer=setInterval(function(){var key=selected;if(CODEX_LINKS[key]){jump.href=CODEX_LINKS[key];jump.style.display='inline-block';jump.hidden=false;}else{jump.hidden=true;jump.style.display='none';}},250);
   window.addEventListener('pagehide',function(){clearInterval(jumpTimer);},{once:true});
@@ -1323,5 +1327,11 @@ toggle?.addEventListener('click',function(){
 .under .info #solar-return-sun:hover{background:#344467a8}
 .under .info{background:#080d2088!important;border-color:#b0baf520!important;box-shadow:none!important}
 .under .info p{opacity:.85}
+</style>
+<style id="solar-inline-return">
+/* Contextual text action, visually paired with the section link. */
+.under .info #codex-jump{display:inline-block;margin-top:10px!important;margin-right:5px!important;font-size:11px!important}
+.under .info #solar-return-sun:not([hidden]){display:inline!important;position:static!important;padding:0!important;margin:0!important;border:0!important;border-radius:0!important;background:transparent!important;backdrop-filter:none!important;box-shadow:none!important;color:#a6bce2!important;font:500 11px system-ui!important;text-decoration:none}
+.under .info #solar-return-sun:hover{text-decoration:underline!important;color:#fff!important}
 </style>
 </body></html>
