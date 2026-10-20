@@ -1127,6 +1127,25 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
     document.body.classList.add('codex-reader-open');
     readerClose.focus({preventScroll:true});
   }
+  /* Retire la seconde navigation des pages intégrées, sans modifier les pages sources.
+     Same-origin only; future universes can reuse this reader treatment. */
+  readerFrame.addEventListener('load',function(){
+    try{
+      var doc=readerFrame.contentDocument;
+      if(!doc||!doc.head)return;
+      var style=doc.createElement('style');
+      style.textContent=[
+        'html,body{background:transparent!important;background-image:none!important;min-height:0!important}',
+        'body{margin:0!important;padding:12px clamp(12px,2vw,24px)!important}',
+        'header,footer,nav,.site-header,.site-footer,#menu,.navbar,.codex-theme-switch{display:none!important}',
+        'main,.container,.content,.wrap{max-width:100%!important;width:100%!important;margin:0 auto!important}',
+        'img,video,canvas{max-width:100%}',
+        '@media(max-width:700px){body{padding:10px!important}}'
+      ].join('');
+      doc.head.appendChild(style);
+      readerFrame.setAttribute('title','Lecture : '+readerTitle.textContent);
+    }catch(e){/* Un contenu non accessible conserve son rendu d’origine. */}
+  });
   readerClose.addEventListener('click',closeCodexReader);
   reader.addEventListener('keydown',function(e){if(e.key==='Escape'){e.preventDefault();closeCodexReader();}});
   document.addEventListener('keydown',function(e){if(e.key==='Escape'&&readerOpen){e.preventDefault();closeCodexReader();}});
@@ -1603,6 +1622,25 @@ body.solar-selected #solar-return-sun:not([hidden]){
 body.codex-reader-open #solar-return-sun{display:none!important}
 body.codex-reader-open .solar-hover{display:none!important}
 @media(max-width:700px){.codex-reader{inset:42px 0 0;padding:7px}.codex-reader-shell{border-radius:12px}.codex-reader-top{padding:11px 12px}.codex-reader-top h2{font-size:19px}#codex-reader-close{font-size:11px;padding:8px 10px}}
+</style>
+<style id="codex-reader-universal-v1">
+/* Universal reader geometry: theme-agnostic tokens for future universes. */
+:root{--codex-glass:rgba(9,14,29,.69);--codex-edge:rgba(199,211,255,.24);--codex-ink:#f1f3ff;--codex-accent:#d6ae68}
+.codex-reader{align-items:center;padding:clamp(18px,4vw,56px);background:transparent}
+.codex-reader-shell{width:min(960px,68vw);height:min(75vh,760px);max-height:calc(100dvh - 100px);background:var(--codex-glass);border-color:var(--codex-edge);box-shadow:0 15px 65px #0006;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.codex-reader-top{background:rgba(12,17,32,.43);padding:12px 20px}
+.codex-reader-top h2{color:var(--codex-ink)}
+#codex-reader-close{background:rgba(15,20,38,.55);font-size:11px}
+#codex-reader-frame{background:transparent!important;color:inherit}
+#solar-return-sun{left:auto!important;right:clamp(18px,3vw,52px)!important;bottom:clamp(70px,10vh,105px)!important;opacity:.68;font-size:11px;padding:7px 12px;background:rgba(9,15,29,.45)}
+#solar-return-sun:hover,#solar-return-sun:focus-visible{opacity:1}
+@media(max-width:700px){
+ .codex-reader{inset:42px 0 0;padding:10px 8px;align-items:center}
+ .codex-reader-shell{width:100%;height:min(86dvh,850px);max-height:calc(100dvh - 64px);border-radius:13px;background:rgba(8,13,26,.78)}
+ .codex-reader-top{padding:10px 12px}
+ #solar-return-sun{right:14px!important;bottom:70px!important;font-size:10px}
+}
+@media(prefers-reduced-motion:reduce){.codex-reader-shell{transition:none}}
 </style>
 <style id="solar-responsive-labels">
 /* Une seule information dans l'espace : le nom de la destination. */
