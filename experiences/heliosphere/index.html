@@ -175,7 +175,7 @@ body{padding-top:72px!important}
 
   <button id="solar-settings-toggle" class="solar-settings-toggle" type="button" aria-controls="solar-settings-panel" aria-expanded="false">⚙ Réglages</button>
 <button id="solar-return-sun" type="button" hidden aria-label="Revenir à la vue générale du Soleil">Retour au Soleil</button>
-<div id="solar-hover" class="solar-hover" hidden aria-live="polite"><strong id="solar-hover-name"></strong><span id="solar-hover-sub"></span></div>
+<div id="solar-hover" class="solar-hover" hidden aria-live="polite"><strong id="solar-hover-name"></strong><span id="solar-hover-sub"></span><span id="solar-hover-desc"></span></div>
 <div class="under">
     <div class="info" aria-live="polite">
       <h2><span class="dot" id="infoDot"></span><span id="infoTitle">Accueil</span></h2>
@@ -1199,6 +1199,7 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
     if(!id || selected || !SECTIONS[id]){panel.hidden=true;return;}
     document.getElementById('solar-hover-name').textContent=SECTIONS[id].name;
     document.getElementById('solar-hover-sub').textContent=SOLAR_SUBTITLES[id]||'';
+    document.getElementById('solar-hover-desc').textContent=SECTIONS[id].text||'';
     panel.hidden=false;
   }
   /* ---------- Picking ---------- */
@@ -1519,6 +1520,11 @@ toggle?.addEventListener('click',function(){
 #solar-return-sun{position:fixed!important;z-index:12!important;left:clamp(18px,4vw,68px)!important;right:auto!important;bottom:clamp(185px,23vh,235px)!important;display:none!important;background:#101a32a8!important;border:1px solid #b9c8ff55!important;padding:9px 14px!important;border-radius:20px!important;color:#e5ebff!important;font:500 12px system-ui!important;pointer-events:auto!important}
 body.solar-selected #solar-return-sun:not([hidden]){display:inline-flex!important}
 @media(max-width:700px){.solar-hover{left:18px;bottom:180px;max-width:75vw}.solar-hover strong{font-size:20px}.solar-hover span{font-size:12px}#solar-return-sun{left:18px!important;bottom:185px!important}}
+.solar-hover{left:50%;bottom:clamp(62px,10vh,105px);transform:translateX(-50%);width:min(620px,calc(100vw - 44px));max-width:none;text-align:center;padding:12px 16px;box-sizing:border-box;transition:opacity .2s ease}
+.solar-hover strong{font-size:clamp(28px,3.3vw,46px);line-height:1.15;letter-spacing:.035em}
+.solar-hover #solar-hover-sub{font-size:clamp(14px,1.25vw,18px);margin-top:10px;color:#f2e6cb}
+.solar-hover #solar-hover-desc{font-size:clamp(12px,1vw,14px);line-height:1.55;margin:9px auto 0;color:#c7ccdf;max-width:530px}
+@media(max-width:700px){.solar-hover{left:50%;bottom:80px;max-width:none;width:calc(100vw - 32px)}.solar-hover strong{font-size:28px}.solar-hover #solar-hover-sub{font-size:14px}.solar-hover #solar-hover-desc{font-size:12px}}
 </style>
 <style id="solar-return-independent">
 /* The navigation control must not be nested in the hidden info card. */
