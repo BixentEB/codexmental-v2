@@ -1228,7 +1228,7 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
             var accordion=document.createElement('details');
             accordion.className='codex-reader-accordion';
             var heading=document.createElement('summary');
-            heading.textContent=group.querySelector('summary')?.textContent.trim()||'Articles';
+            heading.textContent=(group.querySelector('summary')?.textContent.trim()||'Articles').replace(/^[^\p{L}\p{N}]+/u,'').trim();
             accordion.appendChild(heading);
             var articleList=document.createElement('div');articleList.className='codex-reader-article-list';
             accordion.appendChild(articleList);
@@ -1854,6 +1854,23 @@ body.solar-selected #solar-return-sun:not([hidden]):hover,
 .codex-reader .codex-reader-menu-item.active{background:rgba(213,173,100,.14);color:#ffda95}
 .codex-reader #codex-reader-close{border:none!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;outline:none!important;font:500 11px system-ui!important}
 @media(max-width:700px){.codex-reader .codex-reader-group{flex:0 0 auto;white-space:nowrap;margin:8px 4px}}
+</style>
+<style id="codex-reader-layout-v4">
+/* Reader navigation: readable stacked cards, never compressed horizontally. */
+.codex-reader #codex-reader-menu{display:flex!important;flex-direction:column!important;align-items:stretch!important;justify-content:flex-start!important;flex-wrap:nowrap!important;gap:8px!important;overflow-y:auto!important;overflow-x:hidden!important;min-height:0!important;max-height:calc(76dvh - 60px)!important;padding:10px!important;scrollbar-width:thin}
+.codex-reader #codex-reader-menu .codex-reader-accordion{flex:0 0 auto!important;min-height:0!important;margin:0!important;width:100%!important;overflow:visible!important;box-sizing:border-box}
+.codex-reader #codex-reader-menu .codex-reader-accordion>summary{white-space:normal!important;overflow-wrap:anywhere!important;min-height:19px!important;padding:11px 29px 11px 12px!important;line-height:1.45!important;font-size:12px!important}
+.codex-reader #codex-reader-menu .codex-reader-article-list{display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:3px!important;max-height:none!important;overflow:visible!important}
+.codex-reader #codex-reader-menu .codex-reader-menu-item{display:block!important;flex:none!important;width:100%!important;white-space:normal!important;overflow-wrap:anywhere!important;text-align:left!important;line-height:1.45!important;padding:9px 10px!important}
+@media(max-width:700px){
+ .codex-reader{align-items:flex-start!important;justify-content:flex-start!important;padding:14px 12px!important;overflow-y:auto!important}
+ .codex-reader .codex-reader-shell{width:100%!important;max-height:none!important;gap:10px!important;margin-top:clamp(20px,5vh,65px)!important}
+ .codex-reader .codex-reader-layout{display:flex!important;flex-direction:column!important;gap:12px!important;max-height:none!important;overflow:visible!important}
+ .codex-reader #codex-reader-menu{width:100%!important;box-sizing:border-box!important;max-height:min(38dvh,340px)!important;min-height:0!important;overflow-y:auto!important;overflow-x:hidden!important;padding:10px!important;gap:8px!important}
+ .codex-reader #codex-reader-content{width:100%!important;box-sizing:border-box!important;min-height:145px!important;max-height:46dvh!important;overflow-y:auto!important;padding:17px!important}
+ .codex-reader .codex-reader-accordion{width:100%!important}
+ .solar-title,.stage .solar-title{font-size:clamp(22px,6vw,34px)!important;max-width:65vw!important}
+}
 </style>
 <style id="solar-responsive-labels">
 /* Une seule information dans l'espace : le nom de la destination. */
