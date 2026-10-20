@@ -152,7 +152,7 @@ body{padding-top:72px!important}
 
 .cm-signature{position:fixed;z-index:9998;right:18px;bottom:9px;pointer-events:none;color:rgba(210,222,255,.36);font:600 9px/1.4 system-ui,sans-serif;letter-spacing:.16em;text-shadow:0 1px 5px #000}
 </style>
-<nav class="codex-experience-nav" aria-label="Navigation CODEX"><a class="codex-home" href="../../home.html" title="Accueil CODEX Mental">✦ CODEX MENTAL</a><a href="../../codex.html">Codex</a><a href="../../blog/blog.html">Blog</a><a href="../../atelier/atelier.html">Atelier</a><a href="../../lab/index.html">Lab</a><a href="../../dashb/index.html">DashB</a><a href="../../profil/index.html">Profil</a><details class="codex-theme-switch"><summary>Thèmes <span aria-hidden="true">⌄</span></summary><div class="codex-theme-list" role="group" aria-label="Nouveaux univers"><a href="../heliosphere/">Héliosphère</a><a href="../galactique/">Galactique</a></div></details></nav>
+<nav class="codex-experience-nav" aria-label="Navigation CODEX"><a class="codex-home" href="../../home.html" title="Accueil CODEX Mental">✦ CODEX MENTAL</a><a href="../../codex.html">Codex</a><a href="../../blog/blog.html">Blog</a><a href="../../atelier/atelier.html">Atelier</a><a href="../../lab/index.html">Lab</a><a href="../../dashb/index.html">DashB</a><a href="../../profil/index.html">Profil</a><details class="codex-theme-switch"><summary>Thèmes <span aria-hidden="true">⌄</span></summary><div class="codex-theme-list" role="group" aria-label="Nouveaux univers"><a href="../heliosphere/">Héliosphère</a><a href="../galactique/">Galactique</a><div class="codex-theme-settings"><div class="codex-theme-settings-title">Réglages · Héliosphère</div><div id="solar-settings-slot"></div></div></div></details></nav>
 <div class="cm-signature" aria-label="Signature CODEX Mental">✦ CM · CODEX MENTAL</div>
 <div class="wrap">
   <h1>Héliosphère <span style="font-size:.48em;opacity:.55;letter-spacing:.1em">· Laboratoire 3D</span></h1>
@@ -167,6 +167,7 @@ body{padding-top:72px!important}
   </div>
 
   <button id="solar-settings-toggle" class="solar-settings-toggle" type="button" aria-controls="solar-settings-panel" aria-expanded="false">⚙ Réglages</button>
+<div id="solar-hover" class="solar-hover" hidden aria-live="polite"><strong id="solar-hover-name"></strong><span id="solar-hover-sub"></span></div>
 <div class="under">
     <div class="info" aria-live="polite">
       <h2><span class="dot" id="infoDot"></span><span id="infoTitle">Accueil</span></h2>
@@ -641,6 +642,15 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
     profil:  { name: 'Profil', sub: 'Compte', rgb: '205,218,255', text: "Votre profil : parcours, préférences et réglages. Une géante à anneaux, entourée de lunes." }
   };
 
+  var SOLAR_SUBTITLES = {
+    codex:'La bibliothèque des connaissances',
+    blog:'Le journal des réflexions',
+    atelier:'L’espace des idées et des créations',
+    lab:'Le laboratoire des créations numériques',
+    dashb:'Le tableau de bord personnel',
+    profil:'À la découverte de mon univers'
+  };
+
   /* ---------- Définitions des mondes (rayons exagérés pour rester lisibles) ---------- */
   function C(h) { return new T.Color(h); }
   var DEFS = [
@@ -967,8 +977,8 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
       '<span class="lbl"><b>' + s.name + '</b>' + (s.sub ? '<i>' + s.sub + '</i>' : '') + '</span>';
     labelsEl.appendChild(d);
     var hit = d.querySelector('.hit');
-    hit.addEventListener('focus', function () { hover = P.id; });
-    hit.addEventListener('blur', function () { if (hover === P.id) hover = null; });
+    hit.addEventListener('focus', function () { hover = P.id; showSolarHover(P.id); });
+    hit.addEventListener('blur', function () { if (hover === P.id) hover = null; showSolarHover(null); });
     hit.addEventListener('click', function () { select(P.id); });
     els[P.id] = d;
   });
@@ -1077,6 +1087,8 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
   function select(id) {
     selected = id;
     document.getElementById('solar-return-sun').hidden = !id;
+    document.body.classList.toggle('solar-selected',!!id);
+    document.getElementById('solar-hover').hidden=true;
     var key = id || 'home', s = SECTIONS[key];
     document.getElementById('infoTitle').textContent = s.name;
     document.getElementById('infoText').textContent = s.text;
@@ -1127,6 +1139,14 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
     }
   }
 
+  function showSolarHover(id){
+    var panel=document.getElementById('solar-hover');
+    if(!panel)return;
+    if(!id || selected || !SECTIONS[id]){panel.hidden=true;return;}
+    document.getElementById('solar-hover-name').textContent=SECTIONS[id].name;
+    document.getElementById('solar-hover-sub').textContent=SOLAR_SUBTITLES[id]||'';
+    panel.hidden=false;
+  }
   /* ---------- Picking ---------- */
   var ray = new T.Raycaster(), ndc = new T.Vector2(), pointerIn = false, needPick = false, downX = 0, downY = 0;
   var hitMeshes = planets.filter(function (P) { return !P.def.deco; }).map(function (P) { return P.hit; });
@@ -1139,7 +1159,7 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
   }
   var lastPX = 0, lastPY = 0;
   canvas.addEventListener('pointermove', function (e) { pointerIn = true; needPick = true; lastPX = e.clientX; lastPY = e.clientY; });
-  canvas.addEventListener('pointerleave', function () { pointerIn = false; hover = null; canvas.classList.remove('over'); });
+  canvas.addEventListener('pointerleave', function () { pointerIn = false; hover = null; canvas.classList.remove('over'); showSolarHover(null); });
   canvas.addEventListener('pointerdown', function (e) { downX = e.clientX; downY = e.clientY; });
   canvas.addEventListener('pointerup', function (e) {
     if (Math.hypot(e.clientX - downX, e.clientY - downY) > 6) return;
@@ -1261,6 +1281,7 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
       needPick = false;
       var id = pickAt(lastPX, lastPY);
       hover = id; canvas.classList.toggle('over', !!id);
+      showSolarHover(id);
     }
 
     /* hit-spheres : taille minimale à l'écran, et rayons à l'écran pour les étiquettes */
@@ -1311,6 +1332,10 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
   var jumpTimer=setInterval(function(){var key=selected;if(CODEX_LINKS[key]){jump.href=CODEX_LINKS[key];jump.style.display='inline-block';jump.hidden=false;}else{jump.hidden=true;jump.style.display='none';}},250);
   window.addEventListener('pagehide',function(){clearInterval(jumpTimer);},{once:true});
   document.getElementById('solar-return-sun').addEventListener('click', function(){select(null);});
+  var settingsSlot=document.getElementById('solar-settings-slot');
+  var settingsPanel=document.getElementById('solar-settings-panel');
+  if(settingsSlot&&settingsPanel)settingsSlot.appendChild(settingsPanel);
+  document.getElementById('solar-settings-toggle')?.remove();
   syncPause();
   if (window.innerWidth < 640 || (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4)) { quality = 'std'; qualitySel.value = 'std'; }
   resize();
@@ -1420,5 +1445,25 @@ toggle?.addEventListener('click',function(){
 .under .info #codex-jump{display:inline-block;margin-top:10px!important;margin-right:5px!important;font-size:11px!important}
 .under .info #solar-return-sun:not([hidden]){display:inline!important;position:static!important;padding:0!important;margin:0!important;border:0!important;border-radius:0!important;background:transparent!important;backdrop-filter:none!important;box-shadow:none!important;color:#a6bce2!important;font:500 11px system-ui!important;text-decoration:none}
 .under .info #solar-return-sun:hover{text-decoration:underline!important;color:#fff!important}
+</style>
+<style id="solar-hover-and-theme-settings">
+/* Minimal preview on hover: typography, not a second boxed menu. */
+.solar-hover{position:fixed;z-index:10;left:clamp(18px,4vw,68px);bottom:clamp(185px,23vh,235px);pointer-events:none;text-shadow:0 2px 14px #000,0 0 3px #000;max-width:min(420px,70vw)}
+.solar-hover strong{display:block;font:600 clamp(20px,2vw,30px)/1.25 var(--font-display);color:#f3f4ff}
+.solar-hover span{display:block;margin-top:5px;font:400 13px/1.4 var(--font-body);color:#d1d7ee}
+.codex-theme-list{min-width:265px;max-height:min(82vh,680px);overflow-y:auto}
+.codex-theme-settings{border-top:1px solid #9baee83b;margin-top:6px;padding:12px 8px 7px}
+.codex-theme-settings-title{font-size:11px;letter-spacing:.06em;color:#c9d6ff;margin-bottom:10px}
+#solar-settings-slot .ctrl{display:flex!important;position:static!important;width:auto!important;max-width:none!important;padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important;backdrop-filter:none!important}
+#solar-settings-slot .ctrl .row{gap:8px}
+#solar-settings-slot .ctrl label{font-size:11px}
+#solar-settings-slot .ctrl input[type=range]{min-width:65px;width:70px}
+#solar-settings-slot .ctrl .hint{font-size:10px;line-height:1.4}
+#solar-settings-slot .ctrl select{font-size:11px;padding:5px}
+.under .info{display:none!important}
+.under{pointer-events:none!important}
+#solar-return-sun{position:fixed!important;z-index:12!important;left:clamp(18px,4vw,68px)!important;right:auto!important;bottom:clamp(185px,23vh,235px)!important;display:none!important;background:#101a32a8!important;border:1px solid #b9c8ff55!important;padding:9px 14px!important;border-radius:20px!important;color:#e5ebff!important;font:500 12px system-ui!important;pointer-events:auto!important}
+body.solar-selected #solar-return-sun:not([hidden]){display:inline-flex!important}
+@media(max-width:700px){.solar-hover{left:18px;bottom:180px;max-width:75vw}.solar-hover strong{font-size:20px}.solar-hover span{font-size:12px}#solar-return-sun{left:18px!important;bottom:185px!important}}
 </style>
 </body></html>
