@@ -167,12 +167,13 @@ body{padding-top:72px!important}
   </div>
 
   <button id="solar-settings-toggle" class="solar-settings-toggle" type="button" aria-controls="solar-settings-panel" aria-expanded="false">⚙ Réglages</button>
+<button id="solar-return-sun" type="button" hidden aria-label="Revenir à la vue générale du Soleil">Retour au Soleil</button>
 <div id="solar-hover" class="solar-hover" hidden aria-live="polite"><strong id="solar-hover-name"></strong><span id="solar-hover-sub"></span></div>
 <div class="under">
     <div class="info" aria-live="polite">
       <h2><span class="dot" id="infoDot"></span><span id="infoTitle">Accueil</span></h2>
       <p id="infoText"></p>
-      <button id="solar-return-sun" type="button" hidden aria-label="Revenir à la vue générale du Soleil">ou retour au soleil</button>
+      
     </div>
     <div class="ctrl" id="solar-settings-panel">
       <div class="row">
@@ -1465,5 +1466,20 @@ toggle?.addEventListener('click',function(){
 #solar-return-sun{position:fixed!important;z-index:12!important;left:clamp(18px,4vw,68px)!important;right:auto!important;bottom:clamp(185px,23vh,235px)!important;display:none!important;background:#101a32a8!important;border:1px solid #b9c8ff55!important;padding:9px 14px!important;border-radius:20px!important;color:#e5ebff!important;font:500 12px system-ui!important;pointer-events:auto!important}
 body.solar-selected #solar-return-sun:not([hidden]){display:inline-flex!important}
 @media(max-width:700px){.solar-hover{left:18px;bottom:180px;max-width:75vw}.solar-hover strong{font-size:20px}.solar-hover span{font-size:12px}#solar-return-sun{left:18px!important;bottom:185px!important}}
+</style>
+<style id="solar-return-independent">
+/* The navigation control must not be nested in the hidden info card. */
+body.solar-selected #solar-return-sun:not([hidden]){
+ display:inline-flex!important;position:fixed!important;
+ left:clamp(18px,4vw,68px)!important;
+ bottom:clamp(185px,23vh,235px)!important;
+ z-index:15!important;pointer-events:auto!important;
+ background:rgba(10,18,38,.56)!important;
+ border:1px solid rgba(185,200,255,.28)!important;
+ color:#e8edff!important;padding:9px 15px!important;
+ border-radius:22px!important;font:500 12px system-ui!important;
+ cursor:pointer!important;backdrop-filter:blur(8px);
+}
+@media(max-width:700px){body.solar-selected #solar-return-sun:not([hidden]){left:18px!important;bottom:185px!important}}
 </style>
 </body></html>
