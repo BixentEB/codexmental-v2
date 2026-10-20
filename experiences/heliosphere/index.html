@@ -2081,4 +2081,38 @@ window.addEventListener('resize',sync);sync();
  .stage .solar-title,.solar-title{bottom:18px!important;left:14px!important}
 }
 </style>
+<style id="codex-accordion-fixed-menu-v2">
+/* Desktop: never scroll the outer navigation; scrolling belongs to the open sub-list. */
+@media(min-width:701px){
+ .codex-reader #codex-reader-menu{
+   overflow:hidden!important;
+   scrollbar-gutter:auto!important;
+   display:flex!important;
+   flex-direction:column!important;
+   gap:6px!important;
+ }
+ .codex-reader #codex-reader-menu .codex-reader-accordion{
+   flex:0 0 auto!important;
+   margin:0!important;
+ }
+ .codex-reader #codex-reader-menu .codex-reader-accordion[open]{
+   flex:0 1 auto!important;
+   min-height:0!important;
+   display:flex!important;
+   flex-direction:column!important;
+   overflow:hidden!important;
+ }
+ .codex-reader #codex-reader-menu .codex-reader-accordion>summary{
+   flex:0 0 auto!important;
+ }
+ .codex-reader #codex-reader-menu .codex-reader-accordion[open] .codex-reader-article-list{
+   flex:0 1 auto!important;
+   min-height:0!important;
+   max-height:min(24dvh,230px)!important;
+   overflow-y:auto!important;
+   overscroll-behavior:contain!important;
+   scrollbar-width:thin!important;
+ }
+}
+</style>
 </body></html>
