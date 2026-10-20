@@ -1,4 +1,15 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
+/* Shared new-generation theme switcher: native keyboard/touch disclosure. */
+.codex-theme-switch{position:relative;z-index:10010;font:600 12px/1.4 system-ui,-apple-system,Segoe UI,sans-serif;color:#d9e1ff;flex:none}
+.codex-theme-switch summary{list-style:none;display:flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid rgba(173,185,230,.28);border-radius:9px;background:rgba(18,24,49,.82);cursor:pointer;white-space:nowrap;user-select:none}
+.codex-theme-switch summary::-webkit-details-marker{display:none}
+.codex-theme-switch summary:hover,.codex-theme-switch summary:focus-visible{border-color:rgba(194,207,255,.68);background:rgba(36,43,78,.94);outline-offset:3px}
+.codex-theme-switch[open] summary{border-color:rgba(194,207,255,.55)}
+.codex-theme-list{position:absolute;top:calc(100% + 7px);right:0;min-width:175px;padding:6px;border:1px solid rgba(173,185,230,.26);border-radius:11px;background:#0b1023;box-shadow:0 16px 38px rgba(0,0,0,.55);display:grid;gap:2px}
+.codex-theme-list a{display:block!important;padding:11px 12px!important;border-radius:7px;color:#dce4ff!important;text-decoration:none!important;font-size:12px!important;font-weight:500!important;letter-spacing:0!important;margin:0!important;white-space:nowrap}
+.codex-theme-list a:hover,.codex-theme-list a:focus-visible{background:#27335c!important;color:#fff!important}
+@media(max-width:850px){.codex-theme-switch{font-size:11px}.codex-theme-switch summary{padding:6px 9px}.codex-theme-list{right:auto;left:0}}
+</style></head><body>
 <title>Héliosphère — CODEX Mental</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -139,7 +150,7 @@ body{padding-top:72px!important}
 @media(max-width:850px){body{padding-top:102px!important}.codex-experience-nav{justify-content:flex-start;flex-wrap:wrap;gap:8px 13px}.codex-experience-nav .codex-home,.codex-experience-nav .codex-return{margin:0}.codex-experience-nav a{font-size:11px}}
 @media(max-width:480px){.codex-experience-nav{gap:6px 11px;padding:8px 12px}.codex-experience-nav a{font-size:10px}}
 </style>
-<nav class="codex-experience-nav" aria-label="Navigation CODEX"><a class="codex-home" href="../../home.html">✦ CODEX</a><a href="../../codex.html">Codex</a><a href="../../blog/blog.html">Blog</a><a href="../../atelier/atelier.html">Atelier</a><a href="../../lab/index.html">Lab</a><a href="../../dashb/index.html">DashB</a><a href="../../profil/index.html">Profil</a><a class="codex-return" href="../../home.html">← Accueil classique</a></nav>
+<nav class="codex-experience-nav" aria-label="Navigation CODEX"><a class="codex-home" href="../../home.html">✦ CODEX</a><a href="../../codex.html">Codex</a><a href="../../blog/blog.html">Blog</a><a href="../../atelier/atelier.html">Atelier</a><a href="../../lab/index.html">Lab</a><a href="../../dashb/index.html">DashB</a><a href="../../profil/index.html">Profil</a><details class="codex-theme-switch"><summary>Thèmes <span aria-hidden="true">⌄</span></summary><div class="codex-theme-list" role="group" aria-label="Nouveaux univers"><a href="../heliosphere/">Héliosphère</a><a href="../galactique/">Galactique</a></div></details><a class="codex-return" href="../../home.html">← Accueil classique</a></nav>
 <div class="wrap">
   <h1>Héliosphère <span style="font-size:.48em;opacity:.55;letter-spacing:.1em">· Laboratoire 3D</span></h1>
 
