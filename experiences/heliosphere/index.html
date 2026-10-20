@@ -918,10 +918,7 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
     return { pts: pts, seed: seed, base: C(colHex) };
   }
   var tailIon = makeTail(0x7fb4ff, 1.5), tailDust = makeTail(0xffe2a8, 1.8);
-  // Hide the foreground comet and its trails; they distract during navigation.
-  cometFrame.visible = false;
-  tailIon.pts.visible = false;
-  tailDust.pts.visible = false;
+
   var tmpA = new T.Vector3(), tmpB = new T.Vector3(), tmpV = new T.Vector3();
   function updateTail(tl, headPos, dir, len, curve, vel, intensity) {
     var p = tl.pts.geometry.attributes.position, c = tl.pts.geometry.attributes.color;
