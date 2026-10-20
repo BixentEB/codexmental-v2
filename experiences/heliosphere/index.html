@@ -160,7 +160,7 @@ body{padding-top:72px!important}
       <div><span class="codex-reader-eyebrow">CODEX MENTAL · EXPLORATION</span><h2 id="codex-reader-title">Rubrique</h2></div>
       <button id="codex-reader-close" type="button" aria-label="Fermer la rubrique et revoir la planète">✕ &nbsp; Retour à la planète</button>
     </div>
-    <iframe id="codex-reader-frame" title="Contenu de la rubrique" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+    <div class="codex-reader-layout"><nav id="codex-reader-menu" aria-label="Rubriques et articles"></nav><article id="codex-reader-content" aria-live="polite"></article></div>
   </div>
 </section>
 
@@ -1096,56 +1096,76 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
 
   /* ---------- Lecteur CODEX, premier prototype partagé ---------- */
   var reader=document.getElementById('codex-reader');
-  var readerFrame=document.getElementById('codex-reader-frame');
+  var readerMenu=document.getElementById('codex-reader-menu');
+  var readerContent=document.getElementById('codex-reader-content');
   var readerTitle=document.getElementById('codex-reader-title');
   var readerClose=document.getElementById('codex-reader-close');
-  var readerPending=null;
-  var readerOpen=false;
+  var readerPending=null,readerOpen=false,readerRequest=0;
   var readerRoutes={
-    codex:'../../codex.html',
-    blog:'../../blog/blog.html',
-    atelier:'../../atelier/atelier.html',
-    lab:'../../lab/index.html',
-    dashb:'../../dashb/index.html',
-    profil:'../../profil/index.html'
+    codex:'../../codex.html',blog:'../../blog/blog.html',
+    atelier:'../../atelier/atelier.html',lab:'../../lab/index.html',
+    dashb:'../../dashb/index.html',profil:'../../profil/index.html'
   };
   function closeCodexReader(){
-    readerPending=null;
-    readerOpen=false;
-    reader.hidden=true;
+    readerPending=null;readerOpen=false;reader.hidden=true;
     document.body.classList.remove('codex-reader-open');
-    readerFrame.removeAttribute('src');
-    readerClose.blur();
+    readerRequest++;readerClose.blur();
   }
-  function openCodexReader(id){
+  function readerSetContent(node){
+    readerContent.replaceChildren(node);
+    readerContent.scrollTop=0;
+  }
+  function readerMessage(message,link){
+    var block=document.createElement('div');block.className='codex-reader-message';
+    var p=document.createElement('p');p.textContent=message;block.appendChild(p);
+    if(link){var a=document.createElement('a');a.href=link;a.textContent='Ouvrir cette expérience ↗';a.target='_blank';a.rel='noopener';block.appendChild(a);}
+    readerSetContent(block);
+  }
+  async function openCodexReader(id){
     if(!readerRoutes[id]||!SECTIONS[id])return;
-    readerPending=null;
-    readerTitle.textContent=SECTIONS[id].name;
-    if(readerFrame.getAttribute('src')!==readerRoutes[id])readerFrame.setAttribute('src',readerRoutes[id]);
-    reader.hidden=false;
-    readerOpen=true;
+    readerPending=null;readerTitle.textContent=SECTIONS[id].name;
+    reader.hidden=false;readerOpen=true;
     document.body.classList.add('codex-reader-open');
-    readerClose.focus({preventScroll:true});
-  }
-  /* Retire la seconde navigation des pages intégrées, sans modifier les pages sources.
-     Same-origin only; future universes can reuse this reader treatment. */
-  readerFrame.addEventListener('load',function(){
+    readerMenu.replaceChildren();
+    var request=++readerRequest,route=readerRoutes[id];
+    readerMessage('Chargement du contenu…');
     try{
-      var doc=readerFrame.contentDocument;
-      if(!doc||!doc.head)return;
-      var style=doc.createElement('style');
-      style.textContent=[
-        'html,body{background:transparent!important;background-image:none!important;min-height:0!important}',
-        'body{margin:0!important;padding:12px clamp(12px,2vw,24px)!important}',
-        'header,footer,nav,.site-header,.site-footer,#menu,.navbar,.codex-theme-switch{display:none!important}',
-        'main,.container,.content,.wrap{max-width:100%!important;width:100%!important;margin:0 auto!important}',
-        'img,video,canvas{max-width:100%}',
-        '@media(max-width:700px){body{padding:10px!important}}'
-      ].join('');
-      doc.head.appendChild(style);
-      readerFrame.setAttribute('title','Lecture : '+readerTitle.textContent);
-    }catch(e){/* Un contenu non accessible conserve son rendu d’origine. */}
-  });
+      var response=await fetch(route);
+      if(!response.ok)throw new Error('HTTP '+response.status);
+      var doc=new DOMParser().parseFromString(await response.text(),'text/html');
+      if(request!==readerRequest||!readerOpen)return;
+      // Applications interactives require their own runtime: never embed a second website.
+      if(id==='dashb'||id==='lab'){
+        readerMessage(id==='dashb'
+          ?'DashB est une expérience astronomique interactive. Elle nécessite son interface complète pour fonctionner.'
+          :'Le Lab rassemble des applications et expériences numériques. Ouvre-les dans leur espace dédié.',route);
+        return;
+      }
+      var source=doc.querySelector('main')||doc.querySelector('article')||doc.querySelector('.content')||doc.body;
+      var content=source.cloneNode(true);
+      content.querySelectorAll('script,style,link,iframe,header,footer,nav,.navbar,.site-header,.site-footer,.codex-theme-switch').forEach(function(el){el.remove();});
+      content.querySelectorAll('[id]').forEach(function(el){el.removeAttribute('id');});
+      content.querySelectorAll('[href],[src]').forEach(function(el){
+        ['href','src'].forEach(function(attr){var val=el.getAttribute(attr);if(val&&!val.startsWith('#')&&!/^(?:data:|javascript:)/i.test(val))el.setAttribute(attr,new URL(val,new URL(route,location.href)).href);});
+      });
+      content.classList.add('codex-imported-content');
+      // Category headings become a lightweight local table of contents.
+      var headings=Array.from(content.querySelectorAll('h2,h3')).filter(function(h){return h.textContent.trim().length>2;}).slice(0,28);
+      if(headings.length){
+        headings.forEach(function(h,i){
+          var btn=document.createElement('button');btn.type='button';
+          btn.textContent=h.textContent.trim();btn.className='codex-reader-menu-item';
+          btn.addEventListener('click',function(){h.scrollIntoView({behavior:'smooth',block:'start'});});
+          readerMenu.appendChild(btn);
+        });
+      }else{
+        var tag=document.createElement('span');tag.textContent=SECTIONS[id].name;readerMenu.appendChild(tag);
+      }
+      readerSetContent(content);
+    }catch(err){
+      if(request===readerRequest)readerMessage('Impossible de charger cette rubrique dans le lecteur.',route);
+    }
+  }
   readerClose.addEventListener('click',closeCodexReader);
   reader.addEventListener('keydown',function(e){if(e.key==='Escape'){e.preventDefault();closeCodexReader();}});
   document.addEventListener('keydown',function(e){if(e.key==='Escape'&&readerOpen){e.preventDefault();closeCodexReader();}});
@@ -1659,6 +1679,37 @@ body.solar-selected #solar-return-sun:not([hidden]),
 body.solar-selected #solar-return-sun:not([hidden]):hover,
 #solar-return-sun:not([hidden]):focus-visible{color:#fff!important;text-decoration:underline!important}
 @media(max-width:700px){body.solar-selected #solar-return-sun:not([hidden]),#solar-return-sun:not([hidden]){right:16px!important;bottom:65px!important;font-size:11px!important}}
+</style>
+<style id="codex-glass-blocks-v2">
+/* Native content blocks: no nested website or iframe. */
+.codex-reader{background:transparent!important;align-items:center!important;padding:clamp(18px,3vw,42px)!important}
+.codex-reader-shell{width:min(1040px,82vw)!important;height:auto!important;max-height:min(76dvh,780px)!important;min-height:0!important;overflow:visible!important;display:flex!important;flex-direction:column!important;gap:10px!important;background:none!important;border:0!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+.codex-reader-top{padding:5px 3px!important;border:0!important;background:none!important}
+.codex-reader-eyebrow{opacity:.7}
+#codex-reader-close{padding:3px!important;background:none!important;border:0!important;box-shadow:none!important;color:#d7dff5!important;font-size:11px!important}
+.codex-reader-layout{display:grid;grid-template-columns:minmax(145px,205px) minmax(0,1fr);gap:14px;min-height:0;max-height:calc(76dvh - 60px);width:100%}
+#codex-reader-menu,#codex-reader-content{border:1px solid rgba(209,219,255,.15);border-radius:13px;background:rgba(8,14,30,.47);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);color:#f2f2ff;box-shadow:0 8px 32px rgba(0,0,0,.12)}
+#codex-reader-menu{display:flex;flex-direction:column;align-items:stretch;gap:5px;padding:14px;overflow-y:auto;max-height:100%}
+.codex-reader-menu-item{background:transparent;border:0;text-align:left;padding:8px;color:#d8dff4;cursor:pointer;border-radius:6px;font:500 12px system-ui}
+.codex-reader-menu-item:hover{background:rgba(255,255,255,.09);color:white}
+#codex-reader-content{padding:clamp(16px,2.5vw,30px);overflow-y:auto;overscroll-behavior:contain;min-height:220px;max-height:calc(76dvh - 60px);line-height:1.7;font:14px/1.7 system-ui}
+#codex-reader-content :is(h1,h2,h3,h4){color:#fff!important;font-family:system-ui!important;line-height:1.3;margin:1.3em 0 .65em}
+#codex-reader-content h1{font-size:clamp(22px,3vw,32px)}
+#codex-reader-content :is(p,li,span,strong,em){color:inherit}
+#codex-reader-content :is(section,article,div,main,aside){background:transparent!important;background-image:none!important;box-shadow:none!important;border-color:rgba(230,235,255,.13)!important;color:inherit!important}
+#codex-reader-content :is(a){color:#e6c78c!important}
+#codex-reader-content img{max-width:100%;height:auto}
+#codex-reader-content button{max-width:100%}
+#codex-reader-content .codex-imported-content{color:#e4e8f5!important}
+.codex-reader-message{color:#dbe1f4}
+@media(max-width:700px){
+ .codex-reader{padding:12px!important}
+ .codex-reader-shell{width:100%!important;max-height:calc(90dvh - 48px)!important}
+ .codex-reader-layout{grid-template-columns:1fr;gap:8px;max-height:calc(88dvh - 90px)}
+ #codex-reader-menu{flex-direction:row;overflow-x:auto;overflow-y:hidden;min-height:42px;padding:7px;max-height:64px}
+ .codex-reader-menu-item{flex:0 0 auto;white-space:nowrap}
+ #codex-reader-content{min-height:0;max-height:calc(78dvh - 120px);padding:16px}
+}
 </style>
 <style id="solar-responsive-labels">
 /* Une seule information dans l'espace : le nom de la destination. */
