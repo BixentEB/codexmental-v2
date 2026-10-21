@@ -26,7 +26,17 @@ body:has(#gal-reader-overlay:not([hidden])) .codex-gal-theme{display:none}
 #gal-reader-overlay{z-index:200}
 .stage.sel .card{background:rgba(14,18,39,.93);border-color:rgba(183,166,255,.4);box-shadow:0 12px 40px #0009}
 @media(max-width:700px){.codex-experience-nav{height:43px;box-sizing:border-box;gap:8px;padding:7px 12px;overflow-x:auto;scrollbar-width:none}.codex-experience-nav a{font-size:10px}.codex-experience-nav .codex-home{font-size:10px;letter-spacing:.05em}.stage .hero{top:70px}.panel{left:12px;bottom:12px;width:min(330px,calc(100% - 24px))}.panel h2{font-size:10px}}
-</style><style id="codex-brand-unified">.brand{font-family:"Syne","Trebuchet MS",system-ui,sans-serif!important;font-size:17px!important;font-weight:700!important;letter-spacing:.09em!important;white-space:nowrap!important}@media(max-width:640px){.brand{font-size:13px!important;letter-spacing:.035em!important;max-width:none!important}}</style></head><body>
+</style><style id="codex-brand-unified">.brand{font-family:"Syne","Trebuchet MS",system-ui,sans-serif!important;font-size:17px!important;font-weight:700!important;letter-spacing:.09em!important;white-space:nowrap!important}@media(max-width:640px){.brand{font-size:13px!important;letter-spacing:.035em!important;max-width:none!important}}</style><style id="codex-console-unified">
+/* Mini-console unifiée CODEX */
+#panel{width:340px!important;max-width:calc(100vw - 24px)!important;box-sizing:border-box}
+#panel>header{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:14px!important}
+#panel>header h2{flex:1;min-width:0;color:#d7b6ff}
+#panel .gal-panel-actions{flex:none;gap:9px!important}
+#panel #panelToggle{min-width:32px;min-height:30px;font-size:17px!important;line-height:1}
+#panel .gal-theme-menu summary{min-height:30px;display:flex;align-items:center}
+#panel .gal-theme-links{min-width:170px!important}
+#panel .gal-theme-links a[aria-current=page]{color:#d7b6ff;font-weight:700;background:#29234d}
+</style></head><body>
 <title>Codex Galactique</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -201,7 +211,7 @@ body:has(.codex-solar-lucioles) .codex-lucioles{--luciole:#ffd58c;--luciole-glow
     </section>
 
     <section class="panel closed" id="panel" aria-label="Laboratoire de la galaxie">
-      <header><h2>Laboratoire de la galaxie</h2><div class="gal-panel-actions"><details class="gal-theme-menu"><summary class="tg">Thèmes</summary><div class="gal-theme-links"><a href="../heliosphere/">Héliosphère</a><a href="../galactique/" aria-current="page">Galactique</a></div></details><button class="tg" id="panelToggle" type="button" aria-expanded="false">Réglages</button></div></header>
+      <header><h2>Laboratoire de la galaxie</h2><div class="gal-panel-actions"><details class="gal-theme-menu"><summary class="tg">Thèmes</summary><div class="gal-theme-links"><a href="../heliosphere/">Héliosphère</a><a href="../galactique/" aria-current="page">Galactique</a></div></details><button class="tg" id="panelToggle" type="button" aria-expanded="false" aria-label="Réglages" title="Réglages">⚙</button></div></header>
       <div class="body">
         <div class="rw"><label for="pop">Population</label><input id="pop" type="range" min="20" max="200" step="10" value="100"><output id="popOut" for="pop">100 %</output></div>
         <div class="rw"><label for="arms">Bras spiraux</label><input id="arms" type="range" min="2" max="6" step="1" value="4"><output id="armsOut" for="arms">4</output></div>
@@ -781,7 +791,7 @@ window.__G = { PT_VERT: PT_VERT, STAR_FRAG: STAR_FRAG, NEB_FRAG: NEB_FRAG, DUST_
   document.getElementById('reset').addEventListener('click', function () { select(null); });
   document.getElementById('reseed').addEventListener('click', function () { state.seed = Math.floor(Math.random() * 1e9); saveGalSettings(); rebuild(); });
   var panel = document.getElementById('panel'), ptog = document.getElementById('panelToggle');
-  ptog.addEventListener('click', function () { var c = panel.classList.toggle('closed'); ptog.setAttribute('aria-expanded', String(!c)); ptog.textContent = c ? 'Réglages' : 'Réduire'; });
+  ptog.addEventListener('click', function () { var c = panel.classList.toggle('closed'); ptog.setAttribute('aria-expanded', String(!c)); ptog.textContent = '⚙'; });
 
   // Close floating menus when interacting outside; keep the compact lab header visible.
   var themeMenu = panel.querySelector('.gal-theme-menu');
@@ -789,7 +799,7 @@ window.__G = { PT_VERT: PT_VERT, STAR_FRAG: STAR_FRAG, NEB_FRAG: NEB_FRAG, DUST_
     if (!panel.classList.contains('closed')) {
       panel.classList.add('closed');
       ptog.setAttribute('aria-expanded', 'false');
-      ptog.textContent = 'Réglages';
+      ptog.textContent = '⚙';
     }
   }
   document.addEventListener('pointerdown', function (event) {
