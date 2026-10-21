@@ -15,6 +15,7 @@ nav{display:flex;align-items:center;gap:16px;flex-wrap:wrap}nav a{font-size:12px
 main{position:relative;max-width:740px;margin:clamp(35px,8vh,95px) auto;padding:0 20px 60px}
 .eyebrow{font-size:11px;letter-spacing:.24em;color:#c8b184;text-transform:uppercase}
 h1{font-size:clamp(35px,6vw,58px);font-weight:400;letter-spacing:.04em;margin:13px 0}
+.contact-heading{display:flex;align-items:center;gap:15px}.contact-ufo{width:clamp(35px,5vw,52px);height:auto;flex:none;color:#e3bc78;filter:drop-shadow(0 0 5px rgba(228,184,107,.18));transition:transform .3s ease,filter .3s ease}.contact-heading:hover .contact-ufo{transform:translateY(-3px) rotate(-5deg);filter:drop-shadow(0 0 9px rgba(228,184,107,.55))}@media(prefers-reduced-motion:reduce){.contact-ufo{transition:none}.contact-heading:hover .contact-ufo{transform:none}}
 .intro{line-height:1.8;color:#aebbd3;max-width:570px;margin-bottom:35px}
 .panel{border:1px solid #aabce13b;background:rgba(18,25,44,.88);border-radius:17px;padding:clamp(20px,4vw,38px);box-shadow:0 24px 75px #0005}
 form{display:grid;gap:17px}label{display:grid;gap:7px;font-size:13px;color:#d6def0}
@@ -29,7 +30,7 @@ button:disabled{opacity:.55;cursor:wait}
 </head>
 <body>
 <header><a class="brand" href="index.html">✦ CODEX MENTAL</a><nav aria-label="Navigation"><a href="index.html">Accueil</a><a href="experiences/galactique/">Galactique</a><a href="experiences/heliosphere/">Héliosphère</a></nav></header>
-<main><div class="eyebrow">Codex Mental · Correspondance</div><h1>Entrons en contact</h1>
+<main><div class="eyebrow">Codex Mental · Correspondance</div><h1 class="contact-heading"><svg class="contact-ufo" viewBox="0 0 64 64" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 30c1-9 5-14 10-14s9 5 10 14"/><ellipse cx="32" cy="35" rx="25" ry="9"/><path d="M10 39c3 8 41 8 44 0"/><path d="M21 46l-4 8m15-7v9m11-10 4 8"/><circle cx="20" cy="35" r="1.5"/><circle cx="32" cy="37" r="1.5"/><circle cx="44" cy="35" r="1.5"/><path d="M9 17h4m-2-2v4M52 13h4m-2-2v4"/></svg><span>Entrons en contact</span></h1>
 <p class="intro">Une question, une proposition, une collaboration autour d'un projet ou simplement l'envie d'échanger ? Vous pouvez m'écrire ici.</p>
 <section class="panel" aria-label="Formulaire de contact">
 <form id="contactForm" action="https://formspree.io/f/mldnvpjq" method="POST">
