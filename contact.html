@@ -26,11 +26,33 @@ button:disabled{opacity:.55;cursor:wait}
 #status{min-height:1.5em;font-size:13px;line-height:1.6}#status[data-error]{color:#ffc0b8}#status[data-success]{color:#b7e6ca}
 .note{font-size:12px;line-height:1.7;color:#98a6c2;margin-top:24px}
 @media(max-width:480px){header{align-items:flex-start;flex-direction:column}nav{gap:12px}}
+
+
+/* Easter egg : passage discret d'une soucoupe au-dessus du titre. */
+.ufo-sky{position:absolute;top:0;left:0;width:100%;height:165px;pointer-events:none;overflow:hidden;z-index:1}
+.ufo-flight{position:absolute;top:0;left:0;width:40px;height:26px;opacity:0;color:#d5e4ff;filter:drop-shadow(0 0 5px #a5bde9);transform:translate(-70px,28px);will-change:transform,opacity}
+.ufo-flight svg{display:block;width:100%;height:100%}
+.ufo-beam{position:absolute;left:50%;top:18px;transform:translateX(-50%);width:70px;height:75px;opacity:0;background:linear-gradient(180deg,rgba(188,216,255,.22),transparent);clip-path:polygon(43% 0,57% 0,100% 100%,0 100%)}
+.ufo-sky.is-flying .ufo-flight{animation:ufo-journey 4.7s ease-in-out both}
+.ufo-sky.is-flying .ufo-beam{animation:ufo-scan 4.7s ease-in-out both}
+.contact-ufo{cursor:pointer}
+@keyframes ufo-journey{
+0%{opacity:0;transform:translate(-70px,25px) rotate(-9deg)}
+8%{opacity:1}
+32%{transform:translate(calc(50vw - 55px),45px) rotate(5deg)}
+44%{transform:translate(calc(50vw - 20px),19px) rotate(-12deg)}
+56%{transform:translate(calc(50vw + 4px),43px) rotate(7deg)}
+68%{transform:translate(calc(50vw + 30px),24px) rotate(0)}
+78%{opacity:1;transform:translate(calc(50vw + 42px),23px) rotate(0)}
+100%{opacity:0;transform:translate(calc(100vw + 80px),-13px) rotate(12deg)}
+}
+@keyframes ufo-scan{0%,39%,65%,100%{opacity:0}46%,57%{opacity:1}}
+@media(prefers-reduced-motion:reduce){.ufo-sky.is-flying .ufo-flight,.ufo-sky.is-flying .ufo-beam{animation:none!important}}
 </style>
 </head>
 <body>
 <header><a class="brand" href="index.html">✦ CODEX MENTAL</a><nav aria-label="Navigation"><a href="index.html">Accueil</a><a href="experiences/galactique/">Galactique</a><a href="experiences/heliosphere/">Héliosphère</a></nav></header>
-<main><div class="eyebrow">Codex Mental · Correspondance</div><h1 class="contact-heading"><svg class="contact-ufo" viewBox="0 0 64 64" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 30c1-9 5-14 10-14s9 5 10 14"/><ellipse cx="32" cy="35" rx="25" ry="9"/><path d="M10 39c3 8 41 8 44 0"/><path d="M21 46l-4 8m15-7v9m11-10 4 8"/><circle cx="20" cy="35" r="1.5"/><circle cx="32" cy="37" r="1.5"/><circle cx="44" cy="35" r="1.5"/><path d="M9 17h4m-2-2v4M52 13h4m-2-2v4"/></svg><span>Entrons en contact</span></h1>
+<div class="ufo-sky" id="ufo-sky" aria-hidden="true"><div class="ufo-flight"><svg viewBox="0 0 64 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M21 21Q23 8 32 8Q41 8 43 21"/><ellipse cx="32" cy="24" rx="27" ry="9"/><path d="M10 27Q32 42 54 27"/><circle cx="20" cy="26" r="2" fill="#f0cb86"/><circle cx="32" cy="29" r="2" fill="#f0cb86"/><circle cx="44" cy="26" r="2" fill="#f0cb86"/></svg><div class="ufo-beam"></div></div></div><main><div class="eyebrow">Codex Mental · Correspondance</div><h1 class="contact-heading"><svg class="contact-ufo" viewBox="0 0 64 64" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 30c1-9 5-14 10-14s9 5 10 14"/><ellipse cx="32" cy="35" rx="25" ry="9"/><path d="M10 39c3 8 41 8 44 0"/><path d="M21 46l-4 8m15-7v9m11-10 4 8"/><circle cx="20" cy="35" r="1.5"/><circle cx="32" cy="37" r="1.5"/><circle cx="44" cy="35" r="1.5"/><path d="M9 17h4m-2-2v4M52 13h4m-2-2v4"/></svg><span>Entrons en contact</span></h1>
 <p class="intro">Une question, une proposition, une collaboration autour d'un projet ou simplement l'envie d'échanger ? Vous pouvez m'écrire ici.</p>
 <section class="panel" aria-label="Formulaire de contact">
 <form id="contactForm" action="https://formspree.io/f/mldnvpjq" method="POST">
@@ -56,4 +78,16 @@ button:disabled{opacity:.55;cursor:wait}
  });
 })();
 </script>
-</body></html>
+<script>
+(function(){
+ const sky=document.getElementById('ufo-sky'),trigger=document.querySelector('.contact-ufo');
+ if(!sky||!trigger||window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+ let playing=false;
+ function fly(){if(playing)return;playing=true;sky.classList.remove('is-flying');void sky.offsetWidth;sky.classList.add('is-flying')}
+ sky.querySelector('.ufo-flight').addEventListener('animationend',function(e){if(e.animationName==='ufo-journey'){sky.classList.remove('is-flying');playing=false}});
+ trigger.setAttribute('role','button');trigger.setAttribute('tabindex','0');trigger.setAttribute('aria-label','Faire revenir le vaisseau spatial');
+ trigger.addEventListener('click',fly);trigger.addEventListener('mouseenter',fly);
+ trigger.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();fly()}});
+ try{if(!sessionStorage.getItem('codex-contact-ufo-seen')){sessionStorage.setItem('codex-contact-ufo-seen','1');requestAnimationFrame(fly)}}catch(e){requestAnimationFrame(fly)}
+})();
+</script></body></html>
