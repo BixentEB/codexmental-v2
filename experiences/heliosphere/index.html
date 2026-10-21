@@ -1292,7 +1292,7 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
                 });
                 readerSetContent(fragment);
               }catch(error){
-                if(request===readerRequest&&readerOpen&&selection===profileSelection)readerMessage('Cette partie du Portrait est indisponible.',url);
+                if(request===readerRequest&&readerOpen&&selection===profileSelection)readerMessage('Cette partie du Portrait est indisponible. Revenez à la liste pour continuer.');
               }
             });
             return btn;
@@ -1379,8 +1379,9 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
                   var target=articleDoc.querySelector('main,article')||articleDoc.body;
                   var fragment=document.createElement('div');fragment.className='codex-imported-content';
                   fragment.innerHTML=target.innerHTML;
+                  if(!fragment.textContent.trim()&&!fragment.querySelector('img,video,iframe'))throw Error('Empty article');
                   readerSetContent(cleanFragment(fragment,articleUrl));
-                }catch(err){if(request===readerRequest&&readerOpen)readerMessage('Cet article est momentanément indisponible.',articleUrl);}
+                }catch(err){if(request===readerRequest&&readerOpen)readerMessage('Cet article ne contient pas encore de texte. Revenez à la liste pour choisir un autre article.');}
               });
               articleList.appendChild(btn);
             });
