@@ -1294,4 +1294,15 @@ new MutationObserver(()=>{if(!reader.hidden){reader.classList.remove('codex-m-re
 document.getElementById('solar-return-sun')?.addEventListener('click',()=>{if(!reader.hidden)document.getElementById('codex-reader-close')?.click()});
 attach();
 })();
-</script></body></html>
+</script><style id="codex-reader-contrast-20261021">
+/* Éclaircir les surfaces du lecteur, sans éclaircir la scène cosmique derrière. */
+.codex-reader:not([hidden]){background:rgba(7,12,27,.95)!important}
+.codex-reader #codex-reader-menu{background:rgba(23,29,45,.94)!important;border-color:rgba(172,187,226,.36)!important}
+.codex-reader #codex-reader-content{background:rgba(17,23,39,.94)!important;border-color:rgba(172,187,226,.33)!important;color:#eef1fc!important}
+.codex-reader #codex-reader-content p,.codex-reader #codex-reader-content li{color:#e3e8f6}
+.codex-reader #codex-reader-content h1,.codex-reader #codex-reader-content h2,.codex-reader #codex-reader-content h3{color:#fff}
+.codex-reader #codex-reader-menu button{color:#dce5fa}
+.codex-reader #codex-reader-menu button.active{background:rgba(182,143,79,.24)!important;color:#ffe0a0!important}
+@media(max-width:700px){.codex-reader #codex-reader-content{background:rgba(16,22,39,.96)!important}}
+</style>
+</body></html>
