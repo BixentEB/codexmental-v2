@@ -1191,7 +1191,7 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
         fragment.querySelectorAll('[srcset]').forEach(function(el){
           var raw=el.getAttribute('srcset');
           if(raw)el.setAttribute('srcset',raw.split(',').map(function(part){
-            var bits=part.trim().split(/\\s+/);if(bits[0]&&!/^(?:data:|https?:|\\/\\/)/i.test(bits[0]))bits[0]=new URL(bits[0],base).href;return bits.join(' ');
+            var bits=part.trim().split(/\s+/);if(bits[0]&&!/^(?:data:|https?:|\/\/)/i.test(bits[0]))bits[0]=new URL(bits[0],base).href;return bits.join(' ');
           }).join(', '));
         });
         fragment.querySelectorAll('[poster]').forEach(function(el){
@@ -1221,7 +1221,7 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
           "Évolutions de l'IA":"Réflexions et expérimentations autour des outils, des usages et des évolutions de l'intelligence artificielle.",
           'Applications':"Des concepts d'applications et des outils imaginés dans l'Atelier. Les versions à tester trouveront leur place dans le Lab."
         };
-        function atelierLabel(text){return text.replace(/[\\u{1F000}-\\u{1FAFF}\\u{2600}-\\u{27BF}]/gu,'').replace(/\\s+/g,' ').trim();}
+        function atelierLabel(text){return text.replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}]/gu,'').replace(/\s+/g,' ').trim();}
         function atelierIntro(title){
           var section=document.createElement('section');section.className='codex-reader-category-intro';
           var h=document.createElement('h2');h.textContent=title;section.appendChild(h);
