@@ -1476,8 +1476,8 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
           var h=document.createElement('h2');h.textContent=title||label;section.appendChild(h);
           var p=document.createElement('p');
           var key=label;
-          if(label==='Intelligence artificielle'&&title==='Articles & réflexions')key='IA — Articles & réflexions';
-          if(label==="Expressions d'intelligences")key='IA — Expressions d\'intelligences';
+          if(title==='Articles & réflexions')key='IA — Articles & réflexions';
+          if(title==="Expressions d'intelligences")key="IA — Expressions d'intelligences";
           p.textContent=introductions[key]||'Découvrez les articles et réflexions de cette rubrique.';
           section.appendChild(p);
           readerSetContent(section);
