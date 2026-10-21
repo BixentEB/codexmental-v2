@@ -70,6 +70,12 @@ button:disabled{opacity:.55;cursor:wait}
 78%{opacity:1;transform:translate(calc(50vw + 42px),35px)}
 100%{opacity:0;transform:translate(calc(100vw + 80px),25px) rotate(12deg)}
 }
+
+/* Faisceau sans découpe rectangulaire et scène sous le bandeau. */
+.ufo-sky{height:230px!important;overflow:visible!important;clip-path:none!important}
+.ufo-beam{height:112px!important;width:96px!important;top:21px!important;filter:blur(8px);background:linear-gradient(to bottom,rgba(194,218,255,.28),rgba(176,209,255,.10) 48%,transparent 100%)!important;mask-image:linear-gradient(to bottom,#000 0%,#000 25%,transparent 100%)}
+.ufo-flight{pointer-events:none}
+@media(max-width:640px){.ufo-sky{height:190px!important}.ufo-beam{height:85px!important}}
 </style>
 </head>
 <body>
@@ -104,10 +110,13 @@ button:disabled{opacity:.55;cursor:wait}
 (function(){
  const sky=document.getElementById('ufo-sky'),trigger=document.querySelector('.contact-ufo');
  if(!sky||!trigger||window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
- let playing=false;
+ let playing=false; let nextPass=null;
  function fly(){if(playing)return;playing=true;sky.classList.remove('is-flying');void sky.offsetWidth;sky.classList.add('is-flying')}
  sky.querySelector('.ufo-flight').addEventListener('animationend',function(e){if(e.animationName==='ufo-journey'){sky.classList.remove('is-flying');playing=false}});
  trigger.setAttribute('role','button');trigger.setAttribute('tabindex','0');trigger.setAttribute('aria-label','Faire revenir le vaisseau spatial');
+ function schedulePass(){clearTimeout(nextPass);nextPass=setTimeout(function(){if(!document.hidden)fly();schedulePass()},120000+Math.random()*120000)}
+ document.addEventListener('visibilitychange',function(){if(document.hidden){clearTimeout(nextPass)}else{schedulePass()}});
+ schedulePass();
  trigger.addEventListener('click',fly);trigger.addEventListener('mouseenter',fly);
  trigger.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();fly()}});
  try{if(!sessionStorage.getItem('codex-contact-ufo-seen')){sessionStorage.setItem('codex-contact-ufo-seen','1');requestAnimationFrame(fly)}}catch(e){requestAnimationFrame(fly)}
