@@ -1,4 +1,14 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><style id="codex-gal-unified">
+.codex-gal-theme{position:fixed;z-index:100;left:clamp(18px,4vw,68px);bottom:clamp(75px,10vh,110px);font:600 12px system-ui;color:#e5e6f4}
+.codex-gal-theme summary{cursor:pointer;list-style:none;border:1px solid rgba(173,185,230,.3);background:rgba(18,24,49,.8);padding:8px 12px;border-radius:9px}
+.codex-gal-theme details>div{position:absolute;bottom:calc(100% + 7px);left:0;display:grid;min-width:150px;padding:6px;background:#0b1023;border:1px solid rgba(173,185,230,.26);border-radius:10px}
+.codex-gal-theme a{color:#dce4ff;text-decoration:none;padding:10px}
+#gal-reader-overlay{position:fixed;inset:0;z-index:200;background:rgba(3,6,16,.96)}
+#gal-reader-overlay[hidden]{display:none!important}
+#gal-reader-frame{width:100%;height:100%;border:0;display:block}
+body:has(#gal-reader-overlay:not([hidden])) .codex-gal-theme{display:none}
+@media(max-width:700px){.codex-gal-theme{left:12px;bottom:12px}.bar{gap:7px;padding:9px 12px}.tabs{gap:1px}.tabs button{font-size:10px!important;padding:7px!important}}
+</style></head><body>
 <title>Codex Galactique</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -136,10 +146,11 @@ html,body{width:100%;height:100%;overflow:hidden;margin:0!important;padding:0!im
 @media(max-width:720px){.stage{height:100%!important;min-height:0!important}.hero{top:96px}}
 </style>
 
+<div class="codex-gal-theme"><details><summary>Thèmes ⌄</summary><div><a href="../heliosphere/">Héliosphère</a><a href="../galactique/" aria-current="page">Galactique</a></div></details></div>
 <div class="wrap">
   <div class="stage" id="stage">
     <div class="bar">
-      <div class="brand">Codex</div>
+      <a class="brand" href="../../index.html" style="color:inherit;text-decoration:none">CODEX</a>
       <nav class="tabs" id="tabs" aria-label="Sections"></nav>
     </div>
     <div class="hero">
@@ -178,6 +189,7 @@ html,body{width:100%;height:100%;overflow:hidden;margin:0!important;padding:0!im
     <div class="loading" id="loading">Formation de la galaxie…</div>
   </div>
 </div>
+<div id="gal-reader-overlay" hidden><iframe id="gal-reader-frame" title="Lecteur CODEX Mental" loading="lazy"></iframe></div>
 
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
@@ -612,6 +624,15 @@ window.__G = { PT_VERT: PT_VERT, STAR_FRAG: STAR_FRAG, NEB_FRAG: NEB_FRAG, DUST_
     tabsEl.appendChild(b); tabButtons[id] = b;
   });
 
+  var readerOverlay=document.getElementById('gal-reader-overlay'),readerFrame=document.getElementById('gal-reader-frame');
+  function openSharedReader(id){
+    if(!id)return;
+    readerOverlay.hidden=false;
+    var url='../shared-reader/?section='+encodeURIComponent(id);
+    if(readerFrame.getAttribute('src')!==url)readerFrame.src=url;
+    else readerFrame.contentWindow?.postMessage({section:id},location.origin);
+  }
+  window.addEventListener('message',function(e){if(e.origin===location.origin&&e.data?.codexReaderClose){readerOverlay.hidden=true;select(null);}});
   var hover = null, selected = null, flight = null, lastSel = new T.Vector3();
   var tmpV = new T.Vector3(), ZERO = new T.Vector3();
   function select(id) {
@@ -651,7 +672,7 @@ window.__G = { PT_VERT: PT_VERT, STAR_FRAG: STAR_FRAG, NEB_FRAG: NEB_FRAG, DUST_
       vDir.applyQuaternion(qI).multiplyScalar(Math.exp(Math.log(lf) + (Math.log(lt) - Math.log(lf)) * e));
       controls.target.lerpVectors(flight.fromTgt, tgt, e);
       camera.position.copy(controls.target).add(vDir);
-      if (k >= 1) { flight = null; controls.enabled = true; if (S) lastSel.copy(S.pos); }
+      if (k >= 1) { flight = null; controls.enabled = true; if (S) {lastSel.copy(S.pos);openSharedReader(selected);} }
     } else if (S) {
       tmpV.copy(S.pos).sub(lastSel); camera.position.add(tmpV); controls.target.copy(S.pos); lastSel.copy(S.pos);
     }
