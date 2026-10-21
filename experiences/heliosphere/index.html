@@ -18,6 +18,16 @@
 .codex-reader-category-intro p{font-size:clamp(14px,1vw,17px);line-height:1.85;max-width:65ch}
 
 </style>
+
+<style id="codex-mobile-legibility-20261021">
+@media(max-width:700px){
+  .codex-reader .codex-m-nav{background:rgba(8,11,23,.80)!important;border:1px solid rgba(222,178,108,.19)!important;border-radius:12px!important;padding:3px 6px 5px!important;backdrop-filter:blur(12px)!important;-webkit-backdrop-filter:blur(12px)!important}
+  .codex-reader .codex-m-track button{color:#ded9dc!important;opacity:.86!important;text-shadow:0 1px 4px rgba(0,0,0,.9)!important}
+  .codex-reader .codex-m-track button.active{color:#ffe2aa!important;opacity:1!important}
+  .codex-reader .codex-m-hint{color:#d1bd9c!important}
+  .codex-reader #codex-reader-menu.codex-category-mode{background:rgba(8,11,23,.88)!important;border:1px solid rgba(222,178,108,.18)!important;border-radius:9px!important;backdrop-filter:blur(10px)!important;-webkit-backdrop-filter:blur(10px)!important}
+}
+</style>
 </head><body>
 <title>Héliosphère — CODEX Mental</title><link rel="icon" type="image/png" href="../../assets/images/favicon-96x96.png">
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -1444,6 +1454,8 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
         }
         var introductions={
               'Intelligence artificielle':"L'intelligence artificielle transforme notre manière de chercher, de créer et de dialoguer. Cette rubrique explore autant ses possibilités concrètes que ses limites et les questions qu'elle soulève. Deux chemins sont proposés : les articles et réflexions sur l'IA, puis les expressions d'intelligences issues de nos échanges.",
+              'IA — Articles & réflexions':"Comprendre l'intelligence artificielle au-delà des effets d'annonce : ses capacités, ses limites, ses usages et les questions qu'elle soulève. Ici, nous confrontons les idées aux expériences concrètes, avec curiosité et esprit critique.",
+              "IA — Expressions d'intelligences":"Un espace où l'intelligence artificielle prend la parole à travers des textes, des dialogues et des créations. Ces expressions explorent le langage, l'imaginaire et notre collaboration, sans présumer d'une conscience ou d'une expérience intérieure de l'IA.",
               'Psychologie':"Pourquoi pensons-nous, ressentons-nous et réagissons-nous différemment ? Cette rubrique rassemble des réflexions sur les comportements, la cognition et les expériences humaines. Elle distingue les articles de psychologie générale de ceux consacrés au haut potentiel, sans réduire l'un à l'autre.",
               'Haut Potentiel':"Explorer les différentes facettes du haut potentiel, entre vécu, représentations et questions ouvertes. Une place pour nuancer les idées reçues et interroger les façons de penser et de s'adapter.",
               'Philosophie':"Une invitation à questionner les évidences, les valeurs et les idées qui structurent notre vision du monde. Ici, les réponses ne sont pas nécessairement définitives : les questions elles-mêmes font partie du cheminement.",
@@ -1460,7 +1472,10 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
           section.className='codex-reader-category-intro';
           var h=document.createElement('h2');h.textContent=title||label;section.appendChild(h);
           var p=document.createElement('p');
-          p.textContent=introductions[label]||'Découvrez les articles et réflexions de cette rubrique.';
+          var key=label;
+          if(label==='Intelligence artificielle'&&title==='Articles & réflexions')key='IA — Articles & réflexions';
+          if(label==="Expressions d'intelligences")key='IA — Expressions d\'intelligences';
+          p.textContent=introductions[key]||'Découvrez les articles et réflexions de cette rubrique.';
           section.appendChild(p);
           readerSetContent(section);
         }
