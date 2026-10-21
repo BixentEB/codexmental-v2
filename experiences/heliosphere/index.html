@@ -21,11 +21,14 @@
 
 <style id="codex-mobile-legibility-20261021">
 @media(max-width:700px){
-  .codex-reader .codex-m-nav{background:rgba(8,11,23,.80)!important;border:1px solid rgba(222,178,108,.19)!important;border-radius:12px!important;padding:3px 6px 5px!important;backdrop-filter:blur(12px)!important;-webkit-backdrop-filter:blur(12px)!important}
-  .codex-reader .codex-m-track button{color:#ded9dc!important;opacity:.86!important;text-shadow:0 1px 4px rgba(0,0,0,.9)!important}
-  .codex-reader .codex-m-track button.active{color:#ffe2aa!important;opacity:1!important}
-  .codex-reader .codex-m-hint{color:#d1bd9c!important}
-  .codex-reader #codex-reader-menu.codex-category-mode{background:rgba(8,11,23,.88)!important;border:1px solid rgba(222,178,108,.18)!important;border-radius:9px!important;backdrop-filter:blur(10px)!important;-webkit-backdrop-filter:blur(10px)!important}
+  /* Protection du texte uniquement : aucun panneau ni fond ajouté. */
+  .codex-reader .codex-m-track button,
+  .codex-reader .codex-m-sub button{
+    text-shadow:0 1px 3px #080a12,0 0 7px rgba(0,0,0,.95)!important;
+  }
+  .codex-reader .codex-m-hint{
+    text-shadow:0 1px 3px #080a12,0 0 6px #080a12!important;
+  }
 }
 </style>
 </head><body>
