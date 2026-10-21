@@ -8,6 +8,24 @@
 #gal-reader-frame{width:100%;height:100%;border:0;display:block}
 body:has(#gal-reader-overlay:not([hidden])) .codex-gal-theme{display:none}
 @media(max-width:700px){.codex-gal-theme{left:12px;bottom:12px}.bar{gap:7px;padding:9px 12px}.tabs{gap:1px}.tabs button{font-size:10px!important;padding:7px!important}}
+</style><style id="codex-gal-v2-polish">
+.codex-experience-nav{position:fixed;z-index:110;top:0;left:0;right:0;display:flex;align-items:center;gap:clamp(8px,1.4vw,22px);padding:11px clamp(14px,2vw,30px);background:linear-gradient(#030615ee,#03061577);font:600 12px/1.4 system-ui,-apple-system,Segoe UI,sans-serif}
+.codex-experience-nav a{color:#c4cde9;text-decoration:none;white-space:nowrap}
+.codex-experience-nav a:hover,.codex-experience-nav a:focus-visible{color:#fff;text-shadow:0 0 12px #81aaff}
+.codex-experience-nav .codex-home{color:#ffcf7d;font-weight:800;letter-spacing:.1em;margin-right:auto}
+.stage .bar{display:none!important}
+.stage .hero{top:76px}
+.gal-panel-actions{display:flex;align-items:center;gap:6px}
+.gal-theme-menu{position:relative}
+.gal-theme-menu summary{list-style:none;display:block}
+.gal-theme-menu summary::-webkit-details-marker{display:none}
+.gal-theme-links{position:absolute;bottom:calc(100% + 10px);right:0;display:grid;gap:2px;min-width:145px;padding:6px;border:1px solid rgba(170,145,255,.36);border-radius:10px;background:#0c1025;box-shadow:0 10px 28px #0009}
+.gal-theme-links a{color:#e6ddff;text-decoration:none;padding:9px;border-radius:6px;font:500 12px system-ui}
+.gal-theme-links a:hover{background:#29234d}
+.panel{z-index:120}
+#gal-reader-overlay{z-index:200}
+.stage.sel .card{background:rgba(14,18,39,.93);border-color:rgba(183,166,255,.4);box-shadow:0 12px 40px #0009}
+@media(max-width:700px){.codex-experience-nav{height:43px;box-sizing:border-box;gap:8px;padding:7px 12px;overflow-x:auto;scrollbar-width:none}.codex-experience-nav a{font-size:10px}.codex-experience-nav .codex-home{font-size:10px;letter-spacing:.05em}.stage .hero{top:70px}.panel{left:12px;bottom:12px;width:min(330px,calc(100% - 24px))}.panel h2{font-size:10px}}
 </style></head><body>
 <title>Codex Galactique</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -146,13 +164,10 @@ html,body{width:100%;height:100%;overflow:hidden;margin:0!important;padding:0!im
 @media(max-width:720px){.stage{height:100%!important;min-height:0!important}.hero{top:96px}}
 </style>
 
-<div class="codex-gal-theme"><details><summary>Thèmes ⌄</summary><div><a href="../heliosphere/">Héliosphère</a><a href="../galactique/" aria-current="page">Galactique</a></div></details></div>
+<nav class="codex-experience-nav" aria-label="Navigation CODEX"><a class="codex-home" href="../../index.html" data-gal-section="home" title="Accueil de la galaxie">✦ CODEX MENTAL</a><a href="../../codex.html" data-gal-section="codex">Codex</a><a href="../../atelier/atelier.html" data-gal-section="atelier">Atelier</a><a href="../../lab/index.html" data-gal-section="lab">Lab</a><a href="../../dashb/index.html" data-gal-section="dashb">DashB</a><a href="../../profil/index.html" data-gal-section="profil">Portrait</a></nav>
 <div class="wrap">
   <div class="stage" id="stage">
-    <div class="bar">
-      <a class="brand" href="../../index.html" style="color:inherit;text-decoration:none">CODEX</a>
-      <nav class="tabs" id="tabs" aria-label="Sections"></nav>
-    </div>
+    <div class="bar" aria-hidden="true" hidden><nav class="tabs" id="tabs" aria-label="Sections"></nav></div>
     <div class="hero">
       <p class="eye">Codex · Carte galactique</p>
       <h1>Galactique</h1>
@@ -167,7 +182,7 @@ html,body{width:100%;height:100%;overflow:hidden;margin:0!important;padding:0!im
     </section>
 
     <section class="panel closed" id="panel" aria-label="Laboratoire de la galaxie">
-      <header><h2>Laboratoire de la galaxie</h2><button class="tg" id="panelToggle" type="button" aria-expanded="false">Réglages</button></header>
+      <header><h2>Laboratoire de la galaxie</h2><div class="gal-panel-actions"><details class="gal-theme-menu"><summary class="tg">Thèmes</summary><div class="gal-theme-links"><a href="../heliosphere/">Héliosphère</a><a href="../galactique/" aria-current="page">Galactique</a></div></details><button class="tg" id="panelToggle" type="button" aria-expanded="false">Réglages</button></div></header>
       <div class="body">
         <div class="rw"><label for="pop">Population</label><input id="pop" type="range" min="20" max="200" step="10" value="100"><output id="popOut" for="pop">100 %</output></div>
         <div class="rw"><label for="arms">Bras spiraux</label><input id="arms" type="range" min="2" max="6" step="1" value="4"><output id="armsOut" for="arms">4</output></div>
@@ -392,9 +407,9 @@ var FINAL_FRAG = [
 'vec3 aces(vec3 x){ return clamp((x*(2.51*x+0.03))/(x*(2.43*x+0.59)+0.14),0.0,1.0); }',
 'void main(){',
 '  vec3 c=texture2D(tDiffuse,vUv).rgb;',
-'  c=aces(c*uExposure);',
+'  c=aces(c*uExposure*1.18);',
 '  vec2 d=vUv-0.5;',
-'  c*=1.0-dot(d,d)*0.8;',
+'  c*=1.0-dot(d,d)*0.5;',
 '  float g=h21(vUv*uRes+fract(uTime)*91.7)-0.5;',
 '  c+=g*0.02;',
 '  gl_FragColor=vec4(c,1.0);',
@@ -633,6 +648,7 @@ window.__G = { PT_VERT: PT_VERT, STAR_FRAG: STAR_FRAG, NEB_FRAG: NEB_FRAG, DUST_
     else readerFrame.contentWindow?.postMessage({section:id},location.origin);
   }
   window.addEventListener('message',function(e){if(e.origin===location.origin&&e.data?.codexReaderClose){readerOverlay.hidden=true;select(null);}});
+  document.querySelectorAll('[data-gal-section]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();select(a.dataset.galSection==='home'?null:a.dataset.galSection);});});
   var hover = null, selected = null, flight = null, lastSel = new T.Vector3();
   var tmpV = new T.Vector3(), ZERO = new T.Vector3();
   function select(id) {
