@@ -1,70 +1,58 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Contact – Codex Mental</title>
-
-  <!-- 🌞 Favicon -->
-  <link rel="icon" href="img/logo/favicon-96x96.png" sizes="96x96">
-
-  <!-- 🌐 Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto&display=swap" rel="stylesheet" />
-
-  <!-- 🎨 Styles -->
- <link rel="stylesheet" href="assets/css/main.css">
-
-  <!-- ⚙️ Script principal -->
-<script type="module" src="assets/js/main.js"></script>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact · CODEX Mental</title>
+<link rel="icon" href="img/logo/favicon-96x96.png">
+<style>
+:root{color-scheme:dark;font-family:system-ui,-apple-system,Segoe UI,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;color:#e9edfb;background:radial-gradient(ellipse at 78% 18%,rgba(66,75,132,.22),transparent 44%),radial-gradient(ellipse at 18% 80%,rgba(131,92,57,.14),transparent 50%),#070b16}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.4;background-image:radial-gradient(#b4c9f7 0.7px,transparent 1px);background-size:71px 83px}
+header{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:18px clamp(18px,4vw,55px);border-bottom:1px solid #a1b6ed25;background:#070b16d9}
+.brand{font:700 12px system-ui;letter-spacing:.13em;color:#f3ca83;text-decoration:none}
+nav{display:flex;align-items:center;gap:16px;flex-wrap:wrap}nav a{font-size:12px;color:#bbc7e2;text-decoration:none}nav a:hover,nav a:focus-visible{color:#f3ca83}
+main{position:relative;max-width:740px;margin:clamp(35px,8vh,95px) auto;padding:0 20px 60px}
+.eyebrow{font-size:11px;letter-spacing:.24em;color:#c8b184;text-transform:uppercase}
+h1{font-size:clamp(35px,6vw,58px);font-weight:400;letter-spacing:.04em;margin:13px 0}
+.intro{line-height:1.8;color:#aebbd3;max-width:570px;margin-bottom:35px}
+.panel{border:1px solid #aabce13b;background:rgba(18,25,44,.88);border-radius:17px;padding:clamp(20px,4vw,38px);box-shadow:0 24px 75px #0005}
+form{display:grid;gap:17px}label{display:grid;gap:7px;font-size:13px;color:#d6def0}
+input,textarea{width:100%;border:1px solid #aabce14a;border-radius:9px;background:#090f20;color:#fff;font:inherit;font-size:15px;padding:12px 13px}
+input:focus,textarea:focus{outline:2px solid #d3aa66;outline-offset:1px}textarea{min-height:150px;resize:vertical}
+button{justify-self:start;background:#e2bd7d;color:#161a27;border:0;border-radius:9px;padding:12px 22px;font-weight:700;cursor:pointer}
+button:disabled{opacity:.55;cursor:wait}
+#status{min-height:1.5em;font-size:13px;line-height:1.6}#status[data-error]{color:#ffc0b8}#status[data-success]{color:#b7e6ca}
+.note{font-size:12px;line-height:1.7;color:#98a6c2;margin-top:24px}
+@media(max-width:480px){header{align-items:flex-start;flex-direction:column}nav{gap:12px}}
+</style>
 </head>
-
-<body class="theme-stellaire">
-  <!-- 🌌 Canvas de fond -->
-  <canvas id="theme-canvas" style="position:fixed; top:0; left:0; z-index:-1;"></canvas>
-
-  <!-- 🧠 Menu injecté dynamiquement -->
-<header id="menu-placeholder"></header>
- 
-
-  <!-- 🧱 Contenu principal -->
-<main class="container">
-  <h1 class="text-center">📬 Contact</h1>
-
-  <section class="bloc bloc-contact">
-    <form id="contactForm"
-          action="https://formspree.io/f/mldnvpjq"
-          method="POST"
-          target="hidden_iframe"
-          class="contact-form">
-
-      <label for="name">Nom :</label>
-      <input type="text" id="name" name="name" required />
-
-      <label for="email">Email :</label>
-      <input type="email" id="email" name="email" required />
-
-      <label for="message">Message :</label>
-      <textarea id="message" name="message" rows="5" required></textarea>
-
-      <button type="submit" class="btn-primary">📨 Envoyer</button>
-    </form>
-
-    <iframe name="hidden_iframe" style="display:none;" onload="formSubmitted()"></iframe>
-    <p id="confirmationMessage" style="display:none; text-align:center; margin-top:1rem;">✅ Merci ! Ton message a bien été envoyé.</p>
-  </section>
-</main>
-
-  <!-- 🌙 Lune injectée automatiquement si thème lunaire -->
-
-  <!-- 🦶 Footer dynamique -->
-  <div id="footer-placeholder"></div>
-
-  <!-- ✅ Confirmation soumission -->
-  <script>
-    function formSubmitted() {
-      const msg = document.getElementById('confirmationMessage');
-      if (msg) msg.style.display = 'block';
-    }
-  </script>
-</body>
-</html>
+<body>
+<header><a class="brand" href="index.html">✦ CODEX MENTAL</a><nav aria-label="Navigation"><a href="index.html">Accueil</a><a href="experiences/galactique/">Galactique</a><a href="experiences/heliosphere/">Héliosphère</a></nav></header>
+<main><div class="eyebrow">Codex Mental · Correspondance</div><h1>Entrons en contact</h1>
+<p class="intro">Une question, une proposition, une collaboration autour d'un projet ou simplement l'envie d'échanger ? Vous pouvez m'écrire ici.</p>
+<section class="panel" aria-label="Formulaire de contact">
+<form id="contactForm" action="https://formspree.io/f/mldnvpjq" method="POST">
+<label>Votre nom<input name="name" autocomplete="name" required maxlength="120"></label>
+<label>Votre adresse e-mail<input name="email" type="email" autocomplete="email" required maxlength="254"></label>
+<label>Votre message<textarea name="message" required maxlength="10000"></textarea></label>
+<button type="submit" id="send">Envoyer le message</button>
+<p id="status" role="status" aria-live="polite"></p>
+</form>
+<p class="note">Les informations transmises servent uniquement à répondre à votre message. Aucun compte n'est nécessaire.</p>
+</section></main>
+<script>
+(function(){
+ const form=document.getElementById('contactForm'),status=document.getElementById('status'),button=document.getElementById('send');
+ form.addEventListener('submit',async function(e){
+ e.preventDefault();button.disabled=true;status.textContent='Envoi en cours…';status.removeAttribute('data-error');status.removeAttribute('data-success');
+ try{
+ const response=await fetch(form.action,{method:'POST',body:new FormData(form),headers:{Accept:'application/json'}});
+ if(!response.ok)throw new Error('Envoi impossible');
+ status.textContent='Merci ! Votre message a bien été envoyé.';status.setAttribute('data-success','');form.reset();
+ }catch(err){status.textContent="L'envoi n'a pas abouti. Vous pouvez réessayer dans quelques instants.";status.setAttribute('data-error','')}
+ finally{button.disabled=false}
+ });
+})();
+</script>
+</body></html>
