@@ -459,6 +459,29 @@ window.__G = { PT_VERT: PT_VERT, STAR_FRAG: STAR_FRAG, NEB_FRAG: NEB_FRAG, DUST_
   /* ---------- Paramètres ---------- */
   var R = 100, SPIN = .014;
   var state = { pop: 100, arms: 4, twist: 4.5, turb: .75, glow: 1.35, speed: 1, quality: 'high', seed: 20241020 };
+  // Préférences locales du laboratoire (propres à ce navigateur).
+  var GAL_PREF_KEY = 'codex.galactique.settings.v1';
+  var galRanges = { pop: [20, 200], arms: [2, 6], twist: [1, 9], turb: [0, 1.5], glow: [0.4, 2], speed: [0, 5] };
+  try {
+    var savedGal = JSON.parse(localStorage.getItem(GAL_PREF_KEY) || 'null');
+    if (savedGal && typeof savedGal === 'object') {
+      Object.keys(galRanges).forEach(function (key) {
+        var value = Number(savedGal[key]), range = galRanges[key];
+        if (savedGal[key] !== undefined && savedGal[key] !== null && Number.isFinite(value) && value >= range[0] && value <= range[1]) state[key] = value;
+      });
+      if (['std', 'high', 'ultra'].includes(savedGal.quality)) state.quality = savedGal.quality;
+      if (Number.isSafeInteger(savedGal.seed) && savedGal.seed >= 0) state.seed = savedGal.seed;
+    }
+  } catch (err) { /* Stockage indisponible : valeurs par défaut. */ }
+  function saveGalSettings() {
+    try { localStorage.setItem(GAL_PREF_KEY, JSON.stringify(state)); } catch (err) { /* Mode privé ou stockage bloqué. */ }
+  }
+  Object.keys(galRanges).forEach(function (key) {
+    var input = document.getElementById(key);
+    if (input) input.value = state[key];
+  });
+  document.getElementById('quality').value = state.quality;
+
   var QUAL = { std: { n: 80000, neb: 700, dust: 1800 }, high: { n: 160000, neb: 1300, dust: 3200 }, ultra: { n: 320000, neb: 2000, dust: 4800 } };
   var paused = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var simT = 0, last = performance.now();
@@ -718,7 +741,7 @@ window.__G = { PT_VERT: PT_VERT, STAR_FRAG: STAR_FRAG, NEB_FRAG: NEB_FRAG, DUST_
   function scheduleRebuild() { clearTimeout(rebuildTimer); rebuildTimer = setTimeout(rebuild, 90); }
   function bind(id, fmt, fn) {
     var inp = document.getElementById(id), out = document.getElementById(id + 'Out');
-    function upd() { var v = parseFloat(inp.value); out.textContent = fmt(v); fn(v); }
+    function upd() { var v = parseFloat(inp.value); out.textContent = fmt(v); fn(v); saveGalSettings(); }
     inp.addEventListener('input', upd); out.textContent = fmt(parseFloat(inp.value));
   }
   bind('pop', function (v) { return v + ' %'; }, function (v) { state.pop = v; scheduleRebuild(); });
@@ -732,12 +755,12 @@ window.__G = { PT_VERT: PT_VERT, STAR_FRAG: STAR_FRAG, NEB_FRAG: NEB_FRAG, DUST_
     finalUniforms.uExposure.value = .85 * (.7 + .3 * state.glow);
   }
   var qSel = document.getElementById('quality');
-  qSel.addEventListener('change', function () { state.quality = qSel.value; resize(); rebuild(); });
+  qSel.addEventListener('change', function () { state.quality = qSel.value; saveGalSettings(); resize(); rebuild(); });
   var pauseBtn = document.getElementById('pause');
   function syncPause() { pauseBtn.textContent = paused ? 'Lecture' : 'Pause'; }
   pauseBtn.addEventListener('click', function () { paused = !paused; syncPause(); });
   document.getElementById('reset').addEventListener('click', function () { select(null); });
-  document.getElementById('reseed').addEventListener('click', function () { state.seed = Math.floor(Math.random() * 1e9); rebuild(); });
+  document.getElementById('reseed').addEventListener('click', function () { state.seed = Math.floor(Math.random() * 1e9); saveGalSettings(); rebuild(); });
   var panel = document.getElementById('panel'), ptog = document.getElementById('panelToggle');
   ptog.addEventListener('click', function () { var c = panel.classList.toggle('closed'); ptog.setAttribute('aria-expanded', String(!c)); ptog.textContent = c ? 'Réglages' : 'Réduire'; });
 
