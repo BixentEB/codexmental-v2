@@ -351,11 +351,11 @@ var NEB_FRAG = [
 ].join('\n');
 
 var DUST_FRAG = [
-'varying vec3 vC; varying float vSeed;',
+'varying vec3 vC; varying float vSeed; uniform float uDustOpacity;',
 'void main(){',
 '  vec2 c=gl_PointCoord-0.5; float d=dot(c,c)*4.0;',
 '  float n=0.6+0.4*sin(c.x*10.0+vSeed*29.0)*sin(c.y*8.0+vSeed*13.0+c.y*4.0);',
-'  float a=vC.x*exp(-d*2.2)*n;',
+'  float a=vC.x*exp(-d*2.2)*n*uDustOpacity;',
 '  gl_FragColor=vec4(0.004,0.002,0.010,a);',
 '}'
 ].join('\n');
@@ -521,6 +521,8 @@ window.__G = { PT_VERT: PT_VERT, STAR_FRAG: STAR_FRAG, NEB_FRAG: NEB_FRAG, DUST_
   var starMat = ptMaterial(STAR_FRAG, T.AdditiveBlending);
   var nebMat = ptMaterial(NEB_FRAG, T.AdditiveBlending, { uMinPS: 3, uMaxPS: 140, uTwinkle: 0 });
   var dustMat = ptMaterial(DUST_FRAG, T.NormalBlending, { uMinPS: 3, uMaxPS: 160, uTwinkle: 0, uBright: 1 });
+  // Dust should shade the arms gently, not form an opaque black wall edge-on.
+  dustMat.uniforms.uDustOpacity = { value: 0.22 };
   nebMat.uniforms.uBright = { value: 1 }; dustMat.uniforms.uBright = { value: 1 };
   var layers = { stars: null, neb: null, dust: null };
 
