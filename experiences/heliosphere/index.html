@@ -2401,12 +2401,40 @@ slots[0].addEventListener('click',()=>choose(active-1));slots[1].addEventListene
 line.addEventListener('pointerdown',e=>{down={x:e.clientX,y:e.clientY,id:e.pointerId}});
 line.addEventListener('pointerup',e=>{if(!down||down.id!==e.pointerId)return;const dx=e.clientX-down.x,dy=e.clientY-down.y;down=null;if(Math.abs(dx)<18||Math.abs(dx)<Math.abs(dy))return;e.preventDefault();choose(active+(dx<0?1:-1)*Math.max(1,Math.round(Math.abs(dx)/100)))});
 line.addEventListener('pointercancel',()=>down=null);
-menu.addEventListener('click',e=>{if(e.target.closest('.codex-reader-menu-item')&&matchMedia('(max-width:700px)').matches){reading(true);requestAnimationFrame(()=>back.scrollIntoView({block:'start',behavior:'instant'}))}});
+menu.addEventListener('click',e=>{if(e.isTrusted&&e.target.closest('.codex-reader-menu-item')&&matchMedia('(max-width:700px)').matches){reading(true);requestAnimationFrame(()=>{reader.scrollTop=0;shell.scrollTop=0;window.scrollTo(0,0)})}});
 back.addEventListener('click',()=>{reading(false);requestAnimationFrame(()=>wheel.scrollIntoView({block:'start',behavior:'instant'}))});
 const observer=new MutationObserver(render);
 function attach(){const b=bar(),s=subbar();if(b===watchedBar&&s===watchedSub)return;observer.disconnect();if(b)observer.observe(b,{childList:true,subtree:true,attributes:true,attributeFilter:['class','hidden','aria-pressed']});if(s)observer.observe(s,{childList:true,subtree:true,attributes:true,attributeFilter:['class','hidden','aria-pressed']});watchedBar=b;watchedSub=s;render()}
 new MutationObserver(attach).observe(shell,{childList:true});
-new MutationObserver(()=>{if(!reader.hidden){reading(false);reader.scrollTop=0;shell.scrollTop=0}}).observe(reader,{attributes:true,attributeFilter:['hidden']});
+new MutationObserver(()=>{if(!reader.hidden){reading(false);reader.scrollTop=0;shell.scrollTop=0;window.scrollTo(0,0);setTimeout(()=>{attach();render();reader.scrollTop=0;shell.scrollTop=0},100)}}).observe(reader,{attributes:true,attributeFilter:['hidden']});
 attach();
+})();
+</script>
+<style id="codex-mobile-layout-repair-v10">
+@media(max-width:700px){
+html,body{overflow-x:hidden!important}
+.codex-reader:not([hidden]){position:fixed!important;inset:43px 0 0!important;z-index:9000!important;display:block!important;padding:0 12px 16px!important;overflow-y:auto!important;overscroll-behavior:contain!important;scroll-padding-top:0!important}
+.codex-reader .codex-reader-shell{display:block!important;position:relative!important;width:100%!important;height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+.codex-reader .codex-reader-top{position:sticky!important;top:0!important;z-index:20!important;display:flex!important;min-height:54px!important;padding:8px 0!important;background:linear-gradient(#090d1b 80%,rgba(9,13,27,.92))!important;border-bottom:1px solid rgba(215,182,125,.25)!important}
+.codex-reader .codex-reader-top h2{display:block!important;font-size:22px!important;line-height:1.2!important;color:#f4f0e9!important}
+.codex-reader #codex-reader-close{display:none!important}
+.codex-reader .codex-wheel{position:relative!important;margin:8px 0 12px!important;z-index:2!important}
+.codex-reader .codex-wheel-line{height:62px!important}
+.codex-reader #codex-reader-menu.codex-category-mode{background:rgba(9,13,27,.67)!important;border:1px solid rgba(215,182,125,.26)!important;border-radius:11px!important;backdrop-filter:blur(8px)!important;height:clamp(130px,23dvh,205px)!important;max-height:clamp(130px,23dvh,205px)!important;overflow-y:auto!important}
+.codex-reader #codex-reader-content{background:rgba(8,12,24,.88)!important;border-radius:12px!important;max-height:none!important;min-height:0!important;overflow:visible!important;margin:8px 0 20px!important}
+.codex-reader:not(.codex-wheel-reading) #codex-reader-content{display:none!important}
+.codex-reader.codex-wheel-reading .codex-wheel-return{display:block!important;position:sticky!important;top:54px!important;z-index:19!important;background:rgba(9,13,27,.95)!important;width:100%!important;text-align:left!important;padding:13px 4px!important}
+body.codex-reader-open .stage .solar-title,body.codex-reader-open .solar-title,.stage .solar-title,.solar-title{position:fixed!important;bottom:12px!important;top:auto!important;left:12px!important;z-index:5!important;font-size:clamp(20px,5.8vw,26px)!important;max-width:70vw!important}
+.codex-theme-switch{position:fixed!important;top:auto!important;bottom:13px!important;right:12px!important;z-index:9100!important;margin:0!important}
+.codex-theme-switch>summary{font-size:11px!important;padding:6px 9px!important;opacity:.84!important}
+.codex-theme-list{bottom:100%!important;top:auto!important;right:0!important;max-height:55dvh!important;overflow-y:auto!important}
+#solar-return-sun:not([hidden]){position:fixed!important;right:12px!important;bottom:58px!important;z-index:9100!important}
+body.codex-reader-open #solar-return-sun{display:block!important;visibility:visible!important;opacity:1!important;bottom:58px!important;right:12px!important}
+}
+</style>
+<script id="codex-mobile-layout-repair-v10">
+(function(){const reader=document.getElementById('codex-reader');if(!reader)return;const close=document.getElementById('codex-reader-close'),returnSystem=document.getElementById('solar-return-sun');
+if(close){close.textContent='← Système';close.setAttribute('aria-label','Retour au système solaire');}
+if(returnSystem){returnSystem.addEventListener('click',()=>{if(!reader.hidden)close?.click()});}
 })();
 </script></body></html>
