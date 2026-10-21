@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Galactique — CODEX Mental · Laboratoire 3D</title>
+<meta name="theme-color" content="#030512">
+<style>
+:root{color-scheme:dark;font-family:system-ui,-apple-system,Segoe UI,sans-serif}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#02030b;color:#e7eaff}
+#viewport{position:fixed;inset:0;overflow:hidden;background:radial-gradient(ellipse at 50% 48%,#101027,#02030b 72%)}
+#viewport canvas{display:block;width:100%;height:100%;touch-action:none}
+#viewport:after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 39%,rgba(0,0,10,.56) 100%)}
+.top{position:fixed;z-index:10;top:0;left:0;right:0;display:flex;align-items:center;gap:clamp(10px,1.5vw,25px);padding:15px clamp(16px,3vw,44px);background:linear-gradient(#030514e8,#03051400)}
+.top a{color:#c4cae6;text-decoration:none;font-size:12px;font-weight:600;white-space:nowrap}.top a:hover,.top a:focus-visible{color:#fff}
+.brand{font-size:15px!important;letter-spacing:.18em;color:#e7c58b!important;margin-right:auto}
+.heading{position:fixed;z-index:4;top:clamp(74px,11vh,120px);left:clamp(22px,5vw,80px);pointer-events:none;max-width:460px}
+.eyebrow{font-size:10px;letter-spacing:.38em;color:#bca8eb;font-weight:700}.heading h1{font-size:clamp(28px,4vw,58px);font-weight:300;letter-spacing:.15em;margin:10px 0 7px;text-shadow:0 0 35px #6753b588}.heading p{font-size:12px;line-height:1.8;letter-spacing:.045em;color:#a9b0d0;max-width:340px}
+.panel{position:fixed;z-index:10;bottom:clamp(15px,3vw,38px);left:clamp(14px,3vw,42px);width:min(365px,calc(100vw - 28px));padding:18px 20px;border:1px solid #b7a8ff2c;border-radius:15px;background:#080c21bb;backdrop-filter:blur(22px);box-shadow:0 12px 50px #0006}
+.panel h2{font-size:11px;letter-spacing:.19em;font-weight:650;margin:0 0 15px;color:#d9d6ff}
+.line{display:flex;align-items:center;gap:12px;margin:12px 0;font-size:11px;color:#b7bedb}.line label{min-width:102px}.line output{min-width:40px;text-align:right;font-variant-numeric:tabular-nums;color:#f1d7ff}
+input[type=range]{flex:1;accent-color:#b29bff;min-width:0;cursor:pointer}
+button,select{border:1px solid #9998d044;background:#ffffff0a;color:#e8e7ff;border-radius:7px;padding:7px 10px;font-size:11px;cursor:pointer}button:hover{background:#a28cff25}select option{background:#11162d}
+.actions{display:flex;gap:8px;margin-top:15px}.actions button{flex:1}
+.hint{font-size:10px;color:#777fa8;line-height:1.6;margin:12px 0 0}
+.stats{position:fixed;z-index:5;bottom:24px;right:35px;text-align:right;color:#98a3ce;font-size:10px;letter-spacing:.12em;pointer-events:none}.stats strong{display:block;color:#e2d4ff;font-size:13px;margin-bottom:4px}
+#error{position:fixed;z-index:15;top:45%;left:50%;transform:translate(-50%,-50%);padding:18px;background:#141629;max-width:90%;display:none}
+@media(max-width:800px){.top{flex-wrap:wrap;gap:8px 15px;padding:12px 16px}.brand{width:100%}.back{margin-left:0}.heading{top:125px}.heading p{display:none}.panel{padding:13px 15px;bottom:12px}.stats{right:17px;bottom:260px}.heading h1{font-size:29px}}
+@media(max-width:480px){.top a{font-size:10px}.heading{top:110px}.heading h1{font-size:25px}.panel{width:min(345px,calc(100vw - 24px));left:12px}.stats{bottom:253px}}
+
+/* Shared new-generation theme switcher: native keyboard/touch disclosure. */
+.codex-theme-switch{position:relative;z-index:10010;font:600 12px/1.4 system-ui,-apple-system,Segoe UI,sans-serif;color:#d9e1ff;flex:none}
+.codex-theme-switch summary{list-style:none;display:flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid rgba(173,185,230,.28);border-radius:9px;background:rgba(18,24,49,.82);cursor:pointer;white-space:nowrap;user-select:none}
+.codex-theme-switch summary::-webkit-details-marker{display:none}
+.codex-theme-switch summary:hover,.codex-theme-switch summary:focus-visible{border-color:rgba(194,207,255,.68);background:rgba(36,43,78,.94);outline-offset:3px}
+.codex-theme-switch[open] summary{border-color:rgba(194,207,255,.55)}
+.codex-theme-list{position:absolute;top:calc(100% + 7px);right:0;min-width:175px;padding:6px;border:1px solid rgba(173,185,230,.26);border-radius:11px;background:#0b1023;box-shadow:0 16px 38px rgba(0,0,0,.55);display:grid;gap:2px}
+.codex-theme-list a{display:block!important;padding:11px 12px!important;border-radius:7px;color:#dce4ff!important;text-decoration:none!important;font-size:12px!important;font-weight:500!important;letter-spacing:0!important;margin:0!important;white-space:nowrap}
+.codex-theme-list a:hover,.codex-theme-list a:focus-visible{background:#27335c!important;color:#fff!important}
+@media(max-width:850px){.codex-theme-switch{font-size:11px}.codex-theme-switch summary{padding:6px 9px}.codex-theme-list{right:auto;left:0}}
+
+/* Compact mobile controls: allow the galaxy to remain the focus. */
+@media(max-width:800px){.panel{max-height:50dvh;overflow-y:auto;bottom:12px}.panel:not(.expanded) #panelBody{display:none}.panel:not(.expanded){width:auto;min-width:235px;max-height:none}.panel h2{margin-bottom:0}.panel.expanded h2{margin-bottom:14px}.stats{bottom:90px;right:15px}.heading{top:135px}.heading h1{font-size:clamp(25px,7vw,38px)}.top{background:linear-gradient(#030514f0,#03051400)} }
+@media(max-width:480px){.heading{top:132px}.panel{max-width:calc(100vw - 24px)}.top{padding:10px 13px}.codex-theme-switch{margin-left:0}}
+
+/* Signature discrète, visible dans les captures. */
+.cm-signature{position:fixed;z-index:6;right:20px;bottom:8px;pointer-events:none;font:600 9px/1.4 system-ui,sans-serif;letter-spacing:.16em;color:rgba(208,217,255,.36);text-shadow:0 1px 5px #000}
+@media(max-width:800px){.cm-signature{bottom:5px;right:12px;font-size:8px}}
+</style>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
+</head><body>
+<div id="viewport" aria-label="Visualisation tridimensionnelle d'une galaxie spirale"></div>
+<nav class="top" aria-label="Navigation CODEX">
+<a class="brand" href="./" id="galaxyHome" title="Revoir la galaxie">✦ CODEX MENTAL</a>
+<a href="../../codex.html">Codex</a><a href="../../blog/blog.html">Blog</a><a href="../../atelier/atelier.html">Atelier</a><a href="../../lab/index.html">Lab</a><a href="../../dashb/index.html">DashB</a><a href="../../profil/index.html">Profil</a>
+<details class="codex-theme-switch"><summary>Thèmes <span aria-hidden="true">⌄</span></summary><div class="codex-theme-list" role="group" aria-label="Nouveaux univers"><a href="../heliosphere/">Héliosphère</a><a href="../galactique/">Galactique</a></div></details>
+</nav>
+<div class="heading"><div class="eyebrow">CODEX · EXPÉRIENCE EXPÉRIMENTALE</div><h1>GALACTIQUE</h1><p>Une galaxie procédurale vivante. Explorez ses bras, traversez ses poussières et découvrez son cœur lumineux.</p></div>
+<section class="panel" aria-label="Laboratoire galactique">
+<h2><button id="panelToggle" type="button" aria-expanded="true" aria-controls="panelBody" style="all:unset;display:flex;align-items:center;justify-content:space-between;width:100%;cursor:pointer">✧ LABORATOIRE DE LA GALAXIE <span id="panelArrow">−</span></button></h2><div id="panelBody">
+<div class="line"><label for="density">Population</label><input id="density" type="range" min="25" max="160" step="5" value="100"><output id="densityOut">100 %</output></div>
+<div class="line"><label for="arms">Bras spiraux</label><input id="arms" type="range" min="2" max="6" step="1" value="4"><output id="armsOut">4</output></div>
+<div class="line"><label for="twist">Enroulement</label><input id="twist" type="range" min="1" max="8" step=".25" value="4.5"><output id="twistOut">4.5</output></div>
+<div class="line"><label for="turbulence">Turbulence</label><input id="turbulence" type="range" min="0" max="2" step=".05" value=".75"><output id="turbulenceOut">0.75</output></div>
+<div class="line"><label for="exposure">Éclat</label><input id="exposure" type="range" min=".35" max="2.4" step=".05" value=".75"><output id="exposureOut">0.75</output></div>
+<div class="line"><label for="quality">Qualité</label><select id="quality"><option value="eco">Éco</option><option value="balanced">Équilibrée</option><option value="high" selected>Élevée</option><option value="ultra">Ultra</option></select><output id="countOut">—</output></div>
+<div class="actions"><button id="pause">⏸ Pause</button><button id="reset">↺ Revoir la galaxie</button><button id="random">✧ Nouvelle graine</button></div>
+<p class="hint">Glisser : orbiter · Molette ou pincement : zoomer · Les réglages régénèrent la structure en direct.</p>
+</div></section>
+<div class="stats"><strong>NGC · CODEX 01</strong><span id="status">Initialisation de la simulation…</span></div>
+<div id="error" role="alert"></div>
+<div class="cm-signature" aria-label="Signature CODEX Mental">✦ CM · CODEX MENTAL</div>
+<script type="module">
+import * as THREE from 'three';
+import {EffectComposer} from 'three/addons/postprocessing/EffectComposer.js';
+import {RenderPass} from 'three/addons/postprocessing/RenderPass.js';
+import {UnrealBloomPass} from 'three/addons/postprocessing/UnrealBloomPass.js';
+import {OutputPass} from 'three/addons/postprocessing/OutputPass.js';
+import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
+
+const $=id=>document.getElementById(id),host=$('viewport');
+$('galaxyHome').addEventListener('click',event=>{event.preventDefault();$('reset').click();});
+const settings={density:100,arms:4,twist:4.5,turbulence:.75,exposure:.75,quality:'high',seed:741};
+const presets={eco:35000,balanced:85000,high:160000,ultra:260000};
+let renderer,scene,camera,controls,composer,bloom,galaxy,core,halo,background,clock,paused=false,last=0;
+const R=180,PI2=Math.PI*2;
+function randomGenerator(seed){let t=seed>>>0;return ()=>{t+=0x6D2B79F5;let z=t;z=Math.imul(z^(z>>>15),z|1);z^=z+Math.imul(z^(z>>>7),z|61);return ((z^(z>>>14))>>>0)/4294967296;};}
+const vertex=String.raw`
+attribute float aSize;
+attribute float aPhase;
+attribute float aTint;
+uniform float uTime;
+uniform float uScale;
+varying vec3 vColor;
+varying float vAlpha;
+void main(){
+ vec3 p=position;
+ float r=length(p.xz);
+ float spin=uTime*(0.025/(1.0+r*.023));
+ float cs=cos(spin),sn=sin(spin);
+ p.xz=mat2(cs,-sn,sn,cs)*p.xz;
+ vec4 mv=modelViewMatrix*vec4(p,1.0);
+ gl_Position=projectionMatrix*mv;
+ float fade=1.0-smoothstep(160.0,190.0,r);
+ float pulse=0.88+0.12*sin(uTime*1.8+aPhase);
+ gl_PointSize=clamp(aSize*uScale*pulse*(230.0/max(10.0,-mv.z)),0.65,26.0);
+ vec3 warm=vec3(1.0,0.68,0.42);
+ vec3 ice=vec3(0.46,0.68,1.0);
+ vec3 pink=vec3(0.83,0.53,0.78);
+ vColor=mix(warm,ice,smoothstep(0.05,0.9,aTint));
+ vColor=mix(vColor,pink,smoothstep(0.83,1.0,aTint)*0.22);
+ vAlpha=fade;
+}`;
+const fragment=String.raw`
+varying vec3 vColor;
+varying float vAlpha;
+uniform float uExposure;
+void main(){
+ vec2 p=gl_PointCoord-vec2(.5);
+ float d=length(p);
+ float core=exp(-d*d*115.0);
+ float halo=exp(-d*d*22.0)*.16;
+ float spike=exp(-abs(p.x)*38.0)*exp(-abs(p.y)*4.0)*.05+exp(-abs(p.y)*38.0)*exp(-abs(p.x)*4.0)*.05;
+ float alpha=(core+halo+spike)*vAlpha;
+ if(alpha<.008)discard;
+ gl_FragColor=vec4(vColor*uExposure*(core*.85+halo+spike),min(alpha,.75));
+}`;
+const dustVertex=String.raw`
+attribute float aSize;varying float vOpacity;
+uniform float uTime;uniform float uScale;
+void main(){vec3 p=position;float r=length(p.xz);float a=uTime*.008/(1.0+r*.01);p.xz=mat2(cos(a),-sin(a),sin(a),cos(a))*p.xz;vec4 mv=modelViewMatrix*vec4(p,1.);gl_Position=projectionMatrix*mv;gl_PointSize=clamp(aSize*uScale*230.0/max(-mv.z,10.0),1.,55.);vOpacity=.24*(1.0-smoothstep(100.,185.,r));}
+`;
+const dustFragment=String.raw`
+varying float vOpacity;
+void main(){float d=length(gl_PointCoord-.5);float a=exp(-d*d*9.0)*vOpacity;if(a<.005)discard;gl_FragColor=vec4(.055,.035,.09,a);}
+`;
+function material(v,f,opts={}){return new THREE.ShaderMaterial({vertexShader:v,fragmentShader:f,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,...opts});}
+function build(){
+ if(galaxy){scene.remove(galaxy);galaxy.traverse(o=>{o.geometry?.dispose();o.material?.dispose();});}
+ galaxy=new THREE.Group();scene.add(galaxy);
+ const rnd=randomGenerator(settings.seed),count=Math.round(presets[settings.quality]*settings.density/100);
+ const diskCount=Math.floor(count*.33),bulgeCount=Math.floor(count*.16),dustCount=Math.floor(count*.23);
+ const total=count+diskCount+bulgeCount;
+ const pos=new Float32Array(total*3),sizes=new Float32Array(total),phases=new Float32Array(total),tints=new Float32Array(total);
+ const dp=new Float32Array(dustCount*3),ds=new Float32Array(dustCount);
+ const spread=settings.turbulence,arms=settings.arms,twist=settings.twist;
+ const normal=()=>Math.sqrt(-2*Math.log(Math.max(.00001,rnd())))*Math.cos(PI2*rnd());
+ const spiral=(r,arm,offset=0)=>arm*PI2/arms+Math.log1p(r)*twist*.31+offset;
+ // Arm ridges have correlated deviations: independent random noise alone creates artificial fan blades.
+ const corr=(r,arm)=>Math.sin(r*.068+arm*2.1)*(.17+spread*.13)+Math.sin(r*.19+arm*1.4)*(.065+spread*.09);
+ for(let i=0;i<total;i++){
+   const isDisk=i>=count&&i<count+diskCount,isBulge=i>=count+diskCount;
+   let r,angle,height,luminosity;
+   if(isBulge){
+     r=Math.min(76,Math.abs(normal())*15+Math.pow(rnd(),2)*13);
+     angle=rnd()*PI2;
+     height=normal()*Math.max(1.4,13*(1-r/90));
+     luminosity=.65+rnd()*1.2;
+   }else if(isDisk){
+     r=R*Math.pow(rnd(),.83);
+     angle=rnd()*PI2;
+     height=normal()*(.85+2.2*(1-r/R));
+     luminosity=.32+rnd()*.65;
+   }else{
+     r=R*Math.pow(rnd(),.82);
+     const arm=Math.floor(rnd()*arms);
+     const width=(.09+spread*.22)+(r/R)*(.12+spread*.32);
+     angle=spiral(r,arm,corr(r,arm)+normal()*width);
+     height=normal()*(.7+spread*1.8)*(1-r/R*.5);
+     luminosity=.55+rnd()*1.1;
+   }
+   const idx=i*3;
+   pos[idx]=Math.cos(angle)*r;pos[idx+1]=height;pos[idx+2]=Math.sin(angle)*r;
+   sizes[i]=luminosity*(.65+Math.pow(rnd(),5)*2.5);
+   phases[i]=rnd()*PI2;
+   tints[i]=isBulge?.03+rnd()*.2:isDisk?.22+rnd()*.65:Math.min(1,.22+.62*r/R+(rnd()-.5)*.4);
+ }
+ // Dust lanes follow the leading edge of the arms and are no longer additive purple stars.
+ for(let i=0;i<dustCount;i++){
+   const r=13+R*Math.pow(rnd(),.86),arm=Math.floor(rnd()*arms);
+   const angle=spiral(r,arm,corr(r,arm)-.17+normal()*(.07+spread*.12));
+   const idx=i*3;
+   dp[idx]=Math.cos(angle)*r;dp[idx+1]=normal()*1.35;dp[idx+2]=Math.sin(angle)*r;
+   ds[i]=3+rnd()*7;
+ }
+ function points(p,attributes,mat){
+  const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.BufferAttribute(p,3));
+  for(const [key,val] of Object.entries(attributes))geo.setAttribute(key,new THREE.BufferAttribute(val,1));
+  const object=new THREE.Points(geo,mat);object.frustumCulled=false;galaxy.add(object);return object;
+ }
+ const px=Math.min(devicePixelRatio||1,settings.quality==='ultra'?2:settings.quality==='eco'?1:1.5);
+ const uScale={value:px},uTime={value:0},uExposure={value:settings.exposure};
+ points(dp,{aSize:ds},material(dustVertex,dustFragment,{uniforms:{uScale,uTime},blending:THREE.NormalBlending,depthTest:false}));
+ points(pos,{aSize:sizes,aPhase:phases,aTint:tints},material(vertex,fragment,{uniforms:{uScale,uTime,uExposure}}));
+ galaxy.userData={uTime,uExposure};
+ $('countOut').textContent=new Intl.NumberFormat('fr-FR').format(total);
+ $('status').textContent='Simulation procédurale · '+new Intl.NumberFormat('fr-FR').format(total)+' étoiles';
+ if(renderer){renderer.setPixelRatio(px);resize();}
+}
+function makeGlow(size,color,opacity){
+ const canvas=document.createElement('canvas');canvas.width=256;canvas.height=256;
+ const ctx=canvas.getContext('2d'),g=ctx.createRadialGradient(128,128,0,128,128,128);
+ g.addColorStop(0,'rgba(255,255,255,1)');g.addColorStop(.08,'rgba(255,233,202,.85)');g.addColorStop(.23,'rgba(255,184,137,.37)');g.addColorStop(.5,'rgba(164,95,181,.09)');g.addColorStop(1,'rgba(0,0,0,0)');
+ ctx.fillStyle=g;ctx.fillRect(0,0,256,256);
+ const tex=new THREE.CanvasTexture(canvas);
+ return new THREE.Sprite(new THREE.SpriteMaterial({map:tex,color,transparent:true,opacity,depthWrite:false,blending:THREE.AdditiveBlending}));
+}
+function createBackground(){
+ const rnd=randomGenerator(9841),n=4500,positions=new Float32Array(n*3),colors=new Float32Array(n*3);
+ for(let i=0;i<n;i++){
+  const z=2*rnd()-1,a=rnd()*PI2,r=Math.sqrt(1-z*z),dist=850+rnd()*750;
+  positions[3*i]=Math.cos(a)*r*dist;positions[3*i+1]=z*dist;positions[3*i+2]=Math.sin(a)*r*dist;
+  const t=rnd();colors[3*i]=t>.75?.55:1;colors[3*i+1]=t>.75?.7:.87;colors[3*i+2]=1;
+ }
+ const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.BufferAttribute(positions,3));geo.setAttribute('color',new THREE.BufferAttribute(colors,3));
+ background=new THREE.Points(geo,new THREE.PointsMaterial({size:1.25,sizeAttenuation:false,vertexColors:true,transparent:true,opacity:.62,depthWrite:false}));scene.add(background);
+}
+function resize(){
+ if(!renderer)return;
+ const w=host.clientWidth,h=host.clientHeight;camera.aspect=w/h;
+ // Portrait screens need more distance: prevent the spiral and luminous core from filling the viewport.
+ const mobile=w<720;camera.fov=mobile?55:48;camera.updateProjectionMatrix();
+ if(mobile && !controls.userData?.userMoved){camera.position.set(0,195,520);controls.update();}
+ renderer.setSize(w,h,false);composer.setSize(w,h);
+ bloom.resolution.set(Math.max(1,Math.round(w*.65)),Math.max(1,Math.round(h*.65)));
+}
+function init(){
+ scene=new THREE.Scene();scene.background=new THREE.Color('#02030b');
+ camera=new THREE.PerspectiveCamera(48,1,.2,4000);camera.position.set(0,125,340);
+ renderer=new THREE.WebGLRenderer({antialias:false,powerPreference:'high-performance',alpha:false});
+ renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.NoToneMapping;
+ host.appendChild(renderer.domElement);
+ controls=new OrbitControls(camera,renderer.domElement);controls.userData={userMoved:false};controls.addEventListener('start',()=>{controls.userData.userMoved=true;});controls.enableDamping=true;controls.dampingFactor=.055;controls.minDistance=25;controls.maxDistance=680;controls.enablePan=false;controls.autoRotate=false;
+ composer=new EffectComposer(renderer);composer.addPass(new RenderPass(scene,camera));
+ bloom=new UnrealBloomPass(new THREE.Vector2(innerWidth,innerHeight),.35,.35,.72);composer.addPass(bloom);composer.addPass(new OutputPass());
+ createBackground();
+ core=makeGlow(1,0xffd4ab,.23);core.scale.set(30,30,1);scene.add(core);
+ halo=makeGlow(1,0xa483ff,.055);halo.scale.set(85,85,1);scene.add(halo);
+ build();resize();clock=new THREE.Clock();
+ const motion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;if(motion){paused=true;$('pause').textContent='▶ Reprendre';}
+ function animate(){
+  requestAnimationFrame(animate);const dt=Math.min(clock.getDelta(),.06);if(!paused)last+=dt;
+  if(galaxy)galaxy.userData.uTime.value=last;
+  if(!paused){core.material.rotation=last*.012;halo.material.rotation=-last*.008;}
+  controls.update();composer.render();
+ }
+ animate();
+ window.addEventListener('resize',resize,{passive:true});
+}
+for(const key of ['density','arms','twist','turbulence']){
+ $(key).addEventListener('input',()=>{$(key+'Out').textContent=$(key).value+(key==='density'?' %':'');});
+ $(key).addEventListener('change',()=>{settings[key]=Number($(key).value);build();});
+}
+$('exposure').addEventListener('input',()=>{settings.exposure=Number($('exposure').value);$('exposureOut').textContent=settings.exposure.toFixed(2);if(galaxy)galaxy.userData.uExposure.value=settings.exposure;});
+$('quality').addEventListener('change',()=>{settings.quality=$('quality').value;build();});
+$('pause').addEventListener('click',()=>{paused=!paused;$('pause').textContent=paused?'▶ Reprendre':'⏸ Pause';});
+$('reset').addEventListener('click',()=>{controls.userData.userMoved=false;controls.target.set(0,0,0);camera.position.set(0,innerWidth<720?195:125,innerWidth<720?520:340);controls.update();});
+$('random').addEventListener('click',()=>{settings.seed=Math.floor(Math.random()*4294967295);build();});
+const panel=$('panelToggle'),panelRoot=document.querySelector('.panel');
+function setPanel(open){panelRoot.classList.toggle('expanded',open);panel.setAttribute('aria-expanded',String(open));$('panelArrow').textContent=open?'−':'+';}
+setPanel(!matchMedia('(max-width:800px)').matches);
+panel.addEventListener('click',()=>setPanel(!panelRoot.classList.contains('expanded')));
+try{init();}catch(e){console.error(e);$('error').style.display='block';$('error').textContent='Le moteur galactique ne peut pas démarrer : '+e.message;$('status').textContent='Erreur de rendu';}
+</script></body></html>
