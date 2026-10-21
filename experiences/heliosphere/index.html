@@ -36,7 +36,16 @@
 .codex-reader .codex-imported-content figure{max-width:100%;margin:1.2em auto}
 .codex-reader .codex-imported-content figcaption{font-size:.86em;opacity:.82;text-align:center;margin-top:.5em}
 @media(max-width:700px){.codex-reader .codex-imported-content img{max-height:70vh}}
-</style><style id="codex-brand-unified">.brand{font-family:"Syne","Trebuchet MS",system-ui,sans-serif!important;font-size:17px!important;font-weight:700!important;letter-spacing:.09em!important;white-space:nowrap!important}@media(max-width:640px){.brand{font-size:13px!important;letter-spacing:.035em!important;max-width:none!important}}</style></head><body>
+</style><style id="codex-brand-unified">.brand{font-family:"Syne","Trebuchet MS",system-ui,sans-serif!important;font-size:17px!important;font-weight:700!important;letter-spacing:.09em!important;white-space:nowrap!important}@media(max-width:640px){.brand{font-size:13px!important;letter-spacing:.035em!important;max-width:none!important}}</style><style id="codex-console-unified">
+/* Mini-console unifiée CODEX */
+#solar-observatory{width:340px!important;max-width:calc(100vw - 24px)!important;box-sizing:border-box;display:flex!important;align-items:center!important;justify-content:space-between!important;gap:14px!important}
+#solar-observatory>strong{flex:1;min-width:0;color:#f0c477}
+#solar-observatory .solar-observatory-actions{flex:none;display:flex;gap:9px!important;align-items:center}
+#solar-observatory-settings{min-width:32px!important;min-height:30px!important;font-size:17px!important;line-height:1}
+#solar-observatory-themes{min-height:30px}
+#solar-theme-menu.solar-theme-popover{min-width:170px!important}
+#solar-theme-menu a[href="../heliosphere/"]{color:#f0c477!important;font-weight:700;background:#403020}
+</style></head><body>
 <title>Héliosphère — CODEX Mental</title><link rel="icon" type="image/png" href="../../assets/images/favicon-96x96.png">
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -220,7 +229,7 @@ body{padding-top:72px!important}
     <div class="loading" id="loading">Calcul des textures du système solaire…</div>
   </div>
 
-  <section id="solar-observatory" aria-label="Observatoire solaire"><strong>OBSERVATOIRE<br>SOLAIRE</strong><div class="solar-observatory-actions"><button type="button" id="solar-observatory-themes" aria-expanded="false">Thèmes</button><button type="button" id="solar-observatory-settings" aria-expanded="false">Réglages</button></div></section>
+  <section id="solar-observatory" aria-label="Observatoire solaire"><strong>OBSERVATOIRE<br>SOLAIRE</strong><div class="solar-observatory-actions"><button type="button" id="solar-observatory-themes" aria-expanded="false">Thèmes</button><button type="button" id="solar-observatory-settings" aria-expanded="false" aria-label="Réglages" title="Réglages">⚙</button></div></section>
 <button id="solar-settings-toggle" class="solar-settings-toggle" type="button" aria-controls="solar-settings-panel" aria-expanded="false">⚙ Réglages</button>
 <button id="solar-return-sun" type="button" hidden aria-label="Revenir à la vue générale du Soleil">← Retour au système</button>
 <div id="solar-hover" class="solar-hover" hidden aria-live="polite"><strong id="solar-hover-name"></strong><span id="solar-hover-sub"></span><span id="solar-hover-desc"></span></div>
