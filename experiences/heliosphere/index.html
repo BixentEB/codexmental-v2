@@ -175,7 +175,7 @@ body{padding-top:72px!important}
 
 <div class="wrap">
   <h1>Héliosphère <span style="font-size:.48em;opacity:.55;letter-spacing:.1em">· Laboratoire 3D</span></h1>
-  <details class="codex-theme-switch"><summary>Thèmes <span aria-hidden="true">⌄</span></summary><div class="codex-theme-list" role="group" aria-label="Nouveaux univers"><a href="../heliosphere/">Héliosphère</a><a href="../galactique/">Galactique</a><div class="codex-theme-settings"><div class="codex-theme-settings-title">Réglages · Héliosphère</div><div id="solar-settings-slot"></div></div></div></details>
+  <details class="codex-theme-switch"><summary>Thèmes <span aria-hidden="true">⌄</span></summary><div class="codex-theme-list" role="group" aria-label="Nouveaux univers"><a href="../heliosphere/">Héliosphère</a><a href="../galactique/">Galactique</a></div></details>
 
   <div class="stage" id="stage">
     
@@ -1442,6 +1442,28 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
           var list=group.querySelector('.codex-reader-article-list');
           if(list)list.scrollTop=0;
         }
+        var introductions={
+              'Intelligence artificielle':"L'intelligence artificielle transforme notre manière de chercher, de créer et de dialoguer. Cette rubrique explore autant ses possibilités concrètes que ses limites et les questions qu'elle soulève. Deux chemins sont proposés : les articles et réflexions sur l'IA, puis les expressions d'intelligences issues de nos échanges.",
+              'Psychologie':"Pourquoi pensons-nous, ressentons-nous et réagissons-nous différemment ? Cette rubrique rassemble des réflexions sur les comportements, la cognition et les expériences humaines. Elle distingue les articles de psychologie générale de ceux consacrés au haut potentiel, sans réduire l'un à l'autre.",
+              'Haut Potentiel':"Explorer les différentes facettes du haut potentiel, entre vécu, représentations et questions ouvertes. Une place pour nuancer les idées reçues et interroger les façons de penser et de s'adapter.",
+              'Philosophie':"Une invitation à questionner les évidences, les valeurs et les idées qui structurent notre vision du monde. Ici, les réponses ne sont pas nécessairement définitives : les questions elles-mêmes font partie du cheminement.",
+              'États modifiés de conscience':"Que savons-nous de notre conscience et de ses variations ? Cette rubrique aborde les perceptions inhabituelles, les expériences subjectives et les hypothèses qui les entourent, en distinguant le vécu personnel des explications établies.",
+              'Exploration':"Du cosmos aux idées futuristes, cette rubrique suit la curiosité là où elle mène. Elle réunit découvertes, hypothèses et projets de pensée, avec le plaisir d'explorer sans confondre imagination et connaissance.",
+              'Rêves & Onirisme':"Les rêves sont des territoires singuliers, à la frontière de la mémoire, de l'imagination et du sommeil. Cette rubrique rassemble récits, interrogations et explorations des expériences oniriques.",
+              'Symbolique & ésotérisme':"Les symboles, les mythes et les coïncidences invitent à plusieurs niveaux de lecture. Cette rubrique les explore comme objets culturels, imaginaires et personnels, en gardant distinctes les interprétations et les connaissances vérifiables.",
+              'Introspection':"Observer ses pensées, revenir sur une expérience ou suivre une intuition : l'introspection ouvre un espace de réflexion personnelle. Les articles explorent la pensée et le vécu intérieur.",
+              'Réflexions personnelles':''
+            };
+        function showIntroduction(group, title){
+          var label=group.querySelector('summary')?.textContent.trim()||'';
+          var section=document.createElement('section');
+          section.className='codex-reader-category-intro';
+          var h=document.createElement('h2');h.textContent=title||label;section.appendChild(h);
+          var p=document.createElement('p');
+          p.textContent=introductions[label]||'Découvrez les articles et réflexions de cette rubrique.';
+          section.appendChild(p);
+          readerSetContent(section);
+        }
         function chooseCategory(group,button){
           categoryBar.querySelectorAll('button').forEach(function(b){
             var active=b===button;
@@ -1464,6 +1486,8 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
                   other.setAttribute('aria-pressed',String(active));
                 });
                 showGroup(child);
+                readerMenu.querySelectorAll('button.codex-reader-menu-item').forEach(function(item){item.classList.remove('active');});
+                showIntroduction(child,sub.textContent);
               });
               subcategoryBar.appendChild(sub);
             });
@@ -1476,26 +1500,7 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
             if(first)first.click();
           }else{
             readerMenu.querySelectorAll('button.codex-reader-menu-item').forEach(function(item){item.classList.remove('active');});
-            var introductions={
-              'Intelligence artificielle':"L'intelligence artificielle transforme notre manière de chercher, de créer et de dialoguer. Cette rubrique explore autant ses possibilités concrètes que ses limites et les questions qu'elle soulève. Deux chemins sont proposés : les articles et réflexions sur l'IA, puis les expressions d'intelligences issues de nos échanges.",
-              'Psychologie':"Pourquoi pensons-nous, ressentons-nous et réagissons-nous différemment ? Cette rubrique rassemble des réflexions sur les comportements, la cognition et les expériences humaines. Elle distingue les articles de psychologie générale de ceux consacrés au haut potentiel, sans réduire l'un à l'autre.",
-              'Haut Potentiel':"Explorer les différentes facettes du haut potentiel, entre vécu, représentations et questions ouvertes. Une place pour nuancer les idées reçues et interroger les façons de penser et de s'adapter.",
-              'Philosophie':"Une invitation à questionner les évidences, les valeurs et les idées qui structurent notre vision du monde. Ici, les réponses ne sont pas nécessairement définitives : les questions elles-mêmes font partie du cheminement.",
-              'États modifiés de conscience':"Que savons-nous de notre conscience et de ses variations ? Cette rubrique aborde les perceptions inhabituelles, les expériences subjectives et les hypothèses qui les entourent, en distinguant le vécu personnel des explications établies.",
-              'Exploration':"Du cosmos aux idées futuristes, cette rubrique suit la curiosité là où elle mène. Elle réunit découvertes, hypothèses et projets de pensée, avec le plaisir d'explorer sans confondre imagination et connaissance.",
-              'Rêves & Onirisme':"Les rêves sont des territoires singuliers, à la frontière de la mémoire, de l'imagination et du sommeil. Cette rubrique rassemble récits, interrogations et explorations des expériences oniriques.",
-              'Symbolique & ésotérisme':"Les symboles, les mythes et les coïncidences invitent à plusieurs niveaux de lecture. Cette rubrique les explore comme objets culturels, imaginaires et personnels, en gardant distinctes les interprétations et les connaissances vérifiables.",
-              'Introspection':"Observer ses pensées, revenir sur une expérience ou suivre une intuition : l'introspection ouvre un espace de réflexion personnelle. Les articles explorent la pensée et le vécu intérieur.",
-              'Réflexions personnelles':''
-            };
-            var label=group.querySelector('summary')?.textContent.trim()||'';
-            var introduction=document.createElement('section');
-            introduction.className='codex-reader-category-intro';
-            var heading=document.createElement('h2');heading.textContent=button.textContent;introduction.appendChild(heading);
-            var paragraph=document.createElement('p');
-            paragraph.textContent=introductions[label]||'Découvrez les articles et réflexions de cette rubrique.';
-            introduction.appendChild(paragraph);
-            readerSetContent(introduction);
+            showIntroduction(group,button.textContent);
           }
         }
         codexArticleGroups.forEach(function(group){
@@ -1831,8 +1836,9 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
   document.getElementById('solar-return-sun').addEventListener('click', function(){select(null);});
   var settingsSlot=document.getElementById('solar-settings-slot');
   var settingsPanel=document.getElementById('solar-settings-panel');
-  if(settingsSlot&&settingsPanel)settingsSlot.appendChild(settingsPanel);
+  // Keep technical controls outside the public theme selector; DashB will host observatory controls.
   document.getElementById('solar-settings-toggle')?.remove();
+  if(settingsPanel)settingsPanel.remove();
   syncPause();
   if (window.innerWidth < 640 || (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4)) { quality = 'std'; qualitySel.value = 'std'; }
   resize();
