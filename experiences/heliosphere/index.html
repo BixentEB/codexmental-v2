@@ -2417,6 +2417,22 @@ body.codex-reader-open .wrap>h1{display:none!important}
 .wrap>.codex-theme-switch{left:175px!important;bottom:13px!important}
 .wrap>.codex-theme-switch>summary{font-size:10px!important;padding:4px 8px!important}
 }
+/* Mobile: lighter reading surfaces; theme selection only in the universe overview. */
+@media(max-width:700px){
+  .codex-reader #codex-reader-menu.codex-category-mode{
+    background:rgba(17,21,34,.70)!important;
+    backdrop-filter:blur(5px)!important;
+    -webkit-backdrop-filter:blur(5px)!important;
+  }
+  .codex-reader #codex-reader-content{
+    background:rgba(12,16,29,.73)!important;
+    backdrop-filter:blur(5px)!important;
+    -webkit-backdrop-filter:blur(5px)!important;
+  }
+}
+body:has(#codex-reader:not([hidden])) .wrap>.codex-theme-switch{
+  display:none!important;
+}
 </style>
 <script id="codex-mobile-clean">
 (function(){
