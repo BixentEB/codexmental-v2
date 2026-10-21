@@ -31,7 +31,12 @@
   }
 }
 </style>
-</head><body>
+<style id="codex-atelier-v2-visuals">
+.codex-reader .codex-imported-content img{max-width:100%;height:auto;object-fit:contain}
+.codex-reader .codex-imported-content figure{max-width:100%;margin:1.2em auto}
+.codex-reader .codex-imported-content figcaption{font-size:.86em;opacity:.82;text-align:center;margin-top:.5em}
+@media(max-width:700px){.codex-reader .codex-imported-content img{max-height:70vh}}
+</style></head><body>
 <title>Héliosphère — CODEX Mental</title><link rel="icon" type="image/png" href="../../assets/images/favicon-96x96.png">
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1174,7 +1179,8 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
       content.className='codex-imported-content';
       function cleanFragment(fragment,base){
         fragment.querySelectorAll('script,style,link,iframe,header,footer,nav,button,[onclick],.site-header,.site-footer,.codex-theme-switch').forEach(function(el){el.remove();});
-        fragment.querySelectorAll('[style]').forEach(function(el){el.removeAttribute('style');});
+        fragment.querySelectorAll('[style]').forEach(function(el){if(!el.matches('[data-atelier-visual]'))el.removeAttribute('style');});
+        fragment.querySelectorAll('[data-atelier-visual]').forEach(function(el){el.removeAttribute('data-atelier-visual');});
         fragment.querySelectorAll('[id]').forEach(function(el){el.removeAttribute('id');});
         fragment.querySelectorAll('[href],[src]').forEach(function(el){
           ['href','src'].forEach(function(attr){
@@ -1182,13 +1188,97 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
             if(val&&!val.startsWith('#')&&!/^(?:data:|javascript:)/i.test(val))el.setAttribute(attr,new URL(val,base).href);
           });
         });
+        fragment.querySelectorAll('[srcset]').forEach(function(el){
+          var raw=el.getAttribute('srcset');
+          if(raw)el.setAttribute('srcset',raw.split(',').map(function(part){
+            var bits=part.trim().split(/\\s+/);if(bits[0]&&!/^(?:data:|https?:|\\/\\/)/i.test(bits[0]))bits[0]=new URL(bits[0],base).href;return bits.join(' ');
+          }).join(', '));
+        });
+        fragment.querySelectorAll('[poster]').forEach(function(el){
+          var value=el.getAttribute('poster');if(value&&!/^(?:data:|https?:)/i.test(value))el.setAttribute('poster',new URL(value,base).href);
+        });
         return fragment;
       }
-      if(id==='atelier'||id==='blog'){
-        // Existing articles are standalone fragments; their index pages are only menus.
-        var links=Array.from(doc.querySelectorAll('#viewer-menu a[data-viewer]'));
-        var base=new URL(id==='blog'?'../../blog/articles/':'../../atelier/',location.href);
+      if(id==='atelier'){
+        // Atelier V2: shared desktop categories and touch-friendly mobile carousel.
+        // Keep legacy article files intact; only replace the presentation layer.
         var groups=Array.from(doc.querySelectorAll('#viewer-menu details'));
+        var base=new URL('../../atelier/',location.href);
+        var categoryBar=document.getElementById('codex-reader-categories');
+        if(!categoryBar){
+          categoryBar=document.createElement('div');categoryBar.id='codex-reader-categories';
+          categoryBar.className='codex-reader-categories';
+          readerMenu.parentElement.before(categoryBar);
+        }
+        categoryBar.hidden=false;categoryBar.replaceChildren();
+        var subBar=document.getElementById('codex-reader-subcategories');
+        if(subBar){subBar.hidden=true;subBar.replaceChildren();}
+        readerMenu.classList.add('codex-category-mode');
+        var descriptions={
+          'Introduction':"Bienvenue dans l'Atelier : un espace où les idées prennent forme, entre imagination, recherche, création et expérimentation.",
+          'Projets en cours':"Les projets qui se construisent au fil des essais, des découvertes et des améliorations.",
+          'Exploration futuriste':"Imaginer d'autres possibilités, explorer des concepts et confronter les hypothèses à la curiosité.",
+          "Évolutions de l'IA":"Réflexions et expérimentations autour des outils, des usages et des évolutions de l'intelligence artificielle.",
+          'Applications':"Des concepts d'applications et des outils imaginés dans l'Atelier. Les versions à tester trouveront leur place dans le Lab."
+        };
+        function atelierLabel(text){return text.replace(/[\\u{1F000}-\\u{1FAFF}\\u{2600}-\\u{27BF}]/gu,'').replace(/\\s+/g,' ').trim();}
+        function atelierIntro(title){
+          var section=document.createElement('section');section.className='codex-reader-category-intro';
+          var h=document.createElement('h2');h.textContent=title;section.appendChild(h);
+          var p=document.createElement('p');p.textContent=descriptions[title]||'Découvrez les créations et réflexions de cette rubrique.';section.appendChild(p);
+          readerSetContent(section);
+        }
+        var entries=[];
+        groups.forEach(function(group){
+          var title=atelierLabel(group.querySelector('summary')?.textContent||'Rubrique');
+          var accordion=document.createElement('details');accordion.className='codex-reader-accordion';
+          var summary=document.createElement('summary');summary.textContent=title;accordion.appendChild(summary);
+          var list=document.createElement('div');list.className='codex-reader-article-list';accordion.appendChild(list);
+          readerMenu.appendChild(accordion);
+          var tab=document.createElement('button');tab.type='button';tab.textContent=title;
+          tab.setAttribute('aria-pressed','false');categoryBar.appendChild(tab);
+          group.querySelectorAll('a[data-viewer]').forEach(function(link){
+            var button=document.createElement('button');button.type='button';button.className='codex-reader-menu-item';
+            button.textContent=atelierLabel(link.textContent);
+            var url=new URL(link.dataset.viewer+'.html',base).href;
+            button.addEventListener('click',async function(){
+              readerMenu.querySelectorAll('.codex-reader-menu-item').forEach(function(b){b.classList.toggle('active',b===button);});
+              readerMessage('Chargement de l’article…');
+              try{
+                var res=await fetch(url);if(!res.ok)throw Error('HTTP '+res.status);
+                var articleDoc=new DOMParser().parseFromString(await res.text(),'text/html');
+                if(request!==readerRequest||!readerOpen)return;
+                var fragment=document.createElement('div');fragment.className='codex-imported-content';
+                var target=articleDoc.querySelector('main,article')||articleDoc.body;
+                fragment.innerHTML=target.innerHTML;
+                // Retain illustration-specific inline dimensions, while discarding legacy page layout.
+                fragment.querySelectorAll('img,figure,figcaption,picture,svg').forEach(function(el){el.dataset.atelierVisual='';});
+                readerSetContent(cleanFragment(fragment,url));
+              }catch(err){if(request===readerRequest)readerMessage('Article indisponible pour le moment.',url);}
+            });
+            list.appendChild(button);
+          });
+          tab.addEventListener('click',function(){
+            categoryBar.querySelectorAll('button').forEach(function(b){
+              var active=b===tab;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));
+            });
+            entries.forEach(function(entry){entry.accordion.hidden=entry.accordion!==accordion;entry.accordion.open=entry.accordion===accordion;});
+            readerMenu.querySelectorAll('.codex-reader-menu-item').forEach(function(b){b.classList.remove('active');});
+            atelierIntro(title);
+          });
+          entries.push({accordion:accordion,tab:tab,title:title});
+        });
+        if(entries.length){
+          entries[0].tab.click();
+          var introButton=entries[0].accordion.querySelector('.codex-reader-menu-item');
+          if(introButton)introButton.click();
+        }else readerMessage('Aucun article trouvé dans cette rubrique.',route);
+        return;
+      }
+      if(id==='blog'){
+        // Legacy Blog fallback, kept separate from the V2 Atelier navigation.
+        var groups=Array.from(doc.querySelectorAll('#viewer-menu details'));
+        var base=new URL('../../blog/articles/',location.href);
         groups.forEach(function(group){
           var heading=document.createElement('div');heading.className='codex-reader-group';
           heading.textContent=group.querySelector('summary')?.textContent.trim()||'Rubrique';
@@ -1199,24 +1289,19 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
             var fragmentUrl=new URL(link.dataset.viewer+'.html',base).href;
             btn.addEventListener('click',async function(){
               readerMenu.querySelectorAll('button').forEach(function(x){x.classList.remove('active');});
-              btn.classList.add('active');
-              readerMessage('Chargement de l’article…');
+              btn.classList.add('active');readerMessage('Chargement de l’article…');
               try{
                 var res=await fetch(fragmentUrl);if(!res.ok)throw Error('HTTP '+res.status);
-                var html=await res.text();if(request!==readerRequest||!readerOpen)return;
-                var articleDoc=new DOMParser().parseFromString(html,'text/html');
+                var articleDoc=new DOMParser().parseFromString(await res.text(),'text/html');
+                if(request!==readerRequest||!readerOpen)return;
                 var fragment=document.createElement('div');fragment.className='codex-imported-content';
-                var target=articleDoc.querySelector('main,article')||articleDoc.body;
-                fragment.innerHTML=target.innerHTML;
+                fragment.innerHTML=(articleDoc.querySelector('main,article')||articleDoc.body).innerHTML;
                 readerSetContent(cleanFragment(fragment,fragmentUrl));
               }catch(err){if(request===readerRequest)readerMessage('Article indisponible pour le moment.',fragmentUrl);}
-            });
-            readerMenu.appendChild(btn);
+            });readerMenu.appendChild(btn);
           });
         });
-        if(!links.length){readerMessage('Aucun article trouvé dans cette rubrique.',route);}
-        else readerMenu.querySelector('button')?.click();
-        return;
+        readerMenu.querySelector('button')?.click();return;
       }
       if(id==='profil'){
         // Restore the original Portrait visual language without importing its legacy page layout.
