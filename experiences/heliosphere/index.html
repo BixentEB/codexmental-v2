@@ -16,7 +16,7 @@
 .codex-reader-category-intro{max-width:68ch}
 .codex-reader-category-intro h2{margin-bottom:18px}
 .codex-reader-category-intro p{font-size:clamp(14px,1vw,17px);line-height:1.85;max-width:65ch}
-@media(max-width:700px){#codex-reader-subcategories:not([hidden]){gap:7px;padding:9px 0}#codex-reader-subcategories button{padding:8px 11px;font-size:12px}}
+
 </style>
 </head><body>
 <title>Héliosphère — CODEX Mental</title><link rel="icon" type="image/png" href="../../assets/images/favicon-96x96.png">
@@ -1366,7 +1366,7 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
             readerMenu.appendChild(accordion);
             links.forEach(function(link){
               var btn=document.createElement('button');btn.type='button';btn.className='codex-reader-menu-item';
-              btn.textContent=link.textContent.trim();
+              btn.textContent=link.textContent.trim().replace(/^[🌙⚠️🧊🔮]\s*/u,'');
               var articleUrl=new URL(link.dataset.viewer+'.html',blogBase).href;
               btn.addEventListener('click',async function(){
                 readerMenu.querySelectorAll('button').forEach(function(x){x.classList.remove('active');});
@@ -1419,13 +1419,7 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
         });
         var psychGroup=codexArticleGroups.find(function(group){return (group.querySelector('summary')?.textContent||'').trim()==='Psychologie';});
         var hpGroup=codexArticleGroups.find(function(group){return (group.querySelector('summary')?.textContent||'').trim()==='Haut Potentiel';});
-        var personalGroup=codexArticleGroups.find(function(group){return (group.querySelector('summary')?.textContent||'').trim()==='Réflexions personnelles';});
-        var introspectionGroup=codexArticleGroups.find(function(group){return (group.querySelector('summary')?.textContent||'').trim()==='Introspection';});
-        if(personalGroup&&introspectionGroup){
-          var destination=introspectionGroup.querySelector('.codex-reader-article-list');
-          var source=personalGroup.querySelector('.codex-reader-article-list');
-          if(destination&&source)Array.from(source.children).forEach(function(item){destination.appendChild(item);});
-        }
+        var personalGroup=null;
         var expressionsGroup=codexArticleGroups.find(function(group){
           return (group.querySelector('summary')?.textContent||'')==="Expressions d'intelligences";
         });
@@ -1489,8 +1483,8 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
               'Exploration':"Du cosmos aux idées futuristes, cette rubrique suit la curiosité là où elle mène. Elle réunit découvertes, hypothèses et projets de pensée, avec le plaisir d'explorer sans confondre imagination et connaissance.",
               'Rêves & Onirisme':"Les rêves sont des territoires singuliers, à la frontière de la mémoire, de l'imagination et du sommeil. Cette rubrique rassemble récits, interrogations et explorations des expériences oniriques.",
               'Symbolique & ésotérisme':"Les symboles, les mythes et les coïncidences invitent à plusieurs niveaux de lecture. Cette rubrique les explore comme objets culturels, imaginaires et personnels, en gardant distinctes les interprétations et les connaissances vérifiables.",
-              'Introspection':"Observer ses pensées, revenir sur une expérience ou suivre une intuition : l'introspection ouvre un espace de réflexion personnelle. On y retrouve également les textes autrefois classés dans « Réflexions personnelles », désormais réunis ici.",
-              'Réflexions personnelles':"Des réflexions ouvertes sur différents sujets, à retrouver ici en attendant leur reclassement dans les rubriques appropriées."
+              'Introspection':"Observer ses pensées, revenir sur une expérience ou suivre une intuition : l'introspection ouvre un espace de réflexion personnelle. Les articles explorent la pensée et le vécu intérieur.",
+              'Réflexions personnelles':''
             };
             var label=group.querySelector('summary')?.textContent.trim()||'';
             var introduction=document.createElement('section');
@@ -2010,7 +2004,7 @@ body.solar-selected #solar-return-sun:not([hidden]){
 #codex-reader-frame{display:block;flex:1;width:100%;min-height:0;border:0;background:#fff;color:#111}
 body.codex-reader-open #solar-return-sun{display:none!important}
 body.codex-reader-open .solar-hover{display:none!important}
-@media(max-width:700px){.codex-reader{inset:42px 0 0;padding:7px}.codex-reader-shell{border-radius:12px}.codex-reader-top{padding:11px 12px}.codex-reader-top h2{font-size:19px}#codex-reader-close{font-size:11px;padding:8px 10px}}
+
 </style>
 <style id="codex-reader-universal-v1">
 /* Universal reader geometry: theme-agnostic tokens for future universes. */
@@ -2023,12 +2017,7 @@ body.codex-reader-open .solar-hover{display:none!important}
 #codex-reader-frame{background:transparent!important;color:inherit}
 #solar-return-sun{left:auto!important;right:clamp(18px,3vw,52px)!important;bottom:clamp(70px,10vh,105px)!important;opacity:.68;font-size:11px;padding:7px 12px;background:rgba(9,15,29,.45)}
 #solar-return-sun:hover,#solar-return-sun:focus-visible{opacity:1}
-@media(max-width:700px){
- .codex-reader{inset:42px 0 0;padding:10px 8px;align-items:center}
- .codex-reader-shell{width:100%;height:min(86dvh,850px);max-height:calc(100dvh - 64px);border-radius:13px;background:rgba(8,13,26,.78)}
- .codex-reader-top{padding:10px 12px}
- #solar-return-sun{right:14px!important;bottom:70px!important;font-size:10px}
-}
+
 @media(prefers-reduced-motion:reduce){.codex-reader-shell{transition:none}}
 </style>
 <style id="solar-return-text-only">
@@ -2071,14 +2060,7 @@ body.solar-selected #solar-return-sun:not([hidden]):hover,
 #codex-reader-content button{max-width:100%}
 #codex-reader-content .codex-imported-content{color:#e4e8f5!important}
 .codex-reader-message{color:#dbe1f4}
-@media(max-width:700px){
- .codex-reader{padding:12px!important}
- .codex-reader-shell{width:100%!important;max-height:calc(90dvh - 48px)!important}
- .codex-reader-layout{grid-template-columns:1fr;gap:8px;max-height:calc(88dvh - 90px)}
- #codex-reader-menu{flex-direction:row;overflow-x:auto;overflow-y:hidden;min-height:42px;padding:7px;max-height:64px}
- .codex-reader-menu-item{flex:0 0 auto;white-space:nowrap}
- #codex-reader-content{min-height:0;max-height:calc(78dvh - 120px);padding:16px}
-}
+
 </style>
 <style id="codex-reader-accordion-style">
 .codex-reader .codex-reader-accordion{border-bottom:1px solid rgba(220,224,255,.12);margin:2px 0;background:transparent!important;color:#e9ecf6}
@@ -2110,7 +2092,7 @@ body.solar-selected #solar-return-sun:not([hidden]):hover,
 .codex-reader .codex-reader-group{font:700 11px/1.5 system-ui;color:#d9b777;margin:12px 4px 3px}
 .codex-reader .codex-reader-menu-item.active{background:rgba(213,173,100,.14);color:#ffda95}
 .codex-reader #codex-reader-close{border:none!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;outline:none!important;font:500 11px system-ui!important}
-@media(max-width:700px){.codex-reader .codex-reader-group{flex:0 0 auto;white-space:nowrap;margin:8px 4px}}
+
 </style>
 <style id="codex-reader-layout-v4">
 /* Reader navigation: readable stacked cards, never compressed horizontally. */
@@ -2119,15 +2101,7 @@ body.solar-selected #solar-return-sun:not([hidden]):hover,
 .codex-reader #codex-reader-menu .codex-reader-accordion>summary{white-space:normal!important;overflow-wrap:anywhere!important;min-height:19px!important;padding:11px 29px 11px 12px!important;line-height:1.45!important;font-size:12px!important}
 .codex-reader #codex-reader-menu .codex-reader-article-list{display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:3px!important;max-height:none!important;overflow:visible!important}
 .codex-reader #codex-reader-menu .codex-reader-menu-item{display:block!important;flex:none!important;width:100%!important;white-space:normal!important;overflow-wrap:anywhere!important;text-align:left!important;line-height:1.45!important;padding:9px 10px!important}
-@media(max-width:700px){
- .codex-reader{align-items:flex-start!important;justify-content:flex-start!important;padding:14px 12px!important;overflow-y:auto!important}
- .codex-reader .codex-reader-shell{width:100%!important;max-height:none!important;gap:10px!important;margin-top:clamp(20px,5vh,65px)!important}
- .codex-reader .codex-reader-layout{display:flex!important;flex-direction:column!important;gap:12px!important;max-height:none!important;overflow:visible!important}
- .codex-reader #codex-reader-menu{width:100%!important;box-sizing:border-box!important;max-height:min(38dvh,340px)!important;min-height:0!important;overflow-y:auto!important;overflow-x:hidden!important;padding:10px!important;gap:8px!important}
- .codex-reader #codex-reader-content{width:100%!important;box-sizing:border-box!important;min-height:145px!important;max-height:46dvh!important;overflow-y:auto!important;padding:17px!important}
- .codex-reader .codex-reader-accordion{width:100%!important}
- .solar-title,.stage .solar-title{font-size:clamp(22px,6vw,34px)!important;max-width:65vw!important}
-}
+
 </style>
 <style id="codex-reader-responsive-v5">
 /* Use available screen width without turning the content into a modal site. */
@@ -2139,25 +2113,11 @@ body.solar-selected #solar-return-sun:not([hidden]):hover,
  .codex-reader #codex-reader-menu .codex-reader-accordion>summary{font-size:13px!important}
  .codex-reader #codex-reader-menu .codex-reader-menu-item{font-size:12px!important}
 }
-@media(max-width:700px){
- .codex-reader{padding:12px 12px 85px!important;overflow-y:auto!important;overscroll-behavior:contain!important}
- .codex-reader .codex-reader-shell{margin-top:0!important;gap:10px!important}
- .codex-reader .codex-reader-layout{gap:12px!important}
- .codex-reader #codex-reader-menu{max-height:none!important;overflow:visible!important;padding:8px!important}
- .codex-reader #codex-reader-content{max-height:none!important;min-height:190px!important;overflow:visible!important;padding:20px 18px 55px!important;line-height:1.75!important}
- .codex-reader .codex-reader-accordion>summary{padding:13px 30px 13px 13px!important}
- .codex-reader .codex-reader-menu-item{padding:12px!important}
- .codex-reader .codex-reader-menu-toggle{display:block!important;width:100%!important;padding:12px 16px!important;border:1px solid rgba(225,211,173,.35)!important;border-radius:10px!important;background:rgba(13,19,35,.75)!important;color:#f2d7a4!important;text-align:left!important;font:600 14px system-ui!important;cursor:pointer!important}
- .codex-reader #codex-reader-menu[hidden]{display:none!important}
- .codex-reader .codex-reader-layout>.codex-reader-menu-toggle{order:0}
- .codex-reader #codex-reader-menu{order:1}
- .codex-reader #codex-reader-content{order:2}
- .codex-reader .codex-reader-top{padding:5px 0!important}
-}
+
 @media(min-width:701px){.codex-reader-menu-toggle{display:none!important}}
 /* Dedicated lower-left title space, independent of the explorer. */
 .solar-title,.stage .solar-title{position:fixed!important;left:clamp(16px,2.8vw,52px)!important;bottom:clamp(35px,7vh,80px)!important;top:auto!important;z-index:5!important;pointer-events:none!important;max-width:55vw!important}
-@media(max-width:700px){.solar-title,.stage .solar-title{bottom:70px!important;font-size:clamp(21px,5vw,29px)!important;max-width:70vw!important}}
+
 </style>
 
 <style id="solar-responsive-labels">
@@ -2212,9 +2172,7 @@ body.solar-selected #solar-return-sun:not([hidden]):hover,
  .codex-reader .codex-reader-layout{height:calc(100dvh - 240px)!important;min-height:240px!important}
  .stage .solar-title,.solar-title{bottom:12px!important}
 }
-@media(max-width:700px){
- .stage .solar-title,.solar-title{bottom:18px!important;left:14px!important}
-}
+
 </style>
 <style id="codex-accordion-fixed-menu-v2">
 /* Desktop: never scroll the outer navigation; scrolling belongs to the open sub-list. */
@@ -2339,81 +2297,83 @@ body.solar-selected #solar-return-sun:not([hidden]):hover,
 
 
 
-<style id="codex-mobile-clean-v11">
+
+<style id="codex-mobile-v12">
 @media(max-width:700px){
+/* Mobile layout is independent of desktop's sidebar and modal geometry. */
 html,body{overflow-x:hidden!important}
-.codex-reader:not([hidden]){position:fixed!important;inset:42px 0 0!important;z-index:9000!important;display:block!important;overflow-y:auto!important;overscroll-behavior:contain!important;padding:0 12px 85px!important;scroll-padding-top:0!important}
-.codex-reader .codex-reader-shell{position:static!important;display:block!important;width:100%!important;max-height:none!important;height:auto!important;min-height:0!important;overflow:visible!important;border:0!important;border-radius:0!important;padding:0!important;background:transparent!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
-.codex-reader .codex-reader-top{position:sticky!important;top:0!important;z-index:30!important;display:flex!important;align-items:center!important;min-height:50px!important;padding:5px 0!important;border:0!important;background:linear-gradient(#090d1b 75%,rgba(9,13,27,.94))!important}
-.codex-reader .codex-reader-eyebrow,.codex-reader #codex-reader-close{display:none!important}
-.codex-reader .codex-reader-top h2{display:block!important;margin:0!important;font-size:22px!important;color:#f4f0e9!important;background:transparent!important}
-.codex-reader #codex-reader-categories,.codex-reader #codex-reader-subcategories,.codex-reader .codex-reader-menu-toggle,.codex-reader .codex-mobile-tier-picker{display:none!important}
-.codex-reader .codex-mobile-carousel{display:block!important;margin:12px 0 4px!important;touch-action:pan-y;user-select:none;-webkit-user-select:none}
-.codex-reader .codex-mobile-carousel[hidden]{display:none!important}
-.codex-reader .codex-mobile-carousel-track{height:58px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(229,189,119,.36);touch-action:pan-y}
-.codex-reader .codex-mobile-carousel button{border:0!important;background:none!important;box-shadow:none!important;padding:12px 2px!important;font:500 12px system-ui;color:#c5c0c6;opacity:.6;white-space:nowrap;max-width:25%;overflow:hidden;text-overflow:ellipsis}
-.codex-reader .codex-mobile-carousel button.current{color:#ffdb9c!important;opacity:1!important;font-size:16px!important;font-weight:700!important;max-width:50%;text-align:center}
-.codex-reader .codex-mobile-carousel button.current:after{content:"";display:block;width:32px;height:2px;background:#edbd70;margin:7px auto -9px}
-.codex-reader .codex-mobile-sub{display:flex;gap:12px;justify-content:center;margin:9px 0 12px}
-.codex-reader .codex-mobile-sub[hidden]{display:none!important}
-.codex-reader .codex-mobile-sub button{max-width:48%;padding:9px 6px!important;border-bottom:1px solid #8d7655!important;opacity:.75}
-.codex-reader .codex-mobile-sub button.active{opacity:1!important;color:#ffdc9e!important;border-bottom:2px solid #edbd70!important}
-.codex-reader .codex-reader-layout{display:block!important;height:auto!important;min-height:0!important;max-height:none!important;margin:0!important;padding:0!important;overflow:visible!important}
-.codex-reader #codex-reader-menu.codex-category-mode{display:block!important;box-sizing:border-box!important;height:clamp(100px,20dvh,172px)!important;max-height:clamp(100px,20dvh,172px)!important;min-height:0!important;overflow-y:auto!important;overscroll-behavior:contain!important;margin:0 0 12px!important;padding:0 5px!important;border-top:1px solid rgba(218,183,116,.22)!important;border-bottom:1px solid rgba(218,183,116,.22)!important;border-left:0!important;border-right:0!important;border-radius:0!important;background:rgba(10,14,25,.32)!important;box-shadow:none!important;backdrop-filter:none!important}
+.codex-reader:not([hidden]){position:fixed!important;inset:42px 0 0!important;z-index:9000!important;display:block!important;overflow-y:auto!important;overscroll-behavior:contain!important;padding:0 12px 90px!important;pointer-events:auto!important}
+.codex-reader .codex-reader-shell{display:block!important;position:static!important;width:100%!important;height:auto!important;max-height:none!important;min-height:0!important;overflow:visible!important;border:0!important;border-radius:0!important;padding:0!important;background:transparent!important;box-shadow:none!important;backdrop-filter:none!important}
+.codex-reader .codex-reader-top{position:sticky!important;top:0!important;z-index:40!important;display:flex!important;min-height:45px!important;padding:5px 0!important;background:rgba(7,10,21,.96)!important;border:0!important}
+.codex-reader .codex-reader-top>div{background:transparent!important;border:0!important;padding:0!important}
+.codex-reader .codex-reader-top h2{display:block!important;margin:0!important;font:500 21px/1.3 system-ui!important;color:#f4f0ea!important}
+.codex-reader .codex-reader-eyebrow,.codex-reader #codex-reader-close,.codex-reader #codex-reader-categories,.codex-reader #codex-reader-subcategories,.codex-reader .codex-reader-menu-toggle,.codex-reader .codex-mobile-tier-picker{display:none!important}
+.codex-reader .codex-m-nav{display:block!important;margin:9px 0 0;touch-action:pan-y}
+.codex-reader .codex-m-nav[hidden]{display:none!important}
+.codex-reader .codex-m-wheel{display:flex;align-items:center;justify-content:space-between;height:54px;border-bottom:1px solid rgba(235,190,120,.38);touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.codex-reader .codex-m-wheel button{border:0!important;background:none!important;box-shadow:none!important;min-width:0;max-width:26%;padding:10px 2px!important;color:#c2bcc3!important;opacity:.6!important;font:500 12px system-ui!important;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.codex-reader .codex-m-wheel button:nth-child(2){max-width:48%;font-size:16px!important;font-weight:700!important;color:#ffdda1!important;opacity:1!important;text-align:center}
+.codex-reader .codex-m-wheel button:nth-child(2):after{content:"";display:block;width:34px;height:2px;background:#eabd74;margin:7px auto -9px}
+.codex-reader .codex-m-sub{display:flex;gap:12px;justify-content:center;margin:10px 0}
+.codex-reader .codex-m-sub[hidden]{display:none!important}
+.codex-reader .codex-m-sub button{border:0;border-bottom:1px solid #806947;background:none;color:#bfb6b4;font:600 12px system-ui;padding:9px 3px}
+.codex-reader .codex-m-sub button.active{color:#ffdfa6;border-bottom:2px solid #eabd74}
+.codex-reader .codex-reader-layout{display:block!important;height:auto!important;max-height:none!important;min-height:0!important;overflow:visible!important;margin:0!important;padding:0!important}
+.codex-reader #codex-reader-menu.codex-category-mode{display:block!important;box-sizing:border-box!important;height:144px!important;max-height:144px!important;min-height:0!important;overflow-y:auto!important;overscroll-behavior:contain!important;padding:0 4px!important;margin:0 0 10px!important;border:0!important;border-bottom:1px solid rgba(226,183,112,.34)!important;border-radius:0!important;background:rgba(8,11,21,.28)!important;box-shadow:none!important;backdrop-filter:none!important}
 .codex-reader #codex-reader-menu.codex-category-mode .codex-reader-accordion[hidden]{display:none!important}
-.codex-reader #codex-reader-menu.codex-category-mode .codex-reader-accordion{display:block!important;height:auto!important;max-height:none!important;min-height:0!important;overflow:visible!important;padding:0!important;margin:0!important;border:0!important;background:none!important}
+.codex-reader #codex-reader-menu.codex-category-mode .codex-reader-accordion{display:block!important;height:auto!important;max-height:none!important;min-height:0!important;overflow:visible!important;border:0!important;background:none!important;margin:0!important;padding:0!important}
 .codex-reader #codex-reader-menu.codex-category-mode .codex-reader-accordion>summary{display:none!important}
-.codex-reader #codex-reader-menu.codex-category-mode .codex-reader-article-list{display:block!important;max-height:none!important;height:auto!important;overflow:visible!important;padding:0!important;border:0!important}
-.codex-reader #codex-reader-menu.codex-category-mode .codex-reader-menu-item{display:block!important;width:100%!important;min-height:38px!important;padding:10px 12px!important;margin:0!important;border:0!important;border-bottom:1px solid rgba(190,195,214,.13)!important;border-radius:0!important;background:transparent!important;text-align:left!important;font-size:12px!important}
-.codex-reader #codex-reader-menu.codex-category-mode .codex-reader-menu-item.active{color:#ffdb9c!important;background:rgba(216,174,100,.1)!important}
-.codex-reader #codex-reader-content{display:block!important;box-sizing:border-box!important;width:100%!important;min-height:0!important;max-height:none!important;height:auto!important;overflow:visible!important;padding:22px 18px!important;margin:8px 0 28px!important;border-radius:12px!important;background:rgba(8,12,24,.82)!important;backdrop-filter:blur(8px)!important}
-.codex-reader.codex-mobile-reading .codex-mobile-carousel,.codex-reader.codex-mobile-reading #codex-reader-menu,.codex-reader.codex-mobile-reading .codex-mobile-sub{display:none!important}
-.codex-reader .codex-mobile-back{display:none!important}
-.codex-reader.codex-mobile-reading .codex-mobile-back{display:block!important;position:sticky!important;top:50px!important;z-index:25!important;width:100%!important;text-align:left!important;padding:12px 4px!important;border:0!important;background:rgba(9,13,27,.96)!important;color:#ffdc9c!important;font:600 13px system-ui!important}
-.codex-reader .codex-mobile-intro-link{display:none!important}
-.stage .solar-title,.solar-title{position:fixed!important;top:auto!important;bottom:12px!important;left:12px!important;z-index:4!important;font-size:clamp(19px,5.6vw,26px)!important;max-width:70vw!important}
-.codex-theme-switch{position:fixed!important;top:auto!important;right:auto!important;bottom:55px!important;left:12px!important;z-index:10010!important;margin:0!important}
-.codex-theme-switch>summary{padding:5px 8px!important;font-size:10px!important;opacity:.85!important}
-.codex-theme-list{top:auto!important;bottom:100%!important;left:0!important;right:auto!important;max-height:55dvh!important;overflow-y:auto!important}
-body.codex-reader-open #solar-return-sun{display:block!important;position:fixed!important;visibility:visible!important;opacity:1!important;z-index:9100!important;bottom:15px!important;right:12px!important;top:auto!important;left:auto!important;background:rgba(9,13,27,.88)!important}
-body.codex-reader-open .stage .solar-title,body.codex-reader-open .solar-title{bottom:12px!important}
+.codex-reader #codex-reader-menu.codex-category-mode .codex-reader-article-list{display:block!important;height:auto!important;max-height:none!important;overflow:visible!important;padding:0!important;border:0!important}
+.codex-reader #codex-reader-menu.codex-category-mode .codex-reader-menu-item{display:block!important;box-sizing:border-box!important;width:100%!important;min-height:38px!important;padding:10px 8px!important;margin:0!important;border:0!important;border-bottom:1px solid rgba(214,214,231,.12)!important;border-radius:0!important;background:none!important;color:#e5e5ec!important;font-size:12px!important;text-align:left!important}
+.codex-reader #codex-reader-menu.codex-category-mode .codex-reader-menu-item.active{color:#ffe0a4!important;background:rgba(200,155,90,.12)!important}
+.codex-reader #codex-reader-content{display:block!important;box-sizing:border-box!important;width:100%!important;height:auto!important;max-height:none!important;min-height:0!important;overflow:visible!important;padding:22px 18px!important;margin:10px 0 20px!important;border:1px solid rgba(194,206,234,.2)!important;border-radius:12px!important;background:rgba(7,10,21,.82)!important;backdrop-filter:blur(7px)!important}
+.codex-reader.codex-m-reading .codex-m-nav,.codex-reader.codex-m-reading #codex-reader-menu{display:none!important}
+.codex-reader .codex-m-back{display:none!important}
+.codex-reader.codex-m-reading .codex-m-back{display:block!important;position:sticky!important;top:45px!important;z-index:35!important;width:100%!important;padding:13px 0!important;border:0!important;background:rgba(7,10,21,.96)!important;text-align:left!important;color:#ffdc9d!important;font:600 13px system-ui!important}
+.codex-reader .codex-m-intro-entry{display:none!important}
+.wrap>h1{position:fixed!important;left:14px!important;bottom:12px!important;top:auto!important;z-index:4!important;margin:0!important;font-size:23px!important;line-height:1.2!important}
+.wrap>h1 span{display:none!important}
+body.codex-reader-open .wrap>h1{display:none!important}
+.codex-theme-switch{position:fixed!important;left:12px!important;right:auto!important;top:auto!important;bottom:55px!important;z-index:10010!important;margin:0!important}
+.codex-theme-switch>summary{padding:5px 8px!important;font-size:10px!important}
+.codex-theme-list{top:auto!important;bottom:100%!important;left:0!important;right:auto!important;max-height:50dvh!important;overflow-y:auto!important}
+#solar-return-sun:not([hidden]){position:fixed!important;right:12px!important;bottom:13px!important;left:auto!important;top:auto!important;z-index:10011!important}
 }
-@media(min-width:701px){.codex-mobile-carousel,.codex-mobile-back{display:none!important}}
+@media(min-width:701px){.codex-m-nav,.codex-m-back{display:none!important}}
 </style>
-<script id="codex-mobile-clean-v11">
+<script id="codex-mobile-v12">
 (function(){
-const reader=document.getElementById('codex-reader'),menu=document.getElementById('codex-reader-menu');
-if(!reader||!menu)return;
-const layout=menu.closest('.codex-reader-layout');
-const nav=document.createElement('nav');nav.className='codex-mobile-carousel';nav.hidden=true;nav.setAttribute('aria-label','Choisir une rubrique');
-const track=document.createElement('div');track.className='codex-mobile-carousel-track';
-const buttons=['previous','current','next'].map(k=>{let b=document.createElement('button');b.type='button';b.className=k;track.append(b);return b});
-const sub=document.createElement('div');sub.className='codex-mobile-sub';sub.hidden=true;nav.append(track,sub);layout.before(nav);
-const back=document.createElement('button');back.type='button';back.className='codex-mobile-back';back.textContent='← Rubriques et articles';layout.before(back);
-const bar=()=>document.getElementById('codex-reader-categories'),subbar=()=>document.getElementById('codex-reader-subcategories'),items=()=>Array.from(bar()?.querySelectorAll('button')||[]);
-let active=0,drag=null,watched=null,watchedSub=null,observer=new MutationObserver(render);
+const reader=document.getElementById('codex-reader'),menu=document.getElementById('codex-reader-menu'),layout=menu?.closest('.codex-reader-layout');
+if(!reader||!menu||!layout)return;
+const nav=document.createElement('nav');nav.className='codex-m-nav';nav.hidden=true;nav.setAttribute('aria-label','Rubriques du Codex');
+const wheel=document.createElement('div');wheel.className='codex-m-wheel';
+const slots=[0,1,2].map(()=>{let b=document.createElement('button');b.type='button';wheel.append(b);return b});
+const sub=document.createElement('div');sub.className='codex-m-sub';sub.hidden=true;nav.append(wheel,sub);layout.before(nav);
+const back=document.createElement('button');back.type='button';back.className='codex-m-back';back.textContent='← Rubriques et articles';layout.before(back);
+const bar=()=>document.getElementById('codex-reader-categories'),subbar=()=>document.getElementById('codex-reader-subcategories'),categories=()=>Array.from(bar()?.querySelectorAll('button')||[]);
+let index=0,gesture=null,observedBar=null,observedSub=null;
 function render(){
-const list=items();if(!list.length||bar()?.hidden){nav.hidden=true;return}nav.hidden=false;
-const selected=list.findIndex(b=>b.classList.contains('active')||b.getAttribute('aria-pressed')==='true');if(selected>=0)active=selected;
-[(active-1+list.length)%list.length,active,(active+1)%list.length].forEach((i,k)=>buttons[k].textContent=list[i].textContent.trim());
-const child=!subbar()?.hidden?Array.from(subbar()?.querySelectorAll('button')||[]):[];
-sub.hidden=child.length<2;
-sub.replaceChildren(...child.map(b=>{let copy=document.createElement('button');copy.type='button';copy.textContent=b.textContent.trim();copy.classList.toggle('active',b.classList.contains('active'));copy.addEventListener('click',()=>{b.click();reader.classList.remove('codex-mobile-reading');render();reader.scrollTop=0});return copy}));
-menu.querySelectorAll('.codex-reader-menu-item').forEach(b=>{if(/^(?:🌙\\s*)?Introduction sur les rêves$/i.test(b.textContent.trim()))b.classList.add('codex-mobile-intro-link')});
+const bs=categories();if(!bs.length||bar()?.hidden){nav.hidden=true;return}nav.hidden=false;
+const i=bs.findIndex(b=>b.classList.contains('active')||b.getAttribute('aria-pressed')==='true');if(i>=0)index=i;
+[(index-1+bs.length)%bs.length,index,(index+1)%bs.length].forEach((v,k)=>slots[k].textContent=bs[v].textContent.trim());
+const children=!subbar()?.hidden?Array.from(subbar()?.querySelectorAll('button')||[]):[];
+sub.hidden=children.length<2;sub.replaceChildren(...children.map(b=>{let copy=document.createElement('button');copy.type='button';copy.textContent=b.textContent.trim();copy.classList.toggle('active',b.classList.contains('active'));copy.onclick=()=>{b.click();reader.classList.remove('codex-m-reading');reader.scrollTop=0;render()};return copy}));
+menu.querySelectorAll('.codex-reader-menu-item').forEach(b=>{if(b.textContent.trim()==='Introduction sur les rêves')b.classList.add('codex-m-intro-entry')});
 }
-function select(n){const list=items();if(!list.length)return;active=(n+list.length)%list.length;reader.classList.remove('codex-mobile-reading');list[active].click();render();reader.scrollTop=0}
-buttons[0].addEventListener('click',()=>select(active-1));buttons[1].addEventListener('click',()=>{});buttons[2].addEventListener('click',()=>select(active+1));
-track.addEventListener('pointerdown',e=>{drag={x:e.clientX,y:e.clientY,id:e.pointerId}});
-track.addEventListener('pointerup',e=>{if(!drag||drag.id!==e.pointerId)return;let dx=e.clientX-drag.x,dy=e.clientY-drag.y;drag=null;if(Math.abs(dx)<20||Math.abs(dx)<Math.abs(dy))return;e.preventDefault();select(active+(dx<0?1:-1)*Math.max(1,Math.round(Math.abs(dx)/95)))});
-track.addEventListener('pointercancel',()=>drag=null);
-menu.addEventListener('click',e=>{const b=e.target.closest('.codex-reader-menu-item');if(!b||!e.isTrusted||!matchMedia('(max-width:700px)').matches)return;reader.classList.add('codex-mobile-reading');reader.scrollTop=0});
-back.addEventListener('click',()=>{reader.classList.remove('codex-mobile-reading');reader.scrollTop=0});
-function attach(){let b=bar(),s=subbar();if(b===watched&&s===watchedSub)return;observer.disconnect();if(b)observer.observe(b,{childList:true,subtree:true,attributes:true,attributeFilter:['class','hidden','aria-pressed']});if(s)observer.observe(s,{childList:true,subtree:true,attributes:true,attributeFilter:['class','hidden','aria-pressed']});watched=b;watchedSub=s;render()}
-new MutationObserver(attach).observe(reader,{childList:true,subtree:true});
-new MutationObserver(()=>{if(!reader.hidden){reader.classList.remove('codex-mobile-reading');reader.scrollTop=0;setTimeout(()=>{attach();render();reader.scrollTop=0},120)}}).observe(reader,{attributes:true,attributeFilter:['hidden']});
-const close=document.getElementById('codex-reader-close'),returnSystem=document.getElementById('solar-return-sun');
-if(returnSystem&&close)returnSystem.addEventListener('click',()=>{if(!reader.hidden)close.click()});
+function choose(i){let bs=categories();if(!bs.length)return;index=(i+bs.length)%bs.length;reader.classList.remove('codex-m-reading');bs[index].click();reader.scrollTop=0;render()}
+slots[0].onclick=()=>choose(index-1);slots[2].onclick=()=>choose(index+1);
+wheel.addEventListener('touchstart',e=>{if(e.touches.length===1)gesture={x:e.touches[0].clientX,y:e.touches[0].clientY}},{passive:true});
+wheel.addEventListener('touchend',e=>{if(!gesture||!e.changedTouches.length)return;const dx=e.changedTouches[0].clientX-gesture.x,dy=e.changedTouches[0].clientY-gesture.y;gesture=null;if(Math.abs(dx)>24&&Math.abs(dx)>Math.abs(dy))choose(index+(dx<0?1:-1)*Math.max(1,Math.round(Math.abs(dx)/110)))},{passive:true});
+wheel.addEventListener('pointerdown',e=>{if(e.pointerType==='mouse')gesture={x:e.clientX,y:e.clientY}});
+wheel.addEventListener('pointerup',e=>{if(e.pointerType!=='mouse'||!gesture)return;let dx=e.clientX-gesture.x;gesture=null;if(Math.abs(dx)>24)choose(index+(dx<0?1:-1))});
+menu.addEventListener('click',e=>{if(!e.isTrusted||!matchMedia('(max-width:700px)').matches||!e.target.closest('.codex-reader-menu-item'))return;reader.classList.add('codex-m-reading');reader.scrollTop=0});
+back.onclick=()=>{reader.classList.remove('codex-m-reading');reader.scrollTop=0};
+const changes=new MutationObserver(render);
+function attach(){let b=bar(),s=subbar();if(b===observedBar&&s===observedSub)return;changes.disconnect();if(b)changes.observe(b,{childList:true,subtree:true,attributes:true,attributeFilter:['class','hidden','aria-pressed']});if(s)changes.observe(s,{childList:true,subtree:true,attributes:true,attributeFilter:['class','hidden','aria-pressed']});observedBar=b;observedSub=s;render()}
+new MutationObserver(attach).observe(layout.parentElement,{childList:true});
+new MutationObserver(()=>{if(!reader.hidden){reader.classList.remove('codex-m-reading');reader.scrollTop=0;setTimeout(()=>{attach();render();reader.scrollTop=0},80)}}).observe(reader,{attributes:true,attributeFilter:['hidden']});
+const ret=document.getElementById('solar-return-sun'),close=document.getElementById('codex-reader-close');
+ret?.addEventListener('click',()=>{if(!reader.hidden)close?.click()});
 attach();
 })();
-</script>
-</body></html>
+</script></body></html>
