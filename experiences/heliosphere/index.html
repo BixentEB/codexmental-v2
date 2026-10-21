@@ -2359,6 +2359,31 @@ body.codex-reader-open .wrap>h1{display:none!important}
 .codex-reader.codex-m-reading .codex-m-back{display:none!important}
 .codex-reader .codex-m-track button{overflow:visible!important;text-overflow:clip!important;white-space:nowrap!important;width:max-content!important;max-width:none!important;font-size:13px!important;padding:8px 3px!important}
 }
+/* CODEX mobile navigation polish: compact readable article list and accessible theme switch. */
+@media(max-width:700px){
+.codex-reader #codex-reader-menu.codex-category-mode{
+ max-height:126px!important;
+ background:rgba(9,13,26,.88)!important;
+ border:1px solid rgba(219,181,119,.27)!important;
+ border-radius:9px!important;
+ padding:2px 9px!important;
+ backdrop-filter:blur(12px)!important;
+ -webkit-backdrop-filter:blur(12px)!important;
+ scrollbar-width:thin;
+ scrollbar-color:rgba(228,185,112,.7) transparent;
+}
+.codex-reader #codex-reader-menu.codex-category-mode::-webkit-scrollbar{width:3px}
+.codex-reader #codex-reader-menu.codex-category-mode::-webkit-scrollbar-thumb{background:rgba(228,185,112,.75);border-radius:5px}
+.codex-experience-nav .codex-theme-switch{
+ left:170px!important;bottom:11px!important;
+}
+.codex-experience-nav .codex-theme-switch>summary{
+ font-size:10px!important;padding:4px 8px!important;
+ background:rgba(8,12,26,.58)!important;
+ border-color:rgba(215,175,109,.32)!important;
+}
+.codex-experience-nav>a:not(.codex-home){font-size:11px!important}
+}
 </style>
 <script id="codex-mobile-clean">
 (function(){
