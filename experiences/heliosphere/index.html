@@ -212,7 +212,7 @@ body{padding-top:72px!important}
 
 <div class="wrap">
   <h1>Héliosphère <span style="font-size:.48em;opacity:.55;letter-spacing:.1em">· Laboratoire 3D</span></h1>
-  <details class="codex-theme-switch" id="solar-theme-menu"><summary>Thèmes <span aria-hidden="true">⌄</span></summary><div class="codex-theme-list" role="group" aria-label="Nouveaux univers"><a href="../heliosphere/">Héliosphère</a><a href="../galactique/">Galactique</a></div></details>
+  <div class="solar-theme-popover" id="solar-theme-menu" hidden role="group" aria-label="Choisir un univers"><div class="codex-theme-list"><a href="../heliosphere/">Héliosphère</a><a href="../galactique/">Galactique</a></div></div>
 
   <div class="stage" id="stage">
     
@@ -2585,6 +2585,22 @@ attach();
 body.solar-settings-open .under .ctrl{left:12px!important;right:auto!important;bottom:66px!important;z-index:10024!important}
 .wrap > .codex-theme-switch.solar-observatory-visible{display:block!important;position:fixed!important;top:auto!important;bottom:65px!important;left:12px!important;right:auto!important;z-index:10026!important}
 @media(max-width:700px){#solar-observatory{left:8px;bottom:8px;padding:7px 9px;gap:8px}body.solar-settings-open .under .ctrl{left:8px!important;right:auto!important;bottom:62px!important;max-width:calc(100vw - 16px)!important}}
+
+/* Menu des univers directement sous la mini-console : pas de second bouton Thèmes. */
+#solar-theme-menu[hidden]{display:none!important}
+#solar-theme-menu.solar-theme-popover{position:fixed!important;top:auto!important;left:12px!important;bottom:65px!important;right:auto!important;z-index:10027!important;min-width:150px;max-width:calc(100vw - 24px)}
+#solar-theme-menu .codex-theme-list{position:static!important;display:grid;gap:4px;padding:7px;background:#0d1224;border:1px solid rgba(193,180,147,.35);border-radius:11px;box-shadow:0 12px 30px #0008}
+#solar-theme-menu .codex-theme-list a{display:block;padding:9px 11px;font:500 12px system-ui;color:#e4e9fa;text-decoration:none;border-radius:7px}
+#solar-theme-menu .codex-theme-list a:hover{background:#ffffff12;color:#f4d299}
+body.solar-settings-open .under .ctrl{width:min(315px,calc(100vw - 24px))!important;max-width:calc(100vw - 24px)!important;padding:14px!important;border-radius:13px!important;background:rgba(12,17,33,.96)!important;box-shadow:0 14px 35px #0008!important}
+#solar-settings-panel .row{display:flex!important;align-items:center!important;gap:9px!important;flex-wrap:wrap!important;margin-bottom:10px!important}
+#solar-settings-panel label,#solar-settings-panel .hint{font:400 11px/1.55 system-ui!important;letter-spacing:0!important}
+#solar-settings-panel .hint{opacity:.68!important;margin:8px 0 0!important}
+#solar-settings-panel select{min-width:96px!important;font-size:11px!important}
+#solar-settings-panel .btn{font-size:11px!important}
+#solar-settings-panel input[type=range]{flex:1;min-width:70px;max-width:110px}
+#solar-settings-panel output{font-size:11px!important}
+@media(max-width:700px){#solar-theme-menu.solar-theme-popover{left:8px!important;bottom:62px!important}}
 </style>
 <script>
 document.addEventListener('DOMContentLoaded',function(){
@@ -2592,9 +2608,9 @@ document.addEventListener('DOMContentLoaded',function(){
  const themes=document.getElementById('solar-observatory-themes'), settings=document.getElementById('solar-observatory-settings');
  const panel=document.getElementById('solar-settings-panel');
  if(!bar||!theme||!panel)return;
- function closeThemes(){theme.open=false;theme.classList.remove('solar-observatory-visible');themes.setAttribute('aria-expanded','false')}
+ function closeThemes(){theme.hidden=true;theme.classList.remove('solar-observatory-visible');themes.setAttribute('aria-expanded','false')}
  function closeSettings(){document.body.classList.remove('solar-settings-open');settings.setAttribute('aria-expanded','false')}
- themes.addEventListener('click',function(e){e.stopPropagation();const open=!theme.open;closeSettings();closeThemes();if(open){theme.open=true;theme.classList.add('solar-observatory-visible');themes.setAttribute('aria-expanded','true')}});
+ themes.addEventListener('click',function(e){e.stopPropagation();const open=theme.hidden;closeSettings();closeThemes();if(open){theme.hidden=false;theme.classList.add('solar-observatory-visible');themes.setAttribute('aria-expanded','true')}});
  settings.addEventListener('click',function(e){e.stopPropagation();const open=!document.body.classList.contains('solar-settings-open');closeThemes();closeSettings();if(open){document.body.classList.add('solar-settings-open');settings.setAttribute('aria-expanded','true')}});
  document.addEventListener('pointerdown',function(e){if(!bar.contains(e.target)&&!theme.contains(e.target)&&!panel.contains(e.target)){closeThemes();closeSettings()}});
  document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeThemes();closeSettings()}});
