@@ -1,0 +1,1296 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Lecteur CODEX Mental</title><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
+/* Shared new-generation theme switcher: native keyboard/touch disclosure. */
+.codex-theme-switch{position:relative;z-index:10010;font:600 12px/1.4 system-ui,-apple-system,Segoe UI,sans-serif;color:#d9e1ff;flex:none}
+.codex-theme-switch summary{list-style:none;display:flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid rgba(173,185,230,.28);border-radius:9px;background:rgba(18,24,49,.82);cursor:pointer;white-space:nowrap;user-select:none}
+.codex-theme-switch summary::-webkit-details-marker{display:none}
+.codex-theme-switch summary:hover,.codex-theme-switch summary:focus-visible{border-color:rgba(194,207,255,.68);background:rgba(36,43,78,.94);outline-offset:3px}
+.codex-theme-switch[open] summary{border-color:rgba(194,207,255,.55)}
+.codex-theme-list{position:absolute;top:calc(100% + 7px);right:0;min-width:175px;padding:6px;border:1px solid rgba(173,185,230,.26);border-radius:11px;background:#0b1023;box-shadow:0 16px 38px rgba(0,0,0,.55);display:grid;gap:2px}
+.codex-theme-list a{display:block!important;padding:11px 12px!important;border-radius:7px;color:#dce4ff!important;text-decoration:none!important;font-size:12px!important;font-weight:500!important;letter-spacing:0!important;margin:0!important;white-space:nowrap}
+.codex-theme-list a:hover,.codex-theme-list a:focus-visible{background:#27335c!important;color:#fff!important}
+@media(max-width:850px){.codex-theme-switch{font-size:11px}.codex-theme-switch summary{padding:6px 9px}.codex-theme-list{right:auto;left:0}}
+</style>
+<style id="codex-reader-navigation-polish">
+#codex-reader-subcategories:not([hidden]){display:flex!important;align-items:center;flex-wrap:wrap;gap:10px;padding:10px 0 12px;margin:0 0 2px;border-top:1px solid rgba(220,184,122,.25)}
+#codex-reader-subcategories button{appearance:none;background:rgba(12,17,32,.76);color:#e3d7c6;border:1px solid rgba(219,181,115,.45);border-radius:7px;padding:8px 15px;font-size:12px;font-weight:600;cursor:pointer;transition:background .2s,border-color .2s}
+#codex-reader-subcategories button.active,#codex-reader-subcategories button:hover{background:rgba(169,123,57,.27);border-color:#d9b475;color:#ffe3ae}
+.codex-reader-category-intro{max-width:68ch}
+.codex-reader-category-intro h2{margin-bottom:18px}
+.codex-reader-category-intro p{font-size:clamp(14px,1vw,17px);line-height:1.85;max-width:65ch}
+
+</style>
+<style id="codex-mobile-legibility-20261021">
+@media(max-width:700px){
+  /* Protection du texte uniquement : aucun panneau ni fond ajouté. */
+  .codex-reader .codex-m-track button,
+  .codex-reader .codex-m-sub button{
+    text-shadow:0 1px 3px #080a12,0 0 7px rgba(0,0,0,.95)!important;
+  }
+  .codex-reader .codex-m-hint{
+    text-shadow:0 1px 3px #080a12,0 0 6px #080a12!important;
+  }
+}
+</style>
+<style id="codex-atelier-v2-visuals">
+.codex-reader .codex-imported-content img{max-width:100%;height:auto;object-fit:contain}
+.codex-reader .codex-imported-content figure{max-width:100%;margin:1.2em auto}
+.codex-reader .codex-imported-content figcaption{font-size:.86em;opacity:.82;text-align:center;margin-top:.5em}
+@media(max-width:700px){.codex-reader .codex-imported-content img{max-height:70vh}}
+</style>
+<style>
+/* Concept : une fenêtre sur un vrai système solaire en 3D ; chaque planète est une section du site. Thème sombre assumé (espace), un seul univers visuel. */
+:root {
+  --void: #03040a;
+  --deep: #0a0d22;
+  --ink: #e9ecf8;
+  --mute: #8f96b8;
+  --sun: #ffb23e;
+  --line: rgba(150, 170, 255, 0.16);
+  --font-display: "Syne", "Trebuchet MS", system-ui, sans-serif;
+  --font-body: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { background: var(--void); }
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.5;
+  padding-block: 24px 32px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.wrap { max-width: 1180px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
+h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(20px, 3.4vw, 28px);
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.stage {
+  position: relative;
+  height: clamp(520px, 72vh, 760px);
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: var(--void);
+  box-shadow: 0 30px 80px -30px rgba(40, 60, 180, 0.35);
+}
+#cv { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; cursor: grab; }
+#cv.over { cursor: pointer; }
+#cv:active { cursor: grabbing; }
+.loading {
+  position: absolute; inset: 0; z-index: 6; display: grid; place-items: center; text-align: center; padding: 24px;
+  background: var(--void); color: var(--mute); font-size: 14px; transition: opacity .6s;
+}
+.loading.done { opacity: 0; pointer-events: none; }
+
+.bar {
+  position: absolute; z-index: 5; top: 0; left: 0; right: 0;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 10px 14px;
+  background: linear-gradient(to bottom, rgba(3, 4, 10, 0.78), rgba(3, 4, 10, 0));
+  pointer-events: none;
+}
+.bar > * { pointer-events: auto; }
+.brand { font-family: var(--font-display); font-weight: 700; font-size: 16px; letter-spacing: 0.02em; white-space: nowrap; }
+.tabs { display: flex; gap: 2px; overflow-x: auto; min-width: 0; scrollbar-width: none; }
+.tabs::-webkit-scrollbar { display: none; }
+.tabs button {
+  appearance: none; border: 0; background: transparent; color: var(--mute);
+  font: 500 13px/1 var(--font-body); padding: 9px 12px; border-radius: 999px; cursor: pointer; white-space: nowrap;
+  transition: color .2s, background .2s;
+}
+.tabs button:hover { color: var(--ink); }
+.tabs button[aria-current="true"] { color: var(--ink); background: rgba(255, 255, 255, 0.09); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16); }
+button:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid var(--sun); outline-offset: 2px; }
+
+.pl { position: absolute; left: 0; top: 0; width: 0; height: 0; z-index: 3; pointer-events: none; transition: opacity .3s; will-change: transform; }
+.pl .hit {
+  position: absolute; appearance: none; border: 0; background: transparent; padding: 0; border-radius: 50%; pointer-events: none;
+  width: var(--hit); height: var(--hit); left: calc(var(--hit) / -2); top: calc(var(--hit) / -2); transition: box-shadow .2s;
+}
+.pl.hov .hit, .pl.active .hit { box-shadow: 0 0 0 1.5px rgba(255, 255, 255, 0.55); }
+.pl .lbl {
+  position: absolute; top: -17px; white-space: nowrap;
+  font-family: var(--font-display); text-shadow: 0 1px 8px rgba(0, 0, 0, 0.95), 0 0 2px rgba(0, 0, 0, 0.95);
+  display: flex; flex-direction: column; gap: 1px;
+}
+.pl .lbl b { font-weight: 600; font-size: 15px; letter-spacing: 0.01em; }
+.pl .lbl i { font-style: normal; font-family: var(--font-body); font-size: 11px; color: var(--mute); }
+.pl.right .lbl { left: calc(var(--s) + 12px); text-align: left; }
+.pl.left .lbl { right: calc(var(--s) + 12px); text-align: right; }
+.pl.below .lbl { left: 50%; top: calc(var(--s) + 8px); transform: translateX(-50%); text-align: center; align-items: center; }
+.pl.active .lbl b { color: #fff; }
+.pl.dim { opacity: 0.38; }
+.pl.hid { opacity: 0; }
+
+.under { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+.info, .ctrl { border: 1px solid var(--line); border-radius: 14px; background: var(--deep); padding: 16px 18px; min-width: 0; }
+.info h2 { margin: 0 0 4px; font-family: var(--font-display); font-weight: 600; font-size: 18px; display: flex; align-items: center; gap: 10px; }
+.dot { width: 12px; height: 12px; border-radius: 50%; flex: none; background: var(--c, var(--sun)); box-shadow: 0 0 12px var(--c, var(--sun)); }
+.info p { margin: 0; color: var(--mute); max-width: 62ch; }
+.ctrl { display: flex; flex-direction: column; gap: 12px; }
+.row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.row label { color: var(--mute); font-size: 13px; }
+.btn {
+  appearance: none; border: 1px solid var(--line); background: rgba(255, 255, 255, 0.05); color: var(--ink);
+  font: 500 13px/1 var(--font-body); padding: 9px 14px; border-radius: 999px; cursor: pointer;
+}
+.btn:hover { background: rgba(255, 255, 255, 0.1); }
+select {
+  font: 500 13px/1 var(--font-body); color: var(--ink); background: #11152e; border: 1px solid var(--line);
+  border-radius: 8px; padding: 8px 10px;
+}
+input[type="range"] { accent-color: var(--sun); flex: 1; min-width: 100px; }
+output { font-variant-numeric: tabular-nums; min-width: 3ch; font-size: 13px; }
+.hint { color: var(--mute); font-size: 12.5px; margin: 0; }
+
+@media (max-width: 720px) {
+  .under { grid-template-columns: minmax(0, 1fr); }
+  .stage { height: clamp(540px, 76vh, 660px); }
+  .bar { flex-direction: column; align-items: flex-start; gap: 4px; }
+  .tabs { width: 100%; }
+}
+</style>
+<style>
+/* Experience isolated from the legacy theme engine: no global CODEX CSS or JS. */
+:root{color-scheme:dark}
+html,body{min-height:100%;background:#03040a!important}
+body{padding-top:72px!important}
+.codex-experience-nav{position:fixed;z-index:9999;top:0;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:clamp(6px,1.6vw,24px);padding:12px 18px;background:rgba(3,6,17,.87);border-bottom:1px solid rgba(150,178,235,.16);backdrop-filter:blur(18px);font:600 12px/1.5 system-ui,sans-serif}
+.codex-experience-nav a{color:#c4cde9;text-decoration:none;white-space:nowrap}
+.codex-experience-nav a:hover,.codex-experience-nav a:focus-visible{color:white;text-shadow:0 0 12px #81aaff}
+.codex-experience-nav .codex-home{color:#ffcf7d;font-weight:800;letter-spacing:.1em;margin-right:auto}
+.codex-experience-nav .codex-return{margin-left:auto;color:#91c7ff}
+@media(max-width:850px){body{padding-top:102px!important}.codex-experience-nav{justify-content:flex-start;flex-wrap:wrap;gap:8px 13px}.codex-experience-nav .codex-home,.codex-experience-nav .codex-return{margin:0}.codex-experience-nav a{font-size:11px}}
+@media(max-width:480px){.codex-experience-nav{gap:6px 11px;padding:8px 12px}.codex-experience-nav a{font-size:10px}}
+
+.cm-signature{position:fixed;z-index:9998;right:18px;bottom:9px;pointer-events:none;color:rgba(210,222,255,.36);font:600 9px/1.4 system-ui,sans-serif;letter-spacing:.16em;text-shadow:0 1px 5px #000}
+</style>
+<style id="codex-heliosphere-fullscreen">
+/* Immersive layout: the 3D scene is the page, not a framed widget. */
+html,body{width:100%;height:100%;overflow:hidden!important}
+body{padding:0!important;margin:0!important;background:#03040a!important}
+.wrap{display:contents!important}
+.wrap>h1{position:fixed;z-index:7;left:clamp(18px,4vw,68px);bottom:clamp(115px,15vh,160px);font-size:clamp(27px,3.8vw,54px);font-weight:500;letter-spacing:.08em;text-shadow:0 3px 22px #000;pointer-events:none}
+.wrap>h1 span{display:block;margin-top:8px;font-size:11px!important;font-family:var(--font-body);letter-spacing:.17em;color:#d7b98c}
+.stage{position:fixed!important;inset:0!important;width:100vw!important;height:100dvh!important;min-height:0!important;max-height:none!important;border:0!important;border-radius:0!important;box-shadow:none!important;margin:0!important}
+.stage .bar{position:fixed;z-index:8;top:57px;right:clamp(12px,2.5vw,35px);left:auto;width:auto;padding:0;background:none;pointer-events:none}
+.stage .bar .brand{display:none}
+.stage .tabs{max-width:min(75vw,650px);display:flex;flex-wrap:wrap;justify-content:flex-end;gap:4px;overflow:visible;pointer-events:auto}
+.stage .tabs button{font-size:11px;padding:7px 11px;background:#080d20a8;border:1px solid #a8b7e533;backdrop-filter:blur(12px)}
+.stage .tabs button[aria-current="true"]{background:#28304dcb}
+.codex-experience-nav{justify-content:flex-start;gap:clamp(8px,1.4vw,22px);padding:11px clamp(14px,2vw,30px);background:linear-gradient(#030615ee,#03061577);border-bottom:0}
+.codex-experience-nav .codex-home{margin-right:auto}
+.under{position:fixed;z-index:8;inset:auto 20px 20px auto;display:flex;align-items:flex-end;gap:12px;max-width:min(700px,75vw);pointer-events:none}
+.under .info,.under .ctrl{pointer-events:auto;border:1px solid #b0baf52b;background:#080d20bc;backdrop-filter:blur(16px);box-shadow:0 12px 35px #0005;border-radius:12px;padding:12px 15px}
+.under .info{max-width:300px;min-width:170px}
+.under .info h2{font-size:13px}.under .info p{font-size:11px;line-height:1.5}
+.under .ctrl{width:275px;max-width:35vw;gap:7px}
+.under .ctrl .row{gap:7px}.under .ctrl label,.under .ctrl output{font-size:10px}.under .ctrl .hint{font-size:10px;line-height:1.5}
+.under .ctrl input[type="range"]{min-width:60px}
+.cm-signature{z-index:9;bottom:4px}
+@media(max-width:850px){
+ body{padding:0!important}
+ .codex-experience-nav{gap:6px 11px;flex-wrap:wrap;padding:9px 12px}
+ .stage .bar{top:92px;right:10px}
+ .stage .tabs{max-width:95vw;gap:3px}
+ .stage .tabs button{font-size:10px;padding:6px 8px}
+ .wrap>h1{bottom:145px;left:18px;font-size:clamp(25px,6vw,40px)}
+ .under{left:12px;right:12px;bottom:16px;max-width:none;justify-content:space-between}
+ .under .info{max-width:42%;min-width:0}
+ .under .ctrl{max-width:56%;width:250px}
+}
+@media(max-width:550px){
+ .stage .bar{top:105px;left:9px;right:9px}
+ .stage .tabs{justify-content:center;max-width:100%}
+ .stage .tabs button{font-size:9px;padding:5px 7px}
+ .wrap>h1{bottom:165px;font-size:27px}
+ .under{bottom:18px;gap:7px}
+ .under .info{max-width:48%;padding:9px}
+ .under .ctrl{max-width:52%;padding:9px}
+ .under .ctrl .hint{display:none}
+ .under .ctrl .row{gap:5px}
+ .under .ctrl label,.under .ctrl output{font-size:9px}
+ .under .ctrl select{max-width:95px;font-size:10px;padding:5px}
+}
+@media(max-height:550px){.wrap>h1{bottom:20px}.under .info{display:none}.under{max-width:300px}}
+</style>
+<style id="codex-solar-minimal-ui">
+/* Planet hit targets remain intact; only their visible white rings disappear. */
+.pl.hov .hit,.pl.active .hit{box-shadow:none!important}
+.under{max-width:min(410px,75vw)!important;right:20px!important;bottom:24px!important}
+.under .info{max-width:360px!important;min-width:200px}
+.under .info:has(#infoTitle:not(:empty)){display:block}
+.under .ctrl{display:none!important}
+body.solar-settings-open .under .ctrl{display:block!important;position:fixed;right:20px;bottom:67px;max-width:min(340px,calc(100vw - 32px))!important;width:300px}
+.solar-settings-toggle{position:fixed;z-index:12;right:20px;bottom:20px;cursor:pointer;color:#dfe6ff;background:#0b1024c9;border:1px solid #a9baf455;border-radius:20px;padding:9px 15px;font:600 12px system-ui;backdrop-filter:blur(12px)}
+.under{right:135px!important;bottom:18px!important;pointer-events:none}
+.under .info{pointer-events:auto}
+body.solar-settings-open .under .info{display:none}
+@media(max-width:700px){
+ .solar-settings-toggle{right:12px;bottom:12px}
+ .under{left:12px!important;right:125px!important;bottom:12px!important;max-width:calc(100vw - 150px)!important}
+ .under .info{max-width:100%!important;min-width:0;padding:9px!important}
+ body.solar-settings-open .under .ctrl{right:12px;bottom:55px}
+}
+</style>
+<style>
+#solar-return-sun{position:fixed;z-index:13;left:clamp(18px,4vw,68px);bottom:clamp(185px,24vh,235px);padding:10px 16px;border-radius:22px;border:1px solid #b9c8ff66;background:#090f26c9;color:#edf1ff;backdrop-filter:blur(14px);font:600 12px system-ui;cursor:pointer;box-shadow:0 5px 20px #0005}
+#solar-return-sun:hover{background:#273453dd;border-color:#d8e3ff}
+#solar-return-sun[hidden]{display:none!important}
+@media(max-width:700px){#solar-return-sun{left:18px;bottom:215px;font-size:11px;padding:8px 12px}}
+@media(max-height:550px){#solar-return-sun{bottom:85px}}
+</style>
+<style id="solar-return-placement">
+/* The return action belongs to the selected destination's info panel. */
+.under .info #solar-return-sun{position:static!important;display:inline-flex;align-items:center;left:auto!important;right:auto!important;bottom:auto!important;margin-top:9px;padding:7px 11px;font-size:11px;border-radius:18px;background:#18244375;border-color:#b9c8ff38;box-shadow:none}
+.under .info #solar-return-sun[hidden]{display:none!important}
+.under .info #solar-return-sun:hover{background:#344467a8}
+.under .info{background:#080d2088!important;border-color:#b0baf520!important;box-shadow:none!important}
+.under .info p{opacity:.85}
+</style>
+<style id="solar-inline-return">
+/* Contextual text action, visually paired with the section link. */
+.under .info #codex-jump{display:inline-block;margin-top:10px!important;margin-right:5px!important;font-size:11px!important}
+.under .info #solar-return-sun:not([hidden]){display:inline!important;position:static!important;padding:0!important;margin:0!important;border:0!important;border-radius:0!important;background:transparent!important;backdrop-filter:none!important;box-shadow:none!important;color:#a6bce2!important;font:500 11px system-ui!important;text-decoration:none}
+.under .info #solar-return-sun:hover{text-decoration:underline!important;color:#fff!important}
+</style>
+<style id="solar-hover-and-theme-settings">
+/* Minimal preview on hover: typography, not a second boxed menu. */
+.solar-hover{position:fixed;z-index:10;left:clamp(18px,4vw,68px);bottom:clamp(185px,23vh,235px);pointer-events:none;text-shadow:0 2px 14px #000,0 0 3px #000;max-width:min(420px,70vw)}
+.solar-hover strong{display:block;font:600 clamp(20px,2vw,30px)/1.25 var(--font-display);color:#f3f4ff}
+.solar-hover span{display:block;margin-top:5px;font:400 13px/1.4 var(--font-body);color:#d1d7ee}
+.codex-theme-list{min-width:265px;max-height:min(82vh,680px);overflow-y:auto}
+.codex-theme-settings{border-top:1px solid #9baee83b;margin-top:6px;padding:12px 8px 7px}
+.codex-theme-settings-title{font-size:11px;letter-spacing:.06em;color:#c9d6ff;margin-bottom:10px}
+#solar-settings-slot .ctrl{display:flex!important;position:static!important;width:auto!important;max-width:none!important;padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important;backdrop-filter:none!important}
+#solar-settings-slot .ctrl .row{gap:8px}
+#solar-settings-slot .ctrl label{font-size:11px}
+#solar-settings-slot .ctrl input[type=range]{min-width:65px;width:70px}
+#solar-settings-slot .ctrl .hint{font-size:10px;line-height:1.4}
+#solar-settings-slot .ctrl select{font-size:11px;padding:5px}
+.under .info{display:none!important}
+.under{pointer-events:none!important}
+#solar-return-sun{position:fixed!important;z-index:12!important;left:clamp(18px,4vw,68px)!important;right:auto!important;bottom:clamp(185px,23vh,235px)!important;display:none!important;background:#101a32a8!important;border:1px solid #b9c8ff55!important;padding:9px 14px!important;border-radius:20px!important;color:#e5ebff!important;font:500 12px system-ui!important;pointer-events:auto!important}
+body.solar-selected #solar-return-sun:not([hidden]){display:inline-flex!important}
+@media(max-width:700px){.solar-hover{left:18px;bottom:180px;max-width:75vw}.solar-hover strong{font-size:20px}.solar-hover span{font-size:12px}#solar-return-sun{left:18px!important;bottom:185px!important}}
+.solar-hover{left:50%;bottom:clamp(62px,10vh,105px);transform:translateX(-50%);width:min(620px,calc(100vw - 44px));max-width:none;text-align:center;padding:12px 16px;box-sizing:border-box;transition:opacity .2s ease}
+.solar-hover strong{font-size:clamp(28px,3.3vw,46px);line-height:1.15;letter-spacing:.035em}
+.solar-hover #solar-hover-sub{font-size:clamp(14px,1.25vw,18px);margin-top:10px;color:#f2e6cb}
+.solar-hover #solar-hover-desc{font-size:clamp(12px,1vw,14px);line-height:1.55;margin:9px auto 0;color:#c7ccdf;max-width:530px}
+@media(max-width:700px){.solar-hover{left:50%;bottom:80px;max-width:none;width:calc(100vw - 32px)}.solar-hover strong{font-size:28px}.solar-hover #solar-hover-sub{font-size:14px}.solar-hover #solar-hover-desc{font-size:12px}}
+</style>
+<style id="solar-return-independent">
+/* The navigation control must not be nested in the hidden info card. */
+body.solar-selected #solar-return-sun:not([hidden]){
+ display:inline-flex!important;position:fixed!important;
+ left:clamp(18px,4vw,68px)!important;
+ bottom:clamp(185px,23vh,235px)!important;
+ z-index:15!important;pointer-events:auto!important;
+ background:rgba(10,18,38,.56)!important;
+ border:1px solid rgba(185,200,255,.28)!important;
+ color:#e8edff!important;padding:9px 15px!important;
+ border-radius:22px!important;font:500 12px system-ui!important;
+ cursor:pointer!important;backdrop-filter:blur(8px);
+}
+@media(max-width:700px){body.solar-selected #solar-return-sun:not([hidden]){left:18px!important;bottom:185px!important}}
+</style>
+<style id="solar-single-nav">
+/* A single, unobtrusive top navigation, matching Galactique. */
+.codex-experience-nav a[data-solar-section]{padding:5px 2px;border-bottom:1px solid transparent;transition:color .2s,border-color .2s}
+.codex-experience-nav a[data-solar-section]:hover{color:#fff}
+.codex-experience-nav a[data-solar-section][aria-current="true"]{color:#ffda9b;border-color:#ffcf7d}
+.codex-experience-nav .codex-home{border-bottom:0!important}
+.stage .bar{display:none!important}
+</style>
+<style id="cm-monogram-style">
+.cm-signature.cm-monogram{width:34px!important;height:34px!important;min-width:0!important;min-height:0!important;right:15px!important;bottom:12px!important;padding:0!important;background-color:#d5ad63!important;opacity:.48!important;mask:url('../../assets/images/codex-monogramme.png') center/contain no-repeat;-webkit-mask:url('../../assets/images/codex-monogramme.png') center/contain no-repeat;border:0!important;box-shadow:none!important;font-size:0!important;pointer-events:none!important}
+</style>
+<style id="codex-reader-style">
+.codex-reader[hidden]{display:none!important}
+.codex-reader{position:fixed;z-index:9000;inset:42px 0 0;display:flex;justify-content:center;align-items:stretch;padding:clamp(12px,3vw,34px);pointer-events:none}
+.codex-reader-shell{pointer-events:auto;width:min(1220px,100%);height:100%;display:flex;flex-direction:column;overflow:hidden;border:1px solid rgba(182,195,238,.22);border-radius:18px;background:rgba(5,9,22,.78);box-shadow:0 18px 80px rgba(0,0,0,.48);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.codex-reader-top{flex:none;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px clamp(14px,2.4vw,26px);border-bottom:1px solid rgba(190,200,245,.17)}
+.codex-reader-eyebrow{display:block;color:#b6c1e7;font:600 9px/1.6 system-ui;letter-spacing:.2em}
+.codex-reader-top h2{margin:2px 0 0;color:#f4f5ff;font:400 clamp(20px,2.4vw,29px)/1.25 system-ui}
+#codex-reader-close{flex:none;border:1px solid rgba(188,201,250,.3);border-radius:22px;padding:9px 13px;color:#e7edff;background:rgba(24,32,61,.8);cursor:pointer;font:500 12px system-ui}
+#codex-reader-close:hover{background:rgba(61,72,112,.9)}
+#codex-reader-frame{display:block;flex:1;width:100%;min-height:0;border:0;background:#fff;color:#111}
+body.codex-reader-open #solar-return-sun{display:none!important}
+body.codex-reader-open .solar-hover{display:none!important}
+
+</style>
+<style id="codex-reader-universal-v1">
+/* Universal reader geometry: theme-agnostic tokens for future universes. */
+:root{--codex-glass:rgba(9,14,29,.69);--codex-edge:rgba(199,211,255,.24);--codex-ink:#f1f3ff;--codex-accent:#d6ae68}
+.codex-reader{align-items:center;padding:clamp(18px,4vw,56px);background:transparent}
+.codex-reader-shell{width:min(960px,68vw);height:min(75vh,760px);max-height:calc(100dvh - 100px);background:var(--codex-glass);border-color:var(--codex-edge);box-shadow:0 15px 65px #0006;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.codex-reader-top{background:rgba(12,17,32,.43);padding:12px 20px}
+.codex-reader-top h2{color:var(--codex-ink)}
+#codex-reader-close{background:rgba(15,20,38,.55);font-size:11px}
+#codex-reader-frame{background:transparent!important;color:inherit}
+#solar-return-sun{left:auto!important;right:clamp(18px,3vw,52px)!important;bottom:clamp(70px,10vh,105px)!important;opacity:.68;font-size:11px;padding:7px 12px;background:rgba(9,15,29,.45)}
+#solar-return-sun:hover,#solar-return-sun:focus-visible{opacity:1}
+
+@media(prefers-reduced-motion:reduce){.codex-reader-shell{transition:none}}
+</style>
+<style id="solar-return-text-only">
+/* Override legacy selected-state and hidden info-card rules. */
+body.solar-selected #solar-return-sun:not([hidden]),
+#solar-return-sun:not([hidden]){
+ position:fixed!important;left:auto!important;right:clamp(18px,3vw,48px)!important;
+ top:auto!important;bottom:clamp(60px,8vh,86px)!important;
+ width:auto!important;height:auto!important;min-width:0!important;max-width:max-content!important;
+ display:inline!important;z-index:40!important;box-sizing:border-box!important;
+ padding:3px 0!important;margin:0!important;border:0!important;border-radius:0!important;
+ background:none!important;box-shadow:none!important;backdrop-filter:none!important;
+ color:rgba(231,236,255,.68)!important;font:400 11px/1.3 system-ui!important;
+ letter-spacing:.015em!important;text-decoration:none!important;opacity:1!important;
+ pointer-events:auto!important;cursor:pointer!important;
+}
+body.solar-selected #solar-return-sun:not([hidden]):hover,
+#solar-return-sun:not([hidden]):focus-visible{color:#fff!important;text-decoration:underline!important}
+@media(max-width:700px){body.solar-selected #solar-return-sun:not([hidden]),#solar-return-sun:not([hidden]){right:16px!important;bottom:65px!important;font-size:11px!important}}
+</style>
+<style id="codex-glass-blocks-v2">
+/* Native content blocks: no nested website or iframe. */
+.codex-reader{background:transparent!important;align-items:center!important;padding:clamp(18px,3vw,42px)!important}
+.codex-reader-shell{width:min(1040px,82vw)!important;height:auto!important;max-height:min(76dvh,780px)!important;min-height:0!important;overflow:visible!important;display:flex!important;flex-direction:column!important;gap:10px!important;background:none!important;border:0!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+.codex-reader-top{padding:5px 3px!important;border:0!important;background:none!important}
+.codex-reader-eyebrow{opacity:.7}
+#codex-reader-close{padding:3px!important;background:none!important;border:0!important;box-shadow:none!important;color:#d7dff5!important;font-size:11px!important}
+.codex-reader-layout{display:grid;grid-template-columns:minmax(145px,205px) minmax(0,1fr);gap:14px;min-height:0;max-height:calc(76dvh - 60px);width:100%}
+#codex-reader-menu,#codex-reader-content{border:1px solid rgba(209,219,255,.15);border-radius:13px;background:rgba(8,14,30,.47);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);color:#f2f2ff;box-shadow:0 8px 32px rgba(0,0,0,.12)}
+#codex-reader-menu{display:flex;flex-direction:column;align-items:stretch;gap:5px;padding:14px;overflow-y:auto;max-height:100%}
+.codex-reader-menu-item{background:transparent;border:0;text-align:left;padding:8px;color:#d8dff4;cursor:pointer;border-radius:6px;font:500 12px system-ui}
+.codex-reader-menu-item:hover{background:rgba(255,255,255,.09);color:white}
+#codex-reader-content{padding:clamp(16px,2.5vw,30px);overflow-y:auto;overscroll-behavior:contain;min-height:220px;max-height:calc(76dvh - 60px);line-height:1.7;font:14px/1.7 system-ui}
+#codex-reader-content :is(h1,h2,h3,h4){color:#fff!important;font-family:system-ui!important;line-height:1.3;margin:1.3em 0 .65em}
+#codex-reader-content h1{font-size:clamp(22px,3vw,32px)}
+#codex-reader-content :is(p,li,span,strong,em){color:inherit}
+#codex-reader-content :is(section,article,div,main,aside){background:transparent!important;background-image:none!important;box-shadow:none!important;border-color:rgba(230,235,255,.13)!important;color:inherit!important}
+#codex-reader-content :is(a){color:#e6c78c!important}
+#codex-reader-content img{max-width:100%;height:auto}
+#codex-reader-content button{max-width:100%}
+#codex-reader-content .codex-imported-content{color:#e4e8f5!important}
+.codex-reader-message{color:#dbe1f4}
+
+</style>
+<style id="codex-reader-accordion-style">
+.codex-reader .codex-reader-accordion{border-bottom:1px solid rgba(220,224,255,.12);margin:2px 0;background:transparent!important;color:#e9ecf6}
+.codex-reader .codex-reader-accordion>summary{display:list-item;cursor:pointer;padding:10px 8px;font:600 12px/1.5 system-ui;color:#d8c9ab;list-style-position:inside}
+.codex-reader .codex-reader-accordion[open]>summary{color:#ffdc9c}
+.codex-reader .codex-reader-article-list{padding:0 3px 8px 12px;display:flex;flex-direction:column;gap:2px}
+.codex-reader .codex-reader-article-list .codex-reader-menu-item{text-align:left;width:100%}
+
+/* Distinct glass cards for each closed-by-default category. */
+.codex-reader #codex-reader-menu .codex-reader-accordion{display:block;margin:0 0 9px;border:1px solid rgba(215,199,165,.24)!important;border-radius:9px;background:rgba(15,19,32,.57)!important;overflow:hidden;box-shadow:0 3px 14px rgba(0,0,0,.12)}
+.codex-reader #codex-reader-menu .codex-reader-accordion>summary{display:block;position:relative;list-style:none;padding:12px 26px 12px 12px;color:#e7d4b4;cursor:pointer;font-size:12px;line-height:1.4}
+.codex-reader #codex-reader-menu .codex-reader-accordion>summary::-webkit-details-marker{display:none}
+.codex-reader #codex-reader-menu .codex-reader-accordion>summary::after{content:'⌄';position:absolute;right:11px;top:10px;font-size:17px;opacity:.8;transition:transform .18s}
+.codex-reader #codex-reader-menu .codex-reader-accordion[open]>summary::after{transform:rotate(180deg)}
+.codex-reader #codex-reader-menu .codex-reader-accordion[open]{background:rgba(24,27,39,.77)!important;border-color:rgba(240,196,117,.42)!important}
+.codex-reader #codex-reader-menu .codex-reader-article-list{padding:3px 7px 9px;border-top:1px solid rgba(220,224,255,.10)}
+</style>
+<style id="codex-glass-blocks-v3">
+/* Strong isolation from legacy page styling, without losing content. */
+.codex-reader .codex-reader-shell{background:transparent!important;border:none!important;box-shadow:none!important}
+.codex-reader .codex-reader-layout{background:transparent!important}
+.codex-reader #codex-reader-content,.codex-reader #codex-reader-menu{background:rgba(8,13,27,.53)!important;background-image:none!important;color:#e9ecf6!important;border:1px solid rgba(205,216,255,.18)!important}
+.codex-reader #codex-reader-content *{text-shadow:none!important}
+.codex-reader #codex-reader-content :is(section,div,article,main,ul,li,details){background:transparent!important;background-image:none!important;box-shadow:none!important;color:inherit!important}
+.codex-reader #codex-reader-content :is(h1,h2,h3,h4,p,span,li){color:#e9ecf6!important}
+.codex-reader #codex-reader-content :is(h1,h2,h3,h4){color:#fff!important}
+.codex-reader #codex-reader-content :is(.tab-content:not(.active)){display:block!important}
+.codex-reader #codex-reader-content .codex-imported-content{width:100%;max-width:100%;background:transparent!important}
+.codex-reader .codex-reader-group{font:700 11px/1.5 system-ui;color:#d9b777;margin:12px 4px 3px}
+.codex-reader .codex-reader-menu-item.active{background:rgba(213,173,100,.14);color:#ffda95}
+.codex-reader #codex-reader-close{border:none!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;outline:none!important;font:500 11px system-ui!important}
+
+</style>
+<style id="codex-reader-layout-v4">
+/* Reader navigation: readable stacked cards, never compressed horizontally. */
+.codex-reader #codex-reader-menu{display:flex!important;flex-direction:column!important;align-items:stretch!important;justify-content:flex-start!important;flex-wrap:nowrap!important;gap:8px!important;overflow-y:auto!important;overflow-x:hidden!important;min-height:0!important;max-height:calc(76dvh - 60px)!important;padding:10px!important;scrollbar-width:thin}
+.codex-reader #codex-reader-menu .codex-reader-accordion{flex:0 0 auto!important;min-height:0!important;margin:0!important;width:100%!important;overflow:visible!important;box-sizing:border-box}
+.codex-reader #codex-reader-menu .codex-reader-accordion>summary{white-space:normal!important;overflow-wrap:anywhere!important;min-height:19px!important;padding:11px 29px 11px 12px!important;line-height:1.45!important;font-size:12px!important}
+.codex-reader #codex-reader-menu .codex-reader-article-list{display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:3px!important;max-height:none!important;overflow:visible!important}
+.codex-reader #codex-reader-menu .codex-reader-menu-item{display:block!important;flex:none!important;width:100%!important;white-space:normal!important;overflow-wrap:anywhere!important;text-align:left!important;line-height:1.45!important;padding:9px 10px!important}
+
+</style>
+<style id="codex-reader-responsive-v5">
+/* Use available screen width without turning the content into a modal site. */
+@media(min-width:701px){
+ .codex-reader .codex-reader-shell{width:min(1320px,92vw)!important;max-height:84dvh!important}
+ .codex-reader .codex-reader-layout{grid-template-columns:clamp(230px,22vw,315px) minmax(0,1fr)!important;max-height:calc(84dvh - 64px)!important;gap:20px!important}
+ .codex-reader #codex-reader-menu,.codex-reader #codex-reader-content{max-height:calc(84dvh - 64px)!important}
+ .codex-reader #codex-reader-content{font-size:clamp(14px,1vw,16px)!important;padding:clamp(22px,3vw,42px)!important}
+ .codex-reader #codex-reader-menu .codex-reader-accordion>summary{font-size:13px!important}
+ .codex-reader #codex-reader-menu .codex-reader-menu-item{font-size:12px!important}
+}
+
+@media(min-width:701px){.codex-reader-menu-toggle{display:none!important}}
+/* Dedicated lower-left title space, independent of the explorer. */
+.solar-title,.stage .solar-title{position:fixed!important;left:clamp(16px,2.8vw,52px)!important;bottom:clamp(35px,7vh,80px)!important;top:auto!important;z-index:5!important;pointer-events:none!important;max-width:55vw!important}
+
+</style>
+<style id="solar-responsive-labels">
+/* Une seule information dans l'espace : le nom de la destination. */
+#labels .pl .lbl i{display:none!important}
+#labels .pl .lbl{gap:0;line-height:1.2}
+#labels .pl.above .lbl{left:50%;top:auto;bottom:calc(var(--s) + 8px);transform:translateX(-50%);text-align:center;align-items:center}
+@media(max-width:700px){
+  #labels .pl .lbl b{font-size:clamp(12px,3.3vw,15px);letter-spacing:0}
+  /* Le titre reste dans son coin, sans empiéter sur la navigation. */
+  .stage .solar-title, .solar-title{max-width:60vw}
+}
+</style>
+<style id="codex-reader-stable-desktop-v1">
+/* Stable anchor: accordion expansion and article length never move the explorer. */
+@media (min-width:701px){
+ .codex-reader{align-items:flex-start!important;justify-content:center!important;overflow-y:auto!important;overscroll-behavior:contain!important;padding-top:clamp(35px,7vh,82px)!important;padding-bottom:110px!important}
+ .codex-reader .codex-reader-shell{margin-top:0!important;width:min(1380px,calc(100% - 36px))!important;max-height:none!important;height:auto!important;min-height:0!important;overflow:visible!important;gap:14px!important}
+ .codex-reader .codex-reader-layout{display:grid!important;grid-template-columns:clamp(225px,23vw,310px) minmax(0,1fr)!important;align-items:start!important;gap:clamp(16px,2vw,28px)!important;max-height:none!important;min-height:0!important;overflow:visible!important}
+ .codex-reader #codex-reader-menu{box-sizing:border-box!important;width:100%!important;height:auto!important;min-height:350px!important;max-height:min(70dvh,720px)!important;overflow-y:auto!important;overflow-x:hidden!important;align-self:start!important}
+ .codex-reader #codex-reader-content{box-sizing:border-box!important;width:100%!important;min-height:clamp(350px,54dvh,560px)!important;max-height:min(70dvh,720px)!important;overflow-y:auto!important;align-self:start!important;padding:clamp(24px,3vw,42px)!important}
+ .codex-reader .codex-reader-top{width:100%!important;box-sizing:border-box!important}
+}
+</style>
+<style id="codex-reader-fixed-panels-v2">
+/* Desktop: fixed reader geometry; only the menu and article scroll. */
+@media(min-width:701px){
+ .codex-reader{overflow:hidden!important}
+ .codex-reader .codex-reader-shell{height:auto!important;max-height:calc(100dvh - 165px)!important;overflow:hidden!important}
+ .codex-reader .codex-reader-layout{height:clamp(340px,68dvh,740px)!important;max-height:calc(100dvh - 200px)!important;min-height:0!important;overflow:hidden!important;align-items:stretch!important}
+ .codex-reader #codex-reader-menu{height:100%!important;min-height:0!important;max-height:none!important;overflow-y:auto!important;overscroll-behavior:contain!important;scrollbar-gutter:stable!important}
+ .codex-reader #codex-reader-content{height:100%!important;min-height:0!important;max-height:none!important;overflow-y:auto!important;overscroll-behavior:contain!important;scrollbar-gutter:stable!important}
+}
+.codex-reader #codex-reader-content .codex-reader-message{opacity:.64;font-size:12px;line-height:1.6}
+</style>
+<style id="codex-submenu-scroll-v1">
+/* Keep the primary accordion list visible: only an expanded group's article list scrolls. */
+@media(min-width:701px){
+ .codex-reader #codex-reader-menu{overflow-y:auto!important;scrollbar-gutter:stable!important}
+ .codex-reader #codex-reader-menu .codex-reader-accordion[open] .codex-reader-article-list{
+   max-height:clamp(110px,24dvh,245px)!important;
+   overflow-y:auto!important;overscroll-behavior:contain!important;
+   scrollbar-width:thin!important;scrollbar-color:rgba(223,207,167,.55) transparent!important;
+ }
+ .codex-reader #codex-reader-menu .codex-reader-accordion[open]{min-height:0!important}
+ /* Intermediate tablet-like desktop widths: prevent the title from meeting the reader. */
+ .stage .solar-title,.solar-title{bottom:clamp(12px,2.3vh,26px)!important;left:clamp(14px,2vw,38px)!important}
+ .codex-reader .codex-reader-layout{max-height:calc(100dvh - 245px)!important;height:clamp(300px,62dvh,680px)!important}
+}
+@media(min-width:701px) and (max-height:750px){
+ .codex-reader{padding-top:18px!important}
+ .codex-reader .codex-reader-layout{height:calc(100dvh - 240px)!important;min-height:240px!important}
+ .stage .solar-title,.solar-title{bottom:12px!important}
+}
+
+</style>
+<style id="codex-accordion-fixed-menu-v2">
+/* Desktop: never scroll the outer navigation; scrolling belongs to the open sub-list. */
+@media(min-width:701px){
+ .codex-reader #codex-reader-menu{
+   overflow:hidden!important;
+   scrollbar-gutter:auto!important;
+   display:flex!important;
+   flex-direction:column!important;
+   gap:6px!important;
+ }
+ .codex-reader #codex-reader-menu .codex-reader-accordion{
+   flex:0 0 auto!important;
+   margin:0!important;
+ }
+ .codex-reader #codex-reader-menu .codex-reader-accordion[open]{
+   flex:0 1 auto!important;
+   min-height:0!important;
+   display:flex!important;
+   flex-direction:column!important;
+   overflow:hidden!important;
+ }
+ .codex-reader #codex-reader-menu .codex-reader-accordion>summary{
+   flex:0 0 auto!important;
+ }
+ .codex-reader #codex-reader-menu .codex-reader-accordion[open] .codex-reader-article-list{
+   flex:0 1 auto!important;
+   min-height:0!important;
+   max-height:min(24dvh,230px)!important;
+   overflow-y:auto!important;
+   overscroll-behavior:contain!important;
+   scrollbar-width:thin!important;
+ }
+}
+</style>
+<style id="codex-balanced-accordion-v3">
+/* Allocate remaining panel height to the active group; closed categories never scroll. */
+@media(min-width:701px){
+ .codex-reader #codex-reader-menu{
+   overflow:hidden!important;
+   height:100%!important;
+   min-height:0!important;
+   display:flex!important;
+   flex-direction:column!important;
+   gap:5px!important;
+   padding:8px!important;
+   box-sizing:border-box!important;
+ }
+ .codex-reader #codex-reader-menu .codex-reader-accordion{
+   flex:0 0 auto!important;
+   min-height:0!important;
+   margin:0!important;
+ }
+ .codex-reader #codex-reader-menu .codex-reader-accordion>summary{
+   padding:9px 29px 9px 11px!important;
+   line-height:1.25!important;
+   min-height:0!important;
+ }
+ .codex-reader #codex-reader-menu .codex-reader-accordion[open]{
+   flex:1 1 auto!important;
+   min-height:92px!important;
+   max-height:min(38dvh,350px)!important;
+   display:flex!important;
+   flex-direction:column!important;
+   overflow:hidden!important;
+   border-color:rgba(229,193,131,.55)!important;
+ }
+ .codex-reader #codex-reader-menu .codex-reader-accordion[open]>summary{
+   flex:0 0 auto!important;
+   font-size:13px!important;
+   letter-spacing:.015em!important;
+   background:linear-gradient(95deg,rgba(194,154,88,.13),transparent 80%)!important;
+ }
+ .codex-reader #codex-reader-menu .codex-reader-accordion[open] .codex-reader-article-list{
+   flex:1 1 auto!important;
+   min-height:0!important;
+   max-height:none!important;
+   overflow-y:auto!important;
+   overflow-x:hidden!important;
+   overscroll-behavior:contain!important;
+   scrollbar-width:thin!important;
+   scrollbar-color:rgba(223,207,167,.6) transparent!important;
+ }
+}
+</style>
+<style id="codex-two-tier-navigation-v1">
+@media(min-width:701px){
+ .codex-reader #codex-reader-categories{
+   display:flex!important;align-items:center;align-content:start;flex-wrap:wrap;gap:7px;
+   width:100%;box-sizing:border-box;overflow:visible;
+   scrollbar-width:thin;scrollbar-color:rgba(229,193,131,.4) transparent;
+   padding:4px 1px 9px;margin:0;
+ }
+ .codex-reader #codex-reader-categories[hidden]{display:none!important}
+ .codex-reader #codex-reader-categories button{
+   flex:0 0 auto;border:1px solid rgba(204,211,234,.24);
+   border-radius:7px;padding:8px 12px;background:rgba(11,15,30,.78);
+   color:#d8dff1;font:600 11px/1.3 system-ui;cursor:pointer;
+ }
+ .codex-reader #codex-reader-categories button.active{
+   border-color:rgba(235,192,118,.7);background:rgba(128,94,51,.3);color:#ffdb9d;
+ }
+ .codex-reader #codex-reader-menu.codex-category-mode{
+   overflow:hidden!important;display:block!important;padding:9px!important;
+ }
+ .codex-reader #codex-reader-menu.codex-category-mode .codex-reader-accordion[hidden]{display:none!important}
+ .codex-reader #codex-reader-menu.codex-category-mode .codex-reader-accordion[open]{
+   display:flex!important;flex-direction:column!important;
+   height:100%!important;max-height:none!important;min-height:0!important;
+   overflow:hidden!important;flex:1 1 auto!important;
+ }
+ .codex-reader #codex-reader-menu.codex-category-mode .codex-reader-accordion>summary{display:none!important}
+ .codex-reader #codex-reader-menu.codex-category-mode .codex-reader-article-list{
+   flex:1 1 auto!important;max-height:none!important;min-height:0!important;
+   overflow-y:auto!important;overflow-x:hidden!important;
+   padding:4px!important;border:0!important;
+ }
+}
+</style>
+<style id="codex-mobile-clean">
+@media(max-width:700px){
+html,body{overflow-x:hidden!important}
+body{padding-top:43px!important}
+.codex-experience-nav{height:43px!important;box-sizing:border-box!important;flex-wrap:nowrap!important;justify-content:space-between!important;gap:8px!important;padding:7px 12px!important}
+.codex-experience-nav .codex-home{font-size:10px!important;letter-spacing:.05em!important}
+.codex-experience-nav>a:not(.codex-home){font-size:10px!important}
+.codex-theme-switch{position:fixed!important;top:auto!important;bottom:48px!important;left:12px!important;right:auto!important;z-index:10020!important;margin:0!important}
+.codex-theme-switch>summary{padding:4px 7px!important;font-size:10px!important;opacity:.78}
+.codex-theme-list{top:auto!important;bottom:100%!important;left:0!important;right:auto!important;max-height:55dvh!important;overflow:auto!important}
+.wrap>h1{position:fixed!important;top:auto!important;bottom:12px!important;left:14px!important;z-index:4!important;margin:0!important;font:400 23px/1.1 system-ui!important;letter-spacing:.02em!important;text-shadow:0 2px 10px #000!important}
+.wrap>h1 span{display:block!important;font:500 9px/1.3 system-ui!important;letter-spacing:.14em!important;opacity:.6!important;margin-top:5px!important}
+body.codex-reader-open .wrap>h1{display:none!important}
+#solar-return-sun:not([hidden]){position:fixed!important;bottom:13px!important;right:12px!important;top:auto!important;left:auto!important;z-index:10021!important}
+.codex-reader:not([hidden]){position:fixed!important;inset:43px 0 0!important;z-index:9000!important;display:block!important;overflow-y:auto!important;overscroll-behavior:contain!important;padding:0 12px 75px!important;box-sizing:border-box!important}
+.codex-reader .codex-reader-shell{position:static!important;display:block!important;width:100%!important;height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;backdrop-filter:none!important}
+.codex-reader .codex-reader-top{position:relative!important;display:flex!important;min-height:38px!important;padding:7px 0 5px!important;background:transparent!important;border:0!important;box-shadow:none!important;backdrop-filter:none!important}
+.codex-reader .codex-reader-top>div,.codex-reader #codex-reader-title{background:transparent!important;border:0!important;box-shadow:none!important;backdrop-filter:none!important}
+.codex-reader .codex-reader-top h2{display:block!important;font:400 21px/1.25 system-ui!important;margin:0!important;padding:0!important}
+.codex-reader .codex-reader-eyebrow,.codex-reader #codex-reader-close,.codex-reader #codex-reader-categories,.codex-reader #codex-reader-subcategories,.codex-reader .codex-reader-menu-toggle,.codex-reader .codex-mobile-tier-picker{display:none!important}
+.codex-reader .codex-reader-layout{display:block!important;height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;margin:0!important;padding:0!important}
+.codex-reader .codex-m-nav{display:block!important;margin:3px 0 0!important}
+.codex-reader .codex-m-nav[hidden]{display:none!important}
+.codex-reader .codex-m-track{display:flex;align-items:center;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:50%;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;touch-action:pan-x;scrollbar-width:none;border-bottom:1px solid rgba(229,183,108,.3);padding:6px 50% 12px}
+.codex-reader .codex-m-track::-webkit-scrollbar{display:none}
+.codex-reader .codex-m-track button{flex:0 0 auto;scroll-snap-align:center;min-width:0;min-height:46px;border:0!important;background:none!important;box-shadow:none!important;color:#a8a3ab!important;opacity:.7;font:600 14px/1.3 system-ui!important;text-align:center;white-space:normal;padding:8px!important}
+.codex-reader .codex-m-track button.active{color:#ffe0a7!important;opacity:1;font-size:14px!important}
+.codex-reader .codex-m-track button.active:after{content:"";display:block;width:42px;height:2px;background:#e5b971;margin:7px auto -9px}
+.codex-reader .codex-m-hint{color:#b7a68d;text-align:center;font:400 10px system-ui;padding:3px 0 8px}
+.codex-reader .codex-m-sub{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:4px 0 9px}
+.codex-reader .codex-m-sub[hidden]{display:none!important}
+.codex-reader .codex-m-sub button{background:transparent!important;border:0!important;border-bottom:1px solid #7b6850!important;color:#b8b2b6!important;padding:8px 5px!important;font:600 12px system-ui!important}
+.codex-reader .codex-m-sub button.active{color:#ffdc9e!important;border-bottom:2px solid #e9b970!important}
+.codex-reader #codex-reader-menu.codex-category-mode{display:block!important;box-sizing:border-box!important;height:auto!important;max-height:180px!important;min-height:0!important;overflow-y:auto!important;overscroll-behavior:contain!important;margin:0 0 8px!important;padding:0 4px!important;border:0!important;border-bottom:1px solid rgba(235,190,120,.24)!important;border-radius:0!important;background:rgba(10,12,22,.22)!important;box-shadow:none!important;backdrop-filter:none!important}
+.codex-reader #codex-reader-menu.codex-category-mode .codex-reader-accordion[hidden]{display:none!important}
+.codex-reader #codex-reader-menu.codex-category-mode .codex-reader-accordion{display:block!important;height:auto!important;max-height:none!important;min-height:0!important;overflow:visible!important;border:0!important;background:none!important;margin:0!important;padding:0!important}
+.codex-reader #codex-reader-menu.codex-category-mode .codex-reader-accordion>summary{display:none!important}
+.codex-reader #codex-reader-menu.codex-category-mode .codex-reader-article-list{display:block!important;height:auto!important;max-height:none!important;overflow:visible!important;padding:0!important}
+.codex-reader #codex-reader-menu.codex-category-mode .codex-reader-menu-item{display:block!important;width:100%!important;min-height:37px!important;text-align:left!important;padding:9px 8px!important;margin:0!important;border:0!important;border-bottom:1px solid rgba(220,220,230,.13)!important;border-radius:0!important;background:none!important;color:#e6e4eb!important;font:500 12px system-ui!important}
+.codex-reader #codex-reader-menu.codex-category-mode .codex-reader-menu-item.active{color:#ffdda3!important;background:rgba(215,172,105,.12)!important}
+.codex-reader #codex-reader-content{display:block!important;box-sizing:border-box!important;width:100%!important;height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;padding:20px 17px!important;margin:10px 0 20px!important;border:1px solid rgba(190,200,225,.2)!important;border-radius:12px!important;background:rgba(8,10,20,.84)!important}
+.codex-reader.codex-m-reading .codex-m-nav,.codex-reader.codex-m-reading #codex-reader-menu{display:none!important}
+.codex-reader .codex-m-back{display:none!important}
+.codex-reader.codex-m-reading .codex-m-back{display:block!important;position:sticky!important;top:0!important;z-index:60!important;width:100%!important;padding:11px 0!important;margin:0!important;border:0!important;background:rgba(8,10,20,.96)!important;color:#ffda9e!important;text-align:left!important;font:600 13px system-ui!important}
+.codex-reader .codex-m-intro-entry{display:none!important}
+}
+@media(min-width:701px){.codex-m-nav,.codex-m-back{display:none!important}}
+
+/* Mobile reader stays navigable while an article is open. */
+@media(max-width:700px){
+.codex-experience-nav .codex-theme-switch{display:block!important;visibility:visible!important;opacity:1!important;position:fixed!important;left:12px!important;right:auto!important;top:auto!important;bottom:49px!important;z-index:10030!important;transform:none!important}
+.codex-experience-nav .codex-theme-switch>summary{display:flex!important;visibility:visible!important;opacity:.9!important;padding:5px 9px!important;font-size:11px!important;background:rgba(9,13,29,.75)!important;border:1px solid rgba(215,175,109,.5)!important;border-radius:16px!important}
+.codex-experience-nav .codex-theme-list{position:absolute!important;display:none;bottom:calc(100% + 6px)!important;top:auto!important;left:0!important;right:auto!important;min-width:140px!important;background:rgba(9,13,29,.96)!important}
+.codex-experience-nav .codex-theme-switch[open] .codex-theme-list{display:block!important}
+.codex-reader .codex-m-back{display:none!important}
+.codex-reader.codex-m-reading .codex-m-nav{display:block!important}
+.codex-reader.codex-m-reading #codex-reader-menu.codex-category-mode{display:block!important}
+.codex-reader.codex-m-reading .codex-m-back{display:none!important}
+.codex-reader .codex-m-track button{overflow:visible!important;text-overflow:clip!important;white-space:nowrap!important;width:max-content!important;max-width:none!important;font-size:13px!important;padding:8px 3px!important}
+}
+/* CODEX mobile navigation polish: compact readable article list and accessible theme switch. */
+@media(max-width:700px){
+.codex-reader #codex-reader-menu.codex-category-mode{
+ max-height:126px!important;
+ background:rgba(9,13,26,.88)!important;
+ border:1px solid rgba(219,181,119,.27)!important;
+ border-radius:9px!important;
+ padding:2px 9px!important;
+ backdrop-filter:blur(12px)!important;
+ -webkit-backdrop-filter:blur(12px)!important;
+ scrollbar-width:thin;
+ scrollbar-color:rgba(228,185,112,.7) transparent;
+}
+.codex-reader #codex-reader-menu.codex-category-mode::-webkit-scrollbar{width:3px}
+.codex-reader #codex-reader-menu.codex-category-mode::-webkit-scrollbar-thumb{background:rgba(228,185,112,.75);border-radius:5px}
+.codex-experience-nav .codex-theme-switch{
+ left:170px!important;bottom:11px!important;
+}
+.codex-experience-nav .codex-theme-switch>summary{
+ font-size:10px!important;padding:4px 8px!important;
+ background:rgba(8,12,26,.58)!important;
+ border-color:rgba(215,175,109,.32)!important;
+}
+.codex-experience-nav>a:not(.codex-home){font-size:11px!important}
+}
+/* Theme picker lives beside the universe title, not in the primary navigation. */
+.wrap>.codex-theme-switch{position:fixed!important;top:auto!important;left:clamp(18px,4vw,68px)!important;bottom:clamp(75px,10vh,110px)!important;right:auto!important;z-index:10040!important;display:block!important;visibility:visible!important}
+.wrap>.codex-theme-switch>summary{font-size:11px!important;padding:5px 9px!important;border-radius:16px!important;background:rgba(9,13,29,.76)!important;border:1px solid rgba(215,175,109,.42)!important}
+.wrap>.codex-theme-switch .codex-theme-list{position:absolute!important;top:auto!important;bottom:calc(100% + 8px)!important;left:0!important;right:auto!important;min-width:160px!important;max-height:65vh!important;overflow-y:auto!important;background:rgba(9,13,29,.96)!important}
+@media(max-width:700px){
+.wrap>.codex-theme-switch{left:175px!important;bottom:13px!important}
+.wrap>.codex-theme-switch>summary{font-size:10px!important;padding:4px 8px!important}
+}
+/* Mobile: lighter reading surfaces; theme selection only in the universe overview. */
+@media(max-width:700px){
+  .codex-reader #codex-reader-menu.codex-category-mode{
+    background:rgba(17,21,34,.70)!important;
+    backdrop-filter:blur(5px)!important;
+    -webkit-backdrop-filter:blur(5px)!important;
+  }
+  .codex-reader #codex-reader-content{
+    background:rgba(12,16,29,.73)!important;
+    backdrop-filter:blur(5px)!important;
+    -webkit-backdrop-filter:blur(5px)!important;
+  }
+}
+body:has(#codex-reader:not([hidden])) .wrap>.codex-theme-switch{
+  display:none!important;
+}
+</style><style>html,body{background:transparent!important;margin:0!important;padding:0!important;overflow:hidden!important}#codex-reader{display:block!important;position:fixed!important;inset:0!important;z-index:1!important}.codex-reader-eyebrow{display:block!important;font-size:10px!important;letter-spacing:.12em!important;background:none!important}@media(max-width:700px){body{padding:0!important}.codex-reader .codex-reader-eyebrow{display:block!important}}</style></head><body><section id="codex-reader" class="codex-reader" hidden aria-label="Lecture d'une rubrique CODEX">
+  <div class="codex-reader-shell">
+    <div class="codex-reader-top">
+      <div><span class="codex-reader-eyebrow">CODEX MENTAL · EXPLORATION</span><h2 id="codex-reader-title">Rubrique</h2></div>
+      <button id="codex-reader-close" type="button" aria-label="Fermer la rubrique et revoir la planète">✕ &nbsp; Retour à la planète</button>
+    </div>
+    <div class="codex-reader-layout"><nav id="codex-reader-menu" aria-label="Rubriques et articles"></nav><article id="codex-reader-content" aria-live="polite"></article></div>
+  </div>
+</section>
+
+<script>(function(){'use strict';var SECTIONS={codex:{name:'Codex'},blog:{name:'Blog'},atelier:{name:'Atelier'},lab:{name:'Lab'},dashb:{name:'DashB'},profil:{name:'Portrait'}};var reader=document.getElementById('codex-reader');
+  var readerMenu=document.getElementById('codex-reader-menu');
+  var readerContent=document.getElementById('codex-reader-content');
+  var readerTitle=document.getElementById('codex-reader-title');
+  var readerClose=document.getElementById('codex-reader-close');
+  var readerPending=null,readerOpen=false,readerRequest=0;
+  var readerRoutes={
+    codex:'../../codex.html',blog:'../../blog/blog.html',
+    atelier:'../../atelier/atelier.html',lab:'../../lab/index.html',
+    dashb:'../../dashb/index.html',profil:'../../profil/index.html'
+  };
+  function closeCodexReader(){
+    readerPending=null;readerOpen=false;reader.hidden=true;
+    document.body.classList.remove('codex-reader-open');
+    readerRequest++;readerClose.blur();
+  }
+  function readerSetContent(node){
+    readerContent.replaceChildren(node);
+    readerContent.scrollTop=0;
+  }
+  function readerMessage(message,link){
+    var block=document.createElement('div');block.className='codex-reader-message';
+    var p=document.createElement('p');p.textContent=message;block.appendChild(p);
+    if(link){var a=document.createElement('a');a.href=link;a.textContent='Ouvrir cette expérience ↗';a.target='_blank';a.rel='noopener';block.appendChild(a);}
+    readerSetContent(block);
+  }
+  async function openCodexReader(id){
+    if(!readerRoutes[id]||!SECTIONS[id])return;
+    var eyebrow=document.querySelector('.codex-reader-eyebrow');
+    if(eyebrow)eyebrow.textContent='CODEX MENTAL · '+({codex:'CONNAISSANCES',atelier:'CRÉATION',lab:'EXPÉRIMENTATION',dashb:'OBSERVATOIRE',profil:'IDENTITÉ & PARCOURS'}[id]||'EXPLORATION');
+    readerPending=null;readerTitle.textContent=SECTIONS[id].name;
+    reader.hidden=false;readerOpen=true;
+    document.body.classList.add('codex-reader-open');
+    readerMenu.replaceChildren();
+    readerMenu.classList.remove('codex-category-mode');
+    var oldCategoryBar=document.getElementById('codex-reader-categories');
+    if(oldCategoryBar){oldCategoryBar.hidden=true;oldCategoryBar.replaceChildren();}
+    var oldSubcategoryBar=document.getElementById('codex-reader-subcategories');
+    if(oldSubcategoryBar){oldSubcategoryBar.hidden=true;oldSubcategoryBar.replaceChildren();}
+    var request=++readerRequest,route=readerRoutes[id];
+    readerMessage('Chargement du contenu…');
+    try{
+      var response=await fetch(route);
+      if(!response.ok)throw new Error('HTTP '+response.status);
+      var doc=new DOMParser().parseFromString(await response.text(),'text/html');
+      if(request!==readerRequest||!readerOpen)return;
+      // Applications interactives require their own runtime: never embed a second website.
+      if(id==='dashb'||id==='lab'){
+        readerMessage(id==='dashb'
+          ?'DashB est une expérience astronomique interactive. Elle nécessite son interface complète pour fonctionner.'
+          :'Le Lab rassemble des applications et expériences numériques. Ouvre-les dans leur espace dédié.',route);
+        return;
+      }
+      // Import the content, never the legacy page layout or its theme.
+      var source=doc.querySelector('main')||doc.querySelector('article')||doc.body;
+      var content=document.createElement('div');
+      content.className='codex-imported-content';
+      function cleanFragment(fragment,base){
+        fragment.querySelectorAll('script,style,link,iframe,header,footer,nav,button,[onclick],.site-header,.site-footer,.codex-theme-switch').forEach(function(el){el.remove();});
+        fragment.querySelectorAll('[style]').forEach(function(el){if(!el.matches('[data-atelier-visual]'))el.removeAttribute('style');});
+        fragment.querySelectorAll('[data-atelier-visual]').forEach(function(el){el.removeAttribute('data-atelier-visual');});
+        fragment.querySelectorAll('[id]').forEach(function(el){el.removeAttribute('id');});
+        fragment.querySelectorAll('[href],[src]').forEach(function(el){
+          ['href','src'].forEach(function(attr){
+            var val=el.getAttribute(attr);
+            if(val&&!val.startsWith('#')&&!/^(?:data:|javascript:)/i.test(val))el.setAttribute(attr,new URL(val,base).href);
+          });
+        });
+        fragment.querySelectorAll('[srcset]').forEach(function(el){
+          var raw=el.getAttribute('srcset');
+          if(raw)el.setAttribute('srcset',raw.split(',').map(function(part){
+            var bits=part.trim().split(/\s+/);if(bits[0]&&!/^(?:data:|https?:|\/\/)/i.test(bits[0]))bits[0]=new URL(bits[0],base).href;return bits.join(' ');
+          }).join(', '));
+        });
+        fragment.querySelectorAll('[poster]').forEach(function(el){
+          var value=el.getAttribute('poster');if(value&&!/^(?:data:|https?:)/i.test(value))el.setAttribute('poster',new URL(value,base).href);
+        });
+        return fragment;
+      }
+      if(id==='atelier'){
+        // Atelier V2: shared desktop categories and touch-friendly mobile carousel.
+        // Keep legacy article files intact; only replace the presentation layer.
+        var groups=Array.from(doc.querySelectorAll('#viewer-menu details'));
+        var base=new URL('../../atelier/',location.href);
+        var categoryBar=document.getElementById('codex-reader-categories');
+        if(!categoryBar){
+          categoryBar=document.createElement('div');categoryBar.id='codex-reader-categories';
+          categoryBar.className='codex-reader-categories';
+          readerMenu.parentElement.before(categoryBar);
+        }
+        categoryBar.hidden=false;categoryBar.replaceChildren();
+        var subBar=document.getElementById('codex-reader-subcategories');
+        if(subBar){subBar.hidden=true;subBar.replaceChildren();}
+        readerMenu.classList.add('codex-category-mode');
+        var descriptions={
+          'Introduction':"Bienvenue dans l'Atelier : un espace où les idées prennent forme, entre imagination, recherche, création et expérimentation.",
+          'Projets en cours':"Les projets qui se construisent au fil des essais, des découvertes et des améliorations.",
+          'Exploration futuriste':"Imaginer d'autres possibilités, explorer des concepts et confronter les hypothèses à la curiosité.",
+          "Évolutions de l'IA":"Réflexions et expérimentations autour des outils, des usages et des évolutions de l'intelligence artificielle.",
+          'Applications':"Des concepts d'applications et des outils imaginés dans l'Atelier. Les versions à tester trouveront leur place dans le Lab."
+        };
+        function atelierLabel(text){return text.replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}]/gu,'').replace(/\s+/g,' ').trim();}
+        function atelierIntro(title){
+          var section=document.createElement('section');section.className='codex-reader-category-intro';
+          var h=document.createElement('h2');h.textContent=title;section.appendChild(h);
+          var p=document.createElement('p');p.textContent=descriptions[title]||'Découvrez les créations et réflexions de cette rubrique.';section.appendChild(p);
+          readerSetContent(section);
+        }
+        var entries=[];
+        groups.forEach(function(group){
+          var title=atelierLabel(group.querySelector('summary')?.textContent||'Rubrique');
+          var accordion=document.createElement('details');accordion.className='codex-reader-accordion';
+          var summary=document.createElement('summary');summary.textContent=title;accordion.appendChild(summary);
+          var list=document.createElement('div');list.className='codex-reader-article-list';accordion.appendChild(list);
+          readerMenu.appendChild(accordion);
+          var tab=document.createElement('button');tab.type='button';tab.textContent=title;
+          tab.setAttribute('aria-pressed','false');categoryBar.appendChild(tab);
+          group.querySelectorAll('a[data-viewer]').forEach(function(link){
+            var button=document.createElement('button');button.type='button';button.className='codex-reader-menu-item';
+            button.textContent=atelierLabel(link.textContent);
+            var url=new URL(link.dataset.viewer+'.html',base).href;
+            button.addEventListener('click',async function(){
+              readerMenu.querySelectorAll('.codex-reader-menu-item').forEach(function(b){b.classList.toggle('active',b===button);});
+              readerMessage('Chargement de l’article…');
+              try{
+                var res=await fetch(url);if(!res.ok)throw Error('HTTP '+res.status);
+                var articleDoc=new DOMParser().parseFromString(await res.text(),'text/html');
+                if(request!==readerRequest||!readerOpen)return;
+                var fragment=document.createElement('div');fragment.className='codex-imported-content';
+                var target=articleDoc.querySelector('main,article')||articleDoc.body;
+                fragment.innerHTML=target.innerHTML;
+                // Retain illustration-specific inline dimensions, while discarding legacy page layout.
+                fragment.querySelectorAll('img,figure,figcaption,picture,svg').forEach(function(el){el.dataset.atelierVisual='';});
+                readerSetContent(cleanFragment(fragment,url));
+              }catch(err){if(request===readerRequest)readerMessage('Article indisponible pour le moment.',url);}
+            });
+            list.appendChild(button);
+          });
+          tab.addEventListener('click',function(){
+            categoryBar.querySelectorAll('button').forEach(function(b){
+              var active=b===tab;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));
+            });
+            entries.forEach(function(entry){entry.accordion.hidden=entry.accordion!==accordion;entry.accordion.open=entry.accordion===accordion;});
+            readerMenu.querySelectorAll('.codex-reader-menu-item').forEach(function(b){b.classList.remove('active');});
+            atelierIntro(title);
+          });
+          entries.push({accordion:accordion,tab:tab,title:title});
+        });
+        if(entries.length){
+          entries[0].tab.click();
+          var introButton=entries[0].accordion.querySelector('.codex-reader-menu-item');
+          if(introButton)introButton.click();
+        }else readerMessage('Aucun article trouvé dans cette rubrique.',route);
+        return;
+      }
+      if(id==='blog'){
+        // Legacy Blog fallback, kept separate from the V2 Atelier navigation.
+        var groups=Array.from(doc.querySelectorAll('#viewer-menu details'));
+        var base=new URL('../../blog/articles/',location.href);
+        groups.forEach(function(group){
+          var heading=document.createElement('div');heading.className='codex-reader-group';
+          heading.textContent=group.querySelector('summary')?.textContent.trim()||'Rubrique';
+          readerMenu.appendChild(heading);
+          group.querySelectorAll('a[data-viewer]').forEach(function(link){
+            var btn=document.createElement('button');btn.type='button';btn.className='codex-reader-menu-item';
+            btn.textContent=link.textContent.trim();
+            var fragmentUrl=new URL(link.dataset.viewer+'.html',base).href;
+            btn.addEventListener('click',async function(){
+              readerMenu.querySelectorAll('button').forEach(function(x){x.classList.remove('active');});
+              btn.classList.add('active');readerMessage('Chargement de l’article…');
+              try{
+                var res=await fetch(fragmentUrl);if(!res.ok)throw Error('HTTP '+res.status);
+                var articleDoc=new DOMParser().parseFromString(await res.text(),'text/html');
+                if(request!==readerRequest||!readerOpen)return;
+                var fragment=document.createElement('div');fragment.className='codex-imported-content';
+                fragment.innerHTML=(articleDoc.querySelector('main,article')||articleDoc.body).innerHTML;
+                readerSetContent(cleanFragment(fragment,fragmentUrl));
+              }catch(err){if(request===readerRequest)readerMessage('Article indisponible pour le moment.',fragmentUrl);}
+            });readerMenu.appendChild(btn);
+          });
+        });
+        readerMenu.querySelector('button')?.click();return;
+      }
+      if(id==='profil'){
+        // Restore the original Portrait visual language without importing its legacy page layout.
+        if(!document.getElementById('codex-portrait-visual-styles')){
+          try{
+            var cssResponse=await fetch(new URL('../../profil/profil.css',location.href));
+            if(cssResponse.ok){
+              var rawCSS=await cssResponse.text();
+              var sheet=new CSSStyleSheet();sheet.replaceSync(rawCSS);
+              function scopeRules(rules){
+                return Array.from(rules).map(function(rule){
+                  if(rule.type===CSSRule.STYLE_RULE){
+                    return rule.selectorText.split(',').map(function(sel){
+                      return '#codex-reader-content .codex-imported-content '+sel.trim();
+                    }).join(',')+'{'+rule.style.cssText+'}';
+                  }
+                  if(rule.type===CSSRule.MEDIA_RULE||rule.type===CSSRule.SUPPORTS_RULE)
+                    return '@'+(rule.type===CSSRule.MEDIA_RULE?'media ':'supports ')+rule.conditionText+'{'+scopeRules(rule.cssRules)+'}';
+                  if(rule.type===CSSRule.KEYFRAMES_RULE)return rule.cssText;
+                  return '';
+                }).join('\n');
+              }
+              var visualStyle=document.createElement('style');
+              visualStyle.id='codex-portrait-visual-styles';
+              visualStyle.textContent=scopeRules(sheet.cssRules)+
+                '\n#codex-reader-content .codex-imported-content :is(.imagination-visual,.imagination-tree,.idea-cloud,.music-capsule,.music-player){background-image:revert-layer!important;box-shadow:revert-layer!important;}'+
+                '\n#codex-reader-content .codex-imported-content :is(.imagination-tree,.idea-cloud){background:initial!important;background-color:#07101f!important;}';
+              document.head.appendChild(visualStyle);
+            }
+          }catch(error){console.warn('Styles Portrait indisponibles',error);}
+        }
+        // Portrait is a modular page: its sections and subsections live in separate HTML fragments.
+        var profileSections=[
+          ['bio','Mon parcours'],['passions','Passions'],['influences','Influences'],
+          ['references','Références'],['gaming','Gaming'],['voyages','Voyages'],
+          ['aspirations','Aspirations']
+        ];
+        var profileGroups=[];
+        var profileBase=new URL('../../profil/',location.href);
+        var profileSelection=0;
+        readerMessage('Choisissez une rubrique du Portrait.');
+        profileSections.forEach(function(entry){
+          var section=entry[0],title=entry[1];
+          var accordion=document.createElement('details');
+          accordion.className='codex-reader-accordion';
+          var summary=document.createElement('summary');summary.textContent=title;
+          accordion.appendChild(summary);
+          var list=document.createElement('div');list.className='codex-reader-article-list';
+          accordion.appendChild(list);readerMenu.appendChild(accordion);
+          profileGroups.push(accordion);
+          accordion.addEventListener('toggle',function(){
+            if(accordion.open)profileGroups.forEach(function(other){if(other!==accordion)other.open=false;});
+          });
+          function addPage(label,relative){
+            var btn=document.createElement('button');btn.type='button';
+            btn.className='codex-reader-menu-item';btn.textContent=label;
+            list.appendChild(btn);
+            btn.addEventListener('click',async function(){
+              var selection=++profileSelection;
+              readerMenu.querySelectorAll('button').forEach(function(x){x.classList.remove('active');});
+              btn.classList.add('active');
+              readerMessage('Chargement de la rubrique…');
+              var url=new URL(relative,profileBase).href;
+              try{
+                var response=await fetch(url);if(!response.ok)throw Error('HTTP '+response.status);
+                var html=await response.text();
+                if(request!==readerRequest||!readerOpen||selection!==profileSelection)return;
+                var page=new DOMParser().parseFromString(html,'text/html');
+                var fragment=document.createElement('div');fragment.className='codex-imported-content';
+                fragment.innerHTML=(page.querySelector('main,article')||page.body).innerHTML;
+                // Fragment-specific CSS is part of the original design (music capsules, etc.).
+                // Keep trusted CSS scoped to this imported content, not the whole site.
+                fragment.querySelectorAll('style').forEach(function(style){
+                  var scoped=document.createElement('style');
+                  scoped.textContent=style.textContent.replace(/(^|})\\s*([^@{}][^{}]*)\\{/g,function(all,sep,selectors){
+                    return sep+' '+selectors.split(',').map(function(sel){return '#codex-reader-content .codex-imported-content '+sel.trim();}).join(',')+'{';
+                  });
+                  style.replaceWith(scoped);
+                });
+                // Preserve Portrait's semantic headers, media players and illustrations.
+                fragment.querySelectorAll('script,link,nav,[onclick]').forEach(function(el){el.remove();});
+                fragment.querySelectorAll('[href],[src]').forEach(function(el){
+                  ['href','src'].forEach(function(attr){
+                    var value=el.getAttribute(attr);
+                    if(value&&!value.startsWith('#')&&!/^(?:data:|javascript:)/i.test(value))el.setAttribute(attr,new URL(value,url).href);
+                  });
+                });
+                readerSetContent(fragment);
+              }catch(error){
+                if(request===readerRequest&&readerOpen&&selection===profileSelection)readerMessage('Cette partie du Portrait est indisponible. Revenez à la liste pour continuer.');
+              }
+            });
+            return btn;
+          }
+          var introButton=addPage('Introduction','sections/'+section+'/index.html');
+          (async function(){
+            try{
+              var menuUrl=new URL('sections/'+section+'/sousmenu.html',profileBase);
+              var response=await fetch(menuUrl);if(!response.ok)throw Error('HTTP '+response.status);
+              var submenu=new DOMParser().parseFromString(await response.text(),'text/html');
+              if(request!==readerRequest||!readerOpen)return;
+              submenu.querySelectorAll('button[data-subsection]').forEach(function(button){
+                var subsection=button.dataset.subsection;
+                if(!subsection||subsection==='index')return;
+                addPage(button.textContent.trim(),'sections/'+section+'/'+subsection+'.html');
+              });
+            }catch(error){/* The introduction remains available even without a submenu. */}
+          })();
+        });
+        return;
+      }
+      if(id==='codex'){
+        // Codex is the single library: presentation plus all legacy Blog articles.
+        var panels=Array.from(doc.querySelectorAll('.tab-content'));
+        var tabs=Array.from(doc.querySelectorAll('[data-tab]')).filter(function(el){return !el.closest('.tab-content');});
+        var codexArticleGroups=[];
+        var intro=document.createElement('details');intro.className='codex-reader-accordion';
+        var introHeading=document.createElement('summary');introHeading.textContent='Codex';intro.appendChild(introHeading);
+        var introList=document.createElement('div');introList.className='codex-reader-article-list';intro.appendChild(introList);
+        intro.addEventListener('toggle',function(){if(intro.open)codexArticleGroups.forEach(function(other){if(other!==intro)other.open=false;});});
+        codexArticleGroups.push(intro);readerMenu.appendChild(intro);
+        tabs.forEach(function(tab){
+          var btn=document.createElement('button');btn.type='button';btn.className='codex-reader-menu-item';
+          btn.textContent=tab.textContent.trim();
+          btn.addEventListener('click',function(){
+            readerMenu.querySelectorAll('button').forEach(function(x){x.classList.remove('active');});
+            btn.classList.add('active');
+            var panel=panels.find(function(p){return p.id===tab.dataset.tab;});
+            if(!panel)return;
+            var fragment=document.createElement('div');fragment.className='codex-imported-content';
+            fragment.innerHTML=panel.innerHTML;
+            readerSetContent(cleanFragment(fragment,new URL(route,location.href)));
+          });
+          introList.appendChild(btn);
+        });
+        readerMessage('Sélectionnez un article.');
+        try{
+          var blogRoute=new URL('../../blog/blog.html',location.href);
+          var blogResponse=await fetch(blogRoute);
+          if(!blogResponse.ok)throw Error('HTTP '+blogResponse.status);
+          var blogDoc=new DOMParser().parseFromString(await blogResponse.text(),'text/html');
+          if(request!==readerRequest||!readerOpen)return;
+          var blogBase=new URL('../../blog/articles/',location.href);
+          blogDoc.querySelectorAll('#viewer-menu details').forEach(function(group){
+            var links=group.querySelectorAll('a[data-viewer]');if(!links.length)return;
+            var accordion=document.createElement('details');
+            accordion.className='codex-reader-accordion';
+            var heading=document.createElement('summary');
+            heading.textContent=(group.querySelector('summary')?.textContent.trim()||'Articles').replace(/^[^\p{L}\p{N}]+/u,'').trim();
+            accordion.appendChild(heading);
+            var articleList=document.createElement('div');articleList.className='codex-reader-article-list';
+            accordion.appendChild(articleList);
+            accordion.addEventListener('toggle',function(){
+              if(accordion.open)codexArticleGroups.forEach(function(other){if(other!==accordion)other.open=false;});
+            });
+            // Les expressions d'intelligences restent distinctes dans la colonne
+            // de gauche, mais appartiennent à la catégorie IA du menu supérieur.
+            var isExpressions=Array.from(links).some(function(link){return (link.dataset.viewer||'').startsWith('aiautor/');});
+            if(isExpressions)heading.textContent="Expressions d'intelligences";
+            codexArticleGroups.push(accordion);
+            readerMenu.appendChild(accordion);
+            links.forEach(function(link){
+              var btn=document.createElement('button');btn.type='button';btn.className='codex-reader-menu-item';
+              btn.textContent=link.textContent.trim().replace(/^[🌙⚠️🧊🔮]\s*/u,'');
+              var articleUrl=new URL(link.dataset.viewer+'.html',blogBase).href;
+              btn.addEventListener('click',async function(){
+                readerMenu.querySelectorAll('button').forEach(function(x){x.classList.remove('active');});
+                btn.classList.add('active');
+                readerMessage('Chargement de l’article…');
+                try{
+                  var response=await fetch(articleUrl);if(!response.ok)throw Error('HTTP '+response.status);
+                  var articleDoc=new DOMParser().parseFromString(await response.text(),'text/html');
+                  if(request!==readerRequest||!readerOpen||!btn.isConnected)return;
+                  var target=articleDoc.querySelector('main,article')||articleDoc.body;
+                  var fragment=document.createElement('div');fragment.className='codex-imported-content';
+                  fragment.innerHTML=target.innerHTML;
+                  if(!fragment.textContent.trim()&&!fragment.querySelector('img,video,iframe'))throw Error('Empty article');
+                  readerSetContent(cleanFragment(fragment,articleUrl));
+                }catch(err){if(request===readerRequest&&readerOpen)readerMessage('Cet article ne contient pas encore de texte. Revenez à la liste pour choisir un autre article.');}
+              });
+              articleList.appendChild(btn);
+            });
+          });
+        }catch(err){
+          var note=document.createElement('div');note.className='codex-reader-group';
+          note.textContent='Catalogue des articles indisponible';readerMenu.appendChild(note);
+        }
+        // Two-level navigation: categories above, complete article list at left.
+        var categoryBar=document.getElementById('codex-reader-categories');
+        if(!categoryBar){
+          categoryBar=document.createElement('nav');
+          categoryBar.id='codex-reader-categories';
+          categoryBar.setAttribute('aria-label','Catégories du Codex');
+          readerMenu.closest('.codex-reader-layout').before(categoryBar);
+        }
+        categoryBar.replaceChildren();
+        categoryBar.hidden=false;
+        readerMenu.classList.add('codex-category-mode');
+        function selectCodexCategory(chosen,tabButton){
+          codexArticleGroups.forEach(function(group){
+            group.open=(group===chosen);
+            group.hidden=(group!==chosen);
+          });
+          categoryBar.querySelectorAll('button').forEach(function(b){
+            var active=b===tabButton;
+            b.classList.toggle('active',active);
+            b.setAttribute('aria-pressed',String(active));
+          });
+          readerMenu.scrollTop=0;
+          var list=chosen.querySelector('.codex-reader-article-list');
+          if(list)list.scrollTop=0;
+        }
+        var iaGroup=codexArticleGroups.find(function(group){
+          return (group.querySelector('summary')?.textContent||'').toLowerCase()==='intelligence artificielle';
+        });
+        var psychGroup=codexArticleGroups.find(function(group){return (group.querySelector('summary')?.textContent||'').trim()==='Psychologie';});
+        var hpGroup=codexArticleGroups.find(function(group){return (group.querySelector('summary')?.textContent||'').trim()==='Haut Potentiel';});
+        var personalGroup=null;
+        var expressionsGroup=codexArticleGroups.find(function(group){
+          return (group.querySelector('summary')?.textContent||'')==="Expressions d'intelligences";
+        });
+        // Separate top-level categories from their optional second-level tabs.
+        var subcategoryBar=document.getElementById('codex-reader-subcategories');
+        if(!subcategoryBar){
+          subcategoryBar=document.createElement('nav');
+          subcategoryBar.id='codex-reader-subcategories';
+          subcategoryBar.setAttribute('aria-label','Sous-catégories du Codex');
+          categoryBar.after(subcategoryBar);
+        }
+        function showGroup(group){
+          codexArticleGroups.forEach(function(other){
+            other.hidden=other!==group;
+            other.open=other===group;
+          });
+          readerMenu.scrollTop=0;
+          var list=group.querySelector('.codex-reader-article-list');
+          if(list)list.scrollTop=0;
+        }
+        var introductions={
+              'Intelligence artificielle':"L'intelligence artificielle transforme notre manière de chercher, de créer et de dialoguer. Cette rubrique explore autant ses possibilités concrètes que ses limites et les questions qu'elle soulève. Deux chemins sont proposés : les articles et réflexions sur l'IA, puis les expressions d'intelligences issues de nos échanges.",
+              'IA — Articles & réflexions':"Comprendre l'intelligence artificielle au-delà des effets d'annonce : ses capacités, ses limites, ses usages et les questions qu'elle soulève. Ici, nous confrontons les idées aux expériences concrètes, avec curiosité et esprit critique.",
+              "IA — Expressions d'intelligences":"Un espace où l'intelligence artificielle prend la parole à travers des textes, des dialogues et des créations. Ces expressions explorent le langage, l'imaginaire et notre collaboration, sans présumer d'une conscience ou d'une expérience intérieure de l'IA.",
+              'Psychologie':"Pourquoi pensons-nous, ressentons-nous et réagissons-nous différemment ? Cette rubrique rassemble des réflexions sur les comportements, la cognition et les expériences humaines. Elle distingue les articles de psychologie générale de ceux consacrés au haut potentiel, sans réduire l'un à l'autre.",
+              'Haut Potentiel':"Explorer les différentes facettes du haut potentiel, entre vécu, représentations et questions ouvertes. Une place pour nuancer les idées reçues et interroger les façons de penser et de s'adapter.",
+              'Philosophie':"Une invitation à questionner les évidences, les valeurs et les idées qui structurent notre vision du monde. Ici, les réponses ne sont pas nécessairement définitives : les questions elles-mêmes font partie du cheminement.",
+              'États modifiés de conscience':"Que savons-nous de notre conscience et de ses variations ? Cette rubrique aborde les perceptions inhabituelles, les expériences subjectives et les hypothèses qui les entourent, en distinguant le vécu personnel des explications établies.",
+              'Exploration':"Du cosmos aux idées futuristes, cette rubrique suit la curiosité là où elle mène. Elle réunit découvertes, hypothèses et projets de pensée, avec le plaisir d'explorer sans confondre imagination et connaissance.",
+              'Rêves & Onirisme':"Les rêves sont des territoires singuliers, à la frontière de la mémoire, de l'imagination et du sommeil. Cette rubrique rassemble récits, interrogations et explorations des expériences oniriques.",
+              'Symbolique & ésotérisme':"Les symboles, les mythes et les coïncidences invitent à plusieurs niveaux de lecture. Cette rubrique les explore comme objets culturels, imaginaires et personnels, en gardant distinctes les interprétations et les connaissances vérifiables.",
+              'Introspection':"Observer ses pensées, revenir sur une expérience ou suivre une intuition : l'introspection ouvre un espace de réflexion personnelle. Les articles explorent la pensée et le vécu intérieur.",
+              'Réflexions personnelles':''
+            };
+        function showIntroduction(group, title){
+          var label=group.querySelector('summary')?.textContent.trim()||'';
+          var section=document.createElement('section');
+          section.className='codex-reader-category-intro';
+          var h=document.createElement('h2');h.textContent=title||label;section.appendChild(h);
+          var p=document.createElement('p');
+          var key=label;
+          if(title==='Articles & réflexions')key='IA — Articles & réflexions';
+          if(title==="Expressions d'intelligences")key="IA — Expressions d'intelligences";
+          p.textContent=introductions[key]||'Découvrez les articles et réflexions de cette rubrique.';
+          section.appendChild(p);
+          readerSetContent(section);
+        }
+        function chooseCategory(group,button){
+          categoryBar.querySelectorAll('button').forEach(function(b){
+            var active=b===button;
+            b.classList.toggle('active',active);
+            b.setAttribute('aria-pressed',String(active));
+          });
+          subcategoryBar.replaceChildren();
+          var children=group===iaGroup&&expressionsGroup?[iaGroup,expressionsGroup]:group===psychGroup&&hpGroup?[psychGroup,hpGroup]:[group];
+          subcategoryBar.hidden=children.length===1;
+          if(children.length>1){
+            children.forEach(function(child,index){
+              var sub=document.createElement('button');
+              sub.type='button';
+              sub.textContent=group===psychGroup?(index===0?'Psychologie':'Haut potentiel'):(index===0?'Articles & réflexions':"Expressions d'intelligences");
+              sub.setAttribute('aria-pressed',String(index===0));
+              sub.classList.toggle('active',index===0);
+              sub.addEventListener('click',function(){
+                subcategoryBar.querySelectorAll('button').forEach(function(other){
+                  var active=other===sub;other.classList.toggle('active',active);
+                  other.setAttribute('aria-pressed',String(active));
+                });
+                showGroup(child);
+                readerMenu.querySelectorAll('button.codex-reader-menu-item').forEach(function(item){item.classList.remove('active');});
+                showIntroduction(child,sub.textContent);
+              });
+              subcategoryBar.appendChild(sub);
+            });
+          }
+          showGroup(children[0]);
+          // A category opens on a concise introduction, not an arbitrary article.
+          // Codex itself is the exception: its first article introduces the site.
+          if(group===intro){
+            var first=introList.querySelector('button');
+            if(first)first.click();
+          }else{
+            readerMenu.querySelectorAll('button.codex-reader-menu-item').forEach(function(item){item.classList.remove('active');});
+            showIntroduction(group,button.textContent);
+          }
+        }
+        codexArticleGroups.forEach(function(group){
+          if((group===expressionsGroup&&iaGroup)||(group===hpGroup&&psychGroup)||(group===personalGroup&&introspectionGroup))return;
+          var button=document.createElement('button');
+          button.type='button';
+          var label=group.querySelector('summary')?.textContent.trim()||'Catégorie';
+          button.textContent=({
+            'Symbolique & ésotérisme':'Symbolisme',
+            'Rêves & Onirisme':'Onirisme',
+            'États modifiés de conscience':'Conscience'
+          })[label]||label;
+          button.setAttribute('aria-pressed','false');
+          button.addEventListener('click',function(){chooseCategory(group,button);});
+          categoryBar.appendChild(button);
+          group.hidden=true;
+        });
+        // The current category stays selected; the reader starts without an article.
+        if(categoryBar.firstElementChild)categoryBar.firstElementChild.click();
+        return;
+      }
+      content.innerHTML=source.innerHTML;
+      cleanFragment(content,new URL(route,location.href));
+      var headings=Array.from(content.querySelectorAll('h2,h3')).filter(function(h){return h.textContent.trim().length>2;}).slice(0,28);
+      headings.forEach(function(h){
+        var btn=document.createElement('button');btn.type='button';
+        btn.textContent=h.textContent.trim();btn.className='codex-reader-menu-item';
+        btn.addEventListener('click',function(){h.scrollIntoView({behavior:'smooth',block:'start'});});
+        readerMenu.appendChild(btn);
+      });
+      readerSetContent(content);
+    }catch(err){
+      if(request===readerRequest)readerMessage('Impossible de charger cette rubrique dans le lecteur.',route);
+    }
+  }
+  readerClose.addEventListener('click',function(){closeCodexReader();parent.postMessage({codexReaderClose:true},location.origin);});
+  reader.addEventListener('keydown',function(e){if(e.key==='Escape'){e.preventDefault();closeCodexReader();}});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&readerOpen){e.preventDefault();closeCodexReader();}});
+
+var section=new URLSearchParams(location.search).get('section')||'codex';openCodexReader(section);
+window.addEventListener('message',function(e){if(e.origin===location.origin&&e.data&&e.data.section)openCodexReader(e.data.section)});
+})();</script><script id="codex-mobile-clean">
+(function(){
+const reader=document.getElementById('codex-reader'),menu=document.getElementById('codex-reader-menu'),layout=menu?.closest('.codex-reader-layout');
+if(!reader||!menu||!layout)return;
+const nav=document.createElement('nav');nav.className='codex-m-nav';nav.hidden=true;nav.setAttribute('aria-label','Catégories du Codex');
+const track=document.createElement('div');track.className='codex-m-track';
+const hint=document.createElement('div');hint.className='codex-m-hint';hint.textContent='‹ Glissez pour explorer les catégories ›';
+const sub=document.createElement('div');sub.className='codex-m-sub';sub.hidden=true;nav.append(track,hint,sub);layout.before(nav);
+const back=document.createElement('button');back.type='button';back.className='codex-m-back';back.textContent='← Liste des articles';layout.before(back);
+const bar=()=>document.getElementById('codex-reader-categories'),subbar=()=>document.getElementById('codex-reader-subcategories'),categories=()=>Array.from(bar()?.querySelectorAll('button')||[]);
+let current=-1,rendering=false,scrollTimer=0,observedBar=null,observedSub=null;
+function choose(i){const bs=categories();if(!bs.length||i<0||i>=bs.length)return;reader.classList.remove('codex-m-reading');current=i;bs[i].click();reader.scrollTop=0;render()}
+function render(){
+if(rendering)return;rendering=true;
+try{
+const bs=categories();if(!bs.length||bar()?.hidden){nav.hidden=true;return}
+nav.hidden=false;const selected=bs.findIndex(b=>b.classList.contains('active')||b.getAttribute('aria-pressed')==='true');if(selected>=0)current=selected;if(current<0)current=0;
+if(track.children.length!==bs.length||bs.some((b,i)=>track.children[i]?.textContent!==b.textContent.trim())){
+track.replaceChildren(...bs.map((b,i)=>{const item=document.createElement('button');item.type='button';item.textContent=b.textContent.trim();item.onclick=()=>choose(i);return item}));
+}
+Array.from(track.children).forEach((b,i)=>b.classList.toggle('active',i===current));
+const target=track.children[current];if(target){const left=target.offsetLeft-(track.clientWidth-target.offsetWidth)/2;track.scrollTo({left,behavior:'instant'})}
+const children=!subbar()?.hidden?Array.from(subbar()?.querySelectorAll('button')||[]):[];
+sub.hidden=children.length<2;sub.replaceChildren(...children.map(b=>{const copy=document.createElement('button');copy.type='button';copy.textContent=b.textContent.trim();copy.classList.toggle('active',b.classList.contains('active'));copy.onclick=()=>{b.click();reader.classList.remove('codex-m-reading');reader.scrollTop=0;render()};return copy}));
+menu.querySelectorAll('.codex-reader-menu-item').forEach(b=>{if(b.textContent.trim()==='Introduction sur les rêves')b.classList.add('codex-m-intro-entry')});
+}finally{rendering=false}
+}
+track.addEventListener('scroll',()=>{clearTimeout(scrollTimer);scrollTimer=setTimeout(()=>{if(!matchMedia('(max-width:700px)').matches)return;const items=Array.from(track.children);if(!items.length)return;const mid=track.scrollLeft+track.clientWidth/2;let best=0,dist=Infinity;items.forEach((b,i)=>{const d=Math.abs(b.offsetLeft+b.offsetWidth/2-mid);if(d<dist){dist=d;best=i}});if(best!==current)choose(best)},130)},{passive:true});
+menu.addEventListener('click',e=>{if(!e.isTrusted||!matchMedia('(max-width:700px)').matches||!e.target.closest('.codex-reader-menu-item'))return;reader.classList.remove('codex-m-reading');reader.scrollTop=0});
+back.onclick=()=>{reader.classList.remove('codex-m-reading');reader.scrollTop=0};
+const changes=new MutationObserver(()=>{if(!reader.hidden)render()});
+function attach(){const b=bar(),s=subbar();if(b===observedBar&&s===observedSub)return;changes.disconnect();if(b)changes.observe(b,{childList:true,subtree:true,attributes:true,attributeFilter:['class','hidden','aria-pressed']});if(s)changes.observe(s,{childList:true,subtree:true,attributes:true,attributeFilter:['class','hidden','aria-pressed']});observedBar=b;observedSub=s;render()}
+new MutationObserver(attach).observe(layout.parentElement,{childList:true});
+new MutationObserver(()=>{if(!reader.hidden){reader.classList.remove('codex-m-reading');reader.scrollTop=0;setTimeout(()=>{attach();render();reader.scrollTop=0},90)}}).observe(reader,{attributes:true,attributeFilter:['hidden']});
+document.getElementById('solar-return-sun')?.addEventListener('click',()=>{if(!reader.hidden)document.getElementById('codex-reader-close')?.click()});
+attach();
+})();
+</script></body></html>
