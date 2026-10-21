@@ -351,11 +351,11 @@ var NEB_FRAG = [
 ].join('\n');
 
 var DUST_FRAG = [
-'varying vec3 vC; varying float vSeed; uniform float uDustOpacity;',
+'varying vec3 vC; varying float vSeed;',
 'void main(){',
 '  vec2 c=gl_PointCoord-0.5; float d=dot(c,c)*4.0;',
 '  float n=0.6+0.4*sin(c.x*10.0+vSeed*29.0)*sin(c.y*8.0+vSeed*13.0+c.y*4.0);',
-'  float a=vC.x*exp(-d*2.2)*n*uDustOpacity;',
+'  float a=vC.x*exp(-d*2.2)*n;',
 '  gl_FragColor=vec4(0.004,0.002,0.010,a);',
 '}'
 ].join('\n');
@@ -407,9 +407,9 @@ var FINAL_FRAG = [
 'vec3 aces(vec3 x){ return clamp((x*(2.51*x+0.03))/(x*(2.43*x+0.59)+0.14),0.0,1.0); }',
 'void main(){',
 '  vec3 c=texture2D(tDiffuse,vUv).rgb;',
-'  c=aces(c*uExposure*1.18);',
+'  c=aces(c*uExposure);',
 '  vec2 d=vUv-0.5;',
-'  c*=1.0-dot(d,d)*0.5;',
+'  c*=1.0-dot(d,d)*0.8;',
 '  float g=h21(vUv*uRes+fract(uTime)*91.7)-0.5;',
 '  c+=g*0.02;',
 '  gl_FragColor=vec4(c,1.0);',
@@ -521,8 +521,6 @@ window.__G = { PT_VERT: PT_VERT, STAR_FRAG: STAR_FRAG, NEB_FRAG: NEB_FRAG, DUST_
   var starMat = ptMaterial(STAR_FRAG, T.AdditiveBlending);
   var nebMat = ptMaterial(NEB_FRAG, T.AdditiveBlending, { uMinPS: 3, uMaxPS: 140, uTwinkle: 0 });
   var dustMat = ptMaterial(DUST_FRAG, T.NormalBlending, { uMinPS: 3, uMaxPS: 160, uTwinkle: 0, uBright: 1 });
-  // Dust should shade the arms gently, not form an opaque black wall edge-on.
-  dustMat.uniforms.uDustOpacity = { value: 0.22 };
   nebMat.uniforms.uBright = { value: 1 }; dustMat.uniforms.uBright = { value: 1 };
   var layers = { stars: null, neb: null, dust: null };
 
