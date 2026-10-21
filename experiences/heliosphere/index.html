@@ -714,13 +714,11 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
   /* ---------- Définitions des mondes (rayons exagérés pour rester lisibles) ---------- */
   function C(h) { return new T.Color(h); }
   var DEFS = [
-    { id: 'd1', deco: true, a: 14, e: .14, inc: 3, node: .6, M0: 1.0, r: 1.0, tilt: .03, spin: .25, type: 0, scale: 1.4, seed: 3.0, relief: .035, ice: .5,
-      c: [0x6f6a66, 0x9a948c, 0x4c4845, 0xc9c3b8] },
-    { id: 'codex', a: 20, e: .05, inc: 2, node: 2.1, M0: 4.2, r: 1.6, tilt: .1, spin: .18, type: 0, scale: 1.2, seed: 9.0, relief: .04, ice: .6,
+    { id: 'codex', a: 15.5, e: .05, inc: 2, node: 2.1, M0: 4.2, r: 1.6, tilt: .1, spin: .18, type: 0, scale: 1.2, seed: 9.0, relief: .04, ice: .6,
       c: [0x8a909b, 0xc7ccd6, 0x555b69, 0xeef2fa],
       moons: [{ r: .26, d: 3.6, w: .45, ph: 1.0, c: [0x7d7d80, 0xb0b0b4, 0x4a4a50, 0xdddddd], seed: 5 }] },
-    { id: 'd2', deco: true, a: 27, e: .03, inc: 1.5, node: 4.0, M0: 2.2, r: 2.2, tilt: .1, spin: .06, type: 3, bands: 3.4, warp: .5, seed: 2.0,
-      c: [0xd2ae6e, 0xe6cb98, 0xf3e3bf, 0xb5894a], atmoK: .9, atmo: 0xffd08a, shell: { k: 1.07, s: 1.1 } },
+    { id: 'd2', deco: true, a: 26, e: .007, inc: 3.4, node: 4.0, M0: 2.2, r: 2.15, tilt: .05, spin: .07, type: 0, scale: 1.3, seed: 2.0, relief: .018, ice: 0,
+      c: [0xa57d53, 0xd7b68a, 0xe6d2ad, 0x7c6048], atmoK: .8, atmo: 0xe9c88d, shell: { k: 1.05, s: .55 } },
     { id: 'dashb', a: 35, e: .04, inc: 0, node: 0, M0: 5.4, r: 2.5, tilt: .41, spin: .5, type: 2, scale: 1.1, seed: 4.2, relief: .02,
       sea: .1, cloud: .55, city: 1.0, gloss: 1.0, ice: 1.0,
       c: [0x03153a, 0x0d4c86, 0x2f5f2a, 0x6b5a3c, 0xb89a62], atmoK: 1.0, atmo: 0x5d9bff, shell: { k: 1.06, s: 1.0 },
@@ -740,8 +738,13 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
       c: [0xb89a62, 0xdcc794, 0xefe3c0, 0x9a7c4a, 0xc9a86e], atmoK: .35, atmo: 0xf0dca8, shell: { k: 1.04, s: .5 }, ring: [1.35, 2.3],
       moons: [{ r: .55, d: 15.5, w: .22, ph: 1.5, c: [0xb9a98a, 0xe0d2b2, 0x6e6250, 0xf6ecd6], seed: 41 },
               { r: .3, d: 19.0, w: .16, ph: 4.9, c: [0x8a8075, 0xb4a89a, 0x4e463e, 0xd8cdbd], seed: 42 }] },
-    { id: 'lab', a: 104, e: .03, inc: 1.7, node: 0.9, M0: 5.8, r: 3.4, tilt: .5, spin: .72, type: 3, bands: 5, warp: .05, seed: 15.0,
-      c: [0x1f7f5a, 0x35b684, 0x8fe3b9, 0x14503a, 0xffffff], atmoK: .75, atmo: 0x4fe6a0, shell: { k: 1.06, s: .8 } }
+    { id: 'lab', a: 104, e: .03, inc: 1.7, node: 0.9, M0: 5.8, r: 3.4, tilt: 1.68, spin: .72, type: 3, bands: 5, warp: .05, seed: 15.0,
+      c: [0x1f7f5a, 0x35b684, 0x8fe3b9, 0x14503a, 0xffffff], atmoK: .75, atmo: 0x4fe6a0, shell: { k: 1.06, s: .8 }, ring: [1.55, 1.85] },
+    { id: 'neptune', deco: true, a: 132, e: .009, inc: 1.77, node: 2.3, M0: 2.7, r: 3.25, tilt: .49, spin: .7, type: 3, bands: 6, warp: .04, seed: 18.0,
+      c: [0x133f9c, 0x215fca, 0x4389e8, 0x0c2b75, 0xa7c8ff], atmoK: .65, atmo: 0x427bdf, shell: { k: 1.05, s: .7 },
+      moons: [{ r: .37, d: 7.5, w: .2, ph: 1.3, c: [0x6b788a, 0x9aafbd, 0x46576b, 0xd3dce2], seed: 55 }] },
+    { id: 'pluto', deco: true, a: 153, e: .248, inc: 17.1, node: 1.9, M0: 4.0, r: .9, tilt: 2.1, spin: .05, type: 0, scale: 1.2, seed: 24, relief: .04, ice: .75,
+      c: [0x9a7969, 0xc9a99a, 0x59463f, 0xe4d8c8], moons: [{ r: .3, d: 2.6, w: .18, ph: .5, c: [0x888078, 0xada39a, 0x58524d, 0xcac0b8], seed: 57 }] }
   ];
 
   /* ---------- Scène, caméra, contrôles ---------- */
@@ -759,7 +762,7 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
   controls.minDistance = 10; controls.maxDistance = 620;
 
   var ZERO = new T.Vector3();
-  var W = 800, H = 600, PR = 1, mobile = false, homeDist = 160;
+  var W = 800, H = 600, PR = 1, mobile = false, homeDist = 195;
   function homeCamPos() {
     var el = 26 * DEG;
     return new T.Vector3(0, Math.sin(el), Math.cos(el)).multiplyScalar(homeDist);
