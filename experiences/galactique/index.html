@@ -741,6 +741,30 @@ window.__G = { PT_VERT: PT_VERT, STAR_FRAG: STAR_FRAG, NEB_FRAG: NEB_FRAG, DUST_
   var panel = document.getElementById('panel'), ptog = document.getElementById('panelToggle');
   ptog.addEventListener('click', function () { var c = panel.classList.toggle('closed'); ptog.setAttribute('aria-expanded', String(!c)); ptog.textContent = c ? 'Réglages' : 'Réduire'; });
 
+  // Close floating menus when interacting outside; keep the compact lab header visible.
+  var themeMenu = panel.querySelector('.gal-theme-menu');
+  function closeLabSettings() {
+    if (!panel.classList.contains('closed')) {
+      panel.classList.add('closed');
+      ptog.setAttribute('aria-expanded', 'false');
+      ptog.textContent = 'Réglages';
+    }
+  }
+  document.addEventListener('pointerdown', function (event) {
+    if (themeMenu && themeMenu.open && !themeMenu.contains(event.target)) themeMenu.open = false;
+    if (!panel.contains(event.target)) closeLabSettings();
+  });
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape') {
+      if (themeMenu && themeMenu.open) themeMenu.open = false;
+      closeLabSettings();
+    }
+  });
+  if (themeMenu) themeMenu.addEventListener('toggle', function () {
+    if (themeMenu.open) closeLabSettings();
+  });
+
+
   /* ---------- Taille ---------- */
   function resize() {
     var r = stage.getBoundingClientRect();
