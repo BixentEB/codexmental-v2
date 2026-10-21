@@ -890,4 +890,17 @@ window.__G = { PT_VERT: PT_VERT, STAR_FRAG: STAR_FRAG, NEB_FRAG: NEB_FRAG, DUST_
 })();
 </script>
 
+<script>
+/* Liens directs depuis la page Contact vers le lecteur immersif. */
+(function(){
+ function openLinkedSection(){
+  var key=decodeURIComponent(location.hash.slice(1));
+  if(!/^(codex|atelier|lab|dashb|profil)$/.test(key))return;
+  var link=document.querySelector('[data-gal-section="'+key+'"]');
+  if(link)link.click();
+ }
+ window.addEventListener('load',openLinkedSection);
+ window.addEventListener('hashchange',openLinkedSection);
+})();
+</script>
 </body></html>
