@@ -47,3 +47,41 @@ Priorité : `blog/` (distinguer Blog, Codex, archives de publications), `profil/
 ## Lots suivants
 
 02 Centrale CODEX ; 03 lecteur universel ; 04 navigation/thèmes ; 05 consoles ; 06 en-tête ; 07 responsive ; 08 contenus Portrait ; 09 autres rubriques ; 10 Héliosphère ; 11 Galactique ; 12 Contact et livraison.
+
+
+## Décisions du propriétaire — tri du 22 octobre 2026
+
+Les choix ci-dessous sont validés par le propriétaire, mais **ne valent pas confirmation technique que les références sont absentes**.
+
+| Élément | Choix | Prérequis |
+| --- | --- | --- |
+| `home.html` | Archiver (ancien accueil solaire) | Rechercher les références et réparer les liens |
+| `footer.html` | Archiver (ancien pied de page) | `assets/js/main.js` l'injecte encore : retirer proprement l'appel |
+| `lune.html` | Archiver (essai Lune) | Conserver intégralement |
+| `profil.html` | Archiver (ancien CV) | Vérifier références |
+| `checklist.html` | Archiver (ancienne liste) | Conserver pour référence |
+| `menu.html` | À décider après déconnexion | Les moteurs 3D ont leur navigation intégrée ; `assets/js/main.js` injecte encore `menu.html` |
+| `partials/article-tools.html` | Déplacé par le propriétaire vers `assets/partials/` | Vérifier les références au nouvel emplacement |
+| `partials/mp3/` | Supprimer (ancien lecteur) | Vérifier les imports et liens ; préserver par Git si possible |
+| `test/` | Archiver (essais lunaires) | Vérifier liens |
+| `journal/` | Déjà téléchargé et supprimé par le propriétaire | Ne pas recréer |
+| `arcade/` | Déjà téléchargé et supprimé par le propriétaire | Ne pas recréer |
+| `blog/` | Conserver pendant la cartographie des articles | Ne pas confondre ancien lecteur et source des articles |
+| `codex.html` | Conserver (présentation) | Aucun lien direct vers `blog/blog.html` observé dans ce fichier |
+
+### Architecture constatée
+
+- `codex.html` : présentation statique, pas d'appel direct à `blog/blog.html` dans le fichier lu.
+- `blog/blog.html` : ancienne interface de lecture ; utilise `assets/js/viewer.js` pour charger des fragments.
+- `experiences/heliosphere/index.html` : lecteur embarqué avec routes `codex` et `blog`, appels `fetch()` et routes vers `../../blog/blog.html`.
+- `experiences/galactique/index.html` : moteur distinct, avec navigation intégrée.
+- `assets/js/main.js` : appelle `menu.html` et `footer.html` sur les pages classiques.
+- La classe CSS `codex-lucioles` est réellement présente dans les moteurs 3D.
+
+### Point de vigilance : captures du navigateur mobile
+
+Les captures montrent une interface de lecture mobile très étroite, des contenus qui débordent horizontalement, et un rendu sans CSS pour une page/fragment ancien. À traiter dans le lot responsive après identification précise des URL chargées.
+
+### État de la branche
+
+Ce rapport est rédigé sur la branche d'audit, sans déplacer ni supprimer de fichiers. Le propriétaire a déjà modifié la branche `main` indépendamment : **re-synchroniser l'audit avec `main` avant toute opération de nettoyage**.
