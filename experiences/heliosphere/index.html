@@ -1281,7 +1281,7 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
                 var articleDoc=new DOMParser().parseFromString(await res.text(),'text/html');
                 if(request!==readerRequest||!readerOpen)return;
                 var fragment=document.createElement('div');fragment.className='codex-imported-content';
-                var target=articleDoc.querySelector('main,article')||articleDoc.body;
+                var target=articleDoc.querySelector('main')||articleDoc.body;
                 fragment.innerHTML=target.innerHTML;
                 // Retain illustration-specific inline dimensions, while discarding legacy page layout.
                 fragment.querySelectorAll('img,figure,figcaption,picture,svg').forEach(function(el){el.dataset.atelierVisual='';});
@@ -1327,7 +1327,7 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
                 var articleDoc=new DOMParser().parseFromString(await res.text(),'text/html');
                 if(request!==readerRequest||!readerOpen)return;
                 var fragment=document.createElement('div');fragment.className='codex-imported-content';
-                fragment.innerHTML=(articleDoc.querySelector('main,article')||articleDoc.body).innerHTML;
+                fragment.innerHTML=(articleDoc.querySelector('main')||articleDoc.body).innerHTML;
                 readerSetContent(cleanFragment(fragment,fragmentUrl));
               }catch(err){if(request===readerRequest)readerMessage('Article indisponible pour le moment.',fragmentUrl);}
             });readerMenu.appendChild(btn);
@@ -1403,7 +1403,7 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
                 if(request!==readerRequest||!readerOpen||selection!==profileSelection)return;
                 var page=new DOMParser().parseFromString(html,'text/html');
                 var fragment=document.createElement('div');fragment.className='codex-imported-content';
-                fragment.innerHTML=(page.querySelector('main,article')||page.body).innerHTML;
+                fragment.innerHTML=(page.querySelector('main')||page.body).innerHTML;
                 // Fragment-specific CSS is part of the original design (music capsules, etc.).
                 // Keep trusted CSS scoped to this imported content, not the whole site.
                 fragment.querySelectorAll('style').forEach(function(style){
@@ -1507,7 +1507,7 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
                   var response=await fetch(articleUrl);if(!response.ok)throw Error('HTTP '+response.status);
                   var articleDoc=new DOMParser().parseFromString(await response.text(),'text/html');
                   if(request!==readerRequest||!readerOpen||!btn.isConnected)return;
-                  var target=articleDoc.querySelector('main,article')||articleDoc.body;
+                  var target=articleDoc.querySelector('main')||articleDoc.body;
                   var fragment=document.createElement('div');fragment.className='codex-imported-content';
                   fragment.innerHTML=target.innerHTML;
                   if(!fragment.textContent.trim()&&!fragment.querySelector('img,video,iframe'))throw Error('Empty article');
