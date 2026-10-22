@@ -52,3 +52,7 @@ Le propriétaire du site confirme que les neuf références ci-dessous correspon
 - `symbol/synchronicite-numerique` — Synchronicités numériques
 
 **Catalogue actif après nettoyage : 20 références.** Les autres pages d'exemple (`psy/article2.html`, `altstates/revelucide.html`) restent à examiner séparément ; aucune modification de leur contenu n'a été effectuée.
+
+## Suite du nettoyage — 22 octobre 2026
+
+Deux entrées de démonstration sont conservées comme fichiers mais masquées dans les deux lecteurs CODEX par le statut `draft` du catalogue : `psy/article2` et `altstates/revelucide`. Leurs liens ont également été retirés du menu historique `blog/blog.html`. Bilan : 20 références au catalogue, dont 18 publiables et 2 brouillons. Le rendu en navigateur, la résolution des médias et l'intégration Galactique restent à valider avant fusion.
