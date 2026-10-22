@@ -37,7 +37,9 @@ body:has(#gal-reader-overlay:not([hidden])) .codex-gal-theme{display:none}
 #panel .gal-theme-links{min-width:170px!important}
 #panel .gal-theme-links a[aria-current=page]{color:#d7b6ff;font-weight:700;background:#29234d}
 </style><style id="codex-gal-reader-integrated">
-#gal-reader-overlay{background:rgba(2,5,16,.35)!important;backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);top:42px!important;bottom:0!important}
+#gal-reader-overlay{background:rgba(2,5,16,.08)!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;top:42px!important;bottom:0!important}
+/* Laisser la galaxie lisible autour du lecteur, sans éclaircir les panneaux de lecture. */
+body:has(#gal-reader-overlay:not([hidden])) .stage canvas{filter:brightness(1.6) saturate(1.28);transition:filter .3s ease}
 #gal-reader-frame{background:transparent!important}
 body:has(#gal-reader-overlay:not([hidden])) .codex-gal-theme{display:none}
 </style><style id="codex-shared-brand-20261022">
