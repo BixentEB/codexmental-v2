@@ -752,6 +752,39 @@ html,body{background:transparent!important;background-color:transparent!importan
 @media(min-width:701px){
  .codex-reader .codex-reader-layout{height:clamp(340px,74dvh,780px)!important;max-height:calc(100dvh - 190px)!important}
 }
+</style><style id="codex-gal-floating-navigation-20261022">
+/* En Galactique, seuls les éléments textuels reçoivent un fond lisible. */
+.codex-reader .codex-reader-top{position:relative!important;z-index:3!important}
+.codex-reader .codex-reader-top>div{
+ display:inline-block!important;background:rgba(8,13,29,.78)!important;
+ border:1px solid rgba(176,190,231,.24)!important;border-radius:10px!important;
+ padding:7px 12px!important;backdrop-filter:blur(6px)!important;
+}
+.codex-reader .codex-reader-top h2,
+.codex-reader .codex-reader-eyebrow{color:#f2f3ff!important;text-shadow:0 1px 4px #030716!important}
+.codex-reader #codex-reader-close{
+ background:rgba(8,13,29,.9)!important;color:#f4f4ff!important;
+ border:1px solid rgba(190,202,239,.4)!important;border-radius:9px!important;
+ padding:8px 12px!important;pointer-events:auto!important
+}
+.codex-reader #codex-reader-categories,
+.codex-reader #codex-reader-subcategories{
+ position:relative!important;z-index:3!important;
+ background:rgba(9,14,31,.84)!important;border-radius:10px!important;
+ padding:6px 8px!important;width:fit-content!important;max-width:100%!important;
+ backdrop-filter:blur(7px)!important
+}
+.codex-reader #codex-reader-categories button,
+.codex-reader #codex-reader-subcategories button{
+ color:#f0efff!important;background:rgba(24,30,51,.94)!important;
+ border-color:rgba(180,195,235,.42)!important
+}
+.codex-reader #codex-reader-categories button.active,
+.codex-reader #codex-reader-subcategories button.active{color:#ffdc9e!important;background:rgba(111,76,36,.86)!important}
+@media(max-width:700px){
+ .codex-reader .codex-reader-top>div{padding:5px 8px!important}
+ .codex-reader #codex-reader-categories,.codex-reader #codex-reader-subcategories{width:100%!important}
+}
 </style></head><body><button id="shared-reader-exit" type="button" aria-label="Retour à la galaxie">✕ Galaxie</button><section id="codex-reader" class="codex-reader" hidden aria-label="Lecture d'une rubrique CODEX">
   <div class="codex-reader-shell">
     <div class="codex-reader-top">
