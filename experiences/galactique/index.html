@@ -44,7 +44,12 @@ body:has(#gal-reader-overlay:not([hidden])) .stage canvas{filter:brightness(1.0)
 body:has(#gal-reader-overlay:not([hidden])) .codex-gal-theme{display:none}
 </style><style id="codex-gal-reader-contrast-controls-20261022">
 /* Voile léger, entre les étoiles et les blocs, sans effacer la galaxie. */
-#gal-reader-overlay:not([hidden]){background:rgba(5,8,20,.46)!important}
+/* Filtre dans la scène 3D, sous les contrôles et sous le lecteur : aucune zone cliquable recouverte. */
+#gal-reader-overlay:not([hidden]){background:transparent!important}
+body:has(#gal-reader-overlay:not([hidden])) .stage::after{
+ content:"";position:absolute;inset:0;z-index:3;pointer-events:none;
+ background:rgba(5,8,20,.46);
+}
 /* Les contrôles Galactique restent au-dessus de l'iframe interactive. */
 body:has(#gal-reader-overlay:not([hidden])) #panel,
 body:has(#gal-reader-overlay:not([hidden])) .panel{position:fixed!important;z-index:230!important;pointer-events:auto!important}
