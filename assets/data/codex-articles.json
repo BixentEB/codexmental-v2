@@ -1,7 +1,6 @@
 {
   "version": 1,
   "format": "html-fragment",
-  "source": "blog/blog.html",
   "groups": [
     {
       "id": "intelligence-artificielle",
@@ -71,7 +70,8 @@
         {
           "id": "psy/article2",
           "title": "Surfonctionner sans s’effondrer",
-          "path": "blog/articles/psy/article2.html"
+          "path": "blog/articles/psy/article2.html",
+          "status": "draft"
         }
       ]
     },
@@ -111,7 +111,8 @@
         {
           "id": "altstates/revelucide",
           "title": "Rêves lucides",
-          "path": "blog/articles/altstates/revelucide.html"
+          "path": "blog/articles/altstates/revelucide.html",
+          "status": "draft"
         }
       ]
     },
