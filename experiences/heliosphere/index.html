@@ -784,7 +784,7 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
 
   var controls = new T.OrbitControls(camera, canvas);
   controls.enableDamping = true; controls.dampingFactor = .07;
-  controls.enablePan = false; controls.zoomSpeed = .8; controls.rotateSpeed = .6;
+  controls.enablePan = true; controls.panSpeed = .85; controls.screenSpacePanning = true; controls.zoomSpeed = .8; controls.rotateSpeed = .6;
   controls.minDistance = 10; controls.maxDistance = 620;
 
   var ZERO = new T.Vector3();
@@ -1777,7 +1777,10 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
   canvas.addEventListener('pointermove', function (e) { pointerIn = true; needPick = true; lastPX = e.clientX; lastPY = e.clientY; });
   canvas.addEventListener('pointerleave', function () { pointerIn = false; hover = null; canvas.classList.remove('over'); showSolarHover(null); });
   canvas.addEventListener('pointerdown', function (e) { downX = e.clientX; downY = e.clientY; });
+  // Right-drag pans the camera; suppress the native browser context menu on the 3D canvas.
+  canvas.addEventListener('contextmenu', function (e) { e.preventDefault(); });
   canvas.addEventListener('pointerup', function (e) {
+    if (e.button !== 0) return;
     if (Math.hypot(e.clientX - downX, e.clientY - downY) > 6) return;
     var id = pickAt(e.clientX, e.clientY);
     if (id) select(id);
