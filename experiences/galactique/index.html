@@ -59,6 +59,32 @@ body:has(#gal-reader-overlay:not([hidden])) .stage .card{position:fixed!importan
 /* La barre supérieure doit rester intégralement au-dessus du voile et de l'iframe. */
 .codex-experience-nav.codex-lucioles{z-index:250!important;isolation:isolate}
 #gal-reader-overlay:not([hidden]){top:56px!important}
+</style><style id="codex-gal-compact-system-card-20261022">
+/* La fiche de système est un repère, pas une fenêtre couvrant l'article. */
+body:has(#gal-reader-overlay:not([hidden])) .stage .card{
+ right:clamp(12px,1.1vw,20px)!important;bottom:clamp(52px,7vh,78px)!important;
+ width:clamp(176px,14vw,226px)!important;max-width:calc(100vw - 24px)!important;
+ padding:9px 11px!important;border-radius:10px!important;
+ box-shadow:0 5px 20px #0006!important;
+}
+body:has(#gal-reader-overlay:not([hidden])) .stage .card h3{
+ font-size:13px!important;line-height:1.25!important;margin-bottom:4px!important;gap:6px!important;
+}
+body:has(#gal-reader-overlay:not([hidden])) .stage .card .dot{width:8px!important;height:8px!important}
+body:has(#gal-reader-overlay:not([hidden])) .stage .card p{
+ font-size:10px!important;line-height:1.4!important;margin:0 0 6px!important;
+ display:-webkit-box!important;-webkit-line-clamp:2!important;-webkit-box-orient:vertical!important;
+ overflow:hidden!important;
+}
+body:has(#gal-reader-overlay:not([hidden])) .stage .card button,
+body:has(#gal-reader-overlay:not([hidden])) .stage .card a{
+ font-size:10px!important;padding:5px 7px!important;
+}
+@media(max-width:700px){
+ body:has(#gal-reader-overlay:not([hidden])) .stage .card{
+  right:8px!important;bottom:58px!important;width:min(188px,48vw)!important;padding:8px!important;
+ }
+}
 </style><style id="codex-shared-brand-20261022">
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&display=swap');
 .codex-experience-nav .codex-home,.codex-experience-nav.codex-lucioles .codex-home{font-family:'Syne',system-ui,sans-serif!important;font-size:clamp(12px,1.15vw,18px)!important;font-weight:800!important;letter-spacing:clamp(.035em,.13vw,.13em)!important;line-height:1.1!important;white-space:nowrap;transition:color .2s,text-shadow .2s}
