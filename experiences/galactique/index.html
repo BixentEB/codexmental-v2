@@ -37,7 +37,7 @@ body:has(#gal-reader-overlay:not([hidden])) .codex-gal-theme{display:none}
 #panel .gal-theme-links{min-width:170px!important}
 #panel .gal-theme-links a[aria-current=page]{color:#d7b6ff;font-weight:700;background:#29234d}
 </style><style id="codex-gal-reader-integrated">
-#gal-reader-overlay{background:transparent!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;top:42px!important;bottom:0!important}
+#gal-reader-overlay{background:transparent!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;top:56px!important;bottom:0!important}
 /* Laisser la galaxie lisible autour du lecteur, sans éclaircir les panneaux de lecture. */
 body:has(#gal-reader-overlay:not([hidden])) .stage canvas{filter:brightness(1.0) saturate(1.08);transition:filter .3s ease}
 #gal-reader-frame{background:transparent!important;color-scheme:normal!important}
@@ -50,6 +50,10 @@ body:has(#gal-reader-overlay:not([hidden])) #panel,
 body:has(#gal-reader-overlay:not([hidden])) .panel{position:fixed!important;z-index:230!important;pointer-events:auto!important}
 body:has(#gal-reader-overlay:not([hidden])) .stage .card{position:fixed!important;z-index:225!important;pointer-events:auto!important}
 @media(max-width:700px){body:has(#gal-reader-overlay:not([hidden])) .stage .card{right:12px!important;bottom:75px!important;max-width:min(300px,calc(100vw - 24px))!important}}
+</style><style id="codex-gal-topnav-reader-fix-20261022">
+/* La barre supérieure doit rester intégralement au-dessus du voile et de l'iframe. */
+.codex-experience-nav.codex-lucioles{z-index:250!important;isolation:isolate}
+#gal-reader-overlay:not([hidden]){top:56px!important}
 </style><style id="codex-shared-brand-20261022">
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&display=swap');
 .codex-experience-nav .codex-home,.codex-experience-nav.codex-lucioles .codex-home{font-family:'Syne',system-ui,sans-serif!important;font-size:clamp(12px,1.15vw,18px)!important;font-weight:800!important;letter-spacing:clamp(.035em,.13vw,.13em)!important;line-height:1.1!important;white-space:nowrap;transition:color .2s,text-shadow .2s}
@@ -734,7 +738,7 @@ window.__G = { PT_VERT: PT_VERT, STAR_FRAG: STAR_FRAG, NEB_FRAG: NEB_FRAG, DUST_
     if(readerFrame.getAttribute('src')!==url)readerFrame.src=url;
     else readerFrame.contentWindow?.postMessage({section:id},location.origin);
   }
-  window.addEventListener('message',function(e){if(e.origin===location.origin&&e.data?.codexReaderClose){readerOverlay.hidden=true;select(null);}});
+  window.addEventListener('message',function(e){if(e.origin!==location.origin)return;if(e.data?.codexReaderClose){readerOverlay.hidden=true;select(null);}if(e.data?.codexReaderOutsidePointer){if(typeof closeLabSettings==='function')closeLabSettings();var menu=document.querySelector('#panel .gal-theme-menu');if(menu)menu.open=false;}});
   document.querySelectorAll('[data-gal-section]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();select(a.dataset.galSection==='home'?null:a.dataset.galSection);});});
   var hover = null, selected = null, flight = null, lastSel = new T.Vector3();
   var tmpV = new T.Vector3(), ZERO = new T.Vector3();
