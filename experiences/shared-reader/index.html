@@ -789,7 +789,7 @@ body:has(#codex-reader:not([hidden])) .wrap>.codex-theme-switch{
       var content=document.createElement('div');
       content.className='codex-imported-content';
       function cleanFragment(fragment,base){
-        fragment.querySelectorAll('script,style,link,iframe,header,footer,nav,button,[onclick],.site-header,.site-footer,.codex-theme-switch').forEach(function(el){el.remove();});
+        fragment.querySelectorAll('script,style,link,header,footer,nav,button,[onclick],.site-header,.site-footer,.codex-theme-switch').forEach(function(el){el.remove();});
         fragment.querySelectorAll('[style]').forEach(function(el){if(!el.matches('[data-atelier-visual]'))el.removeAttribute('style');});
         fragment.querySelectorAll('[data-atelier-visual]').forEach(function(el){el.removeAttribute('data-atelier-visual');});
         fragment.querySelectorAll('[id]').forEach(function(el){el.removeAttribute('id');});
@@ -860,7 +860,7 @@ body:has(#codex-reader:not([hidden])) .wrap>.codex-theme-switch{
                 var articleDoc=new DOMParser().parseFromString(await res.text(),'text/html');
                 if(request!==readerRequest||!readerOpen)return;
                 var fragment=document.createElement('div');fragment.className='codex-imported-content';
-                var target=articleDoc.querySelector('main,article')||articleDoc.body;
+                var target=articleDoc.querySelector('main')||articleDoc.body;
                 fragment.innerHTML=target.innerHTML;
                 // Retain illustration-specific inline dimensions, while discarding legacy page layout.
                 fragment.querySelectorAll('img,figure,figcaption,picture,svg').forEach(function(el){el.dataset.atelierVisual='';});
@@ -906,7 +906,7 @@ body:has(#codex-reader:not([hidden])) .wrap>.codex-theme-switch{
                 var articleDoc=new DOMParser().parseFromString(await res.text(),'text/html');
                 if(request!==readerRequest||!readerOpen)return;
                 var fragment=document.createElement('div');fragment.className='codex-imported-content';
-                fragment.innerHTML=(articleDoc.querySelector('main,article')||articleDoc.body).innerHTML;
+                fragment.innerHTML=(articleDoc.querySelector('main')||articleDoc.body).innerHTML;
                 readerSetContent(cleanFragment(fragment,fragmentUrl));
               }catch(err){if(request===readerRequest)readerMessage('Article indisponible pour le moment.',fragmentUrl);}
             });readerMenu.appendChild(btn);
@@ -982,7 +982,7 @@ body:has(#codex-reader:not([hidden])) .wrap>.codex-theme-switch{
                 if(request!==readerRequest||!readerOpen||selection!==profileSelection)return;
                 var page=new DOMParser().parseFromString(html,'text/html');
                 var fragment=document.createElement('div');fragment.className='codex-imported-content';
-                fragment.innerHTML=(page.querySelector('main,article')||page.body).innerHTML;
+                fragment.innerHTML=(page.querySelector('main')||page.body).innerHTML;
                 // Fragment-specific CSS is part of the original design (music capsules, etc.).
                 // Keep trusted CSS scoped to this imported content, not the whole site.
                 fragment.querySelectorAll('style').forEach(function(style){
@@ -1086,7 +1086,7 @@ body:has(#codex-reader:not([hidden])) .wrap>.codex-theme-switch{
                   var response=await fetch(articleUrl);if(!response.ok)throw Error('HTTP '+response.status);
                   var articleDoc=new DOMParser().parseFromString(await response.text(),'text/html');
                   if(request!==readerRequest||!readerOpen||!btn.isConnected)return;
-                  var target=articleDoc.querySelector('main,article')||articleDoc.body;
+                  var target=articleDoc.querySelector('main')||articleDoc.body;
                   var fragment=document.createElement('div');fragment.className='codex-imported-content';
                   fragment.innerHTML=target.innerHTML;
                   if(!fragment.textContent.trim()&&!fragment.querySelector('img,video,iframe'))throw Error('Empty article');
