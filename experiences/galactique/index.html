@@ -729,6 +729,12 @@ window.__G = { PT_VERT: PT_VERT, STAR_FRAG: STAR_FRAG, NEB_FRAG: NEB_FRAG, DUST_
   var hover = null, selected = null, flight = null, lastSel = new T.Vector3();
   var tmpV = new T.Vector3(), ZERO = new T.Vector3();
   function select(id) {
+    // Même parcours que l'Héliosphère : fermer le lecteur avant le vol vers une autre rubrique.
+    // L'iframe ne doit pas rester visible au-dessus de la galaxie pendant la transition.
+    if (!readerOverlay.hidden) {
+      readerOverlay.hidden = true;
+      readerFrame.removeAttribute('src');
+    }
     selected = id;
     var key = id || 'home', s = SECTIONS[key];
     Object.keys(tabButtons).forEach(function (k) { tabButtons[k].setAttribute('aria-current', k === key ? 'true' : 'false'); });
