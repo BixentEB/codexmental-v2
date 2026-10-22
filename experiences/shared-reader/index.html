@@ -1320,6 +1320,8 @@ html,body{background:transparent!important;background-color:transparent!importan
   document.addEventListener('keydown',function(e){if(e.key==='Escape'&&readerOpen){e.preventDefault();closeCodexReader();}});
 
 document.getElementById('shared-reader-exit').addEventListener('click',function(){readerClose.click()});
+  // Les clics dans une iframe ne remontent pas au document Galactique : avertir le parent.
+  document.addEventListener('pointerdown',function(){if(window.parent!==window)window.parent.postMessage({codexReaderOutsidePointer:true},location.origin);},true);
 var section=new URLSearchParams(location.search).get('section')||'codex';openCodexReader(section);
 window.addEventListener('message',function(e){if(e.origin===location.origin&&e.data&&e.data.section)openCodexReader(e.data.section)});
 })();</script><script id="codex-mobile-clean">
