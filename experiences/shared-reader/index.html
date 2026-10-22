@@ -786,6 +786,15 @@ html,body{background:transparent!important;background-color:transparent!importan
 .codex-reader #codex-reader-subcategories button.active{
  color:#ffdc9e!important;background:rgba(79,56,37,.88)!important;
 }
+</style><style id="codex-reader-title-seam-fix-20261022">
+/* Supprimer le voile résiduel de l'en-tête, y compris le fond historique de .codex-reader-top. */
+.codex-reader .codex-reader-top{
+ background:transparent!important;background-color:transparent!important;
+ background-image:none!important;border:0!important;box-shadow:none!important;
+ backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
+}
+.codex-reader .codex-reader-top::before,
+.codex-reader .codex-reader-top::after{content:none!important;display:none!important}
 </style></head><body><button id="shared-reader-exit" type="button" aria-label="Retour à la galaxie">✕ Galaxie</button><section id="codex-reader" class="codex-reader" hidden aria-label="Lecture d'une rubrique CODEX">
   <div class="codex-reader-shell">
     <div class="codex-reader-top">
