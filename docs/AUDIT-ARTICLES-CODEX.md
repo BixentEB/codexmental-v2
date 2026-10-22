@@ -36,3 +36,19 @@ Branche contrôlée : `feature/unified-article-catalog`. Catalogue : `assets/dat
 Ne pas archiver `blog/blog.html` ni fusionner vers `main` avant validation du nouveau lecteur en navigateur. Le nouveau catalogue JSON reflète volontairement les 29 entrées historiques, y compris les entrées manquantes ; il ne faut pas interpréter leur présence comme une publication valide.
 
 Pistes : ajouter un état `draft` / `published` au catalogue ; masquer les brouillons dans le visionneur ; convertir les vraies pages complètes en fragments sans effacer de contenu ; réparer les liens seulement après identification des sources. Tester les deux univers et le mobile.
+
+## Décision éditoriale — 22 octobre 2026
+
+Le propriétaire du site confirme que les neuf références ci-dessous correspondent à des articles **jamais rédigés** (et non à des pertes de fichiers). Elles sont retirées du catalogue actif et du menu historique ; les deux fichiers HTML vides ont été supprimés. Cette liste reste une simple réserve d'idées, sans obligation de publication :
+
+- `hp/arborescence` — Pensée arborescente et adaptation
+- `reves/intro` — Introduction sur les rêves
+- `reves/reves` — Rêves
+- `reves/cauchemars` — Cauchemars
+- `reves/paralysis` — Paralysies du sommeil
+- `reves/experiences` — Expériences atypiques
+- `symbol/tarot/intro` — Tarot, introduction
+- `symbol/symbolisme` — Sorcières et Lumières
+- `symbol/synchronicite-numerique` — Synchronicités numériques
+
+**Catalogue actif après nettoyage : 20 références.** Les autres pages d'exemple (`psy/article2.html`, `altstates/revelucide.html`) restent à examiner séparément ; aucune modification de leur contenu n'a été effectuée.
