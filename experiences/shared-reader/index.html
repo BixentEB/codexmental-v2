@@ -741,6 +741,17 @@ body:has(#codex-reader:not([hidden])) .wrap>.codex-theme-switch{
 .codex-reader #codex-reader-menu .codex-reader-menu-item{color:#e8edff!important}
 .codex-reader #codex-reader-menu .codex-reader-menu-item.active{background:rgba(224,182,105,.23)!important;color:#ffe1a9!important}
 @media(max-width:1049px){.codex-reader .codex-reader-shell{width:min(94vw,900px)!important}}
+</style><style id="codex-shared-reader-transparent-layer-20261022">
+/* Le lecteur est une iframe superposée à Galactique : seul le texte et les panneaux doivent être opaques. */
+:root{color-scheme:normal!important}
+html,body{background:transparent!important;background-color:transparent!important;background-image:none!important}
+#codex-reader,.codex-reader,.codex-reader-shell,.codex-reader-layout,.codex-reader-top{
+ background:transparent!important;background-color:transparent!important;background-image:none!important;
+ box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
+}
+@media(min-width:701px){
+ .codex-reader .codex-reader-layout{height:clamp(340px,74dvh,780px)!important;max-height:calc(100dvh - 190px)!important}
+}
 </style></head><body><button id="shared-reader-exit" type="button" aria-label="Retour à la galaxie">✕ Galaxie</button><section id="codex-reader" class="codex-reader" hidden aria-label="Lecture d'une rubrique CODEX">
   <div class="codex-reader-shell">
     <div class="codex-reader-top">
