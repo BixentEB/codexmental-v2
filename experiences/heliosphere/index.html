@@ -1504,18 +1504,19 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
         });
         readerMessage('Sélectionnez un article.');
         try{
-          var blogRoute=new URL('../../blog/blog.html',location.href);
-          var blogResponse=await fetch(blogRoute);
+          var catalogUrl=new URL('../../assets/data/codex-articles.json',location.href);
+          var blogResponse=await fetch(catalogUrl);
           if(!blogResponse.ok)throw Error('HTTP '+blogResponse.status);
-          var blogDoc=new DOMParser().parseFromString(await blogResponse.text(),'text/html');
+          var catalog=await blogResponse.json();
+          if(!catalog||!Array.isArray(catalog.groups))throw Error('Invalid article catalog');
           if(request!==readerRequest||!readerOpen)return;
-          var blogBase=new URL('../../blog/articles/',location.href);
-          blogDoc.querySelectorAll('#viewer-menu details').forEach(function(group){
-            var links=group.querySelectorAll('a[data-viewer]');if(!links.length)return;
+          var siteBase=new URL('../../',location.href);
+          catalog.groups.forEach(function(group){
+            var links=Array.isArray(group.articles)?group.articles.filter(function(article){return article.status!=='draft';}):[];if(!links.length)return;
             var accordion=document.createElement('details');
             accordion.className='codex-reader-accordion';
             var heading=document.createElement('summary');
-            heading.textContent=(group.querySelector('summary')?.textContent.trim()||'Articles').replace(/^[^\p{L}\p{N}]+/u,'').trim();
+            heading.textContent=(group.title||'Articles').replace(/^[^\p{L}\p{N}]+/u,'').trim();
             accordion.appendChild(heading);
             var articleList=document.createElement('div');articleList.className='codex-reader-article-list';
             accordion.appendChild(articleList);
@@ -1524,14 +1525,14 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
             });
             // Les expressions d'intelligences restent distinctes dans la colonne
             // de gauche, mais appartiennent à la catégorie IA du menu supérieur.
-            var isExpressions=Array.from(links).some(function(link){return (link.dataset.viewer||'').startsWith('aiautor/');});
+            var isExpressions=links.some(function(link){return (link.id||'').startsWith('aiautor/');});
             if(isExpressions)heading.textContent="Expressions d'intelligences";
             codexArticleGroups.push(accordion);
             readerMenu.appendChild(accordion);
             links.forEach(function(link){
               var btn=document.createElement('button');btn.type='button';btn.className='codex-reader-menu-item';
-              btn.textContent=link.textContent.trim().replace(/^[🌙⚠️🧊🔮]\s*/u,'');
-              var articleUrl=new URL(link.dataset.viewer+'.html',blogBase).href;
+              btn.textContent=(link.title||'Article').trim().replace(/^[🌙⚠️🧊🔮]\s*/u,'');
+              var articleUrl=new URL(link.path,siteBase).href;
               btn.addEventListener('click',async function(){
                 readerMenu.querySelectorAll('button').forEach(function(x){x.classList.remove('active');});
                 btn.classList.add('active');
