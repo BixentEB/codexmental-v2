@@ -80,11 +80,6 @@
       "title": "🧬 Haut Potentiel",
       "articles": [
         {
-          "id": "hp/arborescence",
-          "title": "Pensée arborescente et adaptation",
-          "path": "blog/articles/hp/arborescence.html"
-        },
-        {
           "id": "hp/cameleon",
           "title": "Le Caméléon",
           "path": "blog/articles/hp/cameleon.html",
@@ -121,59 +116,13 @@
       ]
     },
     {
-      "id": "reves-onirisme",
-      "title": "🌙 Rêves & Onirisme",
-      "articles": [
-        {
-          "id": "reves/intro",
-          "title": "Introduction sur les rêves",
-          "path": "blog/articles/reves/intro.html"
-        },
-        {
-          "id": "reves/reves",
-          "title": "🌙 Rêves",
-          "path": "blog/articles/reves/reves.html"
-        },
-        {
-          "id": "reves/cauchemars",
-          "title": "⚠️ Cauchemars",
-          "path": "blog/articles/reves/cauchemars.html"
-        },
-        {
-          "id": "reves/paralysis",
-          "title": "🧊 Paralysies du sommeil",
-          "path": "blog/articles/reves/paralysis.html"
-        },
-        {
-          "id": "reves/experiences",
-          "title": "🔮 Expériences atypiques",
-          "path": "blog/articles/reves/experiences.html"
-        }
-      ]
-    },
-    {
       "id": "symbolique-esoterisme",
       "title": "🔮 Symbolique & ésotérisme",
       "articles": [
         {
-          "id": "symbol/tarot/intro",
-          "title": "TAROT",
-          "path": "blog/articles/symbol/tarot/intro.html"
-        },
-        {
           "id": "symbol/tarot/13",
           "title": "XIII. MORT",
           "path": "blog/articles/symbol/tarot/13.html"
-        },
-        {
-          "id": "symbol/symbolisme",
-          "title": "Sorcières et Lumières",
-          "path": "blog/articles/symbol/symbolisme.html"
-        },
-        {
-          "id": "symbol/synchronicite-numerique",
-          "title": "Synchronicités numériques",
-          "path": "blog/articles/symbol/synchronicite-numerique.html"
         }
       ]
     },
