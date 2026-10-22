@@ -45,6 +45,18 @@
 #solar-observatory-themes{min-height:30px}
 #solar-theme-menu.solar-theme-popover{min-width:170px!important}
 #solar-theme-menu a[href="../heliosphere/"]{color:#f0c477!important;font-weight:700;background:#403020}
+</style><style id="codex-reader-desktop-space-20261022">
+@media(min-width:1050px){
+ .codex-reader-shell{width:min(1560px,94vw)!important;max-width:none!important;max-height:calc(100dvh - 68px)!important}
+ .codex-reader-layout{grid-template-columns:minmax(205px,260px) minmax(0,1fr)!important;max-height:calc(100dvh - 142px)!important;gap:18px!important}
+ #codex-reader-content{max-height:calc(100dvh - 142px)!important;font-size:clamp(15px,1vw,17px)!important;line-height:1.75!important}
+ #codex-reader-content .codex-imported-content{max-width:100%;overflow-wrap:anywhere}
+ #codex-reader-content .codex-imported-content img{max-width:100%;height:auto;object-fit:contain}
+}
+#codex-reader-content .music-player{min-height:200px;aspect-ratio:16/9}
+#codex-reader-content .music-player iframe{display:block;width:100%;height:100%;border:0}
+#codex-reader-content .music-capsule{display:grid;grid-template-columns:minmax(0,1fr) minmax(250px,38%);gap:22px;align-items:start;margin:18px 0;padding:16px;border:1px solid rgba(180,195,240,.2)!important;border-radius:12px}
+@media(max-width:760px){#codex-reader-content .music-capsule{grid-template-columns:1fr}}
 </style></head><body>
 <title>Héliosphère — CODEX Mental</title><link rel="icon" type="image/png" href="../../assets/images/favicon-96x96.png">
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -1210,7 +1222,7 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
       var content=document.createElement('div');
       content.className='codex-imported-content';
       function cleanFragment(fragment,base){
-        fragment.querySelectorAll('script,style,link,iframe,header,footer,nav,button,[onclick],.site-header,.site-footer,.codex-theme-switch').forEach(function(el){el.remove();});
+        fragment.querySelectorAll('script,style,link,header,footer,nav,button,[onclick],.site-header,.site-footer,.codex-theme-switch').forEach(function(el){el.remove();});
         fragment.querySelectorAll('[style]').forEach(function(el){if(!el.matches('[data-atelier-visual]'))el.removeAttribute('style');});
         fragment.querySelectorAll('[data-atelier-visual]').forEach(function(el){el.removeAttribute('data-atelier-visual');});
         fragment.querySelectorAll('[id]').forEach(function(el){el.removeAttribute('id');});
