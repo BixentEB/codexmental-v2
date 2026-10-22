@@ -1061,7 +1061,7 @@ body:has(#codex-reader:not([hidden])) .wrap>.codex-theme-switch{
           if(request!==readerRequest||!readerOpen)return;
           var siteBase=new URL('../../',location.href);
           catalog.groups.forEach(function(group){
-            var links=Array.isArray(group.articles)?group.articles:[];if(!links.length)return;
+            var links=Array.isArray(group.articles)?group.articles.filter(function(article){return article.status!=='draft';}):[];if(!links.length)return;
             var accordion=document.createElement('details');
             accordion.className='codex-reader-accordion';
             var heading=document.createElement('summary');
