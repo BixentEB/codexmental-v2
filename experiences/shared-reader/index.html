@@ -795,6 +795,28 @@ html,body{background:transparent!important;background-color:transparent!importan
 }
 .codex-reader .codex-reader-top::before,
 .codex-reader .codex-reader-top::after{content:none!important;display:none!important}
+</style><style id="codex-binder-tabs-20261023">
+@media (min-width: 769px){
+ .codex-reader .codex-reader-layout{grid-template-columns:minmax(205px,230px) minmax(0,1fr)!important}
+ .codex-reader #codex-reader-menu{position:relative!important;overflow-x:hidden!important}
+ .codex-reader #codex-reader-menu #codex-reader-subcategories:not([hidden]){
+  display:flex!important;flex-wrap:nowrap!important;gap:2px!important;align-items:stretch!important;
+  width:100%!important;max-width:100%!important;min-width:0!important;
+  padding:0 2px!important;margin:0 0 5px!important;border:0!important;
+  overflow-x:auto!important;overflow-y:hidden!important;scrollbar-width:thin!important;
+  flex-shrink:0!important;
+ }
+ .codex-reader #codex-reader-menu #codex-reader-subcategories button{
+  flex:1 0 auto!important;min-width:0!important;max-width:180px!important;
+  height:34px!important;white-space:nowrap!important;overflow:hidden!important;
+  text-overflow:ellipsis!important;font-size:10px!important;line-height:1!important;
+  padding:0 7px!important;border-radius:9px 9px 0 0!important;
+  border-bottom:1px solid rgba(219,181,115,.45)!important;
+ }
+ .codex-reader #codex-reader-menu #codex-reader-subcategories button.active{
+  border-bottom-color:transparent!important;
+ }
+}
 </style></head><body><button id="shared-reader-exit" type="button" aria-label="Retour à la galaxie">✕ Galaxie</button><section id="codex-reader" class="codex-reader" hidden aria-label="Lecture d'une rubrique CODEX">
   <div class="codex-reader-shell">
     <div class="codex-reader-top">
@@ -1155,7 +1177,8 @@ html,body{background:transparent!important;background-color:transparent!importan
           if(request!==readerRequest||!readerOpen)return;
           var siteBase=new URL('../../',location.href);
           catalog.groups.forEach(function(group){
-            var links=Array.isArray(group.articles)?group.articles.filter(function(article){return article.status!=='draft';}):[];if(!links.length)return;
+            var links=Array.isArray(group.articles)?group.articles.filter(function(article){return article.status!=='draft';}):[];
+            // Keep declared categories visible even when all their articles are drafts.
             var accordion=document.createElement('details');
             accordion.className='codex-reader-accordion';
             var heading=document.createElement('summary');
@@ -1238,8 +1261,10 @@ html,body{background:transparent!important;background-color:transparent!importan
           subcategoryBar=document.createElement('nav');
           subcategoryBar.id='codex-reader-subcategories';
           subcategoryBar.setAttribute('aria-label','Sous-catégories du Codex');
-          categoryBar.after(subcategoryBar);
+          readerMenu.prepend(subcategoryBar);
         }
+        // The subcategory tabs belong to the article binder, not the top navigation.
+        readerMenu.prepend(subcategoryBar);
         function showGroup(group){
           codexArticleGroups.forEach(function(other){
             other.hidden=other!==group;
