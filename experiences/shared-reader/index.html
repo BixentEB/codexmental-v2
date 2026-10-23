@@ -838,6 +838,8 @@ html,body{background:transparent!important;background-color:transparent!importan
     readerPending=null;readerTitle.textContent=SECTIONS[id].name;
     reader.hidden=false;readerOpen=true;
     document.body.classList.add('codex-reader-open');
+    readerMenu.style.display='';
+    readerContent.classList.remove('lab-showcase-host');
     readerMenu.replaceChildren();
     readerMenu.classList.remove('codex-category-mode');
     var oldCategoryBar=document.getElementById('codex-reader-categories');
