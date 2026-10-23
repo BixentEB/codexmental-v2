@@ -85,6 +85,31 @@ body:has(#gal-reader-overlay:not([hidden])) .stage .card a{
   right:8px!important;bottom:58px!important;width:min(188px,48vw)!important;padding:8px!important;
  }
 }
+</style><style id="codex-gal-system-card-responsive-20261023">
+/* Fiche contextuelle lisible et refermable sans interrompre la lecture. */
+.stage .card{box-sizing:border-box}
+.stage .card .gal-card-dismiss{
+ margin-left:auto;flex:none;border:0;background:transparent;color:#dce4ff;
+ font:600 18px/1 system-ui;cursor:pointer;padding:3px 6px;border-radius:6px;
+}
+.stage .card .gal-card-dismiss:hover,.stage .card .gal-card-dismiss:focus-visible{background:rgba(170,186,240,.16);outline-offset:2px}
+body:has(#gal-reader-overlay:not([hidden])) .stage .card{
+ width:max-content!important;min-width:225px!important;max-width:min(340px,calc(100vw - 24px))!important;
+}
+body:has(#gal-reader-overlay:not([hidden])) .stage .card p{
+ display:block!important;-webkit-line-clamp:unset!important;overflow:visible!important;
+ font-size:11px!important;line-height:1.5!important;max-width:310px;
+}
+body:has(#gal-reader-overlay:not([hidden])) .stage .card.gal-card-dismissed{
+ opacity:0!important;visibility:hidden!important;pointer-events:none!important;
+}
+@media(max-width:700px){
+ body:has(#gal-reader-overlay:not([hidden])) .stage .card{
+  width:min(285px,calc(100vw - 20px))!important;min-width:0!important;
+  max-height:32dvh!important;overflow:auto!important;right:10px!important;bottom:70px!important;
+ }
+ body:has(#gal-reader-overlay:not([hidden])) .stage .card p{max-width:none!important}
+}
 </style><style id="codex-shared-brand-20261022">
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&display=swap');
 .codex-experience-nav .codex-home,.codex-experience-nav.codex-lucioles .codex-home{font-family:'Syne',system-ui,sans-serif!important;font-size:clamp(12px,1.15vw,18px)!important;font-weight:800!important;letter-spacing:clamp(.035em,.13vw,.13em)!important;line-height:1.1!important;white-space:nowrap;transition:color .2s,text-shadow .2s}
@@ -275,7 +300,7 @@ body:has(.codex-solar-lucioles) .codex-lucioles{--luciole:#ffd58c;--luciole-glow
     <div id="labels"></div>
 
     <section class="card" id="card" aria-live="polite">
-      <h3><span class="dot" id="cardDot"></span><span id="cardTitle">Codex</span></h3>
+      <h3><span class="dot" id="cardDot"></span><span id="cardTitle">Codex</span><button class="gal-card-dismiss" id="cardDismiss" type="button" aria-label="Masquer la fiche du système" title="Masquer la fiche">×</button></h3>
       <p id="cardText"></p>
       <button class="btn" id="back" type="button">Retour à la galaxie</button>
     </section>
@@ -780,6 +805,7 @@ window.__G = { PT_VERT: PT_VERT, STAR_FRAG: STAR_FRAG, NEB_FRAG: NEB_FRAG, DUST_
       readerOverlay.hidden = true;
       readerFrame.removeAttribute('src');
     }
+    document.getElementById("card").classList.remove("gal-card-dismissed");
     selected = id;
     var key = id || 'home', s = SECTIONS[key];
     Object.keys(tabButtons).forEach(function (k) { tabButtons[k].setAttribute('aria-current', k === key ? 'true' : 'false'); });
@@ -792,6 +818,7 @@ window.__G = { PT_VERT: PT_VERT, STAR_FRAG: STAR_FRAG, NEB_FRAG: NEB_FRAG, DUST_
     startFlight(id);
   }
   document.getElementById('back').addEventListener('click', function () { select(null); });
+  document.getElementById('cardDismiss').addEventListener('click', function () { document.getElementById('card').classList.add('gal-card-dismissed'); });
   function camOffsetFor(S) {
     var out = new T.Vector3(S.pos.x, 0, S.pos.z); if (out.lengthSq() < 1e-6) out.set(1, 0, 0); out.normalize();
     var tan = new T.Vector3(-out.z, 0, out.x);
