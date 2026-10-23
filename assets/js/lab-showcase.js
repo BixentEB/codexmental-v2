@@ -3,7 +3,8 @@
 'use strict';
 const projects=[
  {id:'noxdl',name:'NoxDL',mark:'↓',platform:'Windows',status:'Développement',visibility:'Diffusion publique envisagée',license:'Gratuit envisagé',accent:'#94c8ff',summary:'Télécharger, classer et automatiser ses médias depuis une interface unique.',detail:'Trois modes complémentaires : Standard pour un téléchargement à la demande, Chasseur pour les listes de liens et Radar pour la détection automatisée. Le projet s’appuie sur Python, yt-dlp et FFmpeg.'},
- {id:'perimgo',name:'Périm-Go',mark:'◷',platform:'Android',status:'Prototype fonctionnel',visibility:'Tests privés',license:'Licences envisagées',accent:'#92e5b5',summary:'Suivi des stocks et des dates de péremption, directement depuis un smartphone.',detail:'Scan des codes-barres, inventaire local et gestion des entrées et sorties. Les déclinaisons personnelles et professionnelles sont étudiées séparément. Aucune version publique n’est proposée à ce stade.'},
+ {id:'perimgo-home',name:'Périm-Go Home',tags:['Gestion','Quotidien'],features:['Scan des codes-barres','Inventaire local','Suivi des entrées et sorties'],mark:'◷',platform:'Android',status:'Prototype fonctionnel',visibility:'Tests privés',license:'Licences envisagées',accent:'#92e5b5',summary:'Suivi des stocks et des dates de péremption, directement depuis un smartphone.',detail:'Scan des codes-barres, inventaire local et gestion des entrées et sorties. Cette édition est destinée à un usage personnel. Aucune version publique n’est proposée à ce stade.'},
+ {id:'perimgo-business',name:'Périm-Go Business',tags:['Gestion','Commerce'],features:['Inventaire professionnel','Scan des produits','Suivi des mouvements'],mark:'◷',platform:'Android',status:'Prototype en développement',visibility:'Diffusion privée',license:'À définir',accent:'#71d9bc',summary:'Gestion des stocks et des péremptions pour les professionnels.',detail:'Déclinaison professionnelle de Périm-Go, distincte de l’édition personnelle. Les modalités de distribution et de licence restent à préciser.'},
  {id:'dexlibera',name:'DexLibera',mark:'✧',platform:'Projet numérique',status:'À documenter',visibility:'Non publié',license:'À définir',accent:'#d8b6ff',summary:'Un projet à retrouver prochainement dans le Laboratoire.',detail:'La présentation détaillée, les fonctionnalités et les conditions de diffusion seront ajoutées lorsqu’elles seront prêtes.'},
  {id:'codex',name:'CODEX Mental',mark:'✦',platform:'Web',status:'En évolution',visibility:'Public',license:'Consultation libre',accent:'#f4c68b',summary:'Un univers interactif pour relier écriture, réflexion et expérimentation.',detail:'Deux univers de navigation, Galactique et Héliosphère, pour explorer les publications, créations et expériences de CODEX Mental.'},
  {id:'futur',name:'À venir',mark:'◇',platform:'Expérimentations',status:'Exploration',visibility:'À définir',license:'À définir',accent:'#9fdfe6',summary:'Prototypes, idées et expériences en cours de conception.',detail:'Cet espace accueillera les futures applications, expériences et créations, sans annoncer de téléchargement avant leur disponibilité.'}
@@ -88,6 +89,22 @@ function mount(target,menu){
   .codex-reader .lab-showcase-host .lab-showcase{height:100%;justify-content:center}
   .codex-reader .lab-showcase-host .lab-detail{padding:clamp(8px,2vw,22px)}
   @media(max-width:700px){.codex-reader .lab-intro-top{align-items:flex-start;flex-direction:column;gap:10px;padding:12px 2px}}
+  .codex-reader .lab-intro-top{padding:2px 0 10px!important;margin-bottom:8px!important;gap:12px!important}
+  .codex-reader .lab-intro-top h3{display:none!important}
+  .codex-reader .lab-intro-top p{font-size:.82rem!important;max-width:760px!important}
+  .codex-reader .lab-intro-top a{font-size:.83rem!important}
+  .codex-reader .lab-showcase-host{padding:clamp(14px,1.7vw,24px)!important}
+  .lab-showcase .lab-detail{gap:11px!important}
+  .lab-showcase .lab-heading h3{font-size:clamp(1.3rem,2vw,1.7rem)!important}
+  .lab-showcase .lab-heading .lab-mark{width:43px!important;height:43px!important;font-size:23px!important}
+  .lab-showcase .lab-tags{display:flex;flex-wrap:wrap;gap:7px}
+  .lab-showcase .lab-tag{font-size:.72rem;letter-spacing:.025em;color:#b7d8ee;border-bottom:1px solid rgba(160,207,236,.5);padding:2px 1px}
+  .lab-showcase .lab-features{font-size:.85rem;color:#dce7f6}
+  .lab-showcase .lab-features strong{font-weight:650}
+  .lab-showcase .lab-features ul{display:flex;flex-wrap:wrap;gap:5px 24px;padding-left:18px;margin:6px 0 0}
+  .lab-showcase .lab-metadata{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:0!important}
+  .lab-showcase .lab-meta{padding:5px 9px!important}
+  @media(max-width:700px){.lab-showcase .lab-metadata{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
   .lab-showcase .lab-wheel button{font:inherit;color:#c4cee7;cursor:pointer}
   .lab-showcase .lab-wheel .lab-arrow{align-self:center;background:transparent;border:0;font-size:20px;line-height:1;padding:7px 24px}
   .lab-showcase .lab-wheel .lab-choice{border:1px solid transparent;background:rgba(100,116,156,.07);border-radius:13px;padding:7px 6px;display:flex;align-items:center;gap:9px;text-align:left;opacity:.65;transform:scale(.93);transition:transform .2s,opacity .2s,background .2s}
@@ -119,10 +136,12 @@ function mount(target,menu){
  let selected=0;
  const choices=[];
  function choose(i){selected=(i+projects.length)%projects.length;const item=projects[selected];choices.forEach((b,j)=>b.setAttribute('aria-pressed',String(j===selected)));detail.replaceChildren();
+ const tags=node('div','lab-tags');(item.tags||({noxdl:['Multimédia','Automatisation'],dexlibera:['Création'],codex:['Web','Création'],futur:['Expérimentation']}[item.id]||[])).forEach(t=>tags.append(node('span','lab-tag',t)));detail.append(tags);
  const heading=node('div','lab-heading'),mark=node('span','lab-mark',item.mark);mark.style.setProperty('--lab-accent',item.accent);
  const headingText=node('div');headingText.append(node('h3','',item.name),node('div','lab-platform',item.platform));heading.append(mark,headingText);
  detail.append(heading,node('p','lab-summary',item.summary),node('p','lab-description',item.detail));
- const metadata=node('div','lab-metadata');[['État',item.status],['Diffusion',item.visibility],['Licence',item.license]].forEach(([label,value])=>{const m=node('div','lab-meta');m.append(node('small','',label),node('strong','',value));metadata.append(m);});detail.append(metadata);
+ if(item.features?.length){const features=node('div','lab-features');features.append(node('strong','', 'Fonctions principales'));const ul=node('ul');item.features.forEach(t=>ul.append(node('li','',t)));features.append(ul);detail.append(features);}
+ const metadata=node('div','lab-metadata');[['État',item.status],['Diffusion',item.visibility],['Licence',item.license],['Lien vers','Bientôt sur le Lab']].forEach(([label,value])=>{const m=node('div','lab-meta');m.append(node('small','',label),node('strong','',value));metadata.append(m);});detail.append(metadata);
  /* No scrollIntoView: it can scroll the entire reader and hide the showcase header. */
  }
  const prev=node('button','lab-arrow','⌃');prev.type='button';prev.setAttribute('aria-label','Application précédente');prev.addEventListener('click',()=>choose(selected-1));wheel.append(prev);
