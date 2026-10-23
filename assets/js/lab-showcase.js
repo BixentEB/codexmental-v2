@@ -45,6 +45,34 @@ function mount(target,menu){
   .lab-showcase .lab-meta:last-child{border-right:0!important}
   .lab-showcase .lab-heading h3,.lab-showcase .lab-summary{text-shadow:0 2px 10px #000d!important}
   @media(max-width:700px){.codex-reader .lab-wheel-host .lab-wheel{flex-direction:row!important;overflow-x:auto!important}.codex-reader .lab-wheel-host .lab-wheel .lab-choice{width:auto!important;flex:0 0 auto!important;transform:none!important}.codex-reader .lab-wheel-host .lab-wheel .lab-arrow{display:none!important}.lab-showcase .lab-meta{border-right:0!important;border-bottom:1px solid rgba(205,211,230,.12)!important}}
+  /* Ambiance plus lumineuse et moins de masses grises, sans sacrifier le contraste. */
+  .codex-reader .codex-reader-layout:has(.lab-showcase-host){gap:18px!important}
+  .codex-reader .lab-showcase-host{
+    background:linear-gradient(135deg,rgba(24,44,70,.69),rgba(14,31,56,.74))!important;
+    border:1px solid rgba(159,207,243,.22)!important;
+    border-radius:16px!important;
+    box-shadow:0 12px 35px rgba(0,0,0,.12)!important;
+    -webkit-backdrop-filter:blur(17px) saturate(1.15)!important;
+    backdrop-filter:blur(17px) saturate(1.15)!important;
+    padding:clamp(18px,2.5vw,32px)!important;
+  }
+  .codex-reader #codex-reader-menu.lab-wheel-host{
+    background:linear-gradient(165deg,rgba(22,40,64,.74),rgba(12,27,48,.82))!important;
+    border:1px solid rgba(159,207,243,.2)!important;
+    border-radius:16px!important;
+    -webkit-backdrop-filter:blur(15px)!important;
+    backdrop-filter:blur(15px)!important;
+  }
+  .codex-reader .lab-wheel-host .lab-wheel .lab-choice[aria-pressed="true"]{
+    background:linear-gradient(100deg,rgba(159,207,243,.15),rgba(159,207,243,.04))!important;
+    border-color:rgba(190,220,244,.4)!important;
+  }
+  .lab-showcase .lab-intro{padding-bottom:19px!important;border-bottom-color:rgba(192,220,245,.28)!important}
+  .lab-showcase .lab-intro h3{color:#f5faff!important;font-weight:700!important}
+  .lab-showcase .lab-intro a{color:#ffe0a5!important}
+  .lab-showcase .lab-meta{border-right-color:rgba(192,220,245,.22)!important}
+  .lab-showcase .lab-meta strong{color:#f7faff!important}
+  @media(max-width:700px){.codex-reader .lab-showcase-host{padding:16px!important}}
   .lab-showcase .lab-wheel button{font:inherit;color:#c4cee7;cursor:pointer}
   .lab-showcase .lab-wheel .lab-arrow{align-self:center;background:transparent;border:0;font-size:20px;line-height:1;padding:7px 24px}
   .lab-showcase .lab-wheel .lab-choice{border:1px solid transparent;background:rgba(100,116,156,.07);border-radius:13px;padding:7px 6px;display:flex;align-items:center;gap:9px;text-align:left;opacity:.65;transform:scale(.93);transition:transform .2s,opacity .2s,background .2s}
