@@ -2808,4 +2808,5 @@ document.addEventListener('DOMContentLoaded',function(){
  const orbit=document.getElementById('orbits');if(orbit){try{const v=localStorage.getItem('codex.solar.orbits');if(v!==null){orbit.checked=v==='true';orbit.dispatchEvent(new Event('change'))}}catch(e){}orbit.addEventListener('change',function(){try{localStorage.setItem('codex.solar.orbits',String(orbit.checked))}catch(e){}})}
 });
 </script>
+<link rel="stylesheet" href="../../assets/css/reader-layout.css">
 </body></html>
