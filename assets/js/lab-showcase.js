@@ -13,6 +13,8 @@ function mount(target,menu){
  if(!target)return;
  if(menu){menu.style.display='';menu.classList.add('lab-wheel-host');}
  target.classList.add('lab-showcase-host');
+ const layout=target.closest('.codex-reader-layout');
+ if(layout){layout.parentElement?.querySelectorAll(':scope > .lab-intro-top').forEach(el=>el.remove());}
  target.replaceChildren();
  if(!document.getElementById('codex-lab-showcase-css')){
   const style=node('style');style.id='codex-lab-showcase-css';style.textContent=`
@@ -73,6 +75,19 @@ function mount(target,menu){
   .lab-showcase .lab-meta{border-right-color:rgba(192,220,245,.22)!important}
   .lab-showcase .lab-meta strong{color:#f7faff!important}
   @media(max-width:700px){.codex-reader .lab-showcase-host{padding:16px!important}}
+  /* Trois zones distinctes : introduction pleine largeur, roue, application. */
+  .codex-reader .lab-intro-top{
+    display:flex;align-items:center;justify-content:space-between;gap:22px;
+    padding:10px 2px 18px;margin:0 0 12px;
+    border-bottom:1px solid rgba(193,217,240,.25);
+    color:#f1f6ff;background:transparent;
+  }
+  .codex-reader .lab-intro-top h3{font-size:1.14rem;margin:0 0 6px;color:#fff;text-shadow:0 2px 9px #000b}
+  .codex-reader .lab-intro-top p{margin:0;max-width:780px;font-size:.91rem;line-height:1.55;color:#dce7f6;text-shadow:0 1px 7px #000b}
+  .codex-reader .lab-intro-top a{color:#ffe0a5;font-weight:700;text-decoration:underline;text-underline-offset:4px;white-space:nowrap;text-shadow:0 2px 8px #000c}
+  .codex-reader .lab-showcase-host .lab-showcase{height:100%;justify-content:center}
+  .codex-reader .lab-showcase-host .lab-detail{padding:clamp(8px,2vw,22px)}
+  @media(max-width:700px){.codex-reader .lab-intro-top{align-items:flex-start;flex-direction:column;gap:10px;padding:12px 2px}}
   .lab-showcase .lab-wheel button{font:inherit;color:#c4cee7;cursor:pointer}
   .lab-showcase .lab-wheel .lab-arrow{align-self:center;background:transparent;border:0;font-size:20px;line-height:1;padding:7px 24px}
   .lab-showcase .lab-wheel .lab-choice{border:1px solid transparent;background:rgba(100,116,156,.07);border-radius:13px;padding:7px 6px;display:flex;align-items:center;gap:9px;text-align:left;opacity:.65;transform:scale(.93);transition:transform .2s,opacity .2s,background .2s}
@@ -95,7 +110,7 @@ function mount(target,menu){
   document.head.appendChild(style);
  }
  const root=node('section','lab-showcase');
- const intro=node('div','lab-intro');
+ const intro=node('div','lab-intro-top');
  const introText=node('div');introText.append(node('h3','', 'Le Laboratoire officiel'),node('p','', 'Versions, téléchargements, tutoriels, historique des mises à jour et informations de licence seront regroupés dans un espace indépendant.'));
  const official=node('a','', 'Explorer le dépôt du Lab ↗');official.href='https://github.com/BixentEB/codexmental-lab';official.target='_blank';official.rel='noopener noreferrer';official.title='Le sous-domaine sera ajouté après sa configuration';
  intro.append(introText,official);
@@ -114,7 +129,7 @@ function mount(target,menu){
  projects.forEach((item,i)=>{const b=node('button','lab-choice');b.type='button';b.setAttribute('aria-pressed','false');const m=node('span','lab-mark',item.mark);m.style.setProperty('--lab-accent',item.accent);b.append(m,node('span','',item.name));b.addEventListener('click',()=>choose(i));wheel.append(b);choices.push(b);});
  const next=node('button','lab-arrow','⌄');next.type='button';next.setAttribute('aria-label','Application suivante');next.addEventListener('click',()=>choose(selected+1));wheel.append(next);
  wheel.addEventListener('wheel',e=>{if(Math.abs(e.deltaY)>Math.abs(e.deltaX)){e.preventDefault();choose(selected+(e.deltaY>0?1:-1));}},{passive:false});
- main.append(detail);root.append(intro,main);target.append(root);if(menu){menu.replaceChildren(wheel);}else{main.prepend(wheel);}choose(0);
+ main.append(detail);root.append(main);target.append(root);if(layout){layout.before(intro);}else{root.prepend(intro);intro.classList.add('lab-intro');}if(menu){menu.replaceChildren(wheel);}else{main.prepend(wheel);}choose(0);
 }
 window.CODEXLabShowcase={mount};
 })();
