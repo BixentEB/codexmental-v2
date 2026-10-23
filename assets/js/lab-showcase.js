@@ -27,6 +27,24 @@ function mount(target,menu){
   .lab-showcase .lab-intro a:hover,.lab-showcase .lab-intro a:focus-visible{background:rgba(171,132,66,.3)}
   .lab-showcase .lab-main{display:block;min-height:0;height:auto}
   .codex-reader .lab-wheel-host{padding:8px!important;overflow-y:auto!important;max-height:calc(76dvh - 60px)!important}\n  .lab-showcase .lab-wheel{display:flex;flex-direction:column;align-items:stretch;justify-content:center;gap:8px;border:1px solid rgba(173,194,245,.2);border-radius:18px;padding:8px;background:rgba(9,15,32,.7);overflow:hidden}
+  /* La roue est maintenant dans le menu du lecteur, hors de .lab-showcase. */
+  .codex-reader #codex-reader-menu.lab-wheel-host{display:flex!important;flex-direction:column!important;align-items:stretch!important;justify-content:center!important;gap:6px!important;background:rgba(9,15,32,.86)!important}
+  .codex-reader .lab-wheel-host .lab-wheel{display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:8px!important;width:100%!important;padding:0!important;background:transparent!important;border:0!important;overflow:visible!important}
+  .codex-reader .lab-wheel-host .lab-wheel button{appearance:none!important;-webkit-appearance:none!important;font:inherit!important;color:#c4cee7!important;cursor:pointer!important;white-space:normal!important}
+  .codex-reader .lab-wheel-host .lab-wheel .lab-arrow{align-self:center!important;border:0!important;background:transparent!important;padding:6px 24px!important;color:#c4cee7!important;font-size:21px!important}
+  .codex-reader .lab-wheel-host .lab-wheel .lab-choice{display:flex!important;align-items:center!important;gap:9px!important;width:100%!important;text-align:left!important;border:1px solid transparent!important;border-radius:12px!important;padding:9px 8px!important;background:transparent!important;opacity:.62!important;transform:scale(.95);transition:opacity .25s,transform .25s,background .25s!important}
+  .codex-reader .lab-wheel-host .lab-wheel .lab-choice[aria-pressed="true"]{border-color:rgba(224,192,136,.55)!important;background:rgba(170,139,84,.2)!important;opacity:1!important;transform:scale(1.02);color:#fff!important}
+  .codex-reader .lab-wheel-host .lab-wheel .lab-mark{display:grid!important;place-items:center!important;flex:none!important;width:36px!important;height:36px!important;border:1px solid currentColor!important;border-radius:50%!important;font-size:20px!important;color:var(--lab-accent)!important}
+  .codex-reader .lab-wheel-host .lab-wheel .lab-choice span:last-child{font-size:12px!important;font-weight:600!important}
+  .lab-showcase .lab-intro{border:0!important;border-bottom:1px solid rgba(205,211,230,.18)!important;border-radius:0!important;background:transparent!important;padding:4px 0 15px!important;box-shadow:none!important}
+  .lab-showcase .lab-intro h3{font-size:1.2rem!important;text-shadow:0 2px 10px #000d!important}
+  .lab-showcase .lab-intro p{color:#e3e7f2!important;text-shadow:0 1px 6px #000c!important}
+  .lab-showcase .lab-intro a{background:transparent!important;border:0!important;border-radius:0!important;padding:7px 0!important;text-shadow:0 2px 8px #000e!important;text-decoration:underline!important;text-underline-offset:4px!important}
+  .lab-showcase .lab-metadata{border-top:1px solid rgba(205,211,230,.17)!important;padding-top:12px!important}
+  .lab-showcase .lab-meta{border:0!important;border-right:1px solid rgba(205,211,230,.18)!important;border-radius:0!important;background:transparent!important;padding:5px 12px!important}
+  .lab-showcase .lab-meta:last-child{border-right:0!important}
+  .lab-showcase .lab-heading h3,.lab-showcase .lab-summary{text-shadow:0 2px 10px #000d!important}
+  @media(max-width:700px){.codex-reader .lab-wheel-host .lab-wheel{flex-direction:row!important;overflow-x:auto!important}.codex-reader .lab-wheel-host .lab-wheel .lab-choice{width:auto!important;flex:0 0 auto!important;transform:none!important}.codex-reader .lab-wheel-host .lab-wheel .lab-arrow{display:none!important}.lab-showcase .lab-meta{border-right:0!important;border-bottom:1px solid rgba(205,211,230,.12)!important}}
   .lab-showcase .lab-wheel button{font:inherit;color:#c4cee7;cursor:pointer}
   .lab-showcase .lab-wheel .lab-arrow{align-self:center;background:transparent;border:0;font-size:20px;line-height:1;padding:7px 24px}
   .lab-showcase .lab-wheel .lab-choice{border:1px solid transparent;background:rgba(100,116,156,.07);border-radius:13px;padding:7px 6px;display:flex;align-items:center;gap:9px;text-align:left;opacity:.65;transform:scale(.93);transition:transform .2s,opacity .2s,background .2s}
