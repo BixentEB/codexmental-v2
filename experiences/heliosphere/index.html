@@ -1290,6 +1290,12 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
     readerPending=null;readerTitle.textContent=SECTIONS[id].name;
     reader.hidden=false;readerOpen=true;
     document.body.classList.add('codex-reader-open');
+    // Remove Lab-only elements injected outside the content host before changing section.
+    var readerLayout=readerContent.closest('.codex-reader-layout');
+    if(readerLayout){
+      readerLayout.parentElement?.querySelectorAll(':scope > .lab-intro-top').forEach(function(el){el.remove();});
+      readerLayout.querySelectorAll(':scope > .lab-tags-rail, :scope > .lab-status-rail').forEach(function(el){el.remove();});
+    }
     readerMenu.classList.remove('lab-wheel-host');
     readerMenu.style.display='';
     readerContent.classList.remove('lab-showcase-host');
