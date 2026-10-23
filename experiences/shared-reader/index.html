@@ -845,6 +845,26 @@ html,body{background:transparent!important;background-color:transparent!importan
     var oldSubcategoryBar=document.getElementById('codex-reader-subcategories');
     if(oldSubcategoryBar){oldSubcategoryBar.hidden=true;oldSubcategoryBar.replaceChildren();}
     var request=++readerRequest,route=readerRoutes[id];
+    if(id==='lab'){
+      readerTitle.textContent='Laboratoire';
+      readerMessage('Chargement de la vitrine…');
+      try{
+        if(!window.CODEXLabShowcase){
+          if(!window.codexLabShowcaseLoading){
+            window.codexLabShowcaseLoading=new Promise(function(resolve,reject){
+              var script=document.createElement('script');
+              script.src=new URL('../../assets/js/lab-showcase.js',location.href).href;
+              script.onload=resolve;script.onerror=function(){reject(new Error('Impossible de charger la vitrine du Lab'));};
+              document.head.appendChild(script);
+            });
+          }
+          await window.codexLabShowcaseLoading;
+        }
+        if(request!==readerRequest||!readerOpen)return;
+        window.CODEXLabShowcase.mount(readerContent,readerMenu);
+      }catch(err){if(request===readerRequest)readerMessage('Le Laboratoire ne peut pas être chargé pour le moment.','https://github.com/BixentEB/codexmental-lab');}
+      return;
+    }
     readerMessage('Chargement du contenu…');
     try{
       var response=await fetch(route);
