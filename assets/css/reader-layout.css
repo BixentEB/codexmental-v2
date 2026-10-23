@@ -1,15 +1,27 @@
-/* CODEX Mental — contrat de structure du lecteur, indépendant des univers 3D.
-   Les thèmes définissent leurs couleurs via variables; les pages gardent leur géométrie.
-   Première étape : unifier la largeur des colonnes Codex entre Galactique et Héliosphère.
-   Les règles du Laboratoire restent spécifiques à son composant. */
-@media (min-width: 1050px) {
+/* CODEX Mental — géométrie partagée des pages.
+   Héliosphère et Galactique ne doivent définir que l'ambiance (couleurs, fond 3D).
+   Le Lab garde sa propre grille, identique dans les deux thèmes. */
+@media (min-width:1050px) {
+  .codex-reader .codex-reader-shell {
+    width:min(1380px,calc(100% - 36px))!important;
+    max-width:1380px!important;
+    margin-inline:auto!important;
+  }
   .codex-reader .codex-reader-layout:not(:has(.lab-showcase-host)) {
-    grid-template-columns: clamp(255px, 21vw, 310px) minmax(0, 1fr) !important;
-    gap: clamp(16px, 2vw, 28px) !important;
+    grid-template-columns:minmax(240px,280px) minmax(0,1fr)!important;
+    gap:20px!important;
+    width:100%!important;
   }
 }
-@media (min-width: 701px) and (max-width: 1049px) {
+@media (min-width:701px) and (max-width:1049px) {
   .codex-reader .codex-reader-layout:not(:has(.lab-showcase-host)) {
-    grid-template-columns: minmax(205px, 28%) minmax(0, 1fr) !important;
+    grid-template-columns:minmax(205px,28%) minmax(0,1fr)!important;
+    gap:16px!important;
+  }
+}
+@media (max-width:700px) {
+  .codex-reader .codex-reader-layout:not(:has(.lab-showcase-host)) {
+    grid-template-columns:minmax(0,1fr)!important;
+    width:100%!important;
   }
 }
