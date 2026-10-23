@@ -341,7 +341,7 @@ body:has(.codex-solar-lucioles) .codex-lucioles{--luciole:#ffd58c;--luciole-glow
       <div class="body">
         <div class="rw"><label for="pop">Population</label><input id="pop" type="range" min="20" max="200" step="10" value="100"><output id="popOut" for="pop">100 %</output></div>
         <div class="rw"><label for="arms">Bras spiraux</label><input id="arms" type="range" min="2" max="6" step="1" value="4"><output id="armsOut" for="arms">4</output></div>
-        <div class="rw"><label for="twist">Enroulement</label><input id="twist" type="range" min="1" max="9" step="0.5" value="4.5"><output id="twistOut" for="twist">4.5</output></div>
+        <div class="rw"><label for="twist">Enroulement</label><input id="twist" type="range" min="1" max="9" step="0.5" value="9"><output id="twistOut" for="twist">9.0</output></div>
         <div class="rw"><label for="turb">Turbulence</label><input id="turb" type="range" min="0" max="1.5" step="0.05" value="0.75"><output id="turbOut" for="turb">0.75</output></div>
         <div class="rw"><label for="glow">Éclat</label><input id="glow" type="range" min="0.4" max="2" step="0.05" value="1.35"><output id="glowOut" for="glow">1.35</output></div>
         <div class="rw"><label for="speed">Vitesse</label><input id="speed" type="range" min="0" max="5" step="0.25" value="1"><output id="speedOut" for="speed">1×</output></div>
@@ -613,7 +613,7 @@ window.__G = { PT_VERT: PT_VERT, STAR_FRAG: STAR_FRAG, NEB_FRAG: NEB_FRAG, DUST_
 
   /* ---------- Paramètres ---------- */
   var R = 100, SPIN = .014;
-  var state = { pop: 100, arms: 4, twist: 4.5, turb: .75, glow: 1.35, speed: 1, quality: 'high', seed: 20241020 };
+  var state = { pop: 100, arms: 4, twist: 9, turb: .75, glow: 1.35, speed: 1, quality: 'high', seed: 20241020 };
   // Préférences locales du laboratoire (propres à ce navigateur).
   var GAL_PREF_KEY = 'codex.galactique.settings.v1';
   var galRanges = { pop: [20, 200], arms: [2, 6], twist: [1, 9], turb: [0, 1.5], glow: [0.4, 2], speed: [0, 5] };
@@ -731,7 +731,7 @@ window.__G = { PT_VERT: PT_VERT, STAR_FRAG: STAR_FRAG, NEB_FRAG: NEB_FRAG, DUST_
 
   /* lueur diffuse (plan) + cœur */
   var glowMat = new T.ShaderMaterial({
-    uniforms: { uTime: uni.uTime, uSpin: uni.uSpin, uR: uni.uR, uArms: { value: 4 }, uTwist: { value: 4.5 }, uTurb: { value: .75 }, uGlow: { value: 1 } },
+    uniforms: { uTime: uni.uTime, uSpin: uni.uSpin, uR: uni.uR, uArms: { value: 4 }, uTwist: { value: 9 }, uTurb: { value: .75 }, uGlow: { value: 1 } },
     vertexShader: GLOW_VERT, fragmentShader: GLOW_FRAG, transparent: true, blending: T.AdditiveBlending, depthWrite: false, side: T.DoubleSide
   });
   var glowPlane = new T.Mesh(new T.PlaneGeometry(R * 2.4, R * 2.4), glowMat);
