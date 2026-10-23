@@ -57,6 +57,21 @@
 #codex-reader-content .music-player iframe{display:block;width:100%;height:100%;border:0}
 #codex-reader-content .music-capsule{display:grid;grid-template-columns:minmax(0,1fr) minmax(250px,38%);gap:22px;align-items:start;margin:18px 0;padding:16px;border:1px solid rgba(180,195,240,.2)!important;border-radius:12px}
 @media(max-width:760px){#codex-reader-content .music-capsule{grid-template-columns:1fr}}
+</style><style id="codex-helios-reader-contrast-20261023">
+/* Protéger la lecture des planètes lumineuses sans masquer le décor. */
+.codex-reader #codex-reader-content{
+ background:rgba(9,14,29,.94)!important;
+ -webkit-backdrop-filter:blur(16px)!important;backdrop-filter:blur(16px)!important;
+ border-color:rgba(194,206,239,.22)!important;
+}
+.codex-reader #codex-reader-menu{
+ background:rgba(9,14,29,.9)!important;
+ -webkit-backdrop-filter:blur(14px)!important;backdrop-filter:blur(14px)!important;
+}
+.codex-reader .codex-reader-top :is(h1,h2,h3,p,span),
+.codex-reader .codex-reader-exit{
+ text-shadow:0 2px 10px rgba(0,0,0,.95),0 0 18px rgba(0,0,0,.65)!important;
+}
 </style><style id="codex-shared-brand-20261022">
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&display=swap');
 .codex-experience-nav .codex-home,.codex-experience-nav.codex-lucioles .codex-home{font-family:'Syne',system-ui,sans-serif!important;font-size:clamp(12px,1.15vw,18px)!important;font-weight:800!important;letter-spacing:clamp(.035em,.13vw,.13em)!important;line-height:1.1!important;white-space:nowrap;transition:color .2s,text-shadow .2s}
