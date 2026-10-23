@@ -115,6 +115,20 @@ text-shadow:0 0 12px rgba(255,193,91,.85),0 0 24px rgba(255,160,50,.5)!important
   border-bottom-color:transparent!important;
  }
 }
+</style><style id="codex-final-binder-20261024">
+@media(min-width:1050px){
+ .codex-reader .codex-reader-layout{grid-template-columns:215px minmax(0,1fr)!important}
+}
+.codex-reader .codex-reader-article-list .codex-series{margin:2px 0 5px}
+.codex-reader .codex-series-head{display:flex;align-items:center;gap:3px;min-width:0}
+.codex-reader .codex-series-head .codex-reader-menu-item{flex:1;min-width:0;text-align:left}
+.codex-reader .codex-series-toggle{flex:0 0 25px;border:1px solid rgba(205,175,116,.4);border-radius:5px;background:rgba(10,14,26,.45);color:inherit;cursor:pointer;min-height:25px}
+.codex-reader .codex-series-children{margin-left:12px;padding-left:8px;border-left:1px solid rgba(205,175,116,.4)}
+.codex-reader .codex-series-children[hidden]{display:none!important}
+.codex-reader .codex-article-footer{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:32px;padding-top:14px;border-top:1px solid rgba(205,175,116,.35)}
+.codex-reader .codex-article-tags{display:flex;flex-wrap:wrap;gap:6px}
+.codex-reader .codex-article-tag{font-size:11px;padding:4px 8px;border-radius:12px;background:rgba(100,90,85,.2);color:inherit}
+.codex-reader .codex-article-share{cursor:pointer;border:1px solid rgba(205,175,116,.5);border-radius:7px;background:rgba(50,45,45,.3);color:inherit;padding:7px 12px;font-size:12px}
 </style></head><body>
 <title>Héliosphère — CODEX Mental</title><link rel="icon" type="image/png" href="../../assets/images/favicon-96x96.png">
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -1606,10 +1620,47 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
                   var fragment=document.createElement('div');fragment.className='codex-imported-content';
                   fragment.innerHTML=target.innerHTML;
                   if(!fragment.textContent.trim()&&!fragment.querySelector('img,video,iframe'))throw Error('Empty article');
-                  readerSetContent(cleanFragment(fragment,articleUrl));
+                  var cleaned=cleanFragment(fragment,articleUrl);
+                  var footer=document.createElement('footer');footer.className='codex-article-footer';
+                  var tags=document.createElement('div');tags.className='codex-article-tags';
+                  (Array.isArray(link.tags)?link.tags:[]).forEach(function(tag){
+                    var chip=document.createElement('span');chip.className='codex-article-tag';
+                    chip.textContent=tag.charAt(0)==='#'?tag:'#'+tag;tags.appendChild(chip);
+                  });
+                  footer.appendChild(tags);
+                  var share=document.createElement('button');share.type='button';share.className='codex-article-share';
+                  share.textContent='↗ Partager';share.setAttribute('aria-label','Partager cet article');
+                  share.addEventListener('click',async function(){
+                    var data={title:link.title||'Codex Mental',url:articleUrl};
+                    try{
+                      if(navigator.share){await navigator.share(data);}
+                      else if(navigator.clipboard){await navigator.clipboard.writeText(articleUrl);share.textContent='✓ Lien copié';}
+                      else{window.prompt('Copier le lien de cet article',articleUrl);}
+                    }catch(error){if(error.name!=='AbortError')window.prompt('Copier le lien',articleUrl);}
+                  });
+                  footer.appendChild(share);cleaned.appendChild(footer);
+                  readerSetContent(cleaned);
                 }catch(err){if(request===readerRequest&&readerOpen)readerMessage('Cet article ne contient pas encore de texte. Revenez à la liste pour choisir un autre article.');}
               });
-              articleList.appendChild(btn);
+              if(link.series&&link.seriesRole==='intro'){
+                var folder=document.createElement('div');folder.className='codex-series';
+                var head=document.createElement('div');head.className='codex-series-head';
+                var toggle=document.createElement('button');toggle.type='button';toggle.className='codex-series-toggle';
+                toggle.textContent='+';toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-label','Déplier '+(link.title||'la série'));
+                var children=document.createElement('div');children.className='codex-series-children';children.hidden=true;
+                toggle.addEventListener('click',function(){
+                  var open=children.hidden;
+                  articleList.querySelectorAll('.codex-series-children').forEach(function(other){other.hidden=true;});
+                  articleList.querySelectorAll('.codex-series-toggle').forEach(function(other){other.textContent='+';other.setAttribute('aria-expanded','false');});
+                  children.hidden=!open;toggle.textContent=open?'−':'+';toggle.setAttribute('aria-expanded',String(open));
+                });
+                head.appendChild(btn);head.appendChild(toggle);folder.appendChild(head);folder.appendChild(children);
+                articleList.appendChild(folder);
+                articleList._codexSeries=articleList._codexSeries||{};
+                articleList._codexSeries[link.series]=children;
+              }else if(link.series&&articleList._codexSeries&&articleList._codexSeries[link.series]){
+                articleList._codexSeries[link.series].appendChild(btn);
+              }else{articleList.appendChild(btn);}
             });
           });
         }catch(err){
