@@ -110,6 +110,37 @@ body:has(#gal-reader-overlay:not([hidden])) .stage .card.gal-card-dismissed{
  }
  body:has(#gal-reader-overlay:not([hidden])) .stage .card p{max-width:none!important}
 }
+</style><style id="codex-gal-card-smooth-20261023">
+/* Transition continue : grande fiche de découverte vers repère discret. */
+.stage .card{
+ transition:width .55s ease,max-width .55s ease,min-width .55s ease,
+ padding .55s ease,background-color .55s ease,border-color .55s ease,
+ opacity .4s ease,transform .4s ease!important;
+}
+body:has(#gal-reader-overlay:not([hidden])) .stage .card{
+ width:clamp(185px,16vw,245px)!important;min-width:0!important;
+ max-width:calc(100vw - 24px)!important;
+ background:rgba(13,19,38,.76)!important;
+ border-color:rgba(170,188,232,.23)!important;
+ -webkit-backdrop-filter:blur(12px)!important;backdrop-filter:blur(12px)!important;
+ padding:10px 12px!important;box-shadow:0 6px 22px #0005!important;
+ right:clamp(10px,1vw,18px)!important;bottom:clamp(66px,8vh,90px)!important;
+}
+body:has(#gal-reader-overlay:not([hidden])) .stage .card p{
+ font-size:10px!important;line-height:1.45!important;max-width:none!important;
+}
+@media(max-width:700px){
+ body:has(#gal-reader-overlay:not([hidden])) .stage .card{
+  width:min(190px,46vw)!important;min-width:0!important;
+  right:9px!important;bottom:76px!important;
+  background:rgba(13,19,38,.68)!important;
+ }
+ body:has(#gal-reader-overlay:not([hidden])) .stage .card p{
+  display:-webkit-box!important;-webkit-line-clamp:3!important;
+  -webkit-box-orient:vertical!important;overflow:hidden!important;
+ }
+}
+@media(prefers-reduced-motion:reduce){.stage .card{transition:none!important}}
 </style><style id="codex-shared-brand-20261022">
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&display=swap');
 .codex-experience-nav .codex-home,.codex-experience-nav.codex-lucioles .codex-home{font-family:'Syne',system-ui,sans-serif!important;font-size:clamp(12px,1.15vw,18px)!important;font-weight:800!important;letter-spacing:clamp(.035em,.13vw,.13em)!important;line-height:1.1!important;white-space:nowrap;transition:color .2s,text-shadow .2s}
