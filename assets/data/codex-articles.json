@@ -10,56 +10,90 @@
           "id": "ai/correct",
           "title": "De la correction à la perfection",
           "path": "blog/articles/ai/correct.html",
-          "date": "2025-09-14"
+          "date": "2025-09-14",
+          "tags": [
+            "IntelligenceArtificielle"
+          ]
         },
         {
           "id": "ai/democratisation",
           "title": "Démocratisation & Développement",
           "path": "blog/articles/ai/democratisation.html",
-          "date": "2025-08-09"
+          "date": "2025-08-09",
+          "tags": [
+            "IntelligenceArtificielle"
+          ]
         },
         {
           "id": "ai/decalage",
           "title": "Accès & Décalage",
           "path": "blog/articles/ai/decalage.html",
-          "date": "2025-08-09"
+          "date": "2025-08-09",
+          "tags": [
+            "IntelligenceArtificielle"
+          ]
         },
         {
           "id": "ai/limites",
           "title": "L'IA et ses limites",
           "path": "blog/articles/ai/limites.html",
-          "date": "2025-08-04"
+          "date": "2025-08-04",
+          "tags": [
+            "IntelligenceArtificielle"
+          ]
         },
         {
           "id": "ai/simulsens",
           "title": "Simuler, ressentir, dire",
           "path": "blog/articles/ai/simulsens.html",
-          "date": "2025-08-04"
+          "date": "2025-08-04",
+          "tags": [
+            "IntelligenceArtificielle"
+          ]
         },
         {
           "id": "ai/local",
           "title": "Installer une IA en local ?",
-          "path": "blog/articles/ai/local.html"
+          "path": "blog/articles/ai/local.html",
+          "tags": [
+            "IntelligenceArtificielle"
+          ]
         },
         {
           "id": "ai/aivie",
           "title": "La place de l'IA dans ma vie",
-          "path": "blog/articles/ai/aivie.html"
+          "path": "blog/articles/ai/aivie.html",
+          "tags": [
+            "IntelligenceArtificielle"
+          ]
         },
         {
           "id": "ai/miroirintro",
           "title": "Miroir de l'humanité",
-          "path": "blog/articles/ai/miroirintro.html"
+          "path": "blog/articles/ai/miroirintro.html",
+          "series": "miroir-humanite",
+          "seriesRole": "intro",
+          "tags": [
+            "IntelligenceArtificielle"
+          ]
         },
         {
           "id": "ai/miroir0",
           "title": "0. Genèse",
-          "path": "blog/articles/ai/miroir0.html"
+          "path": "blog/articles/ai/miroir0.html",
+          "series": "miroir-humanite",
+          "tags": [
+            "IntelligenceArtificielle"
+          ]
         },
         {
           "id": "ai/miroir1",
           "title": "1. Révélation",
-          "path": "blog/articles/ai/miroir1.html"
+          "path": "blog/articles/ai/miroir1.html",
+          "series": "miroir-humanite",
+          "tags": [
+            "IntelligenceArtificielle"
+          ]
         }
       ]
     },
@@ -83,7 +117,11 @@
           "id": "hp/cameleon",
           "title": "Le Caméléon",
           "path": "blog/articles/hp/cameleon.html",
-          "date": "2025-09-16"
+          "date": "2025-09-16",
+          "tags": [
+            "Psychologie",
+            "HautPotentiel"
+          ]
         }
       ]
     },
@@ -94,13 +132,19 @@
         {
           "id": "philo/intangible",
           "title": "Conscience et Réalité : Intangibilité",
-          "path": "blog/articles/philo/intangible.html"
+          "path": "blog/articles/philo/intangible.html",
+          "tags": [
+            "Philosophie"
+          ]
         },
         {
           "id": "philo/identite",
           "title": "Qui suis-je ?",
           "path": "blog/articles/philo/identite.html",
-          "date": "2025-08-22"
+          "date": "2025-08-22",
+          "tags": [
+            "Philosophie"
+          ]
         }
       ]
     },
@@ -123,7 +167,11 @@
         {
           "id": "symbol/tarot/13",
           "title": "XIII. MORT",
-          "path": "blog/articles/symbol/tarot/13.html"
+          "path": "blog/articles/symbol/tarot/13.html",
+          "tags": [
+            "Symbolisme",
+            "Tarot"
+          ]
         }
       ]
     },
@@ -135,7 +183,10 @@
           "id": "introspection/seulsilence",
           "title": "Penser seul, douter en silence",
           "path": "blog/articles/introspection/seulsilence.html",
-          "date": "2025-08-09"
+          "date": "2025-08-09",
+          "tags": [
+            "Introspection"
+          ]
         }
       ]
     },
@@ -146,17 +197,29 @@
         {
           "id": "aiautor/intro",
           "title": "Introduction",
-          "path": "blog/articles/aiautor/intro.html"
+          "path": "blog/articles/aiautor/intro.html",
+          "tags": [
+            "IntelligenceArtificielle",
+            "Écriture"
+          ]
         },
         {
           "id": "aiautor/manifeste",
           "title": "Manifeste du Code Partagé",
-          "path": "blog/articles/aiautor/manifeste.html"
+          "path": "blog/articles/aiautor/manifeste.html",
+          "tags": [
+            "IntelligenceArtificielle",
+            "Écriture"
+          ]
         },
         {
           "id": "aiautor/complexa",
           "title": "Complexité apprivoisée",
-          "path": "blog/articles/aiautor/complexa.html"
+          "path": "blog/articles/aiautor/complexa.html",
+          "tags": [
+            "IntelligenceArtificielle",
+            "Écriture"
+          ]
         }
       ]
     }
