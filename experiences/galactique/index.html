@@ -342,6 +342,7 @@ body:has(.codex-solar-lucioles) .codex-lucioles{--luciole:#ffd58c;--luciole-glow
         <div class="rw"><label for="pop">Population</label><input id="pop" type="range" min="20" max="200" step="10" value="100"><output id="popOut" for="pop">100 %</output></div>
         <div class="rw"><label for="arms">Bras spiraux</label><input id="arms" type="range" min="2" max="6" step="1" value="4"><output id="armsOut" for="arms">4</output></div>
         <div class="rw"><label for="twist">Enroulement</label><input id="twist" type="range" min="1" max="9" step="0.5" value="9"><output id="twistOut" for="twist">9.0</output></div>
+        <div class="rw"><label for="nucleus">Noyau</label><input id="nucleus" type="range" min="0" max="100" step="5" value="50"><output id="nucleusOut" for="nucleus">50 %</output></div>
         <div class="rw"><label for="turb">Turbulence</label><input id="turb" type="range" min="0" max="1.5" step="0.05" value="0.75"><output id="turbOut" for="turb">0.75</output></div>
         <div class="rw"><label for="glow">Éclat</label><input id="glow" type="range" min="0.4" max="2" step="0.05" value="1.35"><output id="glowOut" for="glow">1.35</output></div>
         <div class="rw"><label for="speed">Vitesse</label><input id="speed" type="range" min="0" max="5" step="0.25" value="1"><output id="speedOut" for="speed">1×</output></div>
@@ -385,7 +386,7 @@ function omegaAt(r, spin) { return spin * (1 + 0.35 * (1 - 2 * smooth01(0.1, 1.0
 
 /* cfg : { count, arms, twist, turb, seed, nebula, dust } → tableaux typés pour trois couches de points */
 function buildGalaxy(cfg) {
-  var rnd = mulberry32(cfg.seed), N = cfg.count, arms = cfg.arms, twist = cfg.twist, turb = cfg.turb;
+  var rnd = mulberry32(cfg.seed), N = cfg.count, arms = cfg.arms, twist = cfg.twist, turb = cfg.turb, nucleusScale = .45 + cfg.nucleus / 100 * 1.1;
   function gauss() { var u = 0, v = 0; while (!u) u = rnd(); while (!v) v = rnd(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(TAU * v); }
   function gammaR(Rd, lo) { var r; do { r = -Rd * (Math.log(1 - rnd()) + Math.log(1 - rnd())); } while (r > 1 || r < (lo || 0)); return r; }
   function layer(n) { return { n: 0, cap: n, rad: new Float32Array(n), ang: new Float32Array(n), y: new Float32Array(n), col: new Float32Array(n * 3), size: new Float32Array(n), seed: new Float32Array(n) }; }
@@ -400,9 +401,9 @@ function buildGalaxy(cfg) {
   /* Bulbe : barre allongée + sphéroïde, étoiles vieilles (jaune-orangé) */
   var barA = .55, cb = Math.cos(barA), sb = Math.sin(barA);
   for (i = 0; i < nBulge; i++) {
-    if (rnd() < .55) { var bx = gauss() * .15, bz = gauss() * .055; x = bx * cb - bz * sb; z = bx * sb + bz * cb; }
-    else { x = gauss() * .085; z = gauss() * .085; }
-    y = gauss() * .045;
+    if (rnd() < .55) { var bx = gauss() * .15, bz = gauss() * .055; x = (bx * cb - bz * sb) * nucleusScale; z = (bx * sb + bz * cb) * nucleusScale; }
+    else { x = gauss() * .085 * nucleusScale; z = gauss() * .085 * nucleusScale; }
+    y = gauss() * .045 * nucleusScale;
     r = Math.hypot(x, z); if (r > .6) { i--; continue; }
     a = Math.atan2(z, x); t = rnd(); bri = .28 + .62 * Math.pow(rnd(), .8);
     put(stars, r, a, y, bri, bri * (.7 + .2 * t), bri * (.42 + .3 * t), .3 + .4 * rnd());
@@ -613,10 +614,10 @@ window.__G = { PT_VERT: PT_VERT, STAR_FRAG: STAR_FRAG, NEB_FRAG: NEB_FRAG, DUST_
 
   /* ---------- Paramètres ---------- */
   var R = 100, SPIN = .014;
-  var state = { pop: 100, arms: 4, twist: 9, turb: .75, glow: 1.35, speed: 1, quality: 'high', seed: 20241020 };
+  var state = { pop: 100, arms: 4, twist: 9, nucleus: 50, turb: .75, glow: 1.35, speed: 1, quality: 'high', seed: 20241020 };
   // Préférences locales du laboratoire (propres à ce navigateur).
   var GAL_PREF_KEY = 'codex.galactique.settings.v1';
-  var galRanges = { pop: [20, 200], arms: [2, 6], twist: [1, 9], turb: [0, 1.5], glow: [0.4, 2], speed: [0, 5] };
+  var galRanges = { pop: [20, 200], arms: [2, 6], twist: [1, 9], nucleus: [0, 100], turb: [0, 1.5], glow: [0.4, 2], speed: [0, 5] };
   try {
     var savedGal = JSON.parse(localStorage.getItem(GAL_PREF_KEY) || 'null');
     if (savedGal && typeof savedGal === 'object') {
@@ -719,7 +720,7 @@ window.__G = { PT_VERT: PT_VERT, STAR_FRAG: STAR_FRAG, NEB_FRAG: NEB_FRAG, DUST_
   }
   function rebuild() {
     var q = QUAL[state.quality], pop = state.pop / 100;
-    var G = buildGalaxy({ count: Math.round(q.n * pop), arms: state.arms, twist: state.twist, turb: state.turb, seed: state.seed, nebula: Math.round(q.neb * Math.min(1.4, pop)), dust: Math.round(q.dust * Math.min(1.4, pop)) });
+    var G = buildGalaxy({ count: Math.round(q.n * pop), arms: state.arms, twist: state.twist, nucleus: state.nucleus, turb: state.turb, seed: state.seed, nebula: Math.round(q.neb * Math.min(1.4, pop)), dust: Math.round(q.dust * Math.min(1.4, pop)) });
     setLayer('neb', toGeometry(G.neb), nebMat, 2);
     setLayer('stars', toGeometry(G.stars), starMat, 3);
     setLayer('dust', toGeometry(G.dust), dustMat, 4);
@@ -750,6 +751,8 @@ window.__G = { PT_VERT: PT_VERT, STAR_FRAG: STAR_FRAG, NEB_FRAG: NEB_FRAG, DUST_
   }
   var coreA = glowSprite(glowTexture('255,214,160', .55), 46, 2), coreB = glowSprite(glowTexture('255,170,110', .22), 130, 2);
   scene.add(coreA); scene.add(coreB);
+  function applyNucleus() { var scale = .45 + state.nucleus / 100 * 1.1; coreA.scale.set(46 * scale, 46 * scale, 1); coreB.scale.set(130 * scale, 130 * scale, 1); }
+  applyNucleus();
 
   /* ---------- Systèmes stellaires (sections) ---------- */
   scene.add(new T.AmbientLight(0x303850, .5));
@@ -910,6 +913,7 @@ window.__G = { PT_VERT: PT_VERT, STAR_FRAG: STAR_FRAG, NEB_FRAG: NEB_FRAG, DUST_
   bind('pop', function (v) { return v + ' %'; }, function (v) { state.pop = v; scheduleRebuild(); });
   bind('arms', function (v) { return String(v); }, function (v) { state.arms = v; scheduleRebuild(); });
   bind('twist', function (v) { return v.toFixed(1); }, function (v) { state.twist = v; scheduleRebuild(); });
+  bind('nucleus', function (v) { return v + ' %'; }, function (v) { state.nucleus = v; applyNucleus(); scheduleRebuild(); });
   bind('turb', function (v) { return v.toFixed(2); }, function (v) { state.turb = v; scheduleRebuild(); });
   bind('glow', function (v) { return v.toFixed(2); }, function (v) { state.glow = v; applyGlow(); });
   bind('speed', function (v) { return v + '×'; }, function (v) { state.speed = v; });
