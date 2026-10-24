@@ -49,11 +49,15 @@
   position:relative;padding-right:26px!important;
 }
 .codex-reader .codex-reader-menu-item[data-reader-dossier="true"]::after{
-  content:'⌄';position:absolute;right:9px;top:50%;transform:translateY(-50%) rotate(-90deg);
-  opacity:.7;transition:transform .15s;
+  content:'';position:absolute;right:10px;top:50%;
+  width:14px;height:14px;opacity:.8;
+  background-color:currentColor;
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' d='m9 18 6-6-6-6'/%3E%3C/svg%3E") center/contain no-repeat;
+  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' d='m9 18 6-6-6-6'/%3E%3C/svg%3E") center/contain no-repeat;
+  transform:translateY(-50%);transition:transform .15s;
 }
 .codex-reader .codex-reader-menu-item[data-reader-dossier="true"][aria-expanded="true"]::after{
-  transform:translateY(-50%);
+  transform:translateY(-50%) rotate(90deg);
 }
 .codex-reader .codex-dossier-view{padding-top:0!important;margin-top:0!important}
 .codex-reader .codex-dossier-view>article{margin-top:0!important;padding-top:0!important}
@@ -93,4 +97,21 @@
 @media(max-width:700px){
   .codex-reader .codex-dossier-view .codex-dossier-tools{justify-content:flex-start}
   .codex-reader .codex-dossier-view .codex-article-footer{flex-wrap:wrap}
+}
+
+/* Fine-tuning: chapter density and editorial header alignment. */
+.codex-reader .codex-dossier-chapters{gap:0!important;padding-top:1px!important;padding-bottom:4px!important}
+.codex-reader .codex-dossier-chapters .codex-reader-menu-item{
+  padding:3px 7px!important;min-height:24px!important;
+  line-height:1.25!important;font-size:11px!important;
+}
+.codex-reader .codex-dossier-view .codex-dossier-tools{
+  min-height:0!important;margin:0 0 4px!important;
+  height:30px!important;
+}
+.codex-reader .codex-dossier-view>article [data-part="title"]{
+  margin-top:0!important;margin-bottom:12px!important;
+}
+.codex-reader .codex-dossier-view>article [data-part="title"] h1{
+  margin-top:0!important;padding-top:0!important;
 }
