@@ -289,3 +289,26 @@
    overflow-x:hidden!important;
  }
 }
+
+/* A nested article list was reserving/painting a scrollbar inside the menu.
+   Keep wheel/touch scrolling, but remove its independent scrollbar chrome.
+   The chapter drawer is signaled by the Lucide chevron on its parent button. */
+@media(min-width:701px){
+ .codex-reader #codex-reader-menu .codex-reader-article-list,
+ .codex-reader #codex-reader-menu .codex-reader-accordion[open] .codex-reader-article-list,
+ .codex-reader #codex-reader-menu.codex-category-mode .codex-reader-article-list{
+   scrollbar-width:none!important;
+   scrollbar-gutter:auto!important;
+   -ms-overflow-style:none!important;
+ }
+ .codex-reader #codex-reader-menu .codex-reader-article-list::-webkit-scrollbar{
+   display:none!important;width:0!important;height:0!important;
+ }
+ .codex-reader #codex-reader-menu .codex-dossier-chapters{
+   scrollbar-width:none!important;
+   scrollbar-gutter:auto!important;
+ }
+ .codex-reader #codex-reader-menu .codex-dossier-chapters::-webkit-scrollbar{
+   display:none!important;width:0!important;
+ }
+}
