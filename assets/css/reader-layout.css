@@ -450,3 +450,10 @@
    border-left:0;padding-left:12px;
  }
 }
+
+/* Nexus: balanced protagonist cards within the imported Codex panel. */
+.codex-reader #codex-reader-content .codex-nexus-duo{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin:20px 0 28px;align-items:stretch}
+.codex-reader #codex-reader-content .codex-nexus-person{padding:clamp(16px,2vw,24px);border:1px solid rgba(190,180,224,.26);border-radius:14px;background:rgba(120,120,166,.09);min-width:0}
+.codex-reader #codex-reader-content .codex-nexus-person p{margin:0;line-height:1.75}
+.codex-reader #codex-reader-content .codex-nexus-person em{font-style:normal;font-weight:750;font-size:1.12em}
+@media(max-width:800px){.codex-reader #codex-reader-content .codex-nexus-duo{grid-template-columns:1fr}}
