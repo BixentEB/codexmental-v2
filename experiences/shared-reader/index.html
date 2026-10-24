@@ -884,6 +884,18 @@ html,body{background:transparent!important;background-color:transparent!importan
 }
 .codex-reader #codex-reader-content .codex-nexus-person{padding:14px 17px!important;background:linear-gradient(135deg,rgba(134,150,204,.12),rgba(170,139,180,.06))!important;border:1px solid rgba(174,187,222,.23)!important;box-shadow:none!important}
 .codex-reader #codex-reader-content .codex-nexus-person p{line-height:1.58!important}
+/* Shared editorial rendering: same source HTML in Galactique and Heliosphere. */
+.codex-reader #codex-reader-content .codex-editorial-page{width:100%;max-width:1020px;margin-inline:auto}
+.codex-reader #codex-reader-content .codex-editorial-page>p{margin:0 0 .85em!important}
+.codex-reader #codex-reader-content .codex-editorial-page>h3{margin:1.65em 0 .65em!important}
+.codex-reader #codex-reader-content .codex-nexus-duo{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.codex-reader #codex-reader-content .astra-person{display:flex;align-items:flex-start;gap:12px}
+.codex-reader #codex-reader-content .astra-avatar{display:block;width:76px;height:auto;flex:0 0 76px;object-fit:contain}
+.codex-reader #codex-reader-content .codex-retro-terminal{padding:10px 14px!important;margin:1em 0!important;background:#0d1015!important;border-left:2px solid #41ba78!important;border-radius:8px}
+.codex-reader #codex-reader-content .codex-retro-terminal pre{margin:0!important;padding:0!important;background:transparent!important;white-space:pre-wrap;line-height:1.35!important;color:#7ff7a1}
+.codex-reader #codex-reader-content .codex-retro-terminal code{background:transparent!important;padding:0!important;color:inherit!important}
+@media(max-width:700px){.codex-reader #codex-reader-content .codex-nexus-duo{grid-template-columns:1fr}.codex-reader #codex-reader-content .astra-avatar{width:58px;flex-basis:58px}}
+
 </style>
 </head><body><button id="shared-reader-exit" type="button" aria-label="Retour à la galaxie">✕ Galaxie</button><section id="codex-reader" class="codex-reader" hidden aria-label="Lecture d'une rubrique CODEX">
   <div class="codex-reader-shell">
@@ -967,7 +979,7 @@ html,body{background:transparent!important;background-color:transparent!importan
     }
     readerMessage('Chargement du contenu…');
     try{
-      var response=await fetch(route);
+      var response=await fetch(route,{cache:'no-store'});
       if(!response.ok)throw new Error('HTTP '+response.status);
       var doc=new DOMParser().parseFromString(await response.text(),'text/html');
       if(request!==readerRequest||!readerOpen)return;
