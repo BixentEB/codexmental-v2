@@ -30,7 +30,20 @@
       article.setAttribute('data-article','');
       nodes.forEach(function(n){article.appendChild(n.cloneNode(true));});
       wrapper.appendChild(article);
-      if(footer)wrapper.appendChild(footer.cloneNode(true));
+      if(footer){
+        var copy=footer.cloneNode(true);
+        var share=copy.querySelector('.codex-article-share');
+        if(share)share.addEventListener('click',async function(){
+          var url=new URL(opts.articleUrl||location.href);
+          if(selected)url.hash=selected.dataset.chapterId||'';
+          try{
+            if(navigator.share)await navigator.share({title:opts.button.textContent,url:url.href});
+            else if(navigator.clipboard){await navigator.clipboard.writeText(url.href);share.textContent='✓ Lien copié';}
+            else window.prompt('Copier le lien',url.href);
+          }catch(e){if(e.name!=='AbortError')window.prompt('Copier le lien',url.href);}
+        });
+        wrapper.appendChild(copy);
+      }
       menu.querySelectorAll('button').forEach(function(b){b.classList.toggle('active',b===selected);});
       opts.render(wrapper);
     }
@@ -38,6 +51,7 @@
       var b=document.createElement('button');b.type='button';
       b.className='codex-reader-menu-item';
       b.textContent=piece.title;
+      b.dataset.chapterId=piece.id;
       b.style.cssText='text-align:left;font-size:12px;white-space:normal';
       b.addEventListener('click',function(){
         opts.articleList.querySelectorAll('.codex-reader-menu-item').forEach(function(x){x.classList.remove('active');});
