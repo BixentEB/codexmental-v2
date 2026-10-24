@@ -1241,6 +1241,7 @@ html,body{background:transparent!important;background-color:transparent!importan
               btn.textContent=(link.title||'Article').trim().replace(/^[🌙⚠️🧊🔮]\s*/u,'');
               var articleUrl=new URL(link.path,siteBase).href;
               btn.addEventListener('click',async function(){
+                readerMenu.querySelectorAll('.codex-dossier-chapters').forEach(function(x){x.remove();});
                 readerMenu.querySelectorAll('button').forEach(function(x){x.classList.remove('active');});
                 btn.classList.add('active');
                 readerMessage('Chargement de l’article…');
