@@ -77,5 +77,26 @@
     display(intro,null);
     return true;
   }
-  window.CodexDossiers={open:openDossier};
+  // Use the same editorial chrome for standalone articles and multi-file series.
+  // Single-file chapter dossiers already use this layout in display().
+  function decorateArticle(content){
+    var footer=content.querySelector('.codex-article-footer');
+    if(!footer)return content;
+    footer.remove();
+    var share=footer.querySelector('.codex-article-share');
+    if(share){
+      share.textContent='';
+      share.title='Partager cet article';
+      share.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.7 13.5 6.6 4m0-11-6.6 4"/></svg>';
+    }
+    var wrapper=document.createElement('div');
+    wrapper.className='codex-imported-content codex-dossier-view';
+    var tools=document.createElement('div');
+    tools.className='codex-dossier-tools';
+    tools.appendChild(footer);
+    wrapper.appendChild(tools);
+    wrapper.appendChild(content);
+    return wrapper;
+  }
+  window.CodexDossiers={open:openDossier,decorate:decorateArticle};
 })();
