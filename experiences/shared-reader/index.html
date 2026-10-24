@@ -1273,7 +1273,7 @@ html,body{background:transparent!important;background-color:transparent!importan
                   });
                   footer.appendChild(share);cleaned.appendChild(footer);
                   if(!window.CodexDossiers||!window.CodexDossiers.open({
-                    content:cleaned,button:btn,articleList:articleList,render:readerSetContent
+                    content:cleaned,button:btn,articleList:articleList,articleUrl:articleUrl,render:readerSetContent
                   }))readerSetContent(cleaned);
                 }catch(err){if(request===readerRequest&&readerOpen)readerMessage('Cet article ne contient pas encore de texte. Revenez à la liste pour choisir un autre article.');}
               });
