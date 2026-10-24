@@ -884,8 +884,8 @@ html,body{background:transparent!important;background-color:transparent!importan
 }
 .codex-reader #codex-reader-content .codex-nexus-person{padding:14px 17px!important;background:linear-gradient(135deg,rgba(134,150,204,.12),rgba(170,139,180,.06))!important;border:1px solid rgba(174,187,222,.23)!important;box-shadow:none!important}
 .codex-reader #codex-reader-content .codex-nexus-person p{line-height:1.58!important}
-/* Shared theme accents: one reader, two visual identities. */
-:root{--codex-reader-accent:#b995f5;--codex-reader-accent-bg:rgba(133,90,205,.25);--codex-reader-accent-border:#aa85ed;--codex-reader-accent-text:#eedfff}
+/* Shared reader accents: restrained Galactique, warm Héliosphère. */
+:root{--codex-reader-accent:#c5adff;--codex-reader-accent-bg:rgba(218,221,241,.095);--codex-reader-accent-border:rgba(196,174,255,.58);--codex-reader-accent-text:#f5f3ff}
 html[data-reader-universe="heliosphere"]{--codex-reader-accent:#e5b971;--codex-reader-accent-bg:rgba(182,143,79,.24);--codex-reader-accent-border:#d9b475;--codex-reader-accent-text:#ffe0a0}
 .codex-reader #codex-reader-categories button.active,
 .codex-reader #codex-reader-subcategories button.active,
@@ -897,6 +897,15 @@ html[data-reader-universe="heliosphere"]{--codex-reader-accent:#e5b971;--codex-r
  color:var(--codex-reader-accent-text)!important;
  background:var(--codex-reader-accent-bg)!important;
  border-color:var(--codex-reader-accent-border)!important;
+}
+html[data-reader-universe="galactique"] .codex-reader #codex-reader-menu.codex-emblem-mode .codex-emblem-item.active{
+ background:rgba(230,232,255,.055)!important;
+ color:#f7f5ff!important;
+ box-shadow:inset 3px 0 0 var(--codex-reader-accent),inset 0 0 0 1px rgba(205,190,255,.12)!important;
+}
+html[data-reader-universe="galactique"] .codex-reader #codex-reader-menu.codex-emblem-mode .codex-emblem-item.active svg{
+ color:#e6dbff!important;
+ filter:drop-shadow(0 0 7px rgba(235,228,255,.62))!important;
 }
 .codex-reader .codex-m-track button.active:after{background:var(--codex-reader-accent)!important}
 .codex-reader .codex-m-sub button.active{border-bottom-color:var(--codex-reader-accent)!important}
