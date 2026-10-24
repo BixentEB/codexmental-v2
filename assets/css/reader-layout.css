@@ -115,3 +115,19 @@
 .codex-reader .codex-dossier-view>article [data-part="title"] h1{
   margin-top:0!important;padding-top:0!important;
 }
+
+/* Uniform inner gutters: all four sides share the same reader inset. */
+.codex-reader #codex-reader-content{
+  --codex-reader-inset:24px;
+  padding:var(--codex-reader-inset)!important;
+  box-sizing:border-box!important;
+}
+.codex-reader #codex-reader-content>.codex-dossier-view{
+  margin:0!important;padding:0!important;
+}
+.codex-reader #codex-reader-content>.codex-dossier-view>.codex-dossier-tools{
+  margin:0 0 12px!important;
+}
+@media(max-width:700px){
+  .codex-reader #codex-reader-content{--codex-reader-inset:16px}
+}
