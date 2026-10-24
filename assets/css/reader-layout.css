@@ -406,3 +406,47 @@
  .codex-reader .codex-gallery-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
  .codex-reader .codex-gallery-thumb.is-landscape{grid-column:span 2}
 }
+
+/* Editorial rhythm: a heading belongs to the paragraph that follows it. */
+.codex-reader #codex-reader-content .codex-imported-content h2,
+.codex-reader #codex-reader-content .codex-imported-content h3,
+.codex-reader #codex-reader-content .codex-dossier-view article h2,
+.codex-reader #codex-reader-content .codex-dossier-view article h3{
+  margin-top:1.8em!important;
+  margin-bottom:.55em!important;
+  line-height:1.3!important;
+}
+.codex-reader #codex-reader-content .codex-imported-content h2:first-child,
+.codex-reader #codex-reader-content .codex-imported-content h3:first-child,
+.codex-reader #codex-reader-content .codex-dossier-view article h2:first-child,
+.codex-reader #codex-reader-content .codex-dossier-view article h3:first-child{
+  margin-top:0!important;
+}
+.codex-reader #codex-reader-content .codex-imported-content p,
+.codex-reader #codex-reader-content .codex-dossier-view article p{
+  margin-top:0!important;
+  margin-bottom:1.15em!important;
+  line-height:1.75!important;
+  text-align:left!important;
+}
+.codex-reader #codex-reader-content .codex-imported-content p+h2,
+.codex-reader #codex-reader-content .codex-imported-content p+h3,
+.codex-reader #codex-reader-content .codex-dossier-view article p+h2,
+.codex-reader #codex-reader-content .codex-dossier-view article p+h3{
+  margin-top:1.9em!important;
+}
+/* The divider belongs to the full-height editorial grid, not just the thumbnails. */
+@media(min-width:951px){
+ .codex-reader #codex-reader-content>.codex-dossier-view.codex-has-gallery{
+   position:relative;
+ }
+ .codex-reader #codex-reader-content>.codex-dossier-view.codex-has-gallery::before{
+   content:'';position:absolute;top:0;bottom:0;
+   right:calc(clamp(155px,20%,240px) + 20px);
+   width:1px;background:rgba(205,216,255,.20);
+   pointer-events:none;
+ }
+ .codex-reader #codex-reader-content>.codex-dossier-view.codex-has-gallery .codex-gallery{
+   border-left:0;padding-left:12px;
+ }
+}
