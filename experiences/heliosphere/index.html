@@ -1634,6 +1634,7 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
             links.forEach(function(link){
               var btn=document.createElement('button');btn.type='button';btn.className='codex-reader-menu-item';
               btn.textContent=(link.title||'Article').trim().replace(/^[🌙⚠️🧊🔮]\s*/u,'');
+              if(link.dossier==='chapters'){btn.dataset.readerDossier='pending';btn.setAttribute('aria-expanded','false');}
               var articleUrl=new URL(link.path,siteBase).href;
               btn.addEventListener('click',async function(){
                 if(btn.dataset.readerDossier==='true'){
@@ -1685,17 +1686,10 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
               if(link.series&&link.seriesRole==='intro'){
                 var folder=document.createElement('div');folder.className='codex-series';
                 var head=document.createElement('div');head.className='codex-series-head';
-                var toggle=document.createElement('button');toggle.type='button';toggle.className='codex-series-toggle';
-                toggle.textContent='+';toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-label','Déplier '+(link.title||'la série'));
-                var children=document.createElement('div');children.className='codex-series-children';children.hidden=true;
-                toggle.addEventListener('click',function(){
-                  var open=children.hidden;
-                  articleList.querySelectorAll('.codex-series-children').forEach(function(other){other.hidden=true;});
-                  articleList.querySelectorAll('.codex-series-toggle').forEach(function(other){other.textContent='+';other.setAttribute('aria-expanded','false');});
-                  children.hidden=!open;toggle.textContent=open?'−':'+';toggle.setAttribute('aria-expanded',String(open));
-                });
-                head.appendChild(btn);head.appendChild(toggle);folder.appendChild(head);folder.appendChild(children);
-                articleList.appendChild(folder);
+                // Multi-file editorial series: its articles remain visible like a book's chapters.
+                var children=document.createElement('div');children.className='codex-series-children';
+                head.appendChild(btn);folder.appendChild(head);folder.appendChild(children);
+                                articleList.appendChild(folder);
                 articleList._codexSeries=articleList._codexSeries||{};
                 articleList._codexSeries[link.series]=children;
               }else if(link.series&&articleList._codexSeries&&articleList._codexSeries[link.series]){
