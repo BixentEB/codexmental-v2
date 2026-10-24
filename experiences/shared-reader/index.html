@@ -1240,6 +1240,7 @@ html,body{background:transparent!important;background-color:transparent!importan
               var btn=document.createElement('button');btn.type='button';btn.className='codex-reader-menu-item';
               btn.textContent=(link.title||'Article').trim().replace(/^[🌙⚠️🧊🔮]\s*/u,'');
               if(link.dossier==='chapters'){btn.dataset.readerDossier='pending';btn.setAttribute('aria-expanded','false');}
+              if(link.series&&link.seriesRole!=='intro')btn.textContent=btn.textContent.replace(/^\d+\.\s*/, '');
               var articleUrl=new URL(link.path,siteBase).href;
               btn.addEventListener('click',async function(){
                 if(btn.dataset.readerDossier==='true'){
