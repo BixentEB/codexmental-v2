@@ -762,9 +762,9 @@ window.__G = { PT_VERT: PT_VERT, STAR_FRAG: STAR_FRAG, NEB_FRAG: NEB_FRAG, DUST_
     var colr = new T.Color(d.col);
     var core = new T.Mesh(new T.SphereGeometry(.34, 24, 16), new T.MeshBasicMaterial({ color: d.col })); group.add(core);
     var rgb = s.rgb;
-    var halo = glowSprite(glowTexture(rgb, .85), 9, 5); group.add(halo);
-    var halo2 = glowSprite(glowTexture(rgb, .3), 26, 5); group.add(halo2);
-    var light = new T.PointLight(d.col, 1.6, 34, 2); group.add(light);
+    var halo = glowSprite(glowTexture(rgb, 1.0), 13, 6); group.add(halo);
+    var halo2 = glowSprite(glowTexture(rgb, .36), 34, 5); group.add(halo2);
+    var light = new T.PointLight(d.col, 2.0, 38, 2); group.add(light);
     var tilt = new T.Group(); tilt.rotation.set((Math.random() - .5) * .8, Math.random() * 6.28, (Math.random() - .5) * .5); group.add(tilt);
     var planets = [], rings = [];
     d.planets.forEach(function (p, idx) {
@@ -775,7 +775,7 @@ window.__G = { PT_VERT: PT_VERT, STAR_FRAG: STAR_FRAG, NEB_FRAG: NEB_FRAG, DUST_
       planets.push({ mesh: m, rad: p[0], w: p[3], a: Math.random() * 6.28 });
     });
     var hit = new T.Mesh(new T.SphereGeometry(1, 12, 8), new T.MeshBasicMaterial({ visible: false })); hit.userData.id = d.id; group.add(hit);
-    var S = { id: d.id, def: d, group: group, planets: planets, rings: rings, hit: hit, halo: halo, pos: new T.Vector3(), rPx: 10 };
+    var S = { id: d.id, def: d, group: group, planets: planets, rings: rings, hit: hit, halo: halo, halo2: halo2, pos: new T.Vector3(), rPx: 10 };
     sysList.push(S); sysById[d.id] = S;
   });
 
@@ -1001,8 +1001,9 @@ window.__G = { PT_VERT: PT_VERT, STAR_FRAG: STAR_FRAG, NEB_FRAG: NEB_FRAG, DUST_
       S.rPx = 5 * pxPerUnit;
       S.hit.scale.setScalar(Math.max(1.4, 20 / Math.max(pxPerUnit, .001)));
       var vis = 1 - Math.min(1, Math.max(0, (dist - 18) / 40));   // orbites visibles de près
-      S.rings.forEach(function (lm) { lm.opacity += (vis * .35 - lm.opacity) * .1; });
+      S.rings.forEach(function (lm) { lm.opacity += ((.10 + vis * .30) - lm.opacity) * .1; });
       S.halo.material.opacity = 1;
+      S.halo2.material.opacity = .85;
     });
 
     sysList.forEach(function (S) {
