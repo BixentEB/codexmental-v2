@@ -20,6 +20,14 @@
 .codex-reader #codex-reader-menu.codex-emblem-mode .codex-emblem-item span{font-size:13px;font-weight:600;line-height:1.35}
 @media(max-width:700px){.codex-reader #codex-reader-menu.codex-emblem-mode .codex-emblem-item{flex-basis:84px!important;min-height:84px!important}.codex-reader #codex-reader-menu.codex-emblem-mode .codex-emblem-item svg{width:40px;height:40px}}
 .codex-reader #codex-reader-content .codex-heading-emoji{display:inline-block;font-size:.72em;vertical-align:.08em;margin-right:.28em;line-height:1}
+
+/* Long-form reading density — applies to article content, never navigation. */
+.codex-reader #codex-reader-content{font-size:14px!important;line-height:1.65!important}
+.codex-reader #codex-reader-content .codex-editorial-page>p{line-height:1.65}
+.codex-reader #codex-reader-content .codex-editorial-page{line-height:1.65}
+.codex-reader #codex-reader-content .codex-editorial-page>h2:first-child{font-size:clamp(23px,2.5vw,30px)!important}
+.codex-reader #codex-reader-content .codex-editorial-page>h3{font-size:clamp(16px,1.5vw,19px)!important}
+@media(max-width:700px){.codex-reader #codex-reader-content{font-size:14px!important;line-height:1.65!important}}
 </style>
 <style id="codex-reader-navigation-polish">
 #codex-reader-subcategories:not([hidden]){display:flex!important;align-items:center;flex-wrap:wrap;gap:10px;padding:10px 0 12px;margin:0 0 2px;border-top:1px solid rgba(220,184,122,.25)}
