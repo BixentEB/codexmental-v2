@@ -884,6 +884,32 @@ html,body{background:transparent!important;background-color:transparent!importan
 }
 .codex-reader #codex-reader-content .codex-nexus-person{padding:14px 17px!important;background:linear-gradient(135deg,rgba(134,150,204,.12),rgba(170,139,180,.06))!important;border:1px solid rgba(174,187,222,.23)!important;box-shadow:none!important}
 .codex-reader #codex-reader-content .codex-nexus-person p{line-height:1.58!important}
+/* Shared theme accents: one reader, two visual identities. */
+:root{--codex-reader-accent:#b995f5;--codex-reader-accent-bg:rgba(133,90,205,.25);--codex-reader-accent-border:#aa85ed;--codex-reader-accent-text:#eedfff}
+html[data-reader-universe="heliosphere"]{--codex-reader-accent:#e5b971;--codex-reader-accent-bg:rgba(182,143,79,.24);--codex-reader-accent-border:#d9b475;--codex-reader-accent-text:#ffe0a0}
+.codex-reader #codex-reader-categories button.active,
+.codex-reader #codex-reader-subcategories button.active,
+.codex-reader #codex-reader-menu button.active,
+.codex-reader #codex-reader-menu .codex-reader-menu-item.active,
+.codex-reader #codex-reader-menu.codex-category-mode .codex-reader-menu-item.active,
+.codex-reader .codex-m-track button.active,
+.codex-reader .codex-m-sub button.active{
+ color:var(--codex-reader-accent-text)!important;
+ background:var(--codex-reader-accent-bg)!important;
+ border-color:var(--codex-reader-accent-border)!important;
+}
+.codex-reader .codex-m-track button.active:after{background:var(--codex-reader-accent)!important}
+.codex-reader .codex-m-sub button.active{border-bottom-color:var(--codex-reader-accent)!important}
+.codex-reader #codex-reader-categories button:hover,
+.codex-reader #codex-reader-subcategories button:hover,
+.codex-reader #codex-reader-menu button:hover,
+.codex-reader .codex-m-track button:hover,
+.codex-reader .codex-m-sub button:hover{
+ color:#fff!important;
+ border-color:rgba(255,255,255,.8)!important;
+ box-shadow:0 0 12px rgba(255,255,255,.22)!important;
+ transition:color .2s,border-color .2s,box-shadow .2s,background .2s;
+}
 /* Shared editorial rendering: same source HTML in Galactique and Heliosphere. */
 .codex-reader #codex-reader-content .codex-editorial-page{width:100%;max-width:1020px;margin-inline:auto}
 .codex-reader #codex-reader-content .codex-editorial-page>p{margin:0 0 .85em!important}
@@ -1532,6 +1558,7 @@ html,body{background:transparent!important;background-color:transparent!importan
 document.getElementById('shared-reader-exit').addEventListener('click',function(){readerClose.click()});
   // Les clics dans une iframe ne remontent pas au document Galactique : avertir le parent.
   document.addEventListener('pointerdown',function(){if(window.parent!==window)window.parent.postMessage({codexReaderOutsidePointer:true},location.origin);},true);
+try{var parentPath=new URL(document.referrer).pathname;document.documentElement.dataset.readerUniverse=parentPath.includes('/heliosphere/')?'heliosphere':'galactique';}catch(e){document.documentElement.dataset.readerUniverse='galactique';}
 var section=new URLSearchParams(location.search).get('section')||'codex';openCodexReader(section);
 window.addEventListener('message',function(e){if(e.origin===location.origin&&e.data&&e.data.section)openCodexReader(e.data.section)});
 })();</script><script id="codex-mobile-clean">
