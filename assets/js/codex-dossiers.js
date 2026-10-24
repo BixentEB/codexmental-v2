@@ -22,7 +22,7 @@
     var previous=opts.articleList.querySelector('.codex-dossier-chapters');
     if(previous)previous.remove();
     var menu=document.createElement('div');menu.className='codex-dossier-chapters';
-    menu.hidden=true;
+    menu.hidden=false;
     var footer=opts.content.querySelector('.codex-article-footer');
     function display(nodes,selected){
       var wrapper=document.createElement('div');wrapper.className='codex-imported-content codex-dossier-view';
@@ -71,7 +71,7 @@
     opts.button.classList.add('active');
     opts.button.dataset.readerDossier='true';
     opts.button._codexShowIntro=function(){display(intro,null);};
-    opts.button.setAttribute('aria-expanded','false');
+    opts.button.setAttribute('aria-expanded','true');
     opts.button.setAttribute('aria-controls','codex-dossier-'+(source.getAttribute('data-reader-dossier')||'article'));
     menu.id='codex-dossier-'+(source.getAttribute('data-reader-dossier')||'article');
     display(intro,null);
