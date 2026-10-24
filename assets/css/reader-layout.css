@@ -468,3 +468,9 @@
 .codex-reader #codex-reader-content .codex-editorial-page>blockquote pre{white-space:pre-wrap;overflow-wrap:anywhere}
 .codex-reader #codex-reader-content .codex-editorial-presentation>p:first-of-type{font-size:1.07em;line-height:1.85}
 @media(max-width:700px){.codex-reader #codex-reader-content .codex-editorial-page>blockquote{padding:12px 14px!important}.codex-reader #codex-reader-content .codex-editorial-page>h3{margin-top:1.45em!important}}
+
+/* Odyssée: distinguish reflective quotations from ordinary paragraphs. */
+.codex-reader #codex-reader-content .codex-editorial-voyage>blockquote{position:relative;display:block;margin:22px 12px!important;padding:18px 24px 18px 28px!important;border:1px solid rgba(207,180,131,.22)!important;border-left:3px solid rgba(223,190,128,.75)!important;border-radius:12px!important;background:linear-gradient(120deg,rgba(197,162,107,.12),rgba(123,116,171,.07) 65%,rgba(123,116,171,.035))!important;box-shadow:0 8px 24px rgba(0,0,0,.09);font-style:italic;line-height:1.75}
+.codex-reader #codex-reader-content .codex-editorial-voyage>blockquote:first-of-type{text-align:center;font-size:1.06em}
+.codex-reader #codex-reader-content .codex-editorial-voyage>blockquote p{margin:.6em 0}
+@media(max-width:700px){.codex-reader #codex-reader-content .codex-editorial-voyage>blockquote{margin:18px 0!important;padding:14px 17px!important}}
