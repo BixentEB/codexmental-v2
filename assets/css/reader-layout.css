@@ -474,3 +474,20 @@
 .codex-reader #codex-reader-content .codex-editorial-voyage>blockquote:first-of-type{text-align:center;font-size:1.06em}
 .codex-reader #codex-reader-content .codex-editorial-voyage>blockquote p{margin:.6em 0}
 @media(max-width:700px){.codex-reader #codex-reader-content .codex-editorial-voyage>blockquote{margin:18px 0!important;padding:14px 17px!important}}
+
+/* Compact reading typography: one shared source of truth for both engines. */
+@media(min-width:701px){
+ .codex-reader #codex-reader-content{font-size:13px!important;line-height:1.55!important}
+ .codex-reader #codex-reader-content :is(p,li,blockquote){line-height:1.58}
+ .codex-reader #codex-reader-content :is(h1,h2,h3,h4){line-height:1.24}
+ .codex-reader #codex-reader-content h1{font-size:clamp(22px,2.2vw,27px)!important}
+ .codex-reader #codex-reader-content h2{font-size:clamp(18px,1.8vw,22px)!important}
+ .codex-reader #codex-reader-content h3{font-size:clamp(15px,1.35vw,18px)!important}
+ .codex-reader #codex-reader-content .codex-editorial-page>p{line-height:1.58}
+ .codex-reader #codex-reader-content .codex-editorial-page{line-height:1.58}
+}
+/* Nexus: compact balanced portraits, softly tinted like the original Codex. */
+.codex-reader #codex-reader-content .codex-nexus-duo{gap:14px;margin:12px 0 18px}
+.codex-reader #codex-reader-content .codex-nexus-person{padding:14px 17px!important;background:linear-gradient(135deg,rgba(134,150,204,.12),rgba(170,139,180,.06))!important;border:1px solid rgba(174,187,222,.23)!important;box-shadow:none!important}
+.codex-reader #codex-reader-content .codex-nexus-person p{line-height:1.58!important}
+.codex-reader #codex-reader-content .codex-nexus-person em{font-size:1.04em}
