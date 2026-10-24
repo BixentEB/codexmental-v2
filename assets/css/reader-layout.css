@@ -7,6 +7,10 @@
     max-width:1380px!important;
     margin-inline:auto!important;
   }
+  .codex-reader .codex-reader-layout:not(:has(.lab-showcase-host)) #codex-reader-menu {
+    min-width:0;
+    box-sizing:border-box;
+  }
   .codex-reader .codex-reader-layout:not(:has(.lab-showcase-host)) {
     grid-template-columns:minmax(240px,280px) minmax(0,1fr)!important;
     gap:20px!important;
