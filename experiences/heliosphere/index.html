@@ -1307,7 +1307,24 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
     atelier:'../../atelier/atelier.html',lab:'../../lab/index.html',
     dashb:'../../dashb/index.html',profil:'../../profil/index.html'
   };
+  // Le moteur solaire ne gère plus la présentation du lecteur.
+  // Son unique responsabilité : ouvrir ou fermer le lecteur commun.
+  var sharedReaderHost=document.createElement('div');
+  sharedReaderHost.id='solar-shared-reader-host';
+  sharedReaderHost.hidden=true;
+  sharedReaderHost.style.cssText='position:fixed;inset:50px 0 0;z-index:9000;background:transparent';
+  var sharedReaderFrame=document.createElement('iframe');
+  sharedReaderFrame.title='Lecteur CODEX Mental';
+  sharedReaderFrame.style.cssText='width:100%;height:100%;border:0;display:block;background:transparent';
+  sharedReaderHost.appendChild(sharedReaderFrame);
+  document.body.appendChild(sharedReaderHost);
+  window.addEventListener('message',function(event){
+    if(event.origin!==location.origin||!event.data)return;
+    if(event.data.codexReaderClose)closeCodexReader();
+  });
   function closeCodexReader(){
+    sharedReaderHost.hidden=true;
+    sharedReaderFrame.removeAttribute('src');
     readerPending=null;readerOpen=false;reader.hidden=true;
     document.body.classList.remove('codex-reader-open');
     readerRequest++;readerClose.blur();
@@ -1325,6 +1342,16 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
   }
   async function openCodexReader(id){
     if(!readerRoutes[id]||!SECTIONS[id])return;
+    readerPending=null;
+    readerOpen=true;
+    reader.hidden=true;
+    document.body.classList.add('codex-reader-open');
+    sharedReaderHost.hidden=false;
+    var sharedUrl='../shared-reader/?universe=heliosphere&section='+encodeURIComponent(id);
+    if(sharedReaderFrame.getAttribute('src')!==sharedUrl)sharedReaderFrame.src=sharedUrl;
+    return;
+    // Ancien rendu conservé temporairement pour permettre un retrait contrôlé.
+
     var eyebrow=document.querySelector('.codex-reader-eyebrow');
     if(eyebrow)eyebrow.textContent='CODEX MENTAL · '+({codex:'CONNAISSANCES',atelier:'CRÉATION',lab:'EXPÉRIMENTATION',dashb:'OBSERVATOIRE',profil:'IDENTITÉ & PARCOURS'}[id]||'EXPLORATION');
     readerPending=null;readerTitle.textContent=SECTIONS[id].name;
