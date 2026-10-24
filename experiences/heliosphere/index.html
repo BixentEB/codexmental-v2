@@ -1274,6 +1274,7 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
     readerRequest++;readerClose.blur();
   }
   function readerSetContent(node){
+    if(window.CodexGallery&&node&&node.classList&&node.classList.contains('codex-dossier-view'))window.CodexGallery.decorate(node);
     readerContent.replaceChildren(node);
     readerContent.scrollTop=0;
   }
@@ -2817,4 +2818,4 @@ document.addEventListener('DOMContentLoaded',function(){
 });
 </script>
 <link rel="stylesheet" href="../../assets/css/reader-layout.css?v=20261024-3">
-<script src="../../assets/js/codex-dossiers.js?v=20261024-2"></script><script src="../../assets/js/reader-attribution.js"></script></body></html>
+<script src="../../assets/js/codex-dossiers.js?v=20261024-2"></script><script src="../../assets/js/codex-gallery.js?v=20261024-1"></script><script src="../../assets/js/reader-attribution.js"></script></body></html>
