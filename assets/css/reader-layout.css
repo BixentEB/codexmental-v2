@@ -1,0 +1,32 @@
+/* CODEX Mental — shared reader geometry.
+   Theme engines keep their own 3D scene and palette.
+   Page structure is identical for both engines.
+   This file is linked AFTER each engine's inline styles. */
+@media (min-width:1050px) {
+  .codex-reader .codex-reader-shell {
+    width:min(1380px,calc(100% - 36px))!important;
+    max-width:1380px!important;
+    margin-inline:auto!important;
+  }
+  .codex-reader .codex-reader-layout {
+    grid-template-columns:280px minmax(0,1fr)!important;
+    gap:20px!important;
+    width:100%!important;
+  }
+}
+@media (min-width:701px) and (max-width:1049px) {
+  .codex-reader .codex-reader-layout {
+    grid-template-columns:240px minmax(0,1fr)!important;
+    gap:16px!important;
+  }
+}
+@media (max-width:700px) {
+  .codex-reader .codex-reader-layout {
+    grid-template-columns:minmax(0,1fr)!important;
+    width:100%!important;
+  }
+}
+.codex-reader .codex-reader-layout > #codex-reader-menu {
+  min-width:0;
+  box-sizing:border-box;
+}
