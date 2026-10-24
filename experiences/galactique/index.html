@@ -824,7 +824,7 @@ window.__G = { PT_VERT: PT_VERT, STAR_FRAG: STAR_FRAG, NEB_FRAG: NEB_FRAG, DUST_
   function openSharedReader(id){
     if(!id)return;
     readerOverlay.hidden=false;
-    var url='../shared-reader/?section='+encodeURIComponent(id);
+    var url='../shared-reader/?universe=galactique&section='+encodeURIComponent(id);
     if(readerFrame.getAttribute('src')!==url)readerFrame.src=url;
     else readerFrame.contentWindow?.postMessage({section:id},location.origin);
   }
