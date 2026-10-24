@@ -50,7 +50,13 @@
 /* Nexus: two equal protagonists, responsive to a single column on narrow screens. */
 #codeurs .codex-nexus-duo{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin:18px 0 26px;align-items:stretch}
 #codeurs .codex-nexus-person{padding:20px;border:1px solid rgba(170,174,211,.25);border-radius:14px;background:rgba(104,108,148,.07)}
-#codeurs .codex-nexus-person p{margin:0;line-height:1.7}
+#codeurs .codex-nexus-person p{margin:0;line-height:1.55}
+#codeurs .codex-nexus-person.astra-person{display:flex;align-items:flex-start;gap:14px}
+#codeurs .astra-avatar{width:76px;height:auto;flex:none;object-fit:contain}
+#codeurs .codex-retro-terminal{padding:10px 14px;background:#0d1015;border-left:2px solid #41ba78;border-radius:8px}
+#codeurs .codex-retro-terminal pre{margin:0;padding:0;background:transparent;border:0;white-space:pre-wrap;line-height:1.35;font-size:.9em;color:#7ff7a1}
+#codeurs .codex-retro-terminal code{padding:0;background:transparent;color:inherit}
+@media(max-width:650px){#codeurs .astra-avatar{width:58px}#codeurs .codex-retro-terminal{padding:9px 10px}}
 #codeurs .codex-nexus-person em{font-style:normal;font-weight:750;font-size:1.13em}
 @media(max-width:650px){#codeurs .codex-nexus-duo{grid-template-columns:1fr}}
 
