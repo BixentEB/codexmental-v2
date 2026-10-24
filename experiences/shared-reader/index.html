@@ -1727,4 +1727,11 @@ html[data-reader-universe="galactique"] .codex-reader .codex-article-share:hover
 html[data-reader-universe="galactique"]{--codex-tabs-line:rgba(182,157,239,.58);--codex-tabs-divider:rgba(182,157,239,.35)}
 html[data-reader-universe="heliosphere"]{--codex-tabs-line:rgba(219,181,115,.55);--codex-tabs-divider:rgba(219,181,115,.35)}
 </style>
+<style id="codex-iframe-transparent-canvas">
+/* The shared reader is an overlay: its document must never paint an opaque canvas.
+   The panels retain their own backgrounds. */
+html,body{background:transparent!important;background-color:transparent!important}
+html::before,html::after,body::before,body::after{background-color:transparent!important}
+#codex-reader{background:transparent!important;background-color:transparent!important}
+</style>
 </body></html>
