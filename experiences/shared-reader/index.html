@@ -879,6 +879,7 @@ html,body{background:transparent!important;background-color:transparent!importan
     readerRequest++;readerClose.blur();
   }
   function readerSetContent(node){
+    if(window.CodexGallery&&node&&node.classList&&node.classList.contains('codex-dossier-view'))window.CodexGallery.decorate(node);
     readerContent.replaceChildren(node);
     readerContent.scrollTop=0;
   }
@@ -1518,4 +1519,4 @@ attach();
 @media(max-width:700px){.codex-reader #codex-reader-content{background:rgba(16,22,39,.96)!important}}
 </style>
 <link rel="stylesheet" href="../../assets/css/reader-layout.css?v=20261024-3">
-<script src="../../assets/js/codex-dossiers.js?v=20261024-2"></script><script src="../../assets/js/reader-attribution.js"></script></body></html>
+<script src="../../assets/js/codex-dossiers.js?v=20261024-2"></script><script src="../../assets/js/codex-gallery.js?v=20261024-1"></script><script src="../../assets/js/reader-attribution.js"></script></body></html>
