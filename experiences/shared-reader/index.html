@@ -1245,6 +1245,7 @@ html,body{background:transparent!important;background-color:transparent!importan
                   var chapters=btn.nextElementSibling;
                   if(chapters&&chapters.classList.contains('codex-dossier-chapters')){
                     chapters.hidden=!chapters.hidden;
+                    if(btn._codexShowIntro)btn._codexShowIntro();
                     btn.setAttribute('aria-expanded',String(!chapters.hidden));
                     return;
                   }
