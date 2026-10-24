@@ -1640,6 +1640,7 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
                   var chapters=btn.nextElementSibling;
                   if(chapters&&chapters.classList.contains('codex-dossier-chapters')){
                     chapters.hidden=!chapters.hidden;
+                    if(btn._codexShowIntro)btn._codexShowIntro();
                     btn.setAttribute('aria-expanded',String(!chapters.hidden));
                     return;
                   }
