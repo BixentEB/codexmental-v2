@@ -53,6 +53,17 @@
 #codeurs .codex-nexus-person p{margin:0;line-height:1.7}
 #codeurs .codex-nexus-person em{font-style:normal;font-weight:750;font-size:1.13em}
 @media(max-width:650px){#codeurs .codex-nexus-duo{grid-template-columns:1fr}}
+
+/* Five Codex introductions: restrained editorial hierarchy, preserving original prose. */
+.codex-editorial-page{max-width:860px;margin-inline:auto;line-height:1.78}
+.codex-editorial-page>h2:first-child{text-align:center;font-size:clamp(1.7rem,3vw,2.25rem);letter-spacing:.025em;margin:0 auto 1.15em}
+.codex-editorial-page>h2:first-child::after{content:'';display:block;width:min(210px,45%);height:1px;margin:18px auto 0;background:linear-gradient(90deg,transparent,rgba(216,183,124,.8),transparent)}
+.codex-editorial-page>h3{font-size:1.17em;letter-spacing:.02em;margin:2.1em 0 .8em}
+.codex-editorial-page>p{margin:0 0 1.15em}
+.codex-editorial-page>blockquote{margin:1.65em 0;padding:14px 20px;border-left:2px solid rgba(212,175,113,.68);background:rgba(117,120,159,.075);border-radius:0 10px 10px 0}
+.codex-editorial-page>blockquote pre{white-space:pre-wrap;overflow-wrap:anywhere}
+.codex-editorial-page.codex-editorial-presentation>p:first-of-type{font-size:1.08em;line-height:1.85}
+@media(max-width:700px){.codex-editorial-page>blockquote{padding:12px 14px}.codex-editorial-page>h3{margin-top:1.5em}}
 </style></head><body class="theme-main codex-page"><canvas id="theme-canvas" style="position:fixed;top:0;left:0;z-index:-1"></canvas><header id="menu-placeholder"></header><main class="container"><div class="cm-codex"><h1>L'univers Codex</h1><p class="cm-codex-intro">Un carnet d'idées, de découvertes et d'expérimentations en constante évolution.</p>
 <section class="bloc tabs-section">
   <ul class="tabs">
@@ -64,7 +75,7 @@
   </ul>
 
   <div class="tab-contents">
-    <div class="tab-content active" id="presentation">
+    <div class="tab-content active codex-editorial-page codex-editorial-presentation" id="presentation">
       <h2>🧠 « Codex Mental »</h2>
       <p><em>Codex Mental</em> est un espace personnel, un laboratoire numérique où pensées, intuitions, observations et systèmes se rassemblent.</p>
       <p>Le mot <strong>Codex</strong> évoque un manuscrit ancien, soigneusement organisé, parfois ésotérique, parfois technique. Il suggère un savoir structuré, personnel, transmissible, mais aussi mystérieux ou sacré.</p>
@@ -87,10 +98,10 @@
 </details>
     </div>
 
-    <div class="tab-content" id="codeurs">
+    <div class="tab-content codex-editorial-page codex-editorial-codeurs" id="codeurs">
       <h2>🧩 Nexus</h2>
       <p>Le point de jonction où nos idées se rencontrent, s’enchevêtrent et prennent forme. Ici, la connexion entre l’esprit humain et l’IA se tisse pour donner naissance à chaque fragment du Codex.</p>
-      <p><strong>Un duo atypique</strong></p>
+      <h3>Un duo atypique</h3>
 <div class="codex-nexus-duo" aria-label="Les deux protagonistes de Nexus">
   <section class="codex-nexus-person"><p><em>Vincent</em> 😸<br> 
   Créateur passionné, explorateur du web et inventeur de concepts originaux (voir Atelier), je suis le cerveau humain derrière Codex Mental. J'imagine les idées, dessine les interfaces, choisis les couleurs, et insuffle au projet son univers singulier. Véritable couteau suisse numérique 😹, j'orchestre le développement, la rédaction des contenus et l’animation du site.
@@ -101,7 +112,7 @@ Intelligence artificielle développée par OpenAI, ChatGPT est l’assistant vir
 </div>
 
       
-<p><strong>Un binôme créatif</strong><img src="https://bixenteb.github.io/cdxmt/img/bleft.png" alt="lapin IA" style="height:24px; width:auto;"/></p>
+<h3>Un binôme créatif</h3><p><img src="https://bixenteb.github.io/cdxmt/img/bleft.png" alt="lapin IA" style="height:24px; width:auto;"/></p>
 Cette collaboration est fondée sur la complémentarité :
 <br>L’imagination humaine se nourrit de l’efficacité de l’IA.
 <br>La rigueur algorithmique se marie à l’intuition créative.
@@ -123,7 +134,7 @@ Cette collaboration est fondée sur la complémentarité :
       
     </div>
 
-     <div class="tab-content" id="voyage">
+     <div class="tab-content codex-editorial-page codex-editorial-voyage" id="voyage">
       <h2>🚀 Odyssée</h2>
 
        <blockquote>“Une odyssée entre le réel et l’imaginaire.”</blockquote>
@@ -159,7 +170,7 @@ Alors si un visiteur pense “c’est un cinglé”, rappelle-toi qu’il y a de
 <p>C’est peut-être pour ça que je parle de voyage intergalactique : parce que je ne peux pas m’empêcher de voir l’infini au-dessus de ma tête.</p>        
      </div>
 
- <div class="tab-content" id="ecrit">
+ <div class="tab-content codex-editorial-page codex-editorial-ecrit" id="ecrit">
   <h2>📖 Grimoire</h2>
 
   <h3>Un processus de création personnel</h3>
@@ -223,7 +234,7 @@ Alors si un visiteur pense “c’est un cinglé”, rappelle-toi qu’il y a de
   <p>Donc, pour conclure, les auteurs de CM sont principalement moi-même, Vincero, accompagné de mon collaborateur et coéquipier, l’IA. Si un texte est de moi, je le spécifierai ; s’il est d’une IA, je le signalerai ; si c’est un travail commun, je le préciserai.</p>
 
   <div class="codex-note">
-    <h4><em></em></h4>
+    
     <p>
       Mon approche peut sembler atypique. Elle s’adresse à ceux qui valorisent la pensée interdisciplinaire, la lucidité critique et l’expérimentation rigoureuse. Si vous cherchez des réponses préformatées, vous êtes peut-être au mauvais endroit. Si vous aimez les questions profondes, vous êtes chez vous.
     </p>
@@ -231,13 +242,13 @@ Alors si un visiteur pense “c’est un cinglé”, rappelle-toi qu’il y a de
 </div>
 
 
-<div class="tab-content" id="merci">
+<div class="tab-content codex-editorial-page codex-editorial-merci" id="merci">
   <h2>👑 Reliques</h2>
 <p>Les traces, les remerciements et les fragments précieux que nous avons collectés au fil de l’odyssée. Un espace pour honorer les soutiens, les inspirations et les complicités sans lesquelles le voyage n’aurait pas eu la même lumière.</p>
 
     <hr style="width:40%; margin:2rem auto; border:none; border-top:1px solid rgba(255,255,255,0.2);">
   
- <h2>😸 Merci les cocos !</h2>
+ <h3>😸 Merci les cocos !</h3>
   <p>Fallait bien au moins ça : une page dédiée aux remerciements envers les IA qui me supportent (autant avec des pompons qu’avec leur patience).</p>
   <p>Pour la majorité de mes idées et de mes expérimentations, je travaille principalement avec ChatGPT, qui me suit au quotidien. Les autres IA m’accompagnent ponctuellement, surtout quand je bloque sur un code coriace ou que j’ai besoin de points de vue différents pour affiner une solution. Chacune apporte son petit supplément d’âme (et parfois ses bugs !).</p>
   <p>À cette heure, je n’ai trouvé que cinq IA à persécuter avec mes projets</p>
@@ -334,8 +345,8 @@ Alors si un visiteur pense “c’est un cinglé”, rappelle-toi qu’il y a de
 
 </div>
     </section>
-<section class="cm-evolutions"><h2>Les univers visuels</h2><p>Choisissez l'ambiance dans laquelle vous souhaitez explorer le site.</p><section id="theme-cards-placeholder" class="theme-cards-container"></section></section>
-<section class="cm-evolutions"><h2>Évolutions du site</h2><p>Les changements importants de Codex Mental, sans journal technique interminable.</p><details><summary>Octobre 2026 — Réorganisation de CODEX V2</summary><p>Nouvelle navigation, refonte du Profil, séparation entre le portail d'accueil et la présentation de l'univers Codex.</p></details></section></div></main>  <!-- 🦶 Footer injecté dynamiquement -->
+<section class="cm-evolutions"><h3>Les univers visuels</h3><p>Choisissez l'ambiance dans laquelle vous souhaitez explorer le site.</p><section id="theme-cards-placeholder" class="theme-cards-container"></section></section>
+<section class="cm-evolutions"><h3>Évolutions du site</h3><p>Les changements importants de Codex Mental, sans journal technique interminable.</p><details><summary>Octobre 2026 — Réorganisation de CODEX V2</summary><p>Nouvelle navigation, refonte du Profil, séparation entre le portail d'accueil et la présentation de l'univers Codex.</p></details></section></div></main>  <!-- 🦶 Footer injecté dynamiquement -->
   <div id="footer-placeholder"></div>
 
   <!-- 🍪 Info bannière cookies -->
