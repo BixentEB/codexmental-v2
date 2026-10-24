@@ -14,7 +14,7 @@
 .codex-reader #codex-reader-menu.codex-emblem-mode .codex-emblem-accordion{display:flex!important;flex-direction:column!important;flex:1 1 auto!important;min-height:0!important;margin:0!important}
 .codex-reader #codex-reader-menu.codex-emblem-mode .codex-emblem-list{display:flex!important;flex-direction:column!important;flex:1 1 auto!important;min-height:0!important;gap:0!important;padding:0 9px!important;overflow-y:auto!important}
 .codex-reader #codex-reader-menu.codex-emblem-mode .codex-emblem-item{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:7px!important;flex:1 0 92px!important;min-height:92px!important;padding:12px 8px!important;text-align:center!important;position:relative!important;border-radius:0!important;background:transparent!important;transition:color .25s ease!important}
-.codex-reader #codex-reader-menu.codex-emblem-mode .codex-emblem-item+.codex-emblem-item::before{content:'';position:absolute;top:0;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,rgba(233,196,127,.52) 50%,transparent);pointer-events:none}
+.codex-reader #codex-reader-menu.codex-emblem-mode .codex-emblem-item+.codex-emblem-item::before{content:'';position:absolute;top:0;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,var(--codex-decorative-line,rgba(233,196,127,.52)) 50%,transparent);pointer-events:none}
 .codex-reader #codex-reader-menu.codex-emblem-mode .codex-emblem-item svg{width:48px;height:48px;stroke:currentColor;stroke-width:1.45;fill:none;stroke-linecap:round;stroke-linejoin:round;opacity:.8;filter:drop-shadow(0 0 0 transparent);transition:transform .25s ease,filter .25s ease,opacity .25s ease}
 .codex-reader #codex-reader-menu.codex-emblem-mode .codex-emblem-item:hover svg,.codex-reader #codex-reader-menu.codex-emblem-mode .codex-emblem-item:focus-visible svg,.codex-reader #codex-reader-menu.codex-emblem-mode .codex-emblem-item.active svg{opacity:1;transform:scale(1.09);filter:drop-shadow(0 0 11px currentColor)}
 .codex-reader #codex-reader-menu.codex-emblem-mode .codex-emblem-item span{font-size:13px;font-weight:600;line-height:1.35}
@@ -885,6 +885,8 @@ html,body{background:transparent!important;background-color:transparent!importan
 .codex-reader #codex-reader-content .codex-nexus-person{padding:14px 17px!important;background:linear-gradient(135deg,rgba(134,150,204,.12),rgba(170,139,180,.06))!important;border:1px solid rgba(174,187,222,.23)!important;box-shadow:none!important}
 .codex-reader #codex-reader-content .codex-nexus-person p{line-height:1.58!important}
 /* Shared reader accents: restrained Galactique, warm Héliosphère. */
+html[data-reader-universe="galactique"]{--codex-decorative-line:rgba(194,169,255,.65)}
+html[data-reader-universe="heliosphere"]{--codex-decorative-line:rgba(233,196,127,.52)}
 :root{--codex-reader-accent:#c5adff;--codex-reader-accent-bg:rgba(218,221,241,.095);--codex-reader-accent-border:rgba(196,174,255,.58);--codex-reader-accent-text:#f5f3ff}
 html[data-reader-universe="heliosphere"]{--codex-reader-accent:#e5b971;--codex-reader-accent-bg:rgba(182,143,79,.24);--codex-reader-accent-border:#d9b475;--codex-reader-accent-text:#ffe0a0}
 .codex-reader #codex-reader-categories button.active,
