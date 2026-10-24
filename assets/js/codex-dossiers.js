@@ -22,10 +22,10 @@
     var previous=opts.articleList.querySelector('.codex-dossier-chapters');
     if(previous)previous.remove();
     var menu=document.createElement('div');menu.className='codex-dossier-chapters';
-    menu.style.cssText='padding:4px 8px 12px 18px;display:grid;gap:3px';
+    menu.hidden=true;
     var footer=opts.content.querySelector('.codex-article-footer');
     function display(nodes,selected){
-      var wrapper=document.createElement('div');wrapper.className='codex-imported-content';
+      var wrapper=document.createElement('div');wrapper.className='codex-imported-content codex-dossier-view';
       var article=document.createElement('article');article.className=source.className;
       article.setAttribute('data-article','');
       nodes.forEach(function(n){article.appendChild(n.cloneNode(true));});
@@ -42,7 +42,8 @@
             else window.prompt('Copier le lien',url.href);
           }catch(e){if(e.name!=='AbortError')window.prompt('Copier le lien',url.href);}
         });
-        wrapper.appendChild(copy);
+        var bar=document.createElement('div');bar.className='codex-dossier-tools';
+        bar.appendChild(copy);wrapper.prepend(bar);
       }
       menu.querySelectorAll('button').forEach(function(b){b.classList.toggle('active',b===selected);});
       opts.render(wrapper);
@@ -52,7 +53,7 @@
       b.className='codex-reader-menu-item';
       b.textContent=piece.title;
       b.dataset.chapterId=piece.id;
-      b.style.cssText='text-align:left;font-size:12px;white-space:normal';
+
       b.addEventListener('click',function(){
         opts.articleList.querySelectorAll('.codex-reader-menu-item').forEach(function(x){x.classList.remove('active');});
         opts.button.classList.add('active');
@@ -62,6 +63,13 @@
     });
     opts.button.insertAdjacentElement('afterend',menu);
     opts.button.classList.add('active');
+    opts.button.setAttribute('aria-expanded','false');
+    opts.button.setAttribute('aria-controls','codex-dossier-'+(source.getAttribute('data-reader-dossier')||'article'));
+    menu.id='codex-dossier-'+(source.getAttribute('data-reader-dossier')||'article');
+    opts.button.addEventListener('click',function(){
+      menu.hidden=!menu.hidden;
+      opts.button.setAttribute('aria-expanded',String(!menu.hidden));
+    });
     display(intro,null);
     return true;
   }
