@@ -273,3 +273,19 @@
    padding-top:8px!important;
  }
 }
+
+/* Hide the orphaned native scrollbar sliver at the binder's right edge.
+   The inner article list keeps its own scroll when needed. */
+@media(min-width:701px){
+ .codex-reader #codex-reader-menu{
+   overflow:hidden!important;
+   scrollbar-gutter:auto!important;
+ }
+ .codex-reader #codex-reader-menu .codex-reader-accordion{
+   min-height:0!important;
+ }
+ .codex-reader #codex-reader-menu .codex-reader-accordion[open] .codex-reader-article-list{
+   scrollbar-gutter:auto!important;
+   overflow-x:hidden!important;
+ }
+}
