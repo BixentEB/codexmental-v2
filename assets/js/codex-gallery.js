@@ -15,9 +15,11 @@
  function decorate(wrapper){
   if(!wrapper||wrapper.dataset.galleryReady)return wrapper;
   wrapper.dataset.galleryReady='true';
-  var article=wrapper.querySelector('article[data-article],article,.codex-imported-content');
-  if(!article)return wrapper;
-  var images=Array.from(article.querySelectorAll('img')).filter(function(img){return img.getAttribute('src')&&!img.closest('.codex-dossier-tools, .codex-gallery');});
+  // The wrapper can contain both chapter-local images and intro media outside <article>.
+  var images=Array.from(wrapper.querySelectorAll('img')).filter(function(img){
+   return img.getAttribute('src')&&!img.closest('.codex-dossier-tools,.codex-gallery') &&
+     !img.closest('button') && !img.closest('svg');
+  });
   if(!images.length)return wrapper;
   var gallery=document.createElement('aside');gallery.className='codex-gallery';gallery.setAttribute('aria-label','Galerie des illustrations de cet article');
   var grid=document.createElement('div');grid.className='codex-gallery-grid';
@@ -28,9 +30,13 @@
    preview.addEventListener('load',function(){if(preview.naturalWidth>preview.naturalHeight*1.25)button.classList.add('is-landscape');});
    button.appendChild(preview);button.addEventListener('click',function(){showImage(src,img.alt);});
    grid.appendChild(button);
-   var figure=img.closest('figure');
-   if(figure&&figure.querySelectorAll('img').length===1)figure.hidden=true;
-   else img.hidden=true;
+   // Do not hide content twice; source images in the dedicated gallery source
+   // are already hidden. For inline article images, replace only the image.
+   if(!img.closest('.codex-gallery-source')){
+    var figure=img.closest('figure');
+    if(figure&&figure.querySelectorAll('img').length===1)figure.hidden=true;
+    else img.hidden=true;
+   }
   });
   gallery.appendChild(grid);
   wrapper.classList.add('codex-has-gallery');
