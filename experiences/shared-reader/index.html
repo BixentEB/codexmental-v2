@@ -1271,7 +1271,9 @@ html,body{background:transparent!important;background-color:transparent!importan
                     }catch(error){if(error.name!=='AbortError')window.prompt('Copier le lien',articleUrl);}
                   });
                   footer.appendChild(share);cleaned.appendChild(footer);
-                  readerSetContent(cleaned);
+                  if(!window.CodexDossiers||!window.CodexDossiers.open({
+                    content:cleaned,button:btn,articleList:articleList,render:readerSetContent
+                  }))readerSetContent(cleaned);
                 }catch(err){if(request===readerRequest&&readerOpen)readerMessage('Cet article ne contient pas encore de texte. Revenez à la liste pour choisir un autre article.');}
               });
               if(link.series&&link.seriesRole==='intro'){
@@ -1498,4 +1500,4 @@ attach();
 @media(max-width:700px){.codex-reader #codex-reader-content{background:rgba(16,22,39,.96)!important}}
 </style>
 <link rel="stylesheet" href="../../assets/css/reader-layout.css">
-</body></html>
+<script src="../../assets/js/codex-dossiers.js"></script></body></html>
