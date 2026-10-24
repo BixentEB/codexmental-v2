@@ -1638,6 +1638,12 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
               if(link.series&&link.seriesRole!=='intro')btn.textContent=btn.textContent.replace(/^\d+\.\s*/, '');
               var articleUrl=new URL(link.path,siteBase).href;
               btn.addEventListener('click',async function(){
+                if(btn._codexSeriesChildren){
+                  var seriesOpen=btn._codexSeriesChildren.hidden;
+                  btn._codexSeriesChildren.hidden=!seriesOpen;
+                  btn.setAttribute('aria-expanded',String(seriesOpen));
+                  if(!seriesOpen)return;
+                }
                 if(btn.dataset.readerDossier==='true'){
                   var chapters=btn.nextElementSibling;
                   if(chapters&&chapters.classList.contains('codex-dossier-chapters')){
@@ -1689,6 +1695,10 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
                 var head=document.createElement('div');head.className='codex-series-head';
                 // Multi-file editorial series: its articles remain visible like a book's chapters.
                 var children=document.createElement('div');children.className='codex-series-children';
+                children.hidden=true;
+                btn.dataset.readerSeries='true';
+                btn.setAttribute('aria-expanded','false');
+                btn._codexSeriesChildren=children;
                 head.appendChild(btn);folder.appendChild(head);folder.appendChild(children);
                                 articleList.appendChild(folder);
                 articleList._codexSeries=articleList._codexSeries||{};
