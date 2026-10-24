@@ -1311,7 +1311,7 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
     readerMenu.style.display='';
     readerContent.classList.remove('lab-showcase-host');
     readerMenu.replaceChildren();
-    readerMenu.classList.remove('codex-category-mode');
+    readerMenu.classList.remove('codex-category-mode','codex-emblem-mode');
     var oldCategoryBar=document.getElementById('codex-reader-categories');
     if(oldCategoryBar){oldCategoryBar.hidden=true;oldCategoryBar.replaceChildren();}
     var oldSubcategoryBar=document.getElementById('codex-reader-subcategories');
