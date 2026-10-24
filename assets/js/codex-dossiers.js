@@ -70,6 +70,7 @@
     opts.button.insertAdjacentElement('afterend',menu);
     opts.button.classList.add('active');
     opts.button.dataset.readerDossier='true';
+    opts.button._codexShowIntro=function(){display(intro,null);};
     opts.button.setAttribute('aria-expanded','false');
     opts.button.setAttribute('aria-controls','codex-dossier-'+(source.getAttribute('data-reader-dossier')||'article'));
     menu.id='codex-dossier-'+(source.getAttribute('data-reader-dossier')||'article');
