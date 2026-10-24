@@ -1690,13 +1690,14 @@ html[data-reader-universe="galactique"] .codex-reader .codex-article-share:hover
 /* One frame, two flush tabs, one baseline. Verified cascade issue: category padding and grid gap. */
 @media (min-width:701px){
  html .codex-reader #codex-reader-menu.codex-category-mode{
-  padding:0!important;overflow:hidden!important;
+  padding:9px!important;overflow:hidden!important;
  }
  html .codex-reader #codex-reader-menu #codex-reader-subcategories:not([hidden]){
   display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
   width:100%!important;gap:0!important;padding:0!important;margin:0!important;
   min-height:0!important;height:36px!important;
   border:0!important;border-bottom:1px solid var(--codex-tabs-line,rgba(182,157,239,.58))!important;
+  border-radius:9px 9px 0 0!important;
   box-sizing:border-box!important;
  }
  html .codex-reader #codex-reader-menu #codex-reader-subcategories button{
