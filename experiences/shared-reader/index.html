@@ -1244,7 +1244,8 @@ html,body{background:transparent!important;background-color:transparent!importan
               var articleUrl=new URL(link.path,siteBase).href;
               btn.addEventListener('click',async function(){
                 if(btn._codexSeriesChildren){
-                  var seriesOpen=btn._codexSeriesChildren.hidden;
+                  var seriesOpen=!btn._codexSeriesChildren.classList.contains('is-open');
+                  btn._codexSeriesChildren.classList.toggle('is-open',seriesOpen);
                   btn._codexSeriesChildren.hidden=!seriesOpen;
                   btn.setAttribute('aria-expanded',String(seriesOpen));
                   if(!seriesOpen)return;
@@ -1292,7 +1293,8 @@ html,body{background:transparent!important;background-color:transparent!importan
                   readerContent.dataset.articleSource=articleUrl;
                   if(!window.CodexDossiers||!window.CodexDossiers.open({
                     content:cleaned,button:btn,articleList:articleList,articleUrl:articleUrl,render:readerSetContent
-                  }))readerSetContent(cleaned);
+                  }))readerSetContent(window.CodexDossiers&&window.CodexDossiers.decorate
+                    ?window.CodexDossiers.decorate(cleaned):cleaned);
                 }catch(err){if(request===readerRequest&&readerOpen)readerMessage('Cet article ne contient pas encore de texte. Revenez à la liste pour choisir un autre article.');}
               });
               if(link.series&&link.seriesRole==='intro'){
@@ -1516,4 +1518,4 @@ attach();
 @media(max-width:700px){.codex-reader #codex-reader-content{background:rgba(16,22,39,.96)!important}}
 </style>
 <link rel="stylesheet" href="../../assets/css/reader-layout.css">
-<script src="../../assets/js/codex-dossiers.js"></script><script src="../../assets/js/reader-attribution.js"></script></body></html>
+<script src="../../assets/js/codex-dossiers.js?v=20261024-2"></script><script src="../../assets/js/reader-attribution.js"></script></body></html>
