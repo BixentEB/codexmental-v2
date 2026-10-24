@@ -1232,6 +1232,7 @@ html,body{background:transparent!important;background-color:transparent!importan
             if(!panel)return;
             var fragment=document.createElement('div');fragment.className='codex-imported-content';
             fragment.innerHTML=panel.innerHTML;
+            fragment.classList.add('codex-editorial-page','codex-editorial-'+tab.dataset.tab);
             // Keep the playful editorial emojis, but make them a restrained accent.
             fragment.querySelectorAll('h1,h2,h3').forEach(function(heading){
               var first=heading.firstChild;
