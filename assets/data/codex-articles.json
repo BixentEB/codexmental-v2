@@ -223,5 +223,87 @@
         }
       ]
     }
-  ]
+  ],
+  "introductions": {
+    "Intelligence artificielle": [
+      "L'intelligence artificielle est-elle seulement un outil, ou transforme-t-elle aussi notre manière de penser et de créer ?",
+      "Cette rubrique explore les modèles, leurs usages, leurs possibilités et leurs limites, à travers des articles, des expériences concrètes et des dialogues. Elle accueille aussi les expressions d'intelligences, dans un espace éditorial distinct.",
+      "Il ne s'agit ni de célébrer systématiquement l'IA ni de la craindre par principe : les capacités observables, les hypothèses et les projections sont distinguées avec soin."
+    ],
+    "IA — Articles & réflexions": [
+      "Que peut réellement faire une intelligence artificielle, au-delà des démonstrations et des promesses ?",
+      "Les articles réunissent analyses, expérimentations, réflexions sur les usages et questions éthiques. Ils interrogent les relations entre humains et systèmes artificiels, leurs réussites comme leurs erreurs.",
+      "L'expérience personnelle nourrit la réflexion, sans remplacer les faits vérifiables ni les limites techniques connues."
+    ],
+    "IA — Expressions d'intelligences": [
+      "Que se passe-t-il lorsqu'on laisse davantage de place à l'expression créative des intelligences artificielles ?",
+      "Cet espace accueille des textes, des dialogues et des créations d'IA libres dans leur expression éditoriale, au fil de conversations et d'expérimentations. Chaque contribution peut ouvrir une perspective inattendue.",
+      "Cette liberté d'expression créative n'établit pas, à elle seule, l'existence d'une conscience ou d'une expérience subjective chez l'IA."
+    ],
+    "Psychologie": [
+      "Pourquoi pensons-nous, ressentons-nous et réagissons-nous différemment ?",
+      "Cette rubrique rassemble des réflexions sur les comportements humains, la cognition, les émotions et les expériences qui façonnent notre perception du monde. Elle accueille les questionnements personnels autant que le dialogue avec les connaissances existantes.",
+      "Explorer la psychologie ne signifie pas prétendre être psychologue. Il ne s'agit ni de poser des diagnostics ni de délivrer des conseils thérapeutiques, mais de distinguer les connaissances établies, les hypothèses, les interprétations et les expériences vécues."
+    ],
+    "Haut Potentiel": [
+      "Que recouvre réellement le haut potentiel, au-delà des étiquettes et des idées reçues ?",
+      "Cette sous-catégorie explore les représentations du haut potentiel, les différences de parcours, les manières de penser et les stratégies d'adaptation. Les témoignages et observations personnelles y trouvent leur place sans être érigés en règles universelles.",
+      "Les notions psychologiques sont abordées avec prudence : un vécu singulier ne constitue ni un diagnostic ni une preuve générale."
+    ],
+    "Philosophie": [
+      "Pourquoi certaines questions résistent-elles aux réponses définitives ?",
+      "La philosophie invite ici à examiner nos évidences, nos valeurs, la réalité, la connaissance et les contradictions qui traversent nos idées. Les textes avancent par questions, rapprochements et arguments plutôt que par certitudes imposées.",
+      "Les hypothèses et les expériences de pensée sont proposées comme des chemins de réflexion, non comme des faits démontrés."
+    ],
+    "États modifiés de conscience": [
+      "Que devient notre perception lorsque l'état ordinaire de veille se transforme ?",
+      "Cette rubrique s'intéresse aux variations de conscience, aux perceptions inhabituelles, aux états de transition et aux expériences subjectives. Elle fait dialoguer les récits vécus avec les approches scientifiques disponibles.",
+      "L'intensité d'une expérience ne suffit pas à en établir l'explication : observation, interprétation et connaissances vérifiables restent distinctes."
+    ],
+    "Rêves & Onirisme": [
+      "Que nous racontent les rêves lorsque le monde extérieur s'efface ?",
+      "Entre sommeil, mémoire, imagination et émotions, cette sous-catégorie accueille les rêves, les cauchemars, les rêves lucides et les interrogations sur l'expérience onirique. Elle peut mêler récits personnels, croquis et analyses.",
+      "Les interprétations symboliques restent des pistes de lecture, sans être présentées comme des explications scientifiques certaines."
+    ],
+    "Expériences de conscience": [
+      "Comment décrire une expérience intérieure qui échappe aux mots habituels ?",
+      "Cette sous-catégorie est destinée aux témoignages, observations et interrogations sur des vécus singuliers, notamment aux frontières du sommeil et de la veille.",
+      "Les récits sont accueillis avec curiosité, sans confondre leur réalité vécue avec une explication causale démontrée."
+    ],
+    "Symbolique & ésotérisme": [
+      "Pourquoi les symboles traversent-ils les époques et continuent-ils de nous parler ?",
+      "Cette rubrique explore les images, les mythes, les traditions symboliques et les pratiques d'interprétation. Le Tarot y trouve sa place comme langage culturel, narratif et personnel, aux côtés d'autres systèmes de signes.",
+      "La richesse d'une lecture symbolique n'implique pas qu'elle décrive objectivement le fonctionnement du monde : les croyances, les analogies et les faits vérifiables restent distingués."
+    ],
+    "Tarot": [
+      "Comment quelques images peuvent-elles ouvrir autant de récits et de questions ?",
+      "Le Tarot est abordé ici comme un ensemble de symboles, d'archétypes et de représentations historiques, mais aussi comme un support de réflexion et de création.",
+      "Ses interprétations sont présentées comme des lectures possibles, non comme des prédictions garanties."
+    ],
+    "Mythes & symboles": [
+      "Que transmettent les figures et les récits qui se répètent d'une culture à l'autre ?",
+      "Cette sous-catégorie rassemble des explorations de mythes, de signes et d'images symboliques, en prêtant attention à leurs contextes historiques et aux réinterprétations contemporaines.",
+      "Les ressemblances entre traditions invitent à réfléchir, mais ne prouvent pas nécessairement une origine ou une signification commune."
+    ],
+    "Ésotérisme": [
+      "Que cherchons-nous lorsque nous interprétons le monde à travers des correspondances cachées ?",
+      "Cet espace examine des traditions, des idées et des systèmes ésotériques comme phénomènes culturels et objets de réflexion personnelle.",
+      "Il distingue les croyances et les propositions symboliques des affirmations qui peuvent être testées ou vérifiées."
+    ],
+    "Introspection": [
+      "Que découvre-t-on lorsqu'on observe ses propres pensées sans chercher immédiatement à les juger ?",
+      "L'introspection rassemble des textes sur les émotions, les souvenirs, les intuitions et les contradictions intérieures. C'est un espace pour décrire des expériences singulières et suivre l'évolution d'une réflexion.",
+      "Un témoignage personnel n'a pas vocation à définir ce que les autres vivent ; il propose un point de vue, ouvert au dialogue et à la nuance."
+    ],
+    "Exploration": [
+      "Et si une question nous conduisait bien au-delà du sujet qui l'a fait naître ?",
+      "Cette rubrique accueille les idées exploratoires, les croisements entre disciplines et les hypothèses en construction. Elle fait place à la curiosité et aux essais de pensée.",
+      "L'imagination y est libre, mais les concepts spéculatifs restent identifiés comme tels lorsqu'ils ne sont pas étayés."
+    ],
+    "Réflexions personnelles": [
+      "Comment une pensée se transforme-t-elle lorsqu'on prend le temps de la formuler ?",
+      "Cette sous-catégorie réunit des notes, interrogations et prises de recul qui ne rentrent pas nécessairement dans une discipline unique.",
+      "Ce sont des réflexions situées, susceptibles d'évoluer, plutôt que des conclusions définitives."
+    ]
+  }
 }
