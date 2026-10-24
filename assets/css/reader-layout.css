@@ -351,3 +351,58 @@
 .codex-reader #codex-reader-content>.codex-dossier-view>.codex-imported-content>:first-child{
   margin-top:0!important;
 }
+
+/* CODEX editorial gallery — appears only when the displayed article has images. */
+.codex-reader #codex-reader-content>.codex-dossier-view.codex-has-gallery{
+  display:grid!important;grid-template-columns:minmax(0,1fr) clamp(155px,20%,240px);
+  column-gap:20px;align-items:start;
+}
+.codex-reader #codex-reader-content>.codex-dossier-view.codex-has-gallery>.codex-dossier-tools{
+  right:calc(clamp(155px,20%,240px) + 20px)!important;
+}
+.codex-reader #codex-reader-content>.codex-dossier-view.codex-has-gallery>article,
+.codex-reader #codex-reader-content>.codex-dossier-view.codex-has-gallery>.codex-imported-content{
+  min-width:0;grid-column:1;grid-row:1;
+}
+.codex-reader .codex-gallery{
+  grid-column:2;grid-row:1;position:sticky;top:0;
+  align-self:start;min-width:0;max-height:calc(100vh - 260px);
+  overflow-y:auto;scrollbar-width:thin;
+  border-left:1px solid rgba(205,216,255,.18);padding-left:12px;
+}
+.codex-reader .codex-gallery-grid{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;
+}
+.codex-reader .codex-gallery-thumb{
+  display:block;min-width:0;padding:0;border:1px solid rgba(205,216,255,.22);
+  border-radius:7px;overflow:hidden;background:rgba(0,0,0,.20);
+  cursor:zoom-in;aspect-ratio:3/4;
+}
+.codex-reader .codex-gallery-thumb.is-landscape{grid-column:span 2;aspect-ratio:16/9}
+.codex-reader .codex-gallery-thumb img{display:block;width:100%;height:100%;object-fit:cover}
+.codex-reader .codex-gallery-thumb:hover{border-color:rgba(230,194,133,.85)}
+.codex-gallery-lightbox{
+  position:fixed;inset:0;z-index:2147483640;display:flex;
+  align-items:center;justify-content:center;padding:40px;
+  background:rgba(3,5,13,.94);backdrop-filter:blur(8px);
+}
+.codex-gallery-lightbox img{display:block;max-width:95vw;max-height:90vh;object-fit:contain}
+.codex-gallery-close{
+  position:absolute;right:18px;top:12px;border:1px solid rgba(255,255,255,.35);
+  border-radius:8px;background:rgba(25,27,40,.85);color:white;
+  font-size:28px;line-height:1;width:40px;height:40px;cursor:pointer;
+}
+@media(max-width:950px){
+ .codex-reader #codex-reader-content>.codex-dossier-view.codex-has-gallery{
+   display:block!important;
+ }
+ .codex-reader #codex-reader-content>.codex-dossier-view.codex-has-gallery>.codex-dossier-tools{
+   right:0!important;
+ }
+ .codex-reader .codex-gallery{
+   position:static;max-height:none;margin-top:18px;padding:12px 0 0;
+   border-left:0;border-top:1px solid rgba(205,216,255,.18);
+ }
+ .codex-reader .codex-gallery-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .codex-reader .codex-gallery-thumb.is-landscape{grid-column:span 2}
+}
