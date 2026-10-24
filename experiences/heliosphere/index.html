@@ -1676,6 +1676,7 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
                     }catch(error){if(error.name!=='AbortError')window.prompt('Copier le lien',articleUrl);}
                   });
                   footer.appendChild(share);cleaned.appendChild(footer);
+                  readerContent.dataset.articleSource=articleUrl;
                   if(!window.CodexDossiers||!window.CodexDossiers.open({
                     content:cleaned,button:btn,articleList:articleList,articleUrl:articleUrl,render:readerSetContent
                   }))readerSetContent(cleaned);
@@ -2809,4 +2810,4 @@ document.addEventListener('DOMContentLoaded',function(){
 });
 </script>
 <link rel="stylesheet" href="../../assets/css/reader-layout.css">
-<script src="../../assets/js/codex-dossiers.js"></script></body></html>
+<script src="../../assets/js/codex-dossiers.js"></script><script src="../../assets/js/reader-attribution.js"></script></body></html>
