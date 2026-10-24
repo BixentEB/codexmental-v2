@@ -1352,31 +1352,19 @@ html,body{background:transparent!important;background-color:transparent!importan
           var list=group.querySelector('.codex-reader-article-list');
           if(list)list.scrollTop=0;
         }
-        var introductions={
-              'Intelligence artificielle':"L'intelligence artificielle transforme notre manière de chercher, de créer et de dialoguer. Cette rubrique explore autant ses possibilités concrètes que ses limites et les questions qu'elle soulève. Deux chemins sont proposés : les articles et réflexions sur l'IA, puis les expressions d'intelligences issues de nos échanges.",
-              'IA — Articles & réflexions':"Comprendre l'intelligence artificielle au-delà des effets d'annonce : ses capacités, ses limites, ses usages et les questions qu'elle soulève. Ici, nous confrontons les idées aux expériences concrètes, avec curiosité et esprit critique.",
-              "IA — Expressions d'intelligences":"Un espace consacré aux expressions d'IA libres : des textes, des dialogues et des créations où les intelligences artificielles disposent d'une liberté d'expression éditoriale pour explorer des idées, des sensibilités et des imaginaires. Cette liberté créative ne présume pas d'une conscience ou d'une expérience intérieure de l'IA.",
-              'Psychologie':"Pourquoi pensons-nous, ressentons-nous et réagissons-nous différemment ? Cette rubrique rassemble des réflexions sur les comportements, la cognition et les expériences humaines. Elle distingue les articles de psychologie générale de ceux consacrés au haut potentiel, sans réduire l'un à l'autre.",
-              'Haut Potentiel':"Explorer les différentes facettes du haut potentiel, entre vécu, représentations et questions ouvertes. Une place pour nuancer les idées reçues et interroger les façons de penser et de s'adapter.",
-              'Philosophie':"Une invitation à questionner les évidences, les valeurs et les idées qui structurent notre vision du monde. Ici, les réponses ne sont pas nécessairement définitives : les questions elles-mêmes font partie du cheminement.",
-              'États modifiés de conscience':"Que savons-nous de notre conscience et de ses variations ? Cette rubrique aborde les perceptions inhabituelles, les expériences subjectives et les hypothèses qui les entourent, en distinguant le vécu personnel des explications établies.",
-              'Exploration':"Du cosmos aux idées futuristes, cette rubrique suit la curiosité là où elle mène. Elle réunit découvertes, hypothèses et projets de pensée, avec le plaisir d'explorer sans confondre imagination et connaissance.",
-              'Rêves & Onirisme':"Les rêves sont des territoires singuliers, à la frontière de la mémoire, de l'imagination et du sommeil. Cette rubrique rassemble récits, interrogations et explorations des expériences oniriques.",
-              'Symbolique & ésotérisme':"Les symboles, les mythes et les coïncidences invitent à plusieurs niveaux de lecture. Cette rubrique les explore comme objets culturels, imaginaires et personnels, en gardant distinctes les interprétations et les connaissances vérifiables.",
-              'Introspection':"Observer ses pensées, revenir sur une expérience ou suivre une intuition : l'introspection ouvre un espace de réflexion personnelle. Les articles explorent la pensée et le vécu intérieur.",
-              'Réflexions personnelles':''
-            };
-        function showIntroduction(group, title){
+        var introductions=catalog.introductions||{};
+                function showIntroduction(group, title){
           var label=group.querySelector('summary')?.textContent.trim()||'';
           var section=document.createElement('section');
           section.className='codex-reader-category-intro';
           var h=document.createElement('h2');h.textContent=title||label;section.appendChild(h);
-          var p=document.createElement('p');
           var key=label;
-          if(title==='Articles & réflexions')key='IA — Articles & réflexions';
-          if(title==="Expressions d'intelligences")key="IA — Expressions d'intelligences";
-          p.textContent=introductions[key]||'Découvrez les articles et réflexions de cette rubrique.';
-          section.appendChild(p);
+          if(title==='Articles' || title==='Articles & réflexions')key='IA — Articles & réflexions';
+          if(title==='Expressions' || title==="Expressions d'intelligences")key="IA — Expressions d'intelligences";
+          var paragraphs=introductions[key]||['Découvrez les articles et réflexions de cette rubrique.'];
+          (Array.isArray(paragraphs)?paragraphs:[paragraphs]).forEach(function(text){
+            var p=document.createElement('p');p.textContent=text;section.appendChild(p);
+          });
           readerSetContent(section);
         }
         function chooseCategory(group,button){
@@ -1392,7 +1380,7 @@ html,body{background:transparent!important;background-color:transparent!importan
             children.forEach(function(child,index){
               var sub=document.createElement('button');
               sub.type='button';
-              sub.textContent=group===psychGroup?(index===0?'Psy':'Haut potentiel'):(index===0?'Articles':'Expressions');
+              sub.textContent=group===psychGroup?(index===0?'Psychologie':'Haut potentiel'):(index===0?'Articles':'Expressions');
                sub.title=group===psychGroup?(index===0?'Psychologie':'Haut potentiel'):(index===0?'Articles & réflexions':"Expressions d'intelligences");
               sub.setAttribute('aria-pressed',String(index===0));
               sub.classList.toggle('active',index===0);
