@@ -16,8 +16,9 @@
       var title=heading?heading.textContent.trim():'CODEX Mental';
       var selectedChapter=root.querySelector('.codex-dossier-view article h2[data-reader-chapter]');
       var path=selectedChapter?selectedChapter.getAttribute('data-reader-chapter'):'';
-      var source=new URL(window.parent===window?location.href:document.referrer||location.href);
-      var link=source.href;
+      var source=root.dataset.articleSource||location.href;
+      var link=new URL(source,location.href).href;
+      if(path)link=link.split('#')[0]+'#'+encodeURIComponent(path);
       var credit='\n\n— '+title+' · © CODEX Mental\nSource : '+link;
       if(event.clipboardData){
         event.clipboardData.setData('text/plain',text+credit);
