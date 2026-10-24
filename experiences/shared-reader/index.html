@@ -1583,7 +1583,9 @@ html[data-reader-universe="galactique"] .codex-reader #codex-reader-menu #codex-
 document.getElementById('shared-reader-exit').addEventListener('click',function(){readerClose.click()});
   // Les clics dans une iframe ne remontent pas au document Galactique : avertir le parent.
   document.addEventListener('pointerdown',function(){if(window.parent!==window)window.parent.postMessage({codexReaderOutsidePointer:true},location.origin);},true);
-try{var parentPath=new URL(document.referrer).pathname;document.documentElement.dataset.readerUniverse=parentPath.includes('/heliosphere/')?'heliosphere':'galactique';}catch(e){document.documentElement.dataset.readerUniverse='galactique';}
+var universeParam=new URLSearchParams(location.search).get('universe');
+if(universeParam==='heliosphere'||universeParam==='galactique')document.documentElement.dataset.readerUniverse=universeParam;
+else{try{var parentPath=new URL(document.referrer).pathname;document.documentElement.dataset.readerUniverse=parentPath.includes('/heliosphere/')?'heliosphere':'galactique';}catch(e){document.documentElement.dataset.readerUniverse='galactique';}}
 var section=new URLSearchParams(location.search).get('section')||'codex';openCodexReader(section);
 window.addEventListener('message',function(e){if(e.origin===location.origin&&e.data&&e.data.section)openCodexReader(e.data.section)});
 })();</script><script id="codex-mobile-clean">
