@@ -79,9 +79,6 @@
   width:30px;height:30px;padding:0!important;flex:none;
   border-radius:7px!important;
 }
-.codex-reader .codex-dossier-view .codex-article-share::before{
-  content:'↗';font-size:18px;line-height:1;
-}
 .codex-reader :is(#codex-reader-content,#codex-reader-menu,.codex-reader-article-list){
   scrollbar-width:thin;
   scrollbar-color:rgba(179,161,213,.58) rgba(20,24,41,.28);
