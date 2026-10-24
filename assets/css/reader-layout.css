@@ -156,3 +156,38 @@
     margin:0 0 8px!important;
   }
 }
+
+/* Bookmark tabs: visually attached to the article binder, not floating cards. */
+@media(min-width:701px){
+ .codex-reader #codex-reader-menu{
+   padding-top:0!important;
+   border-bottom:1px solid rgba(205,216,255,.18)!important;
+ }
+ .codex-reader #codex-reader-subcategories:not([hidden]){
+   display:flex!important;flex-wrap:nowrap!important;gap:3px!important;
+   align-items:flex-end!important;align-self:stretch!important;
+   padding:0!important;margin:0 0 5px!important;
+   border:0!important;border-bottom:1px solid rgba(205,216,255,.30)!important;
+   min-height:38px!important;
+ }
+ .codex-reader #codex-reader-subcategories button{
+   flex:1 1 0!important;min-width:0!important;
+   padding:9px 5px 8px!important;margin:0 0 -1px!important;
+   border:1px solid rgba(205,216,255,.30)!important;
+   border-bottom-color:rgba(205,216,255,.30)!important;
+   border-radius:8px 8px 0 0!important;
+   background:rgba(12,17,32,.46)!important;
+   font-size:11px!important;line-height:1.15!important;
+   box-shadow:none!important;transform:none!important;
+ }
+ .codex-reader #codex-reader-subcategories button.active{
+   border-bottom-color:rgba(19,24,40,.95)!important;
+   background:rgba(55,48,43,.92)!important;
+   color:#f5dba6!important;
+ }
+ .codex-reader #codex-reader-subcategories button:hover{
+   background:rgba(90,71,51,.65)!important;
+ }
+}
+/* Keep the lower edge subtle rather than looking accidentally cut off. */
+.codex-reader #codex-reader-menu{border-bottom:1px solid rgba(205,216,255,.18)!important}
