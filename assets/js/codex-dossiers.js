@@ -33,7 +33,12 @@
       if(footer){
         var copy=footer.cloneNode(true);
         var share=copy.querySelector('.codex-article-share');
-        if(share)share.addEventListener('click',async function(){
+        if(share){
+          share.textContent='';
+          share.title='Partager cette section';
+          share.setAttribute('aria-label','Partager cette section');
+          share.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.7 13.5 6.6 4m0-11-6.6 4"/></svg>';
+          share.addEventListener('click',async function(){
           var url=new URL(opts.articleUrl||location.href);
           if(selected)url.hash=selected.dataset.chapterId||'';
           try{
@@ -41,7 +46,8 @@
             else if(navigator.clipboard){await navigator.clipboard.writeText(url.href);share.textContent='✓ Lien copié';}
             else window.prompt('Copier le lien',url.href);
           }catch(e){if(e.name!=='AbortError')window.prompt('Copier le lien',url.href);}
-        });
+          });
+        }
         var bar=document.createElement('div');bar.className='codex-dossier-tools';
         bar.appendChild(copy);wrapper.prepend(bar);
       }
