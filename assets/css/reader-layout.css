@@ -30,3 +30,70 @@
   min-width:0;
   box-sizing:border-box;
 }
+
+/* Shared dossier UI — same geometry in Galactique and Héliosphère. */
+.codex-reader .codex-dossier-chapters[hidden]{display:none!important}
+.codex-reader .codex-dossier-chapters{
+  display:flex;flex-direction:column;gap:1px;
+  padding:2px 3px 8px 12px;
+  border-left:1px solid rgba(205,175,116,.25);
+  margin:2px 0 5px 12px;
+}
+.codex-reader .codex-dossier-chapters .codex-reader-menu-item{
+  min-height:0!important;margin:0!important;
+  padding:6px 8px!important;font-size:11px!important;line-height:1.35!important;
+  text-align:left!important;white-space:normal!important;
+  border-radius:5px!important;
+}
+.codex-reader .codex-reader-menu-item[data-reader-dossier="true"]{
+  position:relative;padding-right:26px!important;
+}
+.codex-reader .codex-reader-menu-item[data-reader-dossier="true"]::after{
+  content:'⌄';position:absolute;right:9px;top:50%;transform:translateY(-50%) rotate(-90deg);
+  opacity:.7;transition:transform .15s;
+}
+.codex-reader .codex-reader-menu-item[data-reader-dossier="true"][aria-expanded="true"]::after{
+  transform:translateY(-50%);
+}
+.codex-reader .codex-dossier-view{padding-top:0!important;margin-top:0!important}
+.codex-reader .codex-dossier-view>article{margin-top:0!important;padding-top:0!important}
+.codex-reader .codex-dossier-view>article>:first-child{margin-top:0!important}
+.codex-reader .codex-dossier-view>article [data-part="title"]{margin-top:0!important;padding-top:0!important}
+.codex-reader .codex-dossier-view>article [data-part="title"] h1{margin-top:0!important}
+.codex-reader .codex-dossier-view .codex-dossier-tools{
+  display:flex;justify-content:flex-end;align-items:center;
+  margin:0 0 12px!important;padding:0!important;min-height:30px;
+}
+.codex-reader .codex-dossier-view .codex-article-footer{
+  display:flex;flex-direction:row-reverse;justify-content:flex-start;
+  align-items:center;gap:9px;margin:0!important;padding:0!important;
+  border:0!important;max-width:100%;
+}
+.codex-reader .codex-dossier-view .codex-article-tags{gap:4px;align-items:center}
+.codex-reader .codex-dossier-view .codex-article-tag{
+  font-size:10px!important;padding:2px 5px!important;line-height:1.35!important;
+  border-radius:4px!important;
+}
+.codex-reader .codex-dossier-view .codex-article-share{
+  font-size:0!important;display:inline-flex;align-items:center;justify-content:center;
+  width:30px;height:30px;padding:0!important;flex:none;
+  border-radius:7px!important;
+}
+.codex-reader .codex-dossier-view .codex-article-share::before{
+  content:'↗';font-size:18px;line-height:1;
+}
+.codex-reader :is(#codex-reader-content,#codex-reader-menu,.codex-reader-article-list){
+  scrollbar-width:thin;
+  scrollbar-color:rgba(179,161,213,.58) rgba(20,24,41,.28);
+}
+.codex-reader :is(#codex-reader-content,#codex-reader-menu,.codex-reader-article-list)::-webkit-scrollbar{width:8px;height:8px}
+.codex-reader :is(#codex-reader-content,#codex-reader-menu,.codex-reader-article-list)::-webkit-scrollbar-track{
+  background:rgba(20,24,41,.28);border-radius:8px;
+}
+.codex-reader :is(#codex-reader-content,#codex-reader-menu,.codex-reader-article-list)::-webkit-scrollbar-thumb{
+  background:rgba(179,161,213,.58);border-radius:8px;border:2px solid rgba(20,24,41,.35);
+}
+@media(max-width:700px){
+  .codex-reader .codex-dossier-view .codex-dossier-tools{justify-content:flex-start}
+  .codex-reader .codex-dossier-view .codex-article-footer{flex-wrap:wrap}
+}
