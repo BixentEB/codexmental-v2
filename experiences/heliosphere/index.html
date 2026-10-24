@@ -19,6 +19,7 @@
 .codex-reader #codex-reader-menu.codex-emblem-mode .codex-emblem-item:hover svg,.codex-reader #codex-reader-menu.codex-emblem-mode .codex-emblem-item:focus-visible svg,.codex-reader #codex-reader-menu.codex-emblem-mode .codex-emblem-item.active svg{opacity:1;transform:scale(1.09);filter:drop-shadow(0 0 11px currentColor)}
 .codex-reader #codex-reader-menu.codex-emblem-mode .codex-emblem-item span{font-size:13px;font-weight:600;line-height:1.35}
 @media(max-width:700px){.codex-reader #codex-reader-menu.codex-emblem-mode .codex-emblem-item{flex-basis:84px!important;min-height:84px!important}.codex-reader #codex-reader-menu.codex-emblem-mode .codex-emblem-item svg{width:40px;height:40px}}
+.codex-reader #codex-reader-content .codex-heading-emoji{display:inline-block;font-size:.72em;vertical-align:.08em;margin-right:.28em;line-height:1}
 </style><style id="codex-reader-navigation-polish">
 #codex-reader-subcategories:not([hidden]){display:flex!important;align-items:center;flex-wrap:wrap;gap:10px;padding:10px 0 12px;margin:0 0 2px;border-top:1px solid rgba(220,184,122,.25)}
 #codex-reader-subcategories button{appearance:none;background:rgba(12,17,32,.76);color:#e3d7c6;border:1px solid rgba(219,181,115,.45);border-radius:7px;padding:8px 15px;font-size:12px;font-weight:600;cursor:pointer;transition:background .2s,border-color .2s}
@@ -1618,6 +1619,16 @@ window.__GLSL = { PLANET_VERT: PLANET_VERT, PLANET_FRAG: PLANET_FRAG, RING_VERT:
             if(!panel)return;
             var fragment=document.createElement('div');fragment.className='codex-imported-content';
             fragment.innerHTML=panel.innerHTML;
+            // Keep the playful editorial emojis, but make them a restrained accent.
+            fragment.querySelectorAll('h1,h2,h3').forEach(function(heading){
+              var first=heading.firstChild;
+              if(!first||first.nodeType!==Node.TEXT_NODE)return;
+              var match=first.textContent.match(/^(\s*)([\p{Extended_Pictographic}\uFE0F\u200D]+)(\s*)/u);
+              if(!match)return;
+              first.textContent=first.textContent.slice(match[0].length);
+              var mark=document.createElement('span');mark.className='codex-heading-emoji';mark.textContent=match[2];
+              heading.insertBefore(mark,first);
+            });
             readerSetContent(cleanFragment(fragment,new URL(route,location.href)));
           });
           introList.appendChild(btn);
