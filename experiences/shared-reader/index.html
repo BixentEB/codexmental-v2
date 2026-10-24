@@ -1712,6 +1712,16 @@ html[data-reader-universe="galactique"] .codex-reader .codex-article-share:hover
   margin:0!important;border-top:0!important;
  }
 }
+/* Separate the tab frame from the list's breathing room, in both universes. */
+@media (min-width:701px){
+ html .codex-reader #codex-reader-menu.codex-category-mode .codex-reader-article-list{
+  padding:14px 10px 18px!important;
+  display:flex!important;flex-direction:column!important;gap:5px!important;
+ }
+ html .codex-reader #codex-reader-menu.codex-category-mode .codex-reader-menu-item{
+  min-height:35px!important;padding:8px 9px!important;
+ }
+}
 html[data-reader-universe="galactique"]{--codex-tabs-line:rgba(182,157,239,.58);--codex-tabs-divider:rgba(182,157,239,.35)}
 html[data-reader-universe="heliosphere"]{--codex-tabs-line:rgba(219,181,115,.55);--codex-tabs-divider:rgba(219,181,115,.35)}
 </style>
