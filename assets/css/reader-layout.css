@@ -325,7 +325,8 @@
   transform:translateY(-50%);
 }
 .codex-reader .codex-series-head .codex-reader-menu-item{width:100%!important}
-.codex-reader .codex-series-children{display:flex!important;flex-direction:column!important;gap:0!important}
+.codex-reader .codex-series-children{display:none!important;flex-direction:column!important;gap:0!important}
+.codex-reader .codex-series-children.is-open:not([hidden]){display:flex!important}
 
 /* Multi-file series use the same restrained Lucide drawer affordance. */
 .codex-reader .codex-series-head .codex-reader-menu-item[data-reader-series="true"]{
@@ -342,3 +343,11 @@
   transform:translateY(-50%) rotate(90deg);
 }
 .codex-reader .codex-series-children[hidden]{display:none!important}
+
+/* A single shared editorial layout for standard articles and dossiers. */
+.codex-reader #codex-reader-content>.codex-dossier-view>.codex-imported-content{
+  margin:0!important;padding:0!important;
+}
+.codex-reader #codex-reader-content>.codex-dossier-view>.codex-imported-content>:first-child{
+  margin-top:0!important;
+}
