@@ -919,6 +919,20 @@ html[data-reader-universe="galactique"] .codex-reader #codex-reader-menu.codex-e
  box-shadow:0 0 12px rgba(255,255,255,.22)!important;
  transition:color .2s,border-color .2s,box-shadow .2s,background .2s;
 }
+/* Galactique: lavender accent for the Articles / Expressions sub-tabs only. */
+html[data-reader-universe="galactique"] .codex-reader #codex-reader-menu #codex-reader-subcategories button.active,
+html[data-reader-universe="galactique"] .codex-reader #codex-reader-subcategories button.active{
+ color:#eadcff!important;
+ background:rgba(128,91,185,.22)!important;
+ border-color:#b69ae8!important;
+ border-top-color:#c9b3ff!important;
+ box-shadow:inset 0 2px 0 rgba(210,189,255,.72)!important;
+}
+html[data-reader-universe="galactique"] .codex-reader #codex-reader-menu #codex-reader-subcategories button:hover{
+ color:#fff!important;
+ border-color:rgba(255,255,255,.9)!important;
+ box-shadow:0 0 10px rgba(255,255,255,.2)!important;
+}
 /* Shared editorial rendering: same source HTML in Galactique and Heliosphere. */
 .codex-reader #codex-reader-content .codex-editorial-page{width:100%;max-width:1020px;margin-inline:auto}
 .codex-reader #codex-reader-content .codex-editorial-page>p{margin:0 0 .85em!important}
