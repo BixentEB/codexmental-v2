@@ -1659,6 +1659,14 @@ html[data-reader-universe="galactique"] .codex-reader #codex-reader-menu #codex-
 html[data-reader-universe="galactique"] .codex-reader #codex-reader-subcategories button:hover:not(.active){
  background:rgba(155,139,194,.17)!important;
 }
+/* A single lavender baseline for the two tabs; remove the second line from the category panel. */
+html[data-reader-universe="galactique"] .codex-reader #codex-reader-menu.codex-category-mode{
+ border-bottom:0!important;
+}
+html[data-reader-universe="galactique"] .codex-reader #codex-reader-menu #codex-reader-subcategories:not([hidden]){
+ border-bottom:1px solid rgba(182,157,239,.58)!important;
+ margin-bottom:0!important;
+}
 /* Final Galactique micro-accents: tabs, separators, sharing. */
 html[data-reader-universe="galactique"] .codex-reader #codex-reader-menu #codex-reader-subcategories:not([hidden]){
  border-bottom-color:rgba(182,157,239,.58)!important;
@@ -1668,7 +1676,7 @@ html[data-reader-universe="galactique"] .codex-reader #codex-reader-menu #codex-
  border-bottom-color:rgba(178,151,232,.42)!important;
 }
 html[data-reader-universe="galactique"] .codex-reader #codex-reader-menu.codex-category-mode{
- border-bottom-color:rgba(182,157,239,.36)!important;
+ border-bottom:0!important;
 }
 html[data-reader-universe="galactique"] .codex-reader .codex-article-share{
  border-color:rgba(184,157,244,.66)!important;
