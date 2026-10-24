@@ -19,6 +19,18 @@
     var first=headings[0];
     var intro=[];
     for(var n=parent.firstElementChild;n&&n!==first;n=n.nextElementSibling)intro.push(n.cloneNode(true));
+    // Images outside the article belong to its introduction by default.
+    // An explicit data-gallery-chapter attribute can target any chapter.
+    var mediaByChapter={introduction:[]};
+    pieces.forEach(function(piece){mediaByChapter[piece.id]=[];});
+    var mediaRoot=opts.content;
+    Array.from(mediaRoot.querySelectorAll('img')).forEach(function(img){
+      if(source.contains(img))return; // Images inside a chapter are already copied with its nodes.
+      if(img.closest('.codex-article-footer,.codex-dossier-tools'))return;
+      var requested=img.getAttribute('data-gallery-chapter')||'introduction';
+      var target=Object.prototype.hasOwnProperty.call(mediaByChapter,requested)?requested:'introduction';
+      mediaByChapter[target].push(img.cloneNode(true));
+    });
     var previous=opts.articleList.querySelector('.codex-dossier-chapters');
     if(previous)previous.remove();
     var menu=document.createElement('div');menu.className='codex-dossier-chapters';
@@ -30,6 +42,15 @@
       article.setAttribute('data-article','');
       nodes.forEach(function(n){article.appendChild(n.cloneNode(true));});
       wrapper.appendChild(article);
+      var galleryKey=selected?selected.dataset.chapterId:'introduction';
+      var assigned=mediaByChapter[galleryKey]||[];
+      if(assigned.length){
+        var media=document.createElement('div');
+        media.className='codex-gallery-source';
+        media.hidden=true;
+        assigned.forEach(function(img){media.appendChild(img.cloneNode(true));});
+        wrapper.appendChild(media);
+      }
       if(footer){
         var copy=footer.cloneNode(true);
         var share=copy.querySelector('.codex-article-share');
