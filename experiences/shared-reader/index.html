@@ -1070,7 +1070,7 @@ html[data-reader-universe="galactique"] .codex-reader #codex-reader-menu #codex-
       if(id==='atelier'){
         // Atelier V2: shared desktop categories and touch-friendly mobile carousel.
         // Keep legacy article files intact; only replace the presentation layer.
-        var groups=Array.from(doc.querySelectorAll('#viewer-menu details'));
+        var groups=Array.from(doc.querySelectorAll('#viewer-menu details')).filter(function(group){return !/Introduction/i.test(group.querySelector('summary')?.textContent||'');});
         var base=new URL('../../atelier/',location.href);
         var categoryBar=document.getElementById('codex-reader-categories');
         if(!categoryBar){
@@ -1083,7 +1083,6 @@ html[data-reader-universe="galactique"] .codex-reader #codex-reader-menu #codex-
         if(subBar){subBar.hidden=true;subBar.replaceChildren();}
         readerMenu.classList.add('codex-category-mode');
         var descriptions={
-          'Introduction':"Bienvenue dans l'Atelier : un espace où les idées prennent forme, entre imagination, recherche, création et expérimentation.",
           'Projets en cours':"Les projets qui se construisent au fil des essais, des découvertes et des améliorations.",
           'Exploration futuriste':"Imaginer d'autres possibilités, explorer des concepts et confronter les hypothèses à la curiosité.",
           "Évolutions de l'IA":"Réflexions et expérimentations autour des outils, des usages et des évolutions de l'intelligence artificielle.",
@@ -1094,6 +1093,15 @@ html[data-reader-universe="galactique"] .codex-reader #codex-reader-menu #codex-
           var section=document.createElement('section');section.className='codex-reader-category-intro';
           var h=document.createElement('h2');h.textContent=title;section.appendChild(h);
           var p=document.createElement('p');p.textContent=descriptions[title]||'Découvrez les créations et réflexions de cette rubrique.';section.appendChild(p);
+          readerSetContent(section);
+        }
+        var atelierLayout=readerMenu.parentElement;
+        function atelierWelcome(){
+          categoryBar.querySelectorAll('button').forEach(function(b){b.classList.remove('active');b.setAttribute('aria-pressed','false');});
+          readerMenu.style.display='none';
+          atelierLayout.style.gridTemplateColumns='minmax(0,1fr)';
+          var section=document.createElement('section');section.className='codex-reader-category-intro';
+          section.innerHTML='<h2>Bienvenue dans mon Atelier</h2><p>Mon Atelier rassemble mes idées, mes projets et mes explorations : des concepts nés de mon imagination, de mes lectures et de mes échanges avec les intelligences artificielles.</p><p>J’y expérimente librement, de la création numérique aux hypothèses futuristes. Chaque rubrique ouvre une porte sur ces recherches, qu’elles soient déjà concrètes ou encore en construction.</p><p>Choisissez une catégorie ci-dessus pour découvrir les projets et les articles qui lui sont associés.</p>';
           readerSetContent(section);
         }
         var entries=[];
@@ -1127,6 +1135,8 @@ html[data-reader-universe="galactique"] .codex-reader #codex-reader-menu #codex-
             list.appendChild(button);
           });
           tab.addEventListener('click',function(){
+            readerMenu.style.display='flex';
+            atelierLayout.style.gridTemplateColumns='';
             categoryBar.querySelectorAll('button').forEach(function(b){
               var active=b===tab;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));
             });
@@ -1136,11 +1146,8 @@ html[data-reader-universe="galactique"] .codex-reader #codex-reader-menu #codex-
           });
           entries.push({accordion:accordion,tab:tab,title:title});
         });
-        if(entries.length){
-          entries[0].tab.click();
-          var introButton=entries[0].accordion.querySelector('.codex-reader-menu-item');
-          if(introButton)introButton.click();
-        }else readerMessage('Aucun article trouvé dans cette rubrique.',route);
+        if(entries.length)atelierWelcome();
+        else readerMessage('Aucun article trouvé dans cette rubrique.',route);
         return;
       }
       if(id==='blog'){
