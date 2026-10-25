@@ -1727,6 +1727,14 @@ html[data-reader-universe="galactique"] .codex-reader .codex-article-share:hover
 html[data-reader-universe="galactique"]{--codex-tabs-line:rgba(182,157,239,.58);--codex-tabs-divider:rgba(182,157,239,.35)}
 html[data-reader-universe="heliosphere"]{--codex-tabs-line:rgba(219,181,115,.55);--codex-tabs-divider:rgba(219,181,115,.35)}
 </style>
+<style id="codex-galactique-panel-contrast-20261025">
+/* Darker reading surfaces in Galactique only; keep the galaxy backdrop unchanged. */
+html[data-reader-universe="galactique"] .codex-reader #codex-reader-menu,
+html[data-reader-universe="galactique"] .codex-reader #codex-reader-content{
+ background:rgba(3,6,16,.99)!important;
+ background-image:none!important;
+}
+</style>
 <style id="codex-iframe-transparent-canvas">
 /* The shared reader is an overlay: its document must never paint an opaque canvas.
    The panels retain their own backgrounds. */
