@@ -43,6 +43,9 @@ body:has(#gal-reader-overlay:not([hidden])) .stage canvas{filter:brightness(1.0)
 #gal-reader-frame{background:transparent!important;color-scheme:normal!important}
 /* L'iframe peint encore un fond opaque dans Chrome : compromis provisoire de composition, isolé ici. */
 #gal-reader-overlay:not([hidden]) #gal-reader-frame{opacity:.86}
+/* Opaque backings aligned under the two iframe panels: stars and labels cannot bleed through. */
+#gal-reader-overlay .gal-reader-panel-backing{position:absolute;display:none;pointer-events:none;background:#101625;border-radius:12px;z-index:0}
+#gal-reader-overlay #gal-reader-frame{position:relative;z-index:1}
 </style><style id="codex-gal-reader-contrast-controls-20261022">
 /* Voile léger, entre les étoiles et les blocs, sans effacer la galaxie. */
 /* Filtre dans la scène 3D, sous les contrôles et sous le lecteur : aucune zone cliquable recouverte. */
@@ -360,7 +363,7 @@ body:has(.codex-solar-lucioles) .codex-lucioles{--luciole:#ffd58c;--luciole-glow
     <div class="loading" id="loading">Formation de la galaxie…</div>
   </div>
 </div>
-<div id="gal-reader-overlay" hidden><iframe id="gal-reader-frame" title="Lecteur CODEX Mental" loading="lazy"></iframe></div>
+<div id="gal-reader-overlay" hidden><div class="gal-reader-panel-backing" id="gal-reader-menu-backing" aria-hidden="true"></div><div class="gal-reader-panel-backing" id="gal-reader-content-backing" aria-hidden="true"></div><iframe id="gal-reader-frame" title="Lecteur CODEX Mental" loading="lazy"></iframe></div>
 
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
@@ -850,6 +853,32 @@ window.__G = { PT_VERT: PT_VERT, STAR_FRAG: STAR_FRAG, NEB_FRAG: NEB_FRAG, DUST_
   });
 
   var readerOverlay=document.getElementById('gal-reader-overlay'),readerFrame=document.getElementById('gal-reader-frame');
+  /* Sync two solid backings with the actual reader panel rectangles. The iframe remains
+     translucent for the galaxy, but the panels have an opaque base underneath. */
+  var panelBackings=[
+    ['#codex-reader-menu',document.getElementById('gal-reader-menu-backing')],
+    ['#codex-reader-content',document.getElementById('gal-reader-content-backing')]
+  ];
+  function syncReaderPanelBackings(){
+    if(readerOverlay.hidden)return;
+    var doc;
+    try{doc=readerFrame.contentDocument;}catch(e){return;}
+    if(!doc)return;
+    var frameRect=readerFrame.getBoundingClientRect(),overlayRect=readerOverlay.getBoundingClientRect();
+    panelBackings.forEach(function(pair){
+      var node=doc.querySelector(pair[0]),back=pair[1];
+      if(!node){back.style.display='none';return;}
+      var rect=node.getBoundingClientRect();
+      back.style.display='block';
+      back.style.left=(frameRect.left-overlayRect.left+rect.left)+'px';
+      back.style.top=(frameRect.top-overlayRect.top+rect.top)+'px';
+      back.style.width=rect.width+'px';
+      back.style.height=rect.height+'px';
+    });
+  }
+  readerFrame.addEventListener('load',syncReaderPanelBackings);
+  window.addEventListener('resize',syncReaderPanelBackings);
+  setInterval(syncReaderPanelBackings,400);
   function openSharedReader(id){
     if(!id)return;
     readerOverlay.hidden=false;
