@@ -41,6 +41,8 @@ body:has(#gal-reader-overlay:not([hidden])) .codex-gal-theme{display:none}
 /* Laisser la galaxie lisible autour du lecteur, sans éclaircir les panneaux de lecture. */
 body:has(#gal-reader-overlay:not([hidden])) .stage canvas{filter:brightness(1.0) saturate(1.08);transition:filter .3s ease}
 #gal-reader-frame{background:transparent!important;color-scheme:normal!important}
+/* L'iframe peut peindre un fond opaque malgré les styles internes : rendre sa couche composite translucide pour laisser la scène 3D visible. */
+#gal-reader-overlay:not([hidden]) #gal-reader-frame{opacity:.86!important}
 body:has(#gal-reader-overlay:not([hidden])) .codex-gal-theme{display:none}
 </style><style id="codex-gal-reader-contrast-controls-20261022">
 /* Voile léger, entre les étoiles et les blocs, sans effacer la galaxie. */
