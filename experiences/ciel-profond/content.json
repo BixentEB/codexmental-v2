@@ -1,0 +1,363 @@
+{
+ "site": {
+  "title": "Codex Mental"
+ },
+ "sections": [
+  {
+   "id": "codex",
+   "label": "Codex",
+   "kicker": "Le recueil des idées",
+   "layout": "articles",
+   "intro": "Notes et essais sur la science, la philosophie et la création, classés comme des constellations : chaque idée en rejoint d'autres.",
+   "tree": [
+    {
+     "label": "Science",
+     "desc": "Ce que l'on sait de l'univers, et comment on l'a découvert.",
+     "children": [
+      {
+       "label": "Cosmologie",
+       "children": [
+        {
+         "article": "olbers"
+        },
+        {
+         "article": "cmb"
+        }
+       ]
+      },
+      {
+       "label": "Mathématiques",
+       "children": [
+        {
+         "article": "hasard"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "label": "Philosophie",
+     "desc": "Des questions ouvertes, posées avec rigueur.",
+     "children": [
+      {
+       "label": "Esprit et conscience",
+       "children": [
+        {
+         "article": "conscience"
+        }
+       ]
+      },
+      {
+       "label": "Expériences de pensée",
+       "series": true,
+       "desc": "Une série de scénarios imaginaires pour tester nos intuitions.",
+       "children": [
+        {
+         "article": "chambre"
+        },
+        {
+         "article": "thesee"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "label": "Création",
+     "desc": "Comment naissent et se travaillent les idées.",
+     "children": [
+      {
+       "article": "idee"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "atelier",
+   "label": "Atelier",
+   "kicker": "Là où les idées prennent forme",
+   "layout": "articles",
+   "intro": "Écrits en cours, croquis et expériences de pensée, montrés avant d'être terminés.",
+   "tree": [
+    {
+     "label": "Carnet",
+     "desc": "Fragments et pistes, sans prétention d'être finis.",
+     "children": [
+      {
+       "article": "n-ciel"
+      },
+      {
+       "article": "n-carte"
+      }
+     ]
+    },
+    {
+     "label": "Esquisses",
+     "desc": "Des règles de travail et des essais de forme.",
+     "children": [
+      {
+       "article": "n-regles"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "laboratoire",
+   "label": "Laboratoire",
+   "kicker": "Expériences et simulations",
+   "layout": "articles",
+   "intro": "Des maquettes pour manipuler une idée au lieu de seulement la lire.",
+   "tree": [
+    {
+     "label": "Simulations",
+     "desc": "Des systèmes simples dont le comportement surprend.",
+     "children": [
+      {
+       "article": "vie"
+      },
+      {
+       "article": "trois-corps"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "observatoire",
+   "label": "Observatoire",
+   "kicker": "Veille et lectures",
+   "layout": "articles",
+   "intro": "Ce qui se découvre, se publie et se discute ailleurs, repéré et commenté.",
+   "tree": [
+    {
+     "label": "Lectures",
+     "desc": "Des références pour approfondir.",
+     "children": [
+      {
+       "article": "l-sep"
+      }
+     ]
+    },
+    {
+     "label": "Données et archives",
+     "desc": "Là où trouver les sources primaires.",
+     "children": [
+      {
+       "article": "l-lambda"
+      },
+      {
+       "article": "l-nobel"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "portrait",
+   "label": "Portrait",
+   "kicker": "Qui explore ici",
+   "layout": "page",
+   "intro": "",
+   "tree": [
+    {
+     "article": "portrait"
+    }
+   ]
+  },
+  {
+   "id": "contact",
+   "label": "Contact",
+   "kicker": "Écrire",
+   "layout": "page",
+   "intro": "",
+   "tree": [
+    {
+     "article": "contact"
+    }
+   ]
+  }
+ ],
+ "articles": {
+  "olbers": {
+   "title": "Pourquoi le ciel nocturne est noir",
+   "desc": "Un univers infini et éternel devrait avoir un ciel éblouissant. Le noir de la nuit raconte autre chose.",
+   "date": "2026-09-12",
+   "tags": [
+    "cosmologie",
+    "histoire des sciences"
+   ],
+   "body": "Regardez le ciel une nuit sans lune : entre les étoiles, il est noir. Cette évidence cache une question qui a occupé des astronomes pendant trois siècles.\n\n## Le raisonnement\n\nSupposons un univers infini, éternel et uniformément peuplé d'étoiles. Dans n'importe quelle direction, la ligne de visée finirait par rencontrer la surface d'une étoile. Les étoiles lointaines paraissent plus faibles, mais elles sont aussi plus nombreuses, et ces deux effets se compensent exactement. Le ciel entier devrait donc briller autant que la surface du Soleil.\n\nCe raisonnement porte le nom de l'astronome allemand Heinrich Olbers, qui le publie en 1823. Il n'en est pourtant pas l'inventeur : Kepler, Halley et Jean-Philippe de Chéseaux y avaient déjà réfléchi.\n\n## Ce qui ne marche pas\n\nPremière idée : la poussière interstellaire absorberait la lumière lointaine. Mais la poussière qui absorbe de l'énergie s'échauffe, puis rayonne à son tour. L'énergie ne disparaît pas, elle change de forme.\n\n## Ce qui marche\n\nL'univers n'est pas éternel. Il a un âge, estimé aujourd'hui à environ 13,8 milliards d'années. La lumière des objets situés au-delà d'une certaine distance n'a pas encore eu le temps de nous parvenir. Notre horizon est limité, et le nombre d'étoiles dont la lumière nous atteint est trop faible pour remplir le ciel.\n\nL'expansion de l'univers joue aussi un rôle : elle décale la lumière lointaine vers le rouge et l'affaiblit. Mais c'est un effet moins important que l'âge fini.\n\nEdgar Allan Poe avait proposé une explication proche, de façon intuitive, dans son texte *Eureka* en 1848.\n\n## Ce que le noir nous apprend\n\nLe ciel noir est une observation cosmologique à part entière. Elle suffit à exclure un univers statique, infini dans le temps et rempli d'étoiles. Aucun télescope n'est nécessaire : il suffit de lever la tête, et de se poser la bonne question."
+  },
+  "cmb": {
+   "title": "La lumière la plus ancienne",
+   "desc": "Le fond diffus cosmologique : une photographie de l'univers à 380 000 ans, découverte par hasard.",
+   "date": "2026-09-26",
+   "tags": [
+    "cosmologie",
+    "observation"
+   ],
+   "body": "En 1964, deux ingénieurs des laboratoires Bell, Arno Penzias et Robert Wilson, mettent au point une antenne pour étudier les signaux radio de la Voie lactée. Ils captent un bruit de fond persistant, identique dans toutes les directions, qu'ils n'arrivent pas à éliminer. Ils vérifient l'antenne et la nettoient, y compris des fientes de pigeons qui s'y étaient déposées. Le bruit reste.\n\n## Un écho du Big Bang\n\nCe bruit est le fond diffus cosmologique. C'est la lumière émise environ 380 000 ans après le Big Bang, quand l'univers, en se refroidissant, est devenu transparent. Avant cela, la matière formait un plasma chaud et opaque, où la lumière était sans cesse diffusée. Lorsque protons et électrons se sont associés en atomes d'hydrogène, la lumière a pu voyager librement.\n\nDepuis, l'expansion de l'univers a étiré cette lumière. Elle n'est plus visible : elle arrive sous forme de micro-ondes, qui correspondent à une température de 2,725 kelvins, soit un peu moins de −270 °C.\n\nPenzias et Wilson reçoivent le prix Nobel de physique en 1978.\n\n## Presque uniforme, mais pas tout à fait\n\nLe fond diffus est d'une uniformité remarquable. Ses variations de température sont d'environ une partie sur cent mille. Ces minuscules écarts, mesurés par les satellites COBE, WMAP puis Planck, sont les traces des irrégularités de densité qui ont fini par former les galaxies.\n\n## Pourquoi c'est important\n\n- Il confirme que l'univers a connu un état chaud et dense.\n- Sa température et ses motifs permettent de mesurer l'âge de l'univers, sa géométrie et sa composition.\n- C'est la plus ancienne lumière que nous puissions observer."
+  },
+  "hasard": {
+   "title": "Les mathématiques du hasard",
+   "desc": "Comment un problème de joueurs est devenu une branche entière des mathématiques.",
+   "date": "2026-08-30",
+   "tags": [
+    "probabilités",
+    "histoire des sciences"
+   ],
+   "body": "Le hasard a longtemps été réservé aux dieux et aux joueurs. Il devient un objet mathématique en 1654, dans une correspondance entre Blaise Pascal et Pierre de Fermat.\n\n## Un problème de joueurs\n\nLe chevalier de Méré pose à Pascal une question : comment partager équitablement la mise d'une partie interrompue ? Pascal et Fermat y répondent en comptant les issues possibles et en leur attribuant des chances. C'est l'acte de naissance du calcul des probabilités.\n\n## Trois idées à retenir\n\n- **La loi des grands nombres.** Sur un grand nombre d'essais, la fréquence observée se rapproche de la probabilité théorique. Une pièce équilibrée ne donne pas autant de piles que de faces à chaque série, mais l'écart relatif s'estompe quand les essais se multiplient.\n- **L'indépendance.** Une pièce n'a pas de mémoire. Après cinq piles de suite, la probabilité d'un sixième reste d'une chance sur deux. Croire le contraire s'appelle l'erreur du joueur.\n- **Les axiomes.** En 1933, Andreï Kolmogorov donne à la théorie des bases rigoureuses, à partir de la théorie de la mesure.\n\n## Notre intuition se trompe\n\nCombien faut-il de personnes dans une salle pour que deux d'entre elles aient la même date d'anniversaire avec plus d'une chance sur deux ? La plupart des gens répondent plus de cent. La réponse est **23** : la probabilité atteint alors environ 50,7 %.\n\nIl ne s'agit pas de la probabilité qu'une personne précise partage votre date, mais qu'une paire quelconque la partage. Avec 23 personnes, il y a 253 paires possibles.\n\n## Le hasard comme outil\n\nAujourd'hui, le hasard sert à simuler des systèmes complexes (méthodes de Monte-Carlo), à protéger des communications (cryptographie) et à mesurer l'incertitude d'un résultat scientifique."
+  },
+  "conscience": {
+   "title": "La conscience est-elle un problème difficile ?",
+   "desc": "Pourquoi expliquer le fonctionnement du cerveau ne dit pas encore pourquoi il y a une expérience vécue.",
+   "date": "2026-09-05",
+   "tags": [
+    "philosophie de l'esprit",
+    "neurosciences"
+   ],
+   "body": "Vous lisez ces lignes, et il se passe quelque chose pour vous : une expérience, avec une couleur, un grain, une présence. La science du cerveau peut décrire ce qui se passe dans vos neurones. Peut-elle expliquer pourquoi cela s'accompagne d'une expérience vécue ?\n\n## Problèmes faciles, problème difficile\n\nEn 1994, le philosophe australien David Chalmers propose une distinction. Les « problèmes faciles » de la conscience portent sur des fonctions : comment le cerveau discrimine des stimuli, concentre son attention, rapporte ses états. Ils sont difficiles techniquement, mais on voit à quoi ressemblerait leur solution.\n\nLe « problème difficile » est d'une autre nature : pourquoi ces processus sont-ils accompagnés d'une expérience subjective ? Même une description complète des fonctions semble laisser cette question ouverte.\n\n## Deux repères\n\n- **Thomas Nagel (1974).** Dans « Quel effet cela fait d'être une chauve-souris ? », il soutient qu'il existe un point de vue subjectif qu'aucune description extérieure ne semble épuiser.\n- **Le zombie philosophique.** Un être identique à nous en tout point physique, mais sans expérience. Si on peut le concevoir sans contradiction, la conscience ne se réduit peut-être pas au physique. L'argument est très discuté.\n\n## Les grandes positions\n\n- **Le physicalisme** : la conscience est un phénomène physique, que l'on finira par expliquer comme on a expliqué la vie.\n- **L'illusionnisme** (Daniel Dennett, Keith Frankish) : ce que nous prenons pour une expérience ineffable est une représentation que le cerveau se fait de lui-même. Le problème difficile serait un faux problème.\n- **Le dualisme et le panpsychisme** : la conscience est une propriété fondamentale, distincte ou présente à tous les niveaux de la matière.\n- **Les théories scientifiques** : l'espace de travail global (Bernard Baars, Stanislas Dehaene) et la théorie de l'information intégrée (Giulio Tononi) cherchent à relier la conscience à des mécanismes mesurables. Elles se contredisent encore.\n\n## Pourquoi ça compte\n\nLes questions que l'on pose sur les animaux, sur les patients en état de conscience minimale ou sur les machines dépendent de ce que l'on pense de la conscience. Il n'y a pas de consensus, et c'est ce qui rend le sujet vivant."
+  },
+  "chambre": {
+   "title": "La chambre chinoise",
+   "desc": "Peut-on comprendre une langue en appliquant seulement des règles ?",
+   "date": "2026-08-14",
+   "tags": [
+    "philosophie de l'esprit",
+    "intelligence artificielle"
+   ],
+   "body": "En 1980, le philosophe John Searle imagine une scène simple. Vous êtes enfermé dans une pièce. Par une fente, on vous passe des messages écrits en chinois, une langue que vous ne comprenez pas. Vous disposez d'un grand manuel de règles, rédigé en français, qui indique quels symboles renvoyer en réponse à quels symboles reçus. Vous appliquez les règles. À l'extérieur, on est convaincu de parler à quelqu'un qui comprend le chinois.\n\n## Ce que Searle veut montrer\n\nVous n'avez rien compris. Vous manipulez des symboles d'après leur forme (leur syntaxe), sans accès à leur sens (leur sémantique). Si un programme fait la même chose, conclut Searle, exécuter un programme ne suffit pas pour comprendre. L'argument vise la thèse de l'« IA forte », selon laquelle un programme bien conçu penserait réellement.\n\n## Les réponses classiques\n\n- **La réponse des systèmes.** Ce n'est pas l'occupant qui comprend, mais l'ensemble formé par la pièce, le manuel et lui. Searle répond que l'occupant pourrait mémoriser le manuel et ne comprendrait toujours pas.\n- **La réponse du robot.** Si le système était relié au monde par des capteurs et des actions, ses symboles auraient un ancrage dans la réalité.\n- **La réponse du cerveau simulé.** Si le programme simulait neurone par neurone un cerveau chinois, refuserait-on encore de parler de compréhension ?\n\n## Pourquoi on y revient\n\nLa question de fond est de savoir à quelles conditions un système qui produit des réponses pertinentes comprend ce qu'il dit. Elle revient aujourd'hui avec les modèles de langage. L'expérience ne tranche pas, mais elle oblige à préciser ce que l'on appelle « comprendre »."
+  },
+  "thesee": {
+   "title": "Le navire de Thésée",
+   "desc": "Si l'on remplace toutes les pièces d'un objet, reste-t-il le même ?",
+   "date": "2026-08-21",
+   "tags": [
+    "identité",
+    "métaphysique"
+   ],
+   "body": "Selon Plutarque, les Athéniens conservèrent pendant des siècles le navire sur lequel Thésée était revenu de Crète. À mesure que les planches pourrissaient, on les remplaçait par des planches neuves. Les philosophes se demandaient : quand toutes les pièces ont été changées, est-ce encore le même navire ?\n\n## Deux intuitions\n\n- **La continuité.** Le navire a gardé sa forme, sa fonction et son histoire, c'est donc le même.\n- **La matière.** Plus rien de l'original n'est présent, c'est donc un autre navire.\n\nThomas Hobbes ajoute une complication. Imaginons qu'on ait gardé les anciennes planches et qu'on ait reconstruit un navire avec elles. Lequel des deux est le vrai ?\n\n## De la mer au corps\n\nOn entend souvent que le corps humain se renouvelle entièrement tous les sept ans. C'est une simplification abusive : les cellules se renouvellent à des rythmes très différents. Celles de l'intestin vivent quelques jours, les globules rouges environ quatre mois, tandis que la plupart des neurones du cortex ne sont pas remplacés. Ce qui persiste, c'est une organisation, pas une matière.\n\n## Ce que ça change\n\nLe même problème se pose pour l'identité personnelle. Pour John Locke, ce qui fait la personne est la continuité de la mémoire. Pour Derek Parfit, dans *Reasons and Persons* (1984), l'identité stricte compte peut-être moins que la continuité psychologique."
+  },
+  "idee": {
+   "title": "Comment naît une idée",
+   "desc": "Le récit d'un mathématicien dans un omnibus, et le modèle en quatre temps qu'on en a tiré.",
+   "date": "2026-07-18",
+   "tags": [
+    "création",
+    "méthode"
+   ],
+   "body": "Henri Poincaré a raconté, dans une conférence de 1908, comment il avait trouvé la solution d'un problème sur les fonctions fuchsiennes après des semaines d'efforts vains. Au moment de monter dans un omnibus, à Coutances, l'idée lui est venue, sans que rien dans ses pensées antérieures ait semblé l'y préparer. Il n'a pas pris le temps de la vérifier sur place : il a poursuivi sa conversation, certain d'avoir raison. La vérification est venue plus tard, à son retour.\n\n## Quatre temps\n\nÀ partir de ce témoignage, le psychologue Graham Wallas propose en 1926 un modèle en quatre étapes.\n\n1. **La préparation.** Le problème est posé, étudié, travaillé consciemment.\n2. **L'incubation.** On s'en éloigne. Le travail se poursuit sans effort apparent.\n3. **L'illumination.** L'idée surgit, souvent loin du bureau.\n4. **La vérification.** On contrôle, on précise, on met en forme.\n\n## À retenir pour travailler\n\n- L'illumination suit le travail, elle ne le remplace pas. Poincaré insiste sur les semaines d'effort qui la précèdent.\n- Laisser du temps vide fait partie de la méthode.\n- Garder un carnet à portée de main évite de perdre ce qui arrive hors du bureau.\n\nCe modèle reste une description commode plus qu'une théorie. Les chercheurs en psychologie de la créativité en discutent encore la portée."
+  },
+  "n-ciel": {
+   "title": "Un ciel sans étoiles",
+   "type": "note",
+   "desc": "Fragment : que penserait de l'univers un observateur né sous un ciel toujours couvert ?",
+   "date": "2026-10-02",
+   "tags": [
+    "fragment"
+   ],
+   "body": "Imaginons une civilisation née sur une planète entourée d'un nuage permanent. Pas de Soleil visible, pas d'étoiles. Aurait-elle l'idée de l'espace ?\n\nElle aurait sans doute des lois du mouvement, de la chaleur, de l'électricité. Mais il lui manquerait la preuve la plus directe qu'il existe un dehors. Il faudrait imaginer un instrument, un ballon ou une fusée, pour percer la couche.\n\n**Piste.** L'astronomie commence peut-être par un fait banal : on peut voir loin."
+  },
+  "n-carte": {
+   "title": "Une carte des idées",
+   "type": "note",
+   "desc": "Esquisse : et si chaque article du Codex était une étoile, et chaque lien entre deux articles une constellation ?",
+   "date": "2026-10-10",
+   "tags": [
+    "esquisse",
+    "design"
+   ],
+   "body": "Une carte du site où chaque article serait un point lumineux.\n\n## Pistes\n\n- La **taille** de l'étoile dépend du nombre de liens qui y mènent.\n- La **couleur** désigne la catégorie.\n- La **distance** entre deux étoiles reflète la proximité des sujets.\n- Un trait fin relie les articles qui se citent.\n\nÀ tester : le lecteur doit-il pouvoir se déplacer dans la carte, ou seulement la survoler pour choisir un article ?"
+  },
+  "n-regles": {
+   "title": "Trois règles pour un ciel lisible",
+   "type": "note",
+   "desc": "Notes de design : comment garder une interface sombre et lumineuse sans fatiguer.",
+   "date": "2026-10-14",
+   "tags": [
+    "design"
+   ],
+   "body": "1. **Un seul point lumineux dominant par écran.** Si tout brille, rien ne ressort.\n2. **Le noir est une couleur.** Lui laisser de la place donne du relief aux étoiles.\n3. **La couleur sert à classer, pas à décorer.** Une teinte par catégorie, toujours la même."
+  },
+  "vie": {
+   "title": "Le jeu de la vie",
+   "type": "experiment",
+   "status": "Prototype",
+   "desc": "Trois règles, une grille, et des formes qui naissent, voyagent et s'éteignent.",
+   "date": "2026-09-20",
+   "tags": [
+    "automates",
+    "émergence"
+   ],
+   "body": "En 1970, le mathématicien John Conway invente un « jeu » sans joueur. Une grille de cases, chacune vivante ou morte. À chaque tour, toutes les cases changent d'état en même temps, d'après leurs huit voisines.\n\n## Les règles\n\n- Une case vivante entourée de 2 ou 3 voisines vivantes survit.\n- Une case morte entourée d'exactement 3 voisines vivantes naît.\n- Dans tous les autres cas, la case est morte au tour suivant.\n\n## Ce qu'on y voit\n\nDe ces règles minuscules sortent des motifs stables, des oscillateurs et des « planeurs » qui traversent la grille en diagonale. On a démontré qu'on peut construire dans cette grille un calculateur universel, au sens de Turing.\n\n> Une maquette interactive prendra place ici : une grille à dessiner, un bouton pour lancer le temps."
+  },
+  "trois-corps": {
+   "title": "Le problème à trois corps",
+   "type": "experiment",
+   "status": "À venir",
+   "desc": "Deux astres, c'est une ellipse. Trois astres, c'est le chaos.",
+   "date": "2026-10-08",
+   "tags": [
+    "mécanique céleste",
+    "chaos"
+   ],
+   "body": "Newton résout le mouvement de deux corps qui s'attirent : chacun décrit une ellipse. Dès qu'on ajoute un troisième corps, il n'existe plus de formule générale simple.\n\n## Une longue enquête\n\nÀ la fin du XIXe siècle, Henri Poincaré travaille sur ce problème pour un concours doté par le roi Oscar II de Suède. Il montre que les trajectoires peuvent être extrêmement sensibles aux conditions de départ. C'est l'une des origines de la théorie du chaos.\n\nEn 1912, Karl Sundman donne une solution sous forme de série infinie qui converge, mais si lentement qu'elle est inutilisable en pratique.\n\n## Quelques cas particuliers\n\n- Les **points de Lagrange**, où un petit corps reste immobile par rapport à deux grands.\n- La **trajectoire en huit** de trois corps de masses égales, mise en évidence en 2000 par Chenciner et Montgomery.\n\n> Une simulation permettra ici de déplacer trois astres et de voir les trajectoires diverger."
+  },
+  "l-sep": {
+   "title": "Consciousness, Stanford Encyclopedia of Philosophy",
+   "type": "link",
+   "source": "Stanford Encyclopedia of Philosophy",
+   "url": "https://plato.stanford.edu/entries/consciousness/",
+   "desc": "Une entrée de référence pour situer les grandes théories de la conscience.",
+   "date": "2026-10-18",
+   "tags": [
+    "philosophie de l'esprit"
+   ],
+   "body": "Une synthèse détaillée et régulièrement mise à jour. Utile pour distinguer les différents sens du mot « conscience » avant de choisir sa position.\n\n**À lire en premier :** la partie consacrée aux concepts de conscience, puis celle sur les théories explicatives."
+  },
+  "l-lambda": {
+   "title": "LAMBDA, archive de données cosmologiques de la NASA",
+   "type": "link",
+   "source": "NASA / LAMBDA",
+   "url": "https://lambda.gsfc.nasa.gov/",
+   "desc": "Cartes et données du fond diffus cosmologique, dont celles de WMAP et de Planck.",
+   "date": "2026-10-20",
+   "tags": [
+    "cosmologie",
+    "données"
+   ],
+   "body": "Le point d'entrée pour retrouver les cartes du fond diffus cosmologique et les outils d'analyse. Pour accompagner l'article « La lumière la plus ancienne »."
+  },
+  "l-nobel": {
+   "title": "Prix Nobel de physique 1978",
+   "type": "link",
+   "source": "NobelPrize.org",
+   "url": "https://www.nobelprize.org/prizes/physics/1978/summary/",
+   "desc": "Le résumé du prix partagé entre Pyotr Kapitsa, Arno Penzias et Robert Wilson.",
+   "date": "2026-10-22",
+   "tags": [
+    "cosmologie",
+    "histoire des sciences"
+   ],
+   "body": "Penzias et Wilson sont récompensés pour la découverte du rayonnement cosmique de fond. La page donne le contexte de leur travail et la conférence de réception."
+  },
+  "portrait": {
+   "title": "À propos",
+   "type": "page",
+   "desc": "Un esprit curieux, entre science, philosophie et création.",
+   "date": "2026-10-25",
+   "tags": [],
+   "body": "Cette page accueillera votre présentation : qui vous êtes, ce qui motive ce site, comment lire le Codex.\n\n## Ce qu'on peut y mettre\n\n- Une courte biographie et une photo.\n- Vos sujets de prédilection.\n- Les liens vers vos réseaux et vos publications.\n\n*Texte d'exemple, à remplacer par le vôtre.*"
+  },
+  "contact": {
+   "title": "Contact",
+   "type": "page",
+   "desc": "Écrire à l'auteur du Codex.",
+   "date": "2026-10-25",
+   "tags": [],
+   "body": "Cet espace recevra votre adresse de contact ou un formulaire.\n\n*Texte d'exemple, à remplacer par le vôtre.*"
+  }
+ }
+}

@@ -20,7 +20,7 @@
 <!-- 🌌 Bouton flottant pour menu thème (desktop only) -->
 <div class="theme-fab-container">
   <button id="theme-fab" aria-label="Afficher les thèmes" aria-expanded="false" style="font-size:12px;width:auto;min-width:74px;padding:0 12px">Thèmes ⌄</button>
-  <div class="theme-fab-options hidden" style="min-width:170px">
+  <div class="theme-fab-options hidden" style="min-width:170px" data-theme-list>
     <a href="/codexmental-v2/experiences/heliosphere/" style="display:block;padding:10px 14px;text-decoration:none;color:inherit">Héliosphère</a>
     <a href="/codexmental-v2/experiences/galactique/" style="display:block;padding:10px 14px;text-decoration:none;color:inherit">Galactique</a>
   </div>
@@ -28,7 +28,7 @@
 
 <!-- 📱 Menu mobile déroulant -->
 <nav id="mobile-menu" class="mobile-menu">
-  <ul>
+  <ul data-theme-list="li">
     <li><a href="/codexmental-v2/home.html" class="nav-link">Home</a></li>
     <li><a href="/codexmental-v2/codex.html" class="nav-link">Codex</a></li>
     <li><a href="/codexmental-v2/blog/blog.html" class="nav-link">Blog</a></li>
@@ -38,7 +38,7 @@
     <li><a href="/codexmental-v2/profil/index.html" class="nav-link">Profil</a></li>
     <li><hr></li>
     <li><strong>Thèmes</strong></li>
-    <li><a href="/codexmental-v2/experiences/heliosphere/" style="display:block;padding:8px 12px">Héliosphère</a></li>
-    <li><a href="/codexmental-v2/experiences/galactique/" style="display:block;padding:8px 12px">Galactique</a></li>
+    <li data-theme-item><a href="/codexmental-v2/experiences/heliosphere/" style="display:block;padding:8px 12px">Héliosphère</a></li>
+    <li data-theme-item><a href="/codexmental-v2/experiences/galactique/" style="display:block;padding:8px 12px">Galactique</a></li>
   </ul>
 </nav>

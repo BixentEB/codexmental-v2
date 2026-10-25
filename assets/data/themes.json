@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "default": "heliosphere",
+  "themes": [
+    {
+      "id": "heliosphere",
+      "label": "Héliosphère",
+      "description": "Le système solaire en 3D",
+      "enabled": true
+    },
+    {
+      "id": "galactique",
+      "label": "Galactique",
+      "description": "Une galaxie spirale vivante",
+      "enabled": true
+    },
+    {
+      "id": "ciel-profond",
+      "label": "Ciel profond",
+      "description": "Galaxie, nébuleuses et instruments d'observation",
+      "enabled": false,
+      "note": "Prototype : son lecteur utilise encore des articles d'exemple. Passer enabled à true une fois relié au catalogue réel."
+    },
+    {
+      "id": "champ-stellaire",
+      "label": "Champ stellaire",
+      "description": "Prototype WebGL, nébuleuses procédurales",
+      "enabled": false,
+      "note": "Prototype existant, à décider : garder, fusionner ou archiver."
+    }
+  ]
+}

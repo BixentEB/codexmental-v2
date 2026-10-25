@@ -340,7 +340,7 @@ body:has(.codex-solar-lucioles) .codex-lucioles{--luciole:#ffd58c;--luciole-glow
     </section>
 
     <section class="panel closed" id="panel" aria-label="Laboratoire de la galaxie">
-      <header><h2>Laboratoire de la galaxie</h2><div class="gal-panel-actions"><details class="gal-theme-menu"><summary class="tg">Thèmes</summary><div class="gal-theme-links"><a href="../heliosphere/">Héliosphère</a><a href="../galactique/" aria-current="page">Galactique</a></div></details><button class="tg" id="panelToggle" type="button" aria-expanded="false" aria-label="Réglages" title="Réglages">⚙</button></div></header>
+      <header><h2>Laboratoire de la galaxie</h2><div class="gal-panel-actions"><details class="gal-theme-menu"><summary class="tg">Thèmes</summary><div class="gal-theme-links" data-theme-list><a href="../heliosphere/">Héliosphère</a><a href="../galactique/" aria-current="page">Galactique</a></div></details><button class="tg" id="panelToggle" type="button" aria-expanded="false" aria-label="Réglages" title="Réglages">⚙</button></div></header>
       <div class="body">
         <div class="rw"><label for="pop">Population</label><input id="pop" type="range" min="20" max="200" step="10" value="100"><output id="popOut" for="pop">100 %</output></div>
         <div class="rw"><label for="arms">Bras spiraux</label><input id="arms" type="range" min="2" max="6" step="1" value="4"><output id="armsOut" for="arms">4</output></div>
@@ -1110,4 +1110,5 @@ window.__G = { PT_VERT: PT_VERT, STAR_FRAG: STAR_FRAG, NEB_FRAG: NEB_FRAG, DUST_
  window.addEventListener('hashchange',openLinkedSection);
 })();
 </script>
+<script src="../../assets/js/theme-switch.js"></script>
 </body></html>

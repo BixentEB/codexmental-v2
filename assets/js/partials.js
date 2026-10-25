@@ -20,8 +20,19 @@ export function injectPartial(id, url) {
         highlightActiveLink();
         setupMobileMenu();
         setupThemeFab();
+        loadThemeSwitch(target);
       }
     });
+}
+
+/**
+ * Charge le sélecteur de thèmes partagé (une seule fois) et remplit les listes du menu injecté
+ */
+function loadThemeSwitch(root) {
+  if (window.CodexThemes) { window.CodexThemes.scan(root); return; }
+  const s = document.createElement('script');
+  s.src = new URL('theme-switch.js', import.meta.url).href;
+  document.head.appendChild(s);
 }
 
 /**

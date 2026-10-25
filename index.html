@@ -3,17 +3,31 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>CODEX Mental — Héliosphère</title>
+  <title>CODEX Mental</title>
   <meta name="description" content="Explorez CODEX Mental, son univers interactif, ses idées et ses créations.">
   <link rel="icon" href="img/logo/favicon-96x96.png" type="image/png" sizes="96x96">
-  <meta http-equiv="refresh" content="0;url=experiences/heliosphere/">
+  <noscript><meta http-equiv="refresh" content="0;url=experiences/heliosphere/"></noscript>
   <script>
-    // The site root now opens the current interactive homepage.
-    // Preserve QR-code query strings and deep-link fragments when redirecting.
-    location.replace(new URL('experiences/heliosphere/'+location.search+location.hash,location.href).href);
+    // La racine du site ouvre le thème choisi par le lecteur (dernier thème visité),
+    // sinon le thème par défaut du registre assets/data/themes.json.
+    // Les paramètres d'adresse (QR codes) et les ancres sont conservés.
+    (function () {
+      var fallback = 'heliosphere', wanted = fallback;
+      try { wanted = localStorage.getItem('codex.theme') || fallback; } catch (e) {}
+      function go(id) {
+        location.replace(new URL('experiences/' + id + '/' + location.search + location.hash, location.href).href);
+      }
+      fetch('assets/data/themes.json', { cache: 'no-cache' })
+        .then(function (r) { return r.json(); })
+        .then(function (j) {
+          var ok = j.themes.some(function (t) { return t.id === wanted && t.enabled !== false; });
+          go(ok ? wanted : (j.default || fallback));
+        })
+        .catch(function () { go(fallback); });
+    })();
   </script>
 </head>
 <body>
-  <p>Bienvenue sur CODEX Mental. <a href="experiences/heliosphere/">Entrer dans l'Héliosphère</a></p>
+  <p>Bienvenue sur CODEX Mental. <a href="experiences/heliosphere/">Entrer dans l'Héliosphère</a> · <a href="experiences/galactique/">Entrer dans la Galactique</a></p>
 </body>
 </html>

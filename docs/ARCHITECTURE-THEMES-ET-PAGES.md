@@ -22,3 +22,21 @@ Les fichiers `experiences/heliosphere/index.html` et `experiences/shared-reader/
 5. Fusionner seulement après validation visuelle et fonctionnelle.
 
 Cette branche est un premier jalon de géométrie partagée, **pas** encore une mutualisation complète du moteur de lecture.
+
+## Sélecteur de thèmes (lecteur)
+
+Le lecteur choisit son thème ; le choix est mémorisé (`localStorage`, clé `codex.theme`).
+
+- **Registre** : `assets/data/themes.json` liste les thèmes (`id`, `label`, `enabled`). L'`id` est le nom du dossier `experiences/<id>/`.
+- **Script commun** : `assets/js/theme-switch.js`. Tout conteneur portant `data-theme-list` est rempli depuis le registre (mode `data-theme-list="li"` pour des `<li>`). Les liens déjà présents dans le HTML servent de modèle et de repli si le registre est injoignable.
+- **Navigation** : changer de thème conserve la query et le hash (`?section=…`, `#…`).
+- **Accueil** : `index.html` redirige vers le thème mémorisé, sinon vers `default`.
+- **Aperçu** : `?preview` affiche aussi les thèmes `enabled:false` (suffixe « aperçu »).
+
+### Ajouter un thème
+1. Créer `experiences/<id>/index.html` et y charger `assets/js/theme-switch.js`, avec un conteneur `data-theme-list`.
+2. Ajouter l'entrée dans `themes.json` avec `"enabled": false`.
+3. Tester avec `?preview`, puis passer `enabled` à `true`.
+
+### État actuel
+`heliosphere` et `galactique` sont actifs. `ciel-profond` est en aperçu : son lecteur utilise encore des articles d'exemple (`content.json`) et doit être branché sur `assets/data/codex-articles.json` avant activation. `champ-stellaire` reste un prototype.
