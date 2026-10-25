@@ -597,6 +597,7 @@ window.__G = { PT_VERT: PT_VERT, STAR_FRAG: STAR_FRAG, NEB_FRAG: NEB_FRAG, DUST_
     home:    { name: 'Accueil', sub: '', rgb: '185,164,255', text: '' },
     codex:   { name: 'Codex', sub: '', rgb: '255,214,150', text: "La base de connaissances : notes, concepts et fiches reliés entre eux. Une étoile jaune au cœur d'un bras proche du centre." },
     blog:    { name: 'Système violet', sub: 'Exploration libre', rgb: '201,160,255', text: "Un système stellaire à explorer librement. Admirez son étoile violette et ses planètes, sans ouvrir de rubrique du site." },
+    rubis:   { name: 'Système rubis', sub: 'Exploration libre', rgb: '255,91,105', text: "Un système rouge à explorer librement : une géante aux anneaux cuivrés, une planète bleue accompagnée de sa lune et un monde rocheux pourpre. Aucune rubrique associée." },
     atelier: { name: 'Atelier', sub: '', rgb: '255,157,77', text: "Projets en cours, expériences et prototypes en construction. Une étoile orange, plus loin dans la spirale." },
     lab:     { name: 'Lab', sub: 'Applications', rgb: '90,240,168', text: "Applications et outils à essayer. Une étoile verte en bordure du disque." },
     dashb:   { name: 'DashB', sub: 'Tableau de bord', rgb: '92,180,255', text: "Le tableau de bord : indicateurs et suivi en direct. Une étoile bleue sur un bras jeune." },
@@ -609,7 +610,8 @@ window.__G = { PT_VERT: PT_VERT, STAR_FRAG: STAR_FRAG, NEB_FRAG: NEB_FRAG, DUST_
     { id: 'blog',    r: .52, k: 2, col: 0xc9a0ff, planets: [[1.8, .2, 0xb990f0, .8], [3.0, .15, 0x6f5ac0, .5], [4.2, .26, 0xe0d0ff, .3]] },
     { id: 'atelier', r: .64, k: 3, col: 0xff9d4d, planets: [[1.6, .13, 0xc2612c, 1.0], [2.6, .2, 0xe8924f, .6], [3.8, .17, 0x7a3a22, .34]] },
     { id: 'lab',     r: .76, k: 0, col: 0x5af0a8, planets: [[1.7, .18, 0x3fd08f, .85], [2.9, .14, 0xb7f5d4, .5], [4.1, .22, 0x1f7a55, .3]] },
-    { id: 'profil',  r: .88, k: 1, col: 0xe6ecff, planets: [[1.8, .15, 0xdfe6f8, .7], [3.0, .2, 0xaab4d4, .45], [4.2, .12, 0x8d98ba, .28]] }
+    { id: 'profil',  r: .88, k: 1, col: 0xe6ecff, planets: [[1.8, .15, 0xdfe6f8, .7], [3.0, .2, 0xaab4d4, .45], [4.2, .12, 0x8d98ba, .28]] },
+    { id: 'rubis',   r: .68, k: 2, col: 0xff5368, planets: [[1.9, .31, 0xb74d42, .72], [3.15, .22, 0x304b9d, .48], [4.35, .17, 0x82365e, .31]] }
   ];
 
   /* ---------- Paramètres ---------- */
@@ -772,7 +774,34 @@ window.__G = { PT_VERT: PT_VERT, STAR_FRAG: STAR_FRAG, NEB_FRAG: NEB_FRAG, DUST_
       var pts = []; for (var i = 0; i < 96; i++) { var a = i / 96 * Math.PI * 2; pts.push(new T.Vector3(Math.cos(a) * p[0], 0, Math.sin(a) * p[0])); }
       var lm = new T.LineBasicMaterial({ color: d.col, transparent: true, opacity: 0, depthWrite: false, toneMapped: false });
       var ln = new T.LineLoop(new T.BufferGeometry().setFromPoints(pts), lm); tilt.add(ln); rings.push(lm);
-      planets.push({ mesh: m, rad: p[0], w: p[3], a: Math.random() * 6.28 });
+      if (d.id === 'rubis' && idx === 0) {
+        // Anneaux planétaires, indépendants des orbites du système.
+        var ring = new T.Mesh(
+          new T.RingGeometry(p[1] * 1.38, p[1] * 2.15, 80),
+          new T.MeshBasicMaterial({ color: 0xd8a278, side: T.DoubleSide, transparent: true, opacity: .83, depthWrite: false })
+        );
+        ring.rotation.x = -Math.PI / 2.65;
+        ring.rotation.y = .24;
+        m.add(ring);
+        var innerRing = new T.Mesh(
+          new T.RingGeometry(p[1] * 1.16, p[1] * 1.33, 80),
+          new T.MeshBasicMaterial({ color: 0xf0c6a0, side: T.DoubleSide, transparent: true, opacity: .68, depthWrite: false })
+        );
+        innerRing.rotation.copy(ring.rotation);
+        m.add(innerRing);
+      }
+      var moon = null;
+      if (d.id === 'rubis' && idx === 1) {
+        moon = new T.Group();
+        m.add(moon);
+        var satellite = new T.Mesh(
+          new T.SphereGeometry(.065, 14, 10),
+          new T.MeshBasicMaterial({ color: 0xd9e3f2, toneMapped: false })
+        );
+        satellite.position.set(.43, 0, 0);
+        moon.add(satellite);
+      }
+      planets.push({ mesh: m, rad: p[0], w: p[3], a: Math.random() * 6.28, moon: moon });
     });
     var hit = new T.Mesh(new T.SphereGeometry(1, 12, 8), new T.MeshBasicMaterial({ visible: false })); hit.userData.id = d.id; group.add(hit);
     var S = { id: d.id, def: d, group: group, planets: planets, rings: rings, hit: hit, halo: halo, halo2: halo2, pos: new T.Vector3(), rPx: 10 };
@@ -814,7 +843,7 @@ window.__G = { PT_VERT: PT_VERT, STAR_FRAG: STAR_FRAG, NEB_FRAG: NEB_FRAG, DUST_
     h.addEventListener('click', function () { select(d.id); });
     els[d.id] = el;
   });
-  ['home', 'codex', 'blog', 'atelier', 'lab', 'dashb', 'profil'].forEach(function (id) {
+  ['home', 'codex', 'blog', 'rubis', 'atelier', 'lab', 'dashb', 'profil'].forEach(function (id) {
     var b = document.createElement('button'); b.type = 'button'; b.textContent = SECTIONS[id].name;
     b.addEventListener('click', function () { select(id === 'home' ? null : id); });
     tabsEl.appendChild(b); tabButtons[id] = b;
@@ -877,7 +906,7 @@ window.__G = { PT_VERT: PT_VERT, STAR_FRAG: STAR_FRAG, NEB_FRAG: NEB_FRAG, DUST_
       vDir.applyQuaternion(qI).multiplyScalar(Math.exp(Math.log(lf) + (Math.log(lt) - Math.log(lf)) * e));
       controls.target.lerpVectors(flight.fromTgt, tgt, e);
       camera.position.copy(controls.target).add(vDir);
-      if (k >= 1) { flight = null; controls.enabled = true; if (S) {lastSel.copy(S.pos);if(selected!=='blog')openSharedReader(selected);} }
+      if (k >= 1) { flight = null; controls.enabled = true; if (S) {lastSel.copy(S.pos);if(selected!=='blog' && selected!=='rubis')openSharedReader(selected);} }
     } else if (S) {
       tmpV.copy(S.pos).sub(lastSel); camera.position.add(tmpV); controls.target.copy(S.pos); lastSel.copy(S.pos);
     }
@@ -984,7 +1013,7 @@ window.__G = { PT_VERT: PT_VERT, STAR_FRAG: STAR_FRAG, NEB_FRAG: NEB_FRAG, DUST_
 
     sysList.forEach(function (S) {
       sysPosition(S, S.pos); S.group.position.copy(S.pos);
-      S.planets.forEach(function (p) { p.a += p.w * sdt * 2; p.mesh.position.set(Math.cos(p.a) * p.rad, 0, Math.sin(p.a) * p.rad); });
+      S.planets.forEach(function (p) { p.a += p.w * sdt * 2; p.mesh.position.set(Math.cos(p.a) * p.rad, 0, Math.sin(p.a) * p.rad); if (p.moon) p.moon.rotation.y += sdt * 1.25; });
     });
     scene.updateMatrixWorld(true);
     stepCamera(dt);
