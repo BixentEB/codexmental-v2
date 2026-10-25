@@ -760,17 +760,17 @@ window.__G = { PT_VERT: PT_VERT, STAR_FRAG: STAR_FRAG, NEB_FRAG: NEB_FRAG, DUST_
   SYS.forEach(function (d) {
     var s = SECTIONS[d.id], group = new T.Group(); scene.add(group);
     var colr = new T.Color(d.col);
-    var core = new T.Mesh(new T.SphereGeometry(.34, 24, 16), new T.MeshBasicMaterial({ color: d.col })); group.add(core);
+    var core = new T.Mesh(new T.SphereGeometry(.48, 24, 16), new T.MeshBasicMaterial({ color: d.col, toneMapped: false })); group.add(core);
     var rgb = s.rgb;
-    var halo = glowSprite(glowTexture(rgb, 1.0), 13, 6); group.add(halo);
-    var halo2 = glowSprite(glowTexture(rgb, .36), 34, 5); group.add(halo2);
+    var halo = glowSprite(glowTexture(rgb, .9), 11, 6); group.add(halo);
+    var halo2 = glowSprite(glowTexture(rgb, .25), 26, 5); group.add(halo2);
     var light = new T.PointLight(d.col, 2.0, 38, 2); group.add(light);
     var tilt = new T.Group(); tilt.rotation.set((Math.random() - .5) * .8, Math.random() * 6.28, (Math.random() - .5) * .5); group.add(tilt);
     var planets = [], rings = [];
     d.planets.forEach(function (p, idx) {
-      var m = new T.Mesh(new T.SphereGeometry(p[1], 20, 14), new T.MeshLambertMaterial({ color: p[2] })); tilt.add(m);
+      var m = new T.Mesh(new T.SphereGeometry(p[1], 20, 14), new T.MeshBasicMaterial({ color: p[2], toneMapped: false })); tilt.add(m);
       var pts = []; for (var i = 0; i < 96; i++) { var a = i / 96 * Math.PI * 2; pts.push(new T.Vector3(Math.cos(a) * p[0], 0, Math.sin(a) * p[0])); }
-      var lm = new T.LineBasicMaterial({ color: d.col, transparent: true, opacity: 0, depthWrite: false });
+      var lm = new T.LineBasicMaterial({ color: d.col, transparent: true, opacity: 0, depthWrite: false, toneMapped: false });
       var ln = new T.LineLoop(new T.BufferGeometry().setFromPoints(pts), lm); tilt.add(ln); rings.push(lm);
       planets.push({ mesh: m, rad: p[0], w: p[3], a: Math.random() * 6.28 });
     });
@@ -1001,7 +1001,7 @@ window.__G = { PT_VERT: PT_VERT, STAR_FRAG: STAR_FRAG, NEB_FRAG: NEB_FRAG, DUST_
       S.rPx = 5 * pxPerUnit;
       S.hit.scale.setScalar(Math.max(1.4, 20 / Math.max(pxPerUnit, .001)));
       var vis = 1 - Math.min(1, Math.max(0, (dist - 18) / 40));   // orbites visibles de près
-      S.rings.forEach(function (lm) { lm.opacity += ((.10 + vis * .30) - lm.opacity) * .1; });
+      S.rings.forEach(function (lm) { lm.opacity += ((.22 + vis * .32) - lm.opacity) * .1; });
       S.halo.material.opacity = 1;
       S.halo2.material.opacity = .85;
     });
