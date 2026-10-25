@@ -3,7 +3,7 @@
 .codex-gal-theme summary{cursor:pointer;list-style:none;border:1px solid rgba(173,185,230,.3);background:rgba(18,24,49,.8);padding:8px 12px;border-radius:9px}
 .codex-gal-theme details>div{position:absolute;bottom:calc(100% + 7px);left:0;display:grid;min-width:150px;padding:6px;background:#0b1023;border:1px solid rgba(173,185,230,.26);border-radius:10px}
 .codex-gal-theme a{color:#dce4ff;text-decoration:none;padding:10px}
-#gal-reader-overlay{position:fixed;inset:0;z-index:200;background:rgba(3,6,16,.96)}
+#gal-reader-overlay{position:fixed;inset:0;z-index:200;background:transparent}
 #gal-reader-overlay[hidden]{display:none!important}
 #gal-reader-frame{width:100%;height:100%;border:0;display:block}
 body:has(#gal-reader-overlay:not([hidden])) .codex-gal-theme{display:none}
@@ -37,17 +37,16 @@ body:has(#gal-reader-overlay:not([hidden])) .codex-gal-theme{display:none}
 #panel .gal-theme-links{min-width:170px!important}
 #panel .gal-theme-links a[aria-current=page]{color:#d7b6ff;font-weight:700;background:#29234d}
 </style><style id="codex-gal-reader-integrated">
-#gal-reader-overlay{background:transparent!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;top:56px!important;bottom:0!important}
+#gal-reader-overlay{backdrop-filter:none;-webkit-backdrop-filter:none;top:56px;bottom:0}
 /* Laisser la galaxie lisible autour du lecteur, sans éclaircir les panneaux de lecture. */
 body:has(#gal-reader-overlay:not([hidden])) .stage canvas{filter:brightness(1.0) saturate(1.08);transition:filter .3s ease}
 #gal-reader-frame{background:transparent!important;color-scheme:normal!important}
-/* L'iframe peut peindre un fond opaque malgré les styles internes : rendre sa couche composite translucide pour laisser la scène 3D visible. */
-#gal-reader-overlay:not([hidden]) #gal-reader-frame{opacity:1!important}
-body:has(#gal-reader-overlay:not([hidden])) .codex-gal-theme{display:none}
+/* L'iframe peint encore un fond opaque dans Chrome : compromis provisoire de composition, isolé ici. */
+#gal-reader-overlay:not([hidden]) #gal-reader-frame{opacity:.86}
 </style><style id="codex-gal-reader-contrast-controls-20261022">
 /* Voile léger, entre les étoiles et les blocs, sans effacer la galaxie. */
 /* Filtre dans la scène 3D, sous les contrôles et sous le lecteur : aucune zone cliquable recouverte. */
-#gal-reader-overlay:not([hidden]){background:transparent!important}
+#gal-reader-overlay:not([hidden]){background:transparent}
 body:has(#gal-reader-overlay:not([hidden])) .stage::after{
  content:"";position:absolute;inset:0;z-index:3;pointer-events:none;
  background:rgba(5,8,20,.08);
@@ -60,7 +59,6 @@ body:has(#gal-reader-overlay:not([hidden])) .stage .card{position:fixed!importan
 </style><style id="codex-gal-topnav-reader-fix-20261022">
 /* La barre supérieure doit rester intégralement au-dessus du voile et de l'iframe. */
 .codex-experience-nav.codex-lucioles{z-index:250!important;isolation:isolate}
-#gal-reader-overlay:not([hidden]){top:56px!important}
 </style><style id="codex-gal-compact-system-card-20261022">
 /* La fiche de système est un repère, pas une fenêtre couvrant l'article. */
 body:has(#gal-reader-overlay:not([hidden])) .stage .card{
